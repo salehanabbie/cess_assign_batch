@@ -4,18 +4,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.bsva</groupId>
-	<artifactId>MandateMessage_Parent</artifactId>
+	<artifactId>Cession_AssignmentParent</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0</version>
-	<name>MandateMessage_Parent</name>
+	<name>Cession_AssignmentParent</name>
 
 	<modules>
-		<module>MandateMessage_Commons</module>
-		<module>MandateMessage_Persistence</module>
-		<module>MandateMessage_Service_Client</module>
-		<module>MandateMessage_Service</module>
-		<module>MandateMessage_Service_Common</module>
-		<module>MandateMessage_Web</module>
+		<module>Cession_Assignment_Commons</module>
+		<module>Cession_Assignment_Persistence</module>
+		<module>Cession_Assignment_Service_Client</module>
+		<module>Cession_Assignment_Service</module>
+		<module>Cession_Assignment_Service_Common</module>
+		<module>Cession_Assignment_Web</module>
 	</modules>
 
 	<build>

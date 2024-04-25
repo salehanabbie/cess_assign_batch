@@ -2,14 +2,14 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.bsva</groupId>
-	<artifactId>MandateMessage_Service_Common</artifactId>
-	<name>MandateMessage_Service_Common</name>
+	<artifactId>Cession_Assignment_Service_Common</artifactId>
+	<name>Cession_Assignment_Service_Common</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>ear</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>com.bsva</groupId>
-			<artifactId>MandateMessage_Service</artifactId>
+			<artifactId>Cession_Assignment_Service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>ejb</type>
 		</dependency>
@@ -28,7 +28,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.bsva</groupId>
-			<artifactId>MandateMessage_Persistence</artifactId>
+			<artifactId>Cession_Assignment_Persistence</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>ejb</type>
 		</dependency>

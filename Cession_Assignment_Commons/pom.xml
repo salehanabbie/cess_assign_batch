@@ -1,18 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>MandateMessageParent</artifactId>
-		<groupId>com.bsva</groupId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../MandateMessageParent</relativePath>
-	</parent>
-
 	<groupId>com.bsva</groupId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<url>http://maven.apache.org</url>
+
+	<parent>
+		<artifactId>Cession_AssignmentParent</artifactId>
+		<groupId>com.bsva</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../Cession_AssignmentParent</relativePath>
+	</parent>
+
 
 	<properties>
-		<!-- checkstyle -->
+		<!-- c -->
 		<checkstyle.version>6.8</checkstyle.version>
 		<checkstyle.plugin.version>2.15</checkstyle.plugin.version>
 		<sevntu.checkstyle.plugin.version>1.13.4</sevntu.checkstyle.plugin.version>
@@ -25,11 +28,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<artifactId>MandateMessage_Service_Client</artifactId>
+	<artifactId>Cession_Assignment_Commons</artifactId>
 	<!-- info for reports -->
 	<!-- project name and description -->
-	<name>MandateMessage_Service_Client</name>
-	<description>MandatesMessage Service Client shareable objects</description>
+	<name>Cession_Assignment_Commons</name>
+	<description>Cession_Assignment Commons shareable objects</description>
 	<organization>
 		<name>BankservAfrica</name>
 		<url>http://www.bankservafrica.com/</url>
@@ -209,8 +212,8 @@
 	<!-- Mailing List -->
 	<mailingLists>
 		<mailingList>
-			<!--name>HotelDatabase project mailing list</name> <subscribe>dev-subscribe@wakaleo.com</subscribe>
-				<unsubscribe>dev-unsubscribe@wakaleo.com</unsubscribe> <post>dev@wakaleo.com</post>
+			<!--name>HotelDatabase project mailing list</name> <subscribe>dev-subscribe@wakaleo.com</subscribe> 
+				<unsubscribe>dev-unsubscribe@wakaleo.com</unsubscribe> <post>dev@wakaleo.com</post> 
 				<archive>http://mail-archives.wakaleo.com/modmbox/dev/</archive -->
 		</mailingList>
 	</mailingLists>
@@ -221,11 +224,11 @@
 		<url>http://172.16.71.64/</url>
 	</scm>
 	<reporting>
-		<!--skin> <groupId>org.apache.maven.skins</groupId> <artifactId>maven-fluido-skin</artifactId>
+		<!--skin> <groupId>org.apache.maven.skins</groupId> <artifactId>maven-fluido-skin</artifactId> 
 			<version>1.4</version -->
-		<!-- artifactId>maven-classic-skin</artifactId> <artifactId>maven-default-skin</artifactId>
-			<version>1.1</version> <artifactId>maven-stylus-skin</artifactId> <version>1.5</version>
-			<artifactId>maven-fluido-skin</artifactId> <version>1.4</version> <artifactId>maven-application-skin</artifactId>
+		<!-- artifactId>maven-classic-skin</artifactId> <artifactId>maven-default-skin</artifactId> 
+			<version>1.1</version> <artifactId>maven-stylus-skin</artifactId> <version>1.5</version> 
+			<artifactId>maven-fluido-skin</artifactId> <version>1.4</version> <artifactId>maven-application-skin</artifactId> 
 			<version>1.0</version -->
 		<!--/skin -->
 
@@ -257,7 +260,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>${checkstyle.plugin.version}</version>
-				<!-- Specifying configuration here will take effect on the execution
+				<!-- Specifying configuration here will take effect on the execution 
 					of "mvn site", but will not take effect on the execution of "mvn checkstyle:checkstyle" -->
 				<configuration>
 					<!-- configLocation>checkstyle.xml</configLocation -->
@@ -301,12 +304,11 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>6.0</version>
-			<scope>provided</scope>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
 		</dependency>
-
 
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -315,23 +317,28 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<sourceDirectory>ejbModule</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>ejbModule</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
+				<groupId>com.sun.tools.xjc.maven2</groupId>
+				<artifactId>maven-jaxb-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources</schemaDirectory>
+							<generateDirectory>src/main/java</generateDirectory>
+							<failOnError>false</failOnError>
+							<readOnly>false</readOnly>
+							<includeSchemas>
+								<includeSchema>**/*.xsd</includeSchema>
+							</includeSchemas>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
