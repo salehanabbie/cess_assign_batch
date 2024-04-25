@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03">
+	<stream name="MR019CSV" format="csv">
+		<record name="header" class="com.bsva.commons.model.MandateDailyTransModel" order="1" occurs="1">
+			<field name="creditorBank" default="CREDITORBANK" length="30" padding=" " justify="left"/>
+			<field name="debtorBank" default="DEBTORBANK" length="30" padding=" " justify="left"/>
+			<field name="serviceId" default="SERVICEID" length="10" padding=" " justify="left"/>
+			<field name="txnType" default="TXNTYPE" length="3" padding=" " justify="left"/>
+			<field name="actionDate" default="ACTIONDATE" length="20" padding=" " justify="left"/>
+			<field name="mndtReqTransId" default="MANDATEREQUESTTRANSACTIONID" length="35" padding=" " justify="left"/>
+			<field name="mndtRefNumber" default="MANDATEREFERENCENUMBER" length="35" padding=" " justify="left"/>
+			<field name="authCode" default="AUTHCODE" length="35" padding=" " justify="left"/>
+			<field name="trxnStatus" default="TRXNSTATUS" length="35" padding=" " justify="left"/>
+		</record>
+
+		<record name="header" class="com.bsva.commons.model.MandateDailyTransModel" order="2" occurs="0+">
+			<field name="creditorBank" length="30" padding=" " justify="left"/>
+			<field name="debtorBank"  length="30" padding=" " justify="left"/>
+			<field name="serviceId"  length="10" padding=" " justify="left"/>
+			<field name="txnType" length="3" padding=" " justify="left"/>
+			<field name="actionDate"  length="20" padding=" " justify="left"/>
+			<field name="mndtReqTransId"  length="35" padding=" " justify="left"/>
+			<field name="mndtRefNumber"  length="35" padding=" " justify="left"/>
+			<field name="authCode" length="35" padding=" " justify="left"/>
+			<field name="trxnStatus" length="35" padding=" " justify="left"/>
+		</record>
+	</stream>
+
+
+</beanio>

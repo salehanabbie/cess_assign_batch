@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03">
+		<stream name="PBMD07CSV" format="csv">
+		  <record name="header" class="com.bsva.commons.model.MndtOutstandingSusRespCSVModel" order="1" occurs="1">  
+	     	<field name="drMemberName" default="Debtor Bank" length="13" padding=" " justify="left"/>
+	      	<field name="memberNo" default="Member Number" length="13" padding=" " justify="left"/>
+	      	<field name="assignmentId" default="Assignment Id" length="20" padding=" " justify="left"/>
+	      	<field name="suspensionId" default="Suspension Id" length="20" padding=" " justify="left"/>
+	        <field name="nrDaysOutstanding" default="Number of Days Outstanding" length="30" padding=" " justify="left"/> 
+	        <field name="mandateReqTransId" default="Mandate Request Transaction Id" length="30" padding=" " justify="left"/>
+	        <field name="mandateRefNr" default="Mandate Reference Number" length="30" padding=" " justify="left"/>
+          </record>
+          
+           <record name="header" class="com.bsva.commons.model.MndtOutstandingSusResponseModel" order="2" occurs="0+">
+	      	<field name="drMemberName" length="30" padding=" " justify="left"/>
+	      	<field name="memberNo"  length="6" padding=" " justify="left"/>
+	      	<field name="assignmentId"  length="35" padding=" " justify="left"/>
+	      	<field name="suspensionId" length="35" padding=" " justify="left"/>
+	      	<field name="nrDaysOutstanding"  length="3" padding=" " justify="left"/>
+	      	<field name="mandateReqTransId"  length="35" padding=" " justify="left"/>
+	      	<field name="mandateRefNr"  length="35" padding=" " justify="left"/>     
+		  </record> 
+		</stream>
+   
+		    
+</beanio>

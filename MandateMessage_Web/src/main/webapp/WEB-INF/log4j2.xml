@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <Properties>
+    <Property name="log-path">WEB-INF/</Property>
+  </Properties>
+ <Appenders>
+  <Console name="Console" target="SYSTEM_OUT">
+         <PatternLayout pattern="%d{yyyy-MMM-dd hh:mm:ss a } %level %c - %m %n" />
+      </Console>
+    <!--JDBC name="databaseAppender" tableName="LOGOWNER.LOGS_REP">
+      <DataSource jndiName="java:jboss/datasources/LogDS" />
+      <Column name="LOG_ID"  literal="LOGOWNER.LOG_LOGS_REP_SEQ.NEXTVAL" />
+      <Column name="USER_ID" literal="'javaops'" />     
+      <Column name="LOG_DATE" isEventTimestamp="true" />
+      <Column name="LOG_LEVEL" pattern="%level" />
+      <Column name="LOGGER" pattern="%logger" />
+      <Column name="LOG_MESSAGE" pattern="%message" />
+      <Column name="EXCEPTION" pattern="%ex{full}" />
+    </JDBC-->
+   <RollingFile name="RollingFile" fileName="${log-path}/cls.log" filePattern="${log-path}/cls-%d{yyyy-MM-dd}.log" immediateFlush="false">
+    <PatternLayout>
+     <pattern>%d{dd/MMM/yyyy HH:mm:ss,SSS}- %c{1}: %m%n</pattern>
+    </PatternLayout>
+    <Policies>
+      <!--OnStartupTriggeringPolicy />
+      <SizeBasedTriggeringPolicy size="20 MB" />
+      <TimeBasedTriggeringPolicy /-->
+     <!--SizeBasedTriggeringPolicy size="1 KB" /-->
+      <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+      <!--CronTriggeringPolicy schedule="0 0/2 * 1/1 * ? *" /-->
+    </Policies>
+   <DefaultRolloverStrategy max="4"/>
+  </RollingFile>
+  </Appenders>
+  <Loggers>
+     <AsyncLogger name="com.bsva.batchmndt" level="info"
+         additivity="false" includeLocation="false">
+         <AppenderRef ref="RollingFile" />
+         <!--AppenderRef ref="Console" /-->
+         <!--AppenderRef ref="databaseAppender" /-->
+      </AsyncLogger>
+  
+    <Root level="warn" includeLocation="false">
+      <!--AppenderRef ref="databaseAppender"/-->
+      <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
+</Configuration>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03">
+		<stream name="phir-ma-report" format="csv">
+		   <record name="header" class="com.bsva.entities.PasaMandateReportEntityModel" order="1" occurs="1"> 
+		    <field name="mrti" default="mrti" length="4" padding=" " justify="left"/> 
+	     	<field name="creditorBank" default="CREDITOR_BANK" length="13" padding=" " justify="left"/>
+	      	<field name="debtorBank" default="DEBTOR_BANK" length="11" padding=" " justify="left"/>
+	      	<field name="creationDate" default="SYSTEM_DATE" length="11" padding=" " justify="left"/>
+	      	<field name="reason" default="AMENDMENT_REASON" length="16" padding=" " justify="left"/>
+	      	<field name="authType" default="AUTHENTICATION_TYPE" length="19" padding=" " justify="left"/>
+	      	<field name="contRefNum" default="CONTRACT_REFERENCE_NUMBER" length="25" padding=" " justify="left"/>
+	      	<field name="dbtrAuthReq" default="DEBTOR_AUTHENTICATION_REQUIRED" length="30" padding=" " justify="left"/>
+	      	<field name="instOcc" default="INSTALLMENT_OCCURENCE" length="21" padding=" " justify="left"/>
+	        <field name="cdtrAbbShtNm" default="CREDITOR_ABBREVIATED_SHORT_NAME" length="31" padding=" " justify="left"/>
+	        <field name="status" default="STATUS" length="6" padding=" " justify="left"/>
+	        <field name="errorCode" default="ERROR_CODE" length="10" padding=" " justify="left"/>
+	        <field name="dataSource" default="DATA_SOURCE" length="11" padding=" " justify="left"/>
+          </record>
+          
+		  <record name="header" class="com.bsva.entities.PasaMandateReportEntityModel" order="2" occurs="0+">
+	      	<field name="mrti" length="35" padding=" " justify="left"/>
+	      	<field name="creditorBank" length="6" padding=" " justify="left"/>
+	      	<field name="debtorBank"  length="6" padding=" " justify="left"/>
+	      	<field name="creationDate"  length="10" padding=" " justify="left"/>
+	      	<field name="reason"  length="4" padding=" " justify="left"/>
+	      	<field name="authType" length="9" padding=" " justify="left"/>
+	      	<field name="contRefNum"  length="14" padding=" " justify="left"/>
+	      	<field name="dbtrAuthReq"  length="4" padding=" " justify="left"/>
+	      	<field name="instOcc"  length="4" padding=" " justify="left"/>
+	      	<field name="cdtrAbbShtNm"  length="10" padding=" " justify="left"/>
+	      	<field name="status"  length="26" padding=" " justify="left"/>  
+	      	<field name="errorCode" length="6" padding=" " justify="left"/>
+	      	<field name="dataSource" length="3" padding=" " justify="left"/>
+		  </record> 
+		</stream>
+</beanio>

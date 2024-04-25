@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+ <wicket:panel>
+ 	<fieldset class="fieldset">
+ 	<legend class="legend">Transaction Balancing</legend>
+ 	<span wicket:id="feedback"></span>
+ 	<form wicket:id="form"> 
+ 	<div>
+		<table border="0"> 
+				<tr>
+				<td><label><font size="4">Total Mandates Received</font></label></td>
+				<td></td>
+				<td></td>
+				<td><input wicket:id="totalReceived"   type="text" value="Done" size="15"/></td>
+				</tr>
+				<tr>
+				<td><label><font size="4">Total Mandates Extracted</font></label></td>
+				<td></td>
+				<td></td>
+				
+				<td><input wicket:id="totalExtracted"   type="text" value="Done" size="15"/> </td>
+				</tr>
+				<br></br> 
+				
+				<tr>
+				<td><label><font size="4">Total Mandates Rejected</font></label></td>
+				<td></td>
+				<td></td>
+				
+				<td><input wicket:id="totalRejected"   type="text" value="Done" size="15"/></td>
+				</tr>
+				<tr>
+				<td><label><font size="4">Difference</font> </label></td>
+				<td></td>
+				<td></td>
+				<td><input wicket:id="totalDifference"  type="text" value="Done" size="15"/></td>
+				</tr>
+		</table> 
+				<br></br>
+		<table border="0"> 	
+				<input wicket:id="generateReport"  type="submit" value="Generate System Balance Report"/> 
+				<br></br>
+				<input wicket:id="forceClosureButton" type="submit" value="System Force Closure"/>	
+               	<input wicket:id="endOfDayButton" type="submit" value ="End Of Day"/>   
+    	</table>	
+    </div>           
+	</form>
+ 	</fieldset>
+ </wicket:panel>
+</body>
+</html>

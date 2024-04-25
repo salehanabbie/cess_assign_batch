@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	<fieldset class="fieldset">
+	<legend class="legend" > End Of Transmission </legend>
+		<span wicket:id="feedback_1"/>
+	<form wicket:id="form">
+	<div>  
+		<table border="0">
+			<tr>
+				<td><label class="requiredLabel">Destination Member No:</label></td>
+				<td><select wicket:id="instId"/> </td>
+			</tr>
+			
+			<tr>
+				<td><label class="requiredLabel">Service:</label></td>
+				<td><select wicket:id="serviceIdOut"/> </td>
+			</tr>
+			
+		</table>
+		<br></br>
+		<span>
+			<input wicket:id=generateEOTFileTButton type="submit" value="Generate EOT File">	
+		</span>
+		</div>
+	</form>
+	</fieldset>
+</wicket:panel>
+
+</body>
+</html>

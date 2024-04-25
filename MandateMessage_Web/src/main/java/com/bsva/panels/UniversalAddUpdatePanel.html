@@ -1,0 +1,38 @@
+<wicket:panel>
+	<br></br>
+	<!-- <span wicket:id="tabs" class="tabpanel">[tabbed panel will be here]</span> -->
+	<div wicket:id="feedback"></div>
+
+	<table>
+
+		<tr>
+			<td><fieldset>
+					<i>Please complete the required fields </i>
+				</fieldset></td>
+		</tr>
+		<tr>
+
+
+			<td>
+
+				<form wicket:id="form">
+					<!-- <fieldset class= "loginField"> -->
+					<fieldset class="fieldset">
+						<!-- <legend class= "legend">Single CDV</legend> -->
+						<!-- <legend>Single CDV</legend> -->
+						<p>
+							<span wicket:id="code">code</span> <input
+								wicket:id="codeInput" type="text" size="20" /> <span
+								wicket:id="description">description</span> <input
+								wicket:id="descriptionInput" type="text" size="20"/> 
+								 <input wicket:id="addButton" type="submit" value="Submit">
+								 <input wicket:id="updateButton" type="submit" value="Update">
+								 <input wicket:id="cancelButton" type="submit" value="Cancel">
+						</p>
+						
+					</fieldset>
+				</form>
+			</td>
+		</tr>
+	</table>
+</wicket:panel>

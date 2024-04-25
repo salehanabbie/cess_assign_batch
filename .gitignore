@@ -1,0 +1,18 @@
+/target/
+.metadata
+.classpath
+.settings
+.project
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**.classpath**
+!**.project**
+!**.settings**
+!**/src/main/java/bsva/**
+!**/src/main/java/iso/**
+
+### INTELLIJ ###
+.idea
+*.iws
+*.iml
+*.ipr

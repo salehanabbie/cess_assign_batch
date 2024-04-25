@@ -1,0 +1,29 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+	<wicket:panel>
+		<fieldset class="fieldset">
+		<legend class="legend">CIS Branch Information</legend>
+			<span wicket:id="feedbackPanel"></span>
+			<form wicket:id="viewCisBranchInfoPanel">		
+				<span align="right"> <label>Branch Number:</label> 
+				<input wicket:id="branchNoText" type="text"> 
+				<input wicket:id="searchButton" type="submit" value="Search">
+				<input wicket:id="viewAllButton" type="submit" value="View All">
+					</span> <br></br>
+					<span align="right"> <label>CIS Download Date:</label> 
+						<input wicket:id="cisDate" type="text" size="14" style="text-align:center;">
+						 <br></br> 
+					</span>
+					<table wicket:id="dataTable" class="gridtable" />
+			</form>
+		</fieldset>
+	</wicket:panel>
+
+</body>
+</html>

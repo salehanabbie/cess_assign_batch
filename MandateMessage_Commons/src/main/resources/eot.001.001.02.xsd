@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BankservAfrica version : BSVA02 20160929 -->
+<xs:schema xmlns="urn:bsva:std:tech:xsd:eot.001.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:bsva:std:tech:xsd:eot.001.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:complexType name="ActiveCurrencyAndAmount">
+		<xs:simpleContent>
+			<xs:extension base="ActiveCurrencyAndAmount_SimpleType">
+				<xs:attribute name="Ccy" type="ActiveCurrencyCode" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ActiveCurrencyAndAmount_SimpleType">
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="5"/>
+			<xs:totalDigits value="18"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ActiveCurrencyCode">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{3,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ControlMessage">
+		<xs:sequence>
+			<xs:element name="PrcDte" type="ISODate"/>
+			<xs:element name="From" type="SenderReceiverId"/>
+			<xs:element name="To" type="SenderReceiverId"/>
+			<xs:element name="SvcName" type="Max5Text"/>
+			<xs:element name="MsgTp" type="MessageType"/>
+			<xs:element name="TestLive" type="TestLiveIndicator"/>
+			<xs:element name="NmbrFls" type="Max6NumericText"/>
+			<xs:element name="NmbrRcds" type="Max9NumericText"/>
+			<xs:element name="ValRcds" type="ActiveCurrencyAndAmount" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="CntrlMsg" type="ControlMessage"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max5Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max6NumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max6Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max9NumericText">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessageType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EOT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SenderReceiverId">
+		<xs:choice>
+			<xs:element name="MbrId" type="Max6Text"/>
+			<xs:element name="BICFI" type="BICFIIdentifier"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:simpleType name="TestLiveIndicator">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="T"/>
+			<xs:enumeration value="L"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

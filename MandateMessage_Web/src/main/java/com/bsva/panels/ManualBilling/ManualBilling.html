@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<wicket:panel>
+		<fieldset class="fieldset">
+			<legend class="legend">Manual Billing</legend>
+			<form wicket:id="form">
+				<table>
+							<tr>
+							<td><label class="requiredLabel">From Date:</label></td>
+							<td><input wicket:id="fromDate"/></td>
+							<td></td>
+							<td><label class="requiredLabel">To Date:</label></td>
+							<td><input wicket:id="toDate"/></td>
+						</tr>
+						</table>
+				<table>
+				<tr>
+				<td><input wicket:id="interchngBillButton" type="submit" value="Run TT1/TT3 Interchange Billing" /></td>
+				<td><input wicket:id=rtTxnsBillButton type="submit" value="Run TT1/TT3 Transactional Billing" /></td>
+				<td><input wicket:id="interchngTT2BillButton" type="submit" value="Run TT2 Interchange Billing" /></td>
+				<td><input wicket:id=rtTxnsTT2BillButton type="submit" value="Run TT2 Transactional Billing" /></td>
+				</tr>
+				</table>
+				<br></br> <span wicket:id="feedbackPanel"/>
+			</form>
+		</fieldset>
+	</wicket:panel>
+</body>
+</html>

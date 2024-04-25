@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+ <wicket:panel> 
+<fieldset class="fieldset">
+<legend class="legend">Scheduler</legend>
+<span wicket:id="feedbackPanel"></span>
+<form wicket:id="Form">
+<div>  
+		 <table>
+		
+			<tr>
+				<td><label>Scheduler:</label></td>
+				<td><select wicket:id="schedulers" /> </td>
+				<td><label>Start</label></td>
+				<td><input wicket:id="startButton" type="submit" value="Start"></td>
+				<td><label>Stop</label></td>
+				<td><input wicket:id="stopButton" type="submit" value="Stop"></td>		
+ 				<td><label>Reschedule Times:</label></td>
+				<td> <select wicket:id="rescheduleTimes" /> </td>
+				<td><input wicket:id="rescheduleButton" type="submit" value="Reschedule"></td>
+				
+				</tr>
+				<br></br>
+					<table wicket:id="dataTable" class="gridtable" />
+			
+		 </table>	
+  
+   </div>
+ </form>
+</fieldset>
+</wicket:panel> 
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
+</head>
+<body>
+<wicket:panel> 
+<fieldset class="fieldset">
+<legend class="legend" >Force Closure</legend>
+<span wicket:id="feedbackPanel"></span>
+<form wicket:id="MaintainForceClosure">
+<table border="0">
+<span align="right"> <label>Force Closure Reason:</label> </span>
+<textarea wicket:id="forceClosureTextField"  rows="6"  cols="40"  maxlength="500"> </textarea>
+<table>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><input wicket:id="saveOrUpdateButton"  type ="submit"  value="Force Closure"/></td> 
+<td></td>
+<td><input wicket:id="cancel"  type="submit"  value="Cancel"/></td>
+</tr>
+</table>
+
+</table>
+</form>
+</fieldset>
+</wicket:panel>
+</body>
+</html>

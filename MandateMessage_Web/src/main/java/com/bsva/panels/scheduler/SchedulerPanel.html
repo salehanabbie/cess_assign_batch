@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<wicket:panel>
+			<fieldset class="fieldset">
+			<legend class="legend" >Scheduler </legend>
+				<div wicket:id="feedback"></div>
+	<form wicket:id="form">
+		<p>
+		<label wicket:id="schedulerLabel" class="label" >Message goes here</label>
+		<select wicket:id="scheduleList"></select>&nbsp;&nbsp;&nbsp;
+		<label wicket:id="startLabel" class="label" >Message goes here</label>
+		<input wicket:id="startButton" type="submit" value="Start">&nbsp;&nbsp;&nbsp;
+		<label wicket:id="stopLabel" class="label" >Message goes here</label>
+		<input wicket:id="stopButton" type="submit" value="Stop">&nbsp;&nbsp;&nbsp; 
+		
+		<label wicket:id="resumeLabel" class="label" >Message goes here</label>
+		<input wicket:id="Resume" type="submit" value="Stop">&nbsp;&nbsp;&nbsp; 
+		</p>
+			<br>
+			<table wicket:id="dataTable" class="gridtable"/>
+			<br>	
+</form>
+</fieldset>	
+	<BR>
+
+</wicket:panel>
+</body>
+</html>

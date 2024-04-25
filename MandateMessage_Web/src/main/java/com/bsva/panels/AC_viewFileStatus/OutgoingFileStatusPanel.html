@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+ <wicket:panel>
+
+		<fieldset class="fieldset">
+		<legend class="legend" >Outgoing Files</legend>
+		<span wicket:id="feedback"></span>
+<form wicket:id="form"> 
+	<div>  
+		<table border="0">
+			<tr>
+				<td><label class="requiredLabel">Destination Member No:</label></td>
+				<td><select wicket:id="memberNo"/> </td>
+			</tr>
+			
+			<tr>
+				<td><label class="requiredLabel">Service:</label></td>
+				<td><select wicket:id="serviceIdOut"/> </td>
+			</tr>
+		</table>
+		<br></br>
+		<span>
+			<input wicket:id=generateTableButton type="submit" value="View Files">	
+			<input wicket:id="viewAllButton" type="submit" value="View All">
+		</span>
+		</div>
+ 
+<!-- <h4>Incoming Files</h4>
+ <table wicket:id="dafaultTable" class="gridtable"/>
+ <br></br>
+<input wicket:id="viewFileErrorsButton" type="submit"value="View File Details"> 
+<input wicket:id="cancelButton" type="submit" value="Cancel">
+ <br></br> -->
+<div>
+<h4>Outgoing File</h4>
+ <table wicket:id="dafaultTable1" class="gridtable" />
+<br></br>
+
+<!-- input wicket:id="backButton" type="submit" value="Back"-->
+
+</div>
+
+</form> 
+</fieldset>
+</wicket:panel>
+</body>
+</html>

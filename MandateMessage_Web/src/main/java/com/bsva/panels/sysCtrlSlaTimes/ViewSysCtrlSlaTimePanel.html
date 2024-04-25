@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<wicket:panel>
+		<fieldset class="fieldset">
+		<legend class="legend">SLA Times</legend>
+		<span wicket:id="feedbackPanel"/>
+			<form wicket:id="viewSysCtrlSlaTimePanel">
+				<div>
+				<span align="right"><label>Service:</label> 
+				<input wicket:id="searchText" type="text"> 
+				<input wicket:id="searchButton" type="submit" value="Search">
+				<input wicket:id="viewAllButton" type="submit" value="View All">
+				</span><br></br>
+					<table wicket:id="dataTable" class="gridtable" />
+				<br></br>
+					 <input wicket:id="updateButton" type="submit" value="Update">
+					 <input wicket:id="addButton" type="submit" value="Create">
+					 </div>
+			</form>
+		</fieldset>
+	</wicket:panel>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+</head>
+<body>
+
+	<wicket:panel>
+
+		<fieldset class="fieldset">
+			<legend class="legend">Reports</legend>
+			<span wicket:id="feedback_1" />
+
+			<form wicket:id="reportForm">
+				<div>
+
+					<table border="0">
+						<tr>
+							<td><label>Report Names</label></td>
+							<td><select wicket:id="reportNames"><option></option></select></td>
+						</tr>
+					</table>
+					<table border="0">
+						<tr>
+						    <td><span wicket:id="fromDateLabel" class="mark"></span></td>
+							<td><input wicket:id="fromDate" /></td>
+							<td></td>
+							<td><span wicket:id="toDateLabel" class="mark"></span></td>
+							<td><input wicket:id="toDate" /></td>
+						</tr>
+					</table>
+
+					<br></br> 
+					<span> 
+					<input wicket:id="showDateButton"type="submit" value="Show Date">
+					<input wicket:id="generateButton"type="submit" value="Generate Report">
+
+					</span>
+				</div>
+			</form>
+		</fieldset>
+	</wicket:panel>
+
+</body>
+</html>

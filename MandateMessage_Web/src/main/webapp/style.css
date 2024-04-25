@@ -1,0 +1,1213 @@
+/* /* Eric Meyer's CSS Reset
+html, body, div, span, applet, object, iframe, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	
+	background-color: white;
+	background-image: url('wicket-logo.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: 96% 96%;
+	color: #6F6F6F;
+	color: black;
+	font-family: 'Arial';
+	font-size: 9pt;
+	line-height: 1.8em;
+	padding: 10px 10px 10px 10px;
+	margin: 10px 10px 10px 10px;
+}
+h1
+{
+    color: #F58220;
+    font-family: 'Arial';
+    font-size: 30pt;
+    font-weight: bold;
+}
+
+h2 
+{
+     color: black;
+    text-decoration: underline;
+}
+
+h3,h4,h5,h6,h7,h8 
+{
+	color: #bfd730;
+}
+
+input.loginbtn
+        {
+            background: no-repeat;
+            background-color: transparent;
+            background-image: url("resources/loginbtn.png");
+            cursor:pointer;
+            width: 107px;
+            height: 58px;
+        }
+
+HTML5 display-role reset for older browsers
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+End of Eric Meyer's CSS Reset
+
+html {
+	height: 100%;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+	display: block;
+}
+body {
+	font: 12px/18px Arial, sans-serif;
+	height: 100%;
+}
+.wrapper {
+	width: 100%;
+	min-width: 1000px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+}
+
+
+Header
+-----------------------------------------------------------------------------
+.header {
+	height: 100px;
+	background: #FFE680;
+}
+
+
+Middle
+-----------------------------------------------------------------------------
+.middle {
+	width: 100%;
+	padding: 0 0 100px;
+	position: relative;
+}
+.middle:after {
+	display: table;
+	clear: both;
+	content: '';
+}
+.container {
+	width: 100%;
+	float: left;
+	overflow: hidden;
+}
+.content {
+	padding: 0 0 0 270px;
+}
+
+
+Left Sidebar
+-----------------------------------------------------------------------------
+.left-sidebar {
+	float: left;
+	width: 250px;
+	margin-left: -100%;
+	position: relative;
+	background: #B5E3FF;
+}
+
+
+Footer
+-----------------------------------------------------------------------------
+.footer {
+	margin: -100px auto 0;
+	min-width: 1000px;
+	height: 100px;
+	background: #BFF08E;
+	position: relative;
+} */
+* /
+
+
+body {
+	background-color: white;
+	/* background-image: url('pwrbsva.PNG'); */
+	background-repeat: no-repeat;
+	/* background-attachment: fixed; */
+	background-position: 100% 100%;
+	color: black;
+	font-family: arial, sans-serif;
+	font-size: 9pt;
+	line-height: 1.8em;
+	padding: 0px 10px 10px 10px;
+	width:100%;
+	 margin: 0px 0px 0px 0px; 
+}
+
+h1 {
+	font-family: arial, sans-serif;
+	color: black;
+	font-size: 30pt;
+	font-weight: bold;
+}
+
+h2 {
+	font-family: arial, sans-serif;
+	font-size: 14pt;
+	color: #000005;
+	text-decoration: underline;
+	text-align: left;
+}
+
+h3 {
+	font-family: arial, sans-serif;
+	color: black;
+	font-size: 24pt;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+h4 {
+	font-family: arial, sans-serif;
+	color: black;
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+h5,h6,h7,h8 {
+	font-family: arial, sans-serif;
+	color: #F58220;
+}
+
+button {
+	font-family: arial, sans-serif;
+	font-size: 10.2pt;
+}
+
+label {
+	font-family: arial, sans-serif;
+	font-size: 10.2pt;
+}
+
+#extitle {
+	font-family: arial, sans-serif;
+	font-size: 12pt;
+	font-weight: bold;
+	color: black;
+	padding: 0px 10px 10px 10px;
+}
+
+.feedbackPanelERROR {
+	font-family: arial, sans-serif;
+	color: red;
+	list-style: circle;
+	font-weight: bold;
+}
+
+.feedbackPanelINFO {
+	font-family: arial, sans-serif;
+	color: green;
+	list-style: circle;
+	font-weight: bold;
+}
+
+#hellomessage {
+	font-family: arial, sans-serif;
+	font-size: 30pt;
+}
+
+#titleblock {
+	font-family: arial, sans-serif;
+	background: black;
+	color: white;
+	font-weight: bold;
+	border-bottom: solid red;
+	border-width: thin;
+	padding: 2px 2px 2px 6px;
+}
+
+a {
+	color: #6F6F6F;
+	text-decoration: underline;
+}
+
+img {
+	border: none;
+}
+
+pre {
+	font-family: arial, sans-serif;
+}
+
+table.gridtable {
+	font-family: arial, sans-serif;
+	font-size: 10.2pt;
+	font-weight: bold;
+	line-height: 1.4em;
+	font-style: normal;
+	border-collapse: separate;
+   
+}
+
+.gridtable thead th {
+	padding: 14px;
+	color: #666;
+	border: 1px solid #93CE37;
+	border-bottom: 3px solid #9ED929;
+	background-color: #fff;
+	background: #fff;
+	background: #fff;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.gridtable thead th:empty {
+	background: transparent;
+	border: none;
+}
+
+.gridtable tfoot td {
+	color: #9CD009;
+	font-size: 32px;
+	text-align: right;
+	padding: 10px 0px;
+	text-shadow: 1px 1px 1px #444;
+}
+
+.gridtable tfoot th {
+	color: #666;
+}
+
+.gridtable tbody td {
+	padding: 7px;
+	text-align: left;
+	background-color: #fff;
+	border: 2px solid #E7EFE0;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	color: #666;
+	text-shadow: 1px 1px 1px #fff;
+	
+}
+
+.gridtable tr:nth-child(even) td {
+	background-color: #D3D3D3;
+}
+
+.gridtable tr:hover td {
+	transform: scale(1.04) translateX(-5px);
+	z-index: 1;
+	border-bottom: 0 none;
+}
+
+#inputForm {
+	font-family: arial, sans-serif;
+	width: 300px;
+}
+
+#inputForm label {
+	font-family: arial, sans-serif;
+	display: block;
+	margin-top: 5px;
+}
+
+#inputForm label.non {
+	font-family: arial, sans-serif;
+	display: inline !important;
+}
+
+#inputFormTable td {
+	vertical-align: top;
+	padding: 10px;
+	text-align:left;
+}
+
+#nestedExampleTree {
+	width: 300px;
+}
+
+#feedbackPanel {
+	font-family: arial, sans-serif;
+	width: 100px;
+}
+
+#siteSelection {
+	width: 200px;
+}
+
+input.button {
+	background: no-repeat;
+	background-color: #FFB96D;
+	cursor: pointer;
+	color: black;
+	width: 80px;
+	height: 30px;
+}
+
+input.loginbtn {
+	background: no-repeat;
+	background-color: transparent;
+	background-image: url("images/loginbtn.png");
+	cursor: pointer;
+	width: 107px;
+	height: 58px;
+}
+
+input.createbtn {
+	background: no-repeat;
+	background-color: transparent;
+	background-image: url("images/createbtn.png");
+	cursor: pointer;
+	width: 107px;
+	height: 58px;
+}
+
+input.updatebtn {
+	background: no-repeat;
+	background-color: transparent;
+	background-image: url("images/updatebtn.png");
+	cursor: pointer;
+	width: 107px;
+	height: 58px;
+}
+
+input.savebtn {
+	background: no-repeat;
+	background-color: transparent;
+	background-image: url("images/savebtn.png");
+	cursor: pointer;
+	width: 107px;
+	height: 58px;
+}
+
+input.cancelbtn {
+	background: no-repeat;
+	background-color: transparent;
+	background-image: url("images/cancelbtn.png");
+	cursor: pointer;
+	width: 107px;
+	height: 58px;
+}
+
+panel.Background {
+	background: no-repeat;
+	background-color: transparent;
+	/*    background-image: url("loginbtn.png"); */
+}
+
+label.requiredLabel {
+	font-family: arial, sans-serif;
+	font-weight: bold;
+}
+
+label.requiredLabel:AFTER {
+	font-family: arial, sans-serif;
+	content: "*";
+	display: inline;
+	color: red;
+}
+
+/* .tabs ul {
+	list-style: none;
+} */
+
+.fieldset {
+	border-radius: 15px;
+	background: #FAFAFA;
+	margin: 20px;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+	position: relative;
+	border: 2px groove threedface;
+}
+
+
+.loginField {
+	padding-left: 2em;
+	padding-right: 2em;
+	padding-top: 1em;
+	border: 0;
+	background: -webkit-linear-gradient(90deg, #CCCCCC, #FFFFFF) repeat
+		scroll 0 0 transparent;
+	background: -moz-linear-gradient(90deg, #CCCCCC, #FFFFFF) repeat scroll
+		0 0 transparent;
+	border: 1px solid #AAAAAA;
+	border-radius: 10px 10px 10px 10px;
+	box-shadow: 0 0 15px #AAAAAA;
+	margin: 60px auto 0;
+	padding: 20px;
+}
+
+.loginField legend {
+	text-align: right;
+	background: #000005;
+	background: #000005;
+	border-radius: 10px 10px 10px 10px;
+	box-shadow: 0 0 15px #AAAAAA;
+	padding-right: 1em;
+	padding-left: 1em:
+}
+
+.loginField img {
+	max-width: 24px;
+}
+
+.loginVerticalPanel {
+	margin: 0 auto 0 auto;
+}
+
+.loginVerticalPanel input {
+	background: -webkit-linear-gradient(90deg, #FFFFFF, #EEEEEE) repeat
+		scroll 0 0 transparent;
+	background: -moz-linear-gradient(90deg, #FFFFFF, #EEEEEE) repeat scroll
+		0 0 transparent;
+	border: 1px solid #AAAAAA;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 0 0 3px #AAAAAA;
+	padding: 5px;
+}
+
+.legend {
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	font-size: 12.2pt;
+	font-color:orange;
+	color:white;
+	background-color: orange;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+} 
+
+/* .tabs {
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.tabs ul:before, .tabs ul:after {
+	content: " ";
+	display: block;
+	height: 0px;
+	visibility: hidden;
+}
+
+.tabs ul:after {
+	clear: both;
+}
+
+.tabs ul {
+	border-bottom: 2px solid #E0E0E0;
+	border-color: #faa61a;
+}
+
+.tabs ul li {
+	float: left;
+	margin: 0px;
+	position: relative;
+}
+
+.tabs ul li a {
+	background: none repeat scroll 0px 0px #faa61a;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	border: 1px solid #E0E0E0;
+	color: #FFFFFF;
+	display: block;
+	font: bold 13px/20px arial, sans-serif;
+	margin: 0px 5px -1px 0px;
+	padding: 6px 18px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.tabs ul li a:hover {
+	border-color: #CCCCCC;
+	color: #606060;
+}
+
+.tabs ul li.selected a {
+	background: none repeat scroll 0px 0px #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
+	border-color: #faa61a #faa61a #FFFFFF;
+	color: #606060;
+	margin-top: -4px;
+	padding-top: 10px;
+} */
+  
+ /* start of new CSS */ 
+  /* Tabbed Panel Styling */
+  
+ div.tabpanel div.tab-row li {
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+      list-style-type: none;
+}
+
+div.tabpanel div.tab-row a:link, div.tabpanel div.tab-row a:visited {
+      background: none repeat scroll 0 0 #F3F3F3;
+      background: #fff;
+      border: 1px solid #F87217;
+      color: #666666;
+      float: left;
+      font-size: 100%;
+      font-weight: bold;
+      line-height: 118%;
+      margin-right: 4px;
+      padding: 2px 12px;
+      text-decoration: none;
+}
+
+div.tabpanel div.tab-row li.selected a:link, div.tabpanel div.tab-row a:visited.active
+      {
+      border-bottom: 1px solid #fff;
+      background: #fff;
+      color: #000;
+}
+
+div.tabpanel div.tab-row a:hover {
+      background: #fff;
+}
+
+div.tabpanel div.tab-content {
+      background: none repeat scroll 0 0 #666666;
+      border-bottom-style: solid;
+}
+ 
+  /* the end of new tab css */
+
+ 
+.absoluteCenter {
+	/* Must manually set width/height */
+	width: 100px;
+	height: 100px;
+	/* The magic centering code */
+	margin: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0; /* Aligns Vertically - Remove for Horizontal Only */
+	left: 0;
+	right: 0; /* Aligns Horizontally - Remove for Vertical Only  */
+	/* Prevent div from overflowing main window */
+	max-width: 100%;
+	max-height: 100%;
+	overflow: auto;
+}
+
+.absoluteMiddel {
+	/* Must manually set width/height */
+	width: 600px;
+	height: 565px;
+	/* The magic centering code */
+	margin: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0; /* Aligns Vertically - Remove for Horizontal Only */
+	left: 0;
+	right: 0; /* Aligns Horizontally - Remove for Vertical Only  */
+	/* Prevent div from overflowing main window */
+	max-width: 100%;
+	max-height: 100%;
+	overflow: auto;
+}
+
+body {
+	background: /* #E9E9E9 */;
+}
+
+h2 {
+	text-align: center;
+	color: #CCC;
+}
+
+a:hover {
+	color: #777;
+}
+
+/* NAVIGATION */
+.navigationd {
+	list-style: none;
+	padding: 0;
+	width: 100%;
+	/* height: 8%; */
+	/*   width: 250px;  */
+	height: 40px;
+	margin: 20px auto;
+	background: #F58220;
+	position: relative;
+	z-index: 100;
+}
+
+.navigationd,.navigationd a.main {
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+.navigationd:hover,.navigationd:hover a.main {
+	border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+}
+
+.navigationd a.main {
+	display: block;
+	height: 40px;
+	font: bold 13px/40px arial, sans-serif;
+	text-align: center;
+	text-decoration: none;
+	color: #FFF;
+	-webkit-transition: 0.2s ease-in-out;
+	-o-transition: 0.2s ease-in-out;
+	transition: 0.2s ease-in-out;
+	position: relative;
+	z-index: 100;
+	width: 160px;
+}
+
+.navigationd:hover a.main {
+	color: rgba(255, 255, 255, 0.6);
+	background: rgba(0, 0, 0, 0.04);
+}
+
+.navigationd li {
+	width: 250px;
+	height: 40px;
+	background: #F7F7F7;
+	font: normal 12px/40px arial, sans-serif !important;
+	color: #999;
+	text-align: center;
+	margin: 0;
+	-webkit-transform-origin: 50% 0%;
+	-o-transform-origin: 50% 0%;
+	transform-origin: 50% 0%;
+	-webkit-transform: perspective(350px) rotateX(-90deg);
+	-o-transform: perspective(350px) rotateX(-90deg);
+	transform: perspective(350px) rotateX(-90deg);
+	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navigationd li:nth-child(even) {
+	background: #F5F5F5;
+}
+
+.navigationd li:nth-child(odd) {
+	background: #EFEFEF;
+}
+
+.navigationd li.n1 {
+	-webkit-transition: 0.2s linear 0.8s;
+	-o-transition: 0.2s linear 0.8s;
+	transition: 0.2s linear 0.8s;
+}
+
+.navigationd li.n2 {
+	-webkit-transition: 0.2s linear 0.6s;
+	-o-transition: 0.2s linear 0.6s;
+	transition: 0.2s linear 0.6s;
+}
+
+.navigationd li.n3 {
+	-webkit-transition: 0.2s linear 0.4s;
+	-o-transition: 0.2s linear 0.4s;
+	transition: 0.2s linear 0.4s;
+}
+
+.navigationd li.n4 {
+	-webkit-transition: 0.2s linear 0.2s;
+	-o-transition: 0.2s linear 0.2s;
+	transition: 0.2s linear 0.2s;
+}
+
+.navigationd li.n5 {
+	border-radius: 0px 0px 4px 4px;
+	-webkit-transition: 0.2s linear 0s;
+	-o-transition: 0.2s linear 0s;
+	transition: 0.2s linear 0s;
+}
+
+.navigationd:hover li {
+	-webkit-transform: perspective(350px) rotateX(0deg);
+	-o-transform: perspective(350px) rotateX(0deg);
+	transform: perspective(350px) rotateX(0deg);
+	-webkit-transition: 0.2s linear 0s;
+	-o-transition: 0.2s linear 0s;
+	transition: 0.2s linear 0s;
+}
+
+.navigationd:hover .n2 {
+	-webkit-transition-delay: 0.2s;
+	-o-transition-delay: 0.2s;
+	transition-delay: 0.2s;
+}
+
+.navigationd:hover .n3 {
+	-webkit-transition-delay: 0.4s;
+	-o-transition-delay: 0.4s;
+	transition-delay: 0.4s;
+}
+
+.navigationd:hover .n4 {
+	transition-delay: 0.6s;
+	-o-transition-delay: 0.6s;
+	transition-delay: 0.6s;
+}
+
+.navigationd:hover .n5 {
+	-webkit-transition-delay: 0.8s;
+	-o-transition-delay: 0.8s;
+	transition-delay: 0.8s;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 60px; /* Height of the footer */
+	background: #6cf;
+}
+
+/* Tabbed Panel Styling */
+
+/* div.tabpanel div.tab-row li {
+	margin: 0;
+	padding: 0;
+	display: inline-flex;
+	list-style-type: none;
+} */
+
+/* div.tabpanel div.tab-row a:link,div.tabpanel div.tab-row a:visited {
+	background: none repeat scroll 0 0 #F3F3F3;
+	background: #fff;
+	border: 1px solid #F87217;
+	color: #666666;
+	float: left;
+	font-size: 100%;
+	font-weight: bold;
+	line-height: 118%;
+	margin-right: 4px;
+	padding: 2px 12px;
+	text-decoration: none;
+}
+ */
+/* div.tabpanel div.tab-row li.selected a:link,div.tabpanel div.tab-row a:visited.active
+	{
+	border-bottom: 1px solid #fff;
+	background: #fff;
+	color: #000;
+} */
+
+/* div.tabpanel div.tab-row a:hover {
+	background: #fff;
+} */
+
+/* div.tabpanel div.tab-content {
+	background: none repeat scroll 0 0 #666666;
+	border-bottom-style: solid;
+} */
+
+.disclaimer {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+}
+
+.progress {
+	padding: 4px;
+	background: rgba(0, 0, 0, 0.25);
+	border-radius: 6px;
+	-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px
+		rgba(255, 255, 255, 0.08);
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px
+		rgba(255, 255, 255, 0.08);
+}
+
+/* Styling an indeterminate progress bar */
+progress:not(value) {
+	/* Add your styles here. As part of this walkthrough we will focus only on determinate progress bars. */
+	
+}
+
+/* Styling the determinate progress element */
+progress[value] {
+	/* Get rid of the default appearance */
+	appearance: none;
+	/* This unfortunately leaves a trail of border behind in Firefox and Opera. We can remove that by setting the border to none. */
+	border: none;
+	/* Add dimensions */
+	width: 100%;
+	height: 20px;
+	/* Although firefox doesn't provide any additional pseudo class to style the progress element container, any style applied here works on the container. */
+	background-color: whiteSmoke;
+	border-radius: 3px;
+	box-shadow: 0 2px 3px rgba(0, 0, 0, .5) inset;
+	/* Of all IE, only IE10 supports progress element that too partially. It only allows to change the background-color of the progress value using the 'color' attribute. */
+	color: royalblue;
+	position: relative;
+	margin: 0 0 1.5em;
+}
+
+/*
+Webkit browsers provide two pseudo classes that can be use to style HTML5 progress element.
+-webkit-progress-bar -> To style the progress element container
+-webkit-progress-value -> To style the progress element value.
+*/
+progress[value]::-webkit-progress-bar {
+	background-color: whiteSmoke;
+	border-radius: 3px;
+	box-shadow: 0 2px 3px rgba(0, 0, 0, .5) inset;
+}
+
+progress[value]::-webkit-progress-value {
+	position: relative;
+	background-size: 35px 20px, 100% 100%, 100% 100%;
+	border-radius: 3px;
+	/* Let's animate this */
+	animation: animate-stripes 5s linear infinite;
+}
+
+@
+keyframes animate-stripes { 100% {
+	background-position: -100px 0;
+}
+
+}
+
+/* Let's spice up things little bit by using pseudo elements. */
+progress[value]::-webkit-progress-value:after {
+	/* Only webkit/blink browsers understand pseudo elements on pseudo classes. A rare phenomenon! */
+	content: '';
+	position: absolute;
+	width: 5px;
+	height: 5px;
+	top: 7px;
+	right: 7px;
+	background-color: white;
+	border-radius: 100%;
+}
+
+/* Firefox provides a single pseudo class to style the progress element value and not for container. -moz-progress-bar */
+progress[value]::-moz-progress-bar {
+	/* Gradient background with Stripes */
+	background-image: -moz-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0, 0,
+		.1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+		-moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .2)),
+		-moz-linear-gradient(left, #09c, #f44);
+	background-size: 35px 20px, 100% 100%, 100% 100%;
+	border-radius: 3px;
+
+	/* Firefox doesn't support CSS3 keyframe animations on progress element. Hence, we did not include animate-stripes in this code block */
+}
+
+/* Fallback technique styles */
+.progress-bar {
+	background-color: whiteSmoke;
+	border-radius: 3px;
+	box-shadow: 0 2px 3px rgba(0, 0, 0, .5) inset;
+	/* Dimensions should be similar to the parent progress element. */
+	width: 100%;
+	height: 20px;
+}
+
+.progress-bar span {
+	background-color: royalblue;
+	border-radius: 3px;
+	display: block;
+	text-indent: -9999px;
+}
+
+p[data-value] {
+	position: relative;
+}
+
+/* The percentage will automatically fall in place as soon as we make the width fluid. Now making widths fluid. */
+p[data-value]:after {
+	content: attr(data-value) '%';
+	position: absolute;
+	right: 0;
+}
+
+.html5::-webkit-progress-value,.python::-webkit-progress-value {
+	/* Gradient background with Stripes */
+	background-image: -webkit-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0,
+		0, .1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+		-webkit-linear-gradient(top, rgba(255, 255, 255, .25),
+		rgba(0, 0, 0, .2)), -webkit-linear-gradient(left, #09c, #f44);
+}
+
+.css3::-webkit-progress-value,.php::-webkit-progress-value {
+	/* Gradient background with Stripes */
+	background-image: -webkit-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0,
+		0, .1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+		-webkit-linear-gradient(top, rgba(255, 255, 255, .25),
+		rgba(0, 0, 0, .2)), -webkit-linear-gradient(left, #09c, #ff0);
+}
+
+.jquery::-webkit-progress-value,.node-js::-webkit-progress-value {
+	/* Gradient background with Stripes */
+	background-image: -webkit-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0,
+		0, .1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+		-webkit-linear-gradient(top, rgba(255, 255, 255, .25),
+		rgba(0, 0, 0, .2)), -webkit-linear-gradient(left, #09c, #690);
+}
+
+/* Similarly, for Mozillaa. Unfortunately combining the styles for different browsers will break every other browser. Hence, we need a separate block. */
+.html5::-moz-progress-bar,.php::-moz-progress-bar {
+	/* Gradient background with Stripes */
+	background-image: -moz-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0, 0,
+		.1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+		-moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .2)),
+		-moz-linear-gradient(left, #09c, #f44);
+}
+
+.css3::-moz-progress-bar,.php::-moz-progress-bar { {
+	/* Gradient background with Stripes */
+	background-image: -moz-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0, 0,
+		.1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+		-moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .2)),
+		-moz-linear-gradient(left, #09c, #ff0);
+}
+
+.jquery::-moz-progress-bar,.node-js::-moz-progress-bar {
+	/* Gradient background with Stripes */
+	background-image: -moz-linear-gradient(135deg, transparent, transparent 33%, rgba(0, 0, 0,
+		.1) 33%, rgba(0, 0, 0, .1) 66%, transparent 66%),
+		-moz-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .2)),
+		-moz-linear-gradient(left, #09c, #690);
+}
+
+
+/**********************************************************************************************************/
+
+.jqueryslidemenu{
+font: bold 12px Verdana;
+background: #414141;
+width: 100%;
+}
+
+.jqueryslidemenu ul{
+margin: 0;
+padding: 0;
+list-style-type: none;
+}
+
+/*Top level list items*/
+.jqueryslidemenu ul li{
+position: relative;
+display: inline;
+float: left;
+}
+
+/* /*Top level menu link items style*/
+
+/* .jqueryslidemenu ul li a{
+display: block;
+background: #414141; background of tabs (default state)
+color: orange;
+padding: 8px 10px;
+border-right: 1px solid #778;
+color: #2d2b2b;
+text-decoration: none;
+}  */
+
+* html .jqueryslidemenu ul li a{ /*IE6 hack to get sub menu links to behave correctly*/
+display: inline-block;
+}
+
+.jqueryslidemenu ul li a:link, .jqueryslidemenu ul li a:visited{
+color: orange;
+}
+
+/* .jqueryslidemenu ul li a:hover{
+background: black; tab link background during hover state
+color: orange;
+} */
+	
+/*1st sub level menu*/
+.jqueryslidemenu ul li ul{
+position: absolute;
+ left: 0;
+ display: block;
+ visibility: hidden;
+ background-color: #F3F3F3; /*Disappearing menu fix-BP */
+ top: 1em; /* no need to change, as true value set by script */
+}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.jqueryslidemenu ul li ul li{
+display: list-item;
+float: none;
+}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.jqueryslidemenu ul li ul li ul{
+top: 0;
+}
+
+/* Sub level menu links style */
+.jqueryslidemenu ul li ul li a{
+font: normal 13px Verdana;
+width: 160px; /*width of sub menus*/
+padding: 5px;
+margin: 0;
+border-top-width: 0;
+border-bottom: 1px solid gray;
+}
+
+.jqueryslidemenuz ul li ul li a:hover{ /*sub menus hover style*/
+background: #eff9ff;
+color: black;
+}
+
+/* ######### CSS classes applied to down and right arrow images  ######### */
+
+.downarrowclass{
+position: absolute;
+top: 12px;
+right: 7px;
+}
+
+.rightarrowclass{
+position: absolute;
+top: 6px;
+right: 5px;
+}
+
+
+
+
+
+
+/* .jqueryslidemenu{
+font: bold 12px Verdana;
+background: #414141;
+border-top: 1px solid white;
+width: 100%;
+}
+
+.jqueryslidemenu  ul {
+        margin: 0px;
+        padding: 0px;
+        background: #414141;
+        float: left;
+        -webkit-transition: .5s;
+        transition: .5s;
+}
+	
+.jqueryslidemenu li {
+        float: left;
+        position: relative;
+        width: 180px;
+        list-style: none;
+        -webkit-transition: .5s;
+        transition: .5s;
+        
+}
+
+.jqueryslidemenu a {
+        display: block;
+        text-decoration: none;
+        padding: 5px;
+        color: orange;
+}
+
+.jqueryslidemenu ul ul {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width:180px;
+        visibility:hidden;
+        opacity: 0;
+        border-top: 1px solid gray;
+}
+
+.jqueryslidemenu ul ul:hover {
+        position: absolute;
+        left: 10;
+        top: 100%;
+        list-style:none;
+        opacity: 1;
+        width:180px;
+}
+
+.jqueryslidemenu ul ul ul {
+	position: absolute;
+        left: 80%;
+        top: 0;
+        width:180px;
+        opacity: 0;
+        visibility:hidden;
+        border-top: 1px solid gray;
+}
+
+.jqueryslidemenu ul ul ul:hover {
+        left: 80%;
+        top: 0;
+        opacity: 1;
+}
+
+.jqueryslidemenu li:hover, .jqueryslidemenu li:hover li {
+        background: black;
+        color:orange;
+        visibility:visible;
+        opacity: 1;
+        z-index:1;
+        border-top: 1px solid gray;
+}
+
+.jqueryslidemenu li li:hover, .jqueryslidemenu li li:hover li {
+         background: black;
+        color:orange;
+        visibility:visible;
+        opacity: 1;
+        z-index:2;
+}
+
+.jqueryslidemenu li li li:hover {
+        background: black;
+        color:orange;
+        visibility:visible;
+       opacity: 1;
+        z-index:3;
+}
+
+ .jqueryslidemenu li:hover > ul {
+        background: black;
+        color:orange;
+        opacity: 1;
+} */
+

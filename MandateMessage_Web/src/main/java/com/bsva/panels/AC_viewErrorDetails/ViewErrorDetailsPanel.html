@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+ <wicket:panel>
+
+		<fieldset class="fieldset">
+		<legend class="legend" >Status Report</legend>
+		<span wicket:id="feedback"></span>
+<form wicket:id="form">  
+<h4>Group Header Information</h4>
+ <table wicket:id="dataTable" class="gridtable"/>
+ <br></br>
+<div>
+<h4>Transactions Error Details</h4>
+ <table wicket:id="dataTable1" class="gridtable" />
+<br></br>
+<input wicket:id="cancelButton" type="submit" value="Back">
+</div>
+     </form> 
+    </fieldset>
+</wicket:panel>
+</body>
+</html>

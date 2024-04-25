@@ -1,0 +1,528 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>MandateMessageParent</artifactId>
+		<groupId>com.bsva</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../MandateMessageParent</relativePath>
+	</parent>
+
+	<packaging>ejb</packaging>
+
+	<properties>
+		<!-- checkstyle -->
+		<checkstyle.version>6.8</checkstyle.version>
+		<checkstyle.plugin.version>2.15</checkstyle.plugin.version>
+		<sevntu.checkstyle.plugin.version>1.13.4</sevntu.checkstyle.plugin.version>
+		<!-- findbugs -->
+		<findbugs.version>2.0.3</findbugs.version>
+		<!-- findbugs.plugin.version>2.5.5</findbugs.plugin.version -->
+		<findbugs.plugin.version>3.0.1</findbugs.plugin.version>
+		<!-- xml -->
+		<xml.plugin.version>1.0</xml.plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<artifactId>MandateMessage_Service</artifactId>
+	<!-- info for reports -->
+	<!-- project name and description -->
+	<name>MandateMessage_Service</name>
+	<description>MandatesMessage Service shareable objects</description>
+	<organization>
+		<name>BankservAfrica</name>
+		<url>http://www.bankservafrica.com/</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<!-- Issue tracking -->
+	<issueManagement>
+		<system>BugTracker.net</system>
+		<url>http://172.16.4.150/btnet/newdev/</url>
+	</issueManagement>
+	<!-- Continues Integration -->
+	<ciManagement>
+		<system>Hudson</system>
+		<url>http://172.16.103.82:8080/hudson-3.2.2/</url>
+		<notifiers>
+			<notifier>
+				<type>email</type>
+				<address>charlesd@bankservafrica.com</address>
+			</notifier>
+			<notifier>
+				<type>email</type>
+				<address>lukasl@bankservafrica.com</address>
+			</notifier>
+			<notifier>
+				<type>email</type>
+				<address>salehar@bankservafrica.com</address>
+			</notifier>
+		</notifiers>
+	</ciManagement>
+	<!-- List the core committers -->
+	<developers>
+		<developer>
+			<id>SR</id>
+			<name>Saleha Rashad</name>
+			<email>salehar@bankservafrica.com</email>
+			<roles>
+				<role>Technical Architect</role>
+				<role>Technical Lead</role>
+				<role>Developer</role>
+			</roles>
+			<organization>BankservAfrica</organization>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>DN</id>
+			<name>Dimakatso Ntloedibe</name>
+			<email>dimakatson@bankservafrica.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>BankservAfrica</organization>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>MD</id>
+			<name>Moesha De Andrade</name>
+			<email>moeshad@bankservafrica.com</email>
+			<roles>
+				<role>Junior Developer</role>
+			</roles>
+			<organization>BankservAfrica</organization>
+			<timezone>+2</timezone>
+		</developer>
+	</developers>
+	<!-- Contributors -->
+	<contributors>
+		<contributor>
+			<name>Gail Clarke</name>
+			<email>gailc@bankservafrica.com</email>
+			<roles>
+				<role>Product Owner</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Charles de Swardt</name>
+			<email>charlesd@bankservafrica.com</email>
+			<roles>
+				<role>Development Manager</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Navin Munthree</name>
+			<email>navinmd@bankservafrica.com</email>
+			<roles>
+				<role>Project Manager</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Martin Suchecki</name>
+			<email>martinsd@bankservafrica.com</email>
+			<roles>
+				<role>Business Analyst</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Lukas Lotz</name>
+			<email>lukasl@bankservafrica.com</email>
+			<roles>
+				<role>Systems Analyst</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Manika Mbangu</name>
+			<email>manikam@bankservafrica.com</email>
+			<roles>
+				<role>Test Lead</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Raj Batchu</name>
+			<email>rajb@bankservafrica.com</email>
+			<roles>
+				<role>Test Analyst</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Fiona Sauls</name>
+			<email>fions@bankservafrica.com</email>
+			<roles>
+				<role>Test Analyst</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Basie K</name>
+			<email>basiek@bankservafrica.com</email>
+			<roles>
+				<role>DBA</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+	</contributors>
+	<!-- Mailing List -->
+	<mailingLists>
+		<mailingList>
+			<!--name>HotelDatabase project mailing list</name> <subscribe>dev-subscribe@wakaleo.com</subscribe>
+				<unsubscribe>dev-unsubscribe@wakaleo.com</unsubscribe> <post>dev@wakaleo.com</post>
+				<archive>http://mail-archives.wakaleo.com/modmbox/dev/</archive -->
+		</mailingList>
+	</mailingLists>
+	<!-- Source Control -->
+	<scm>
+		<!-- connection>scm:git:http://172.16.71.64/</connection -->
+		<developerConnection>scm:git:git@172.16.71.64:pasabinlist/pasabinlist-jsp.git</developerConnection>
+		<url>http://172.16.71.64/</url>
+	</scm>
+	<reporting>
+		<!--skin> <groupId>org.apache.maven.skins</groupId> <artifactId>maven-fluido-skin</artifactId>
+			<version>1.4</version -->
+		<!-- artifactId>maven-classic-skin</artifactId> <artifactId>maven-default-skin</artifactId>
+			<version>1.1</version> <artifactId>maven-stylus-skin</artifactId> <version>1.5</version>
+			<artifactId>maven-fluido-skin</artifactId> <version>1.4</version> <artifactId>maven-application-skin</artifactId>
+			<version>1.0</version -->
+		<!--/skin -->
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<outputDirectory>${basedir}/target/newsite</outputDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<outputDirectory>${basedir}/target/newsite</outputDirectory>
+				</configuration>
+			</plugin>
+			<!-- Clover code coverage start -->
+			<plugin>
+				<artifactId>maven-clover-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<!-- Clover code coverage end -->
+			<!-- checkstyle start -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle.plugin.version}</version>
+				<!-- Specifying configuration here will take effect on the execution
+					of "mvn site", but will not take effect on the execution of "mvn checkstyle:checkstyle" -->
+				<configuration>
+					<!-- configLocation>checkstyle.xml</configLocation -->
+					<failOnViolation>false</failOnViolation>
+				</configuration>
+			</plugin>
+			<!-- checkstyle end -->
+			<!-- findbugs start -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<!--version>3.0.1</version -->
+				<version>${findbugs.plugin.version}</version>
+				<configuration>
+					<threshold>Low</threshold><!-- High|Normal|Low|Exp|Ignore -->
+					<effort>Default</effort><!-- Min|Default|Max -->
+				</configuration>
+			</plugin>
+			<!-- findbugs end -->
+			<!-- jxr start -->
+			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jxr-plugin</artifactId>
+				</plugin -->
+			<!-- jxr end -->
+			<!-- javadoc start -->
+			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId>
+				<configuration> <links> <link>http://commons.apache.org/lang/api</link> <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+				<link>http://this-one-will-not-work</link> </links> </configuration> </plugin -->
+			<!-- javadoc end -->
+		</plugins>
+	</reporting>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jboss.spec.javax.jms</groupId>
+			<artifactId>jboss-jms-api_2.0_spec</artifactId>
+			<version>1.0.0.Alpha1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.beanio/beanio -->
+
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>6.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-7.0</artifactId>
+			<version>1.0.0.Final</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.2_spec</artifactId>
+			<version>1.0.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Import the CDI API -->
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Import the Common Annotations API (JSR-250) -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.annotation</groupId>
+			<artifactId>jboss-annotations-api_1.2_spec</artifactId>
+			<version>1.0.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.bsva</groupId>
+			<artifactId>MandateMessage_Persistence</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bsva</groupId>
+			<artifactId>MandateMessage_Service_Client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+
+		<!-- Common Project Dependancy -->
+		<dependency>
+			<groupId>com.bsva</groupId>
+			<artifactId>MandateMessage_Commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.bsva</groupId>
+			<artifactId>BSVA_CIS_Services</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>11.0.1</version>
+		</dependency>
+		<!-- Use of Google Guava Bus as opposed to direct JMS Implementation -->
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>3.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-parsers</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+		<!-- <dependency> <groupId>commons-io</groupId> <artifactId>commons-io</artifactId>
+			<version>2.4</version> </dependency> -->
+		<!-- <dependency> <groupId>org.apache.commons</groupId> <artifactId>commons-io</artifactId>
+			<version>1.3.2</version> </dependency> -->
+
+		<!-- LOGGING DEPENDENCIES - LOG4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId>
+			<version>1.2.16</version> </dependency> -->
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
+		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+			<version>3.4.2</version>
+		</dependency>
+
+		<!-- SCHEDULER DEPENDENCIES -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.quartz-scheduler</groupId> <artifactId>quartz-jobs</artifactId>
+			<version>2.2.1</version> </dependency> -->
+
+
+		<!-- <dependency> <groupId>com.bsva</groupId> <artifactId>BSVA_CIS_Services</artifactId>
+			<version>0.0.1-SNAPSHOT</version> </dependency> -->
+
+
+
+		<!-->dependency> <groupId>javax.ejb</groupId> <artifactId>ejb-api</artifactId>
+			<version>3.0</version> </dependency -->
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.jms</groupId>
+			<artifactId>jboss-jms-api_2.0_spec</artifactId>
+			<version>1.0.0.Alpha1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<!-- REPORTING DEPENDENCIES -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<!-- >>version>5.4.5</version -->
+			<version>5.5.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext-xtra</artifactId>
+			<!-->version>5.4.5</version -->
+			<version>5.5.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.15</version>
+		</dependency>
+		<!-- CSV FILES -->
+		<dependency>
+			<groupId>org.beanio</groupId>
+			<artifactId>beanio</artifactId>
+			<version>2.1.0.M1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-imaging</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+		<!-- <dependency> <groupId>com.opencsv</groupId> <artifactId>opencsv</artifactId>
+			<version>4.0</version> </dependency -->
+
+		<!-- <dependency> <groupId>BSVA_Billing_Models</groupId> <artifactId>BSVA_Billing_Models</artifactId>
+			<version>0.0.1-SNAPSHOT</version> </dependency> -->
+
+	</dependencies>
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<!-- resources> <resource> <directory>src/main/java</directory> <excludes>
+			<exclude>**/*.java</exclude> </excludes> </resource> </resources -->
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<ejbVersion>3.1</ejbVersion>
+				</configuration>
+			</plugin>
+
+			<!-- <plugin> <groupId>org.wildfly.plugins</groupId> <artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.0.0.Beta1</version> </plugin> -->
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03">
+		<stream name="PBBIL05CSV" format="csv">
+		  <record name="header" class="com.bsva.entities.BatchTxnBillReportEntity" order="1" occurs="1">  
+	     	<field name="processDate" default="Process Date" length="12" padding=" " justify="left"/>
+	     	<field name="delTime" default="Delivery Time" length="13" padding=" " justify="left"/>
+	      	<field name="serviceId" default="Service Id" length="10" padding=" " justify="left"/>
+	      	<field name="txnType" default="Transaction Type" length="16" padding=" " justify="left"/>
+	      	<field name="fileName" default="File Name" length="9" padding=" " justify="left"/>
+	        <field name="mrti" default="MRTI" length="4" padding=" " justify="left"/>
+	        
+          </record>
+          
+           <record name="header" class="com.bsva.entities.BatchTxnBillReportEntity" order="2" occurs="0+">
+	      	<field name="processDate" length="10" padding=" " justify="left"/>
+	      	<field name="delTime" length="8" padding=" " justify="left"/>
+	      	<field name="serviceId"  length="5" padding=" " justify="left"/>
+	      	<field name="txnType"  length="3" padding=" " justify="left"/>
+	      	<field name="fileName" length="37" padding=" " justify="left"/>
+	      	<field name="mrti"  length="30" padding=" " justify="left"/>
+	      	
+		  </record> 
+		</stream>
+</beanio>

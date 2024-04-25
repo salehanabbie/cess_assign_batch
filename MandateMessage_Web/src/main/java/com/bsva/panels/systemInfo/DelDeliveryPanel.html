@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+ <wicket:panel>
+
+		<fieldset class="fieldset">
+		<legend class="legend" >File Registry</legend>
+		<span wicket:id="feedback"></span>
+<form wicket:id="form">  
+
+ <table wicket:id="dataTable" class="gridtable"/>
+   <br></br>
+   <span>
+  <input wicket:id="viewMandateButton" type="submit" value="View File Errors">
+  	</span>
+  	<span>
+  	<input wicket:id="deleteFileButton" type="submit" value="Delete File">
+  	</span>
+
+
+     </form> 
+    </fieldset>
+</wicket:panel>
+</body>
+</html>

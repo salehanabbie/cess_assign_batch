@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+		<fieldset class="fieldset">
+			<legend class="legend">PHI Reports</legend>
+			<span wicket:id="feedback_1" />
+			<form wicket:id="phiReportForm">
+				<table>
+					
+					<tr>
+
+						<td><label class="requiredLabel">Report Names:</label></td>
+				<td><select wicket:id="reportNames"/> </td>
+					</tr>
+						<tr>
+							<td><label class="requiredLabel">From Date: </label></td>
+							<td><input wicket:id="fromDate" /></td>
+							<td></td>
+							<td><label class="requiredLabel">To Date: </label></td>
+							<td><input wicket:id="toDate"  /></td>
+						</tr>
+
+				</table>
+				<br></br>
+					 <span> 
+					 <input wicket:id="generateReportButton" type="submit" value="Generate Report"> 
+					</span>
+			</form>
+		</fieldset>
+	</wicket:panel>
+</body>
+</html>

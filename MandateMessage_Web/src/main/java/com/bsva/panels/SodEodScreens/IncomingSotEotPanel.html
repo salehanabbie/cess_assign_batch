@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<wicket:panel>
+		<fieldset class="fieldset">
+		<legend class="legend">Incoming SOT/EOT</legend>
+			<form wicket:id="form">                   
+                        
+             <table border= "0" cellspacing="10" cellpadding="3">
+			<tr>
+				<tr>
+				<td><label>Institution ID:</label></td>
+				<td><select wicket:id="instId"/> </td>
+				<td><label> Service ID : </label></td>
+				<td><select wicket:id="serviceId"/> </td>
+				</tr>
+				
+				<tr>
+				<td><label>Incoming SOT Ind : </label></td>
+				<td><select wicket:id="sotIn"/> </td>
+				<td><label>Incoming EOT Ind : </label></td>
+				<td><select wicket:id="eotIn"/> </td>
+				</tr>
+				
+				<tr>
+				<td> <input wicket:id="searchButton" type="submit" value="Search"></td>
+				<td> <input wicket:id="viewAllButton" type="submit" value="View All"></td>
+				</tr>
+				 
+			</tr>    
+			</table>
+			<br></br>
+				<table wicket:id="incomingDataTableStatus" class="gridtable" />	
+			</form>
+		</fieldset>
+	</wicket:panel>
+</body>
+</html>

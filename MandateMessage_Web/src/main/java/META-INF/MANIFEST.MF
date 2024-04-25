@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Dependencies: TestBeansClient-0.0.1-SNAPSHOT.jar

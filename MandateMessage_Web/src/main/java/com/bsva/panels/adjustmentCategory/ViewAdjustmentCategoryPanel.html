@@ -1,0 +1,32 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+	<wicket:panel>
+		<fieldset class="fieldset">
+		<legend class="legend">Adjustment Category</legend>
+			<span wicket:id="feedbackPanel"></span>
+			<form wicket:id="viewAdjustmentCategoryPanel">
+				<div>
+				<span align="right"> <label>Adjustment Category:</label> 
+				<input wicket:id="searchText" type="text"> 
+				<input wicket:id="searchButton" type="submit" value="Search">
+				<input wicket:id="viewAllButton" type="submit" value="View All">
+					</span> <br></br>
+					<table wicket:id="dataTable" class="gridtable" />
+					<br></br> <span>
+					 <input wicket:id="addButton" type="submit" value="Create">
+					  <input wicket:id="updateButton" type="submit" value="Update">
+					</span>
+					</div>
+					
+			</form>
+		</fieldset>
+	</wicket:panel>
+
+</body>
+</html>

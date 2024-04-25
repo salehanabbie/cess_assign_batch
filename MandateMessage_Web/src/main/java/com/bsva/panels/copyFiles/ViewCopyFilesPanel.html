@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<wicket:panel>
+		<fieldset class="fieldset">
+			<legend class="legend">Copy Output Files</legend>
+			<span wicket:id="feedbackPanel"></span>
+			<form wicket:id="viewCopyFilesPanel">
+			<div>  
+			<fieldset>
+				<table border="0">
+					<tr>
+						<td><label class="requiredLabel">Member No:</label></td>
+						<td><select wicket:id="memberNo" /></td>
+					</tr>
+					<tr>
+						<td><label class="requiredLabel">Output Service:</label></td>
+						<td><select wicket:id="serviceIdOut" /> <input wicket:id="searchButton_1" type="submit" value="Search"> </td>
+					</tr>
+					</table>
+			</fieldset>
+			<fieldset>
+					<table border="0">
+					<tr>
+						<td><label class="requiredLabel">File Name:</label></td>
+						<td><input wicket:id="searchText" type="text"> 	<input wicket:id="searchButton_2" type="submit" value="Search"></td>
+					</tr>
+					</table>
+			</fieldset>
+			</div>
+				<!-- <span>
+				<input wicket:id="searchButton" type="submit" value="Search"> 
+				<input wicket:id="viewAllButton" type="submit" value="Refresh">
+				</span> -->
+			<fieldset>
+				<h4>Output Files</h4>
+				<table wicket:id="dataTable" class="gridtable" />
+				<br></br>
+				<span>
+					 <input wicket:id="copyButton" type="submit" value="Copy File">
+					 <input wicket:id="viewAllButton" type="submit" value="Refresh">
+					 <input wicket:id="cancelButton" type="submit" value="Cancel">
+				</span>
+			</fieldset>
+			</form>
+		</fieldset>
+	</wicket:panel>
+</body>
+</html>

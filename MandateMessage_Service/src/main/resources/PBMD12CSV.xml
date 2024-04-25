@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03">
+		<stream name="PBMD12CSV" format="csv">
+		  <record name="header" class="com.bsva.entities.ExceptionReportEntityModel" order="1" occurs="1">  
+	     	<field name="serviceId" default="Sub-Service ID" length="16" padding=" " justify="left"/>
+	      	<field name="instructingAgent" default="Instructing Agent" length="20" padding=" " justify="left"/>
+	      	<field name="fileName" default="File Name" length="14" padding=" " justify="left"/>
+	      	<field name="errorCode" default="Error Code" length="10" padding=" " justify="left"/>
+	        <field name="mrti" default="Mandate Request Transaction Id" length="30" padding=" " justify="left"/>
+	        <field name="mndtRefNr" default="Mandate Reference Number" length="30" padding=" " justify="left"/>
+	         <field name="credAbbShrtNm" default="Creditor Abbreviated Short Name" length="31" padding=" " justify="left"/> 
+			<field name="drBranchNr" default="Debtor Branch Number" length="30" padding=" " justify="left"/> 
+			
+          </record>
+          
+           <record name="header" class="com.bsva.entities.ExceptionReportEntityModel" order="2" occurs="0+">
+	      	<field name="serviceId" length="5" padding=" " justify="left"/>
+	      	<field name="instructingAgent" length="6" padding=" " justify="left"/>
+	      	<field name="fileName"  length="37" padding=" " justify="left"/>
+	      	<field name="errorCode" length="6" padding=" " justify="left"/>
+	      	<field name="mrti"  length="35" padding=" " justify="left"/>
+	      	<field name="mndtRefNr"  length="35" padding=" " justify="left"/>  
+	      	<field name="credAbbShrtNm"  length="35" padding=" " justify="left"/>    
+	      	<field name="drBranchNr"  length="6" padding=" " justify="left"/>    
+	      	
+		  </record> 
+		</stream>     
+</beanio>		

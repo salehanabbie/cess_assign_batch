@@ -1,0 +1,345 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.bsva</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<url>http://maven.apache.org</url>
+
+	<parent>
+		<artifactId>MandateMessageParent</artifactId>
+		<groupId>com.bsva</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../MandateMessageParent</relativePath>
+	</parent>
+
+
+	<properties>
+		<!-- c -->
+		<checkstyle.version>6.8</checkstyle.version>
+		<checkstyle.plugin.version>2.15</checkstyle.plugin.version>
+		<sevntu.checkstyle.plugin.version>1.13.4</sevntu.checkstyle.plugin.version>
+		<!-- findbugs -->
+		<findbugs.version>2.0.3</findbugs.version>
+		<!-- findbugs.plugin.version>2.5.5</findbugs.plugin.version -->
+		<findbugs.plugin.version>3.0.1</findbugs.plugin.version>
+		<!-- xml -->
+		<xml.plugin.version>1.0</xml.plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<artifactId>MandateMessage_Commons</artifactId>
+	<!-- info for reports -->
+	<!-- project name and description -->
+	<name>MandateMessage_Commons</name>
+	<description>MandatesMessage Commons shareable objects</description>
+	<organization>
+		<name>BankservAfrica</name>
+		<url>http://www.bankservafrica.com/</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<!-- Issue tracking -->
+	<issueManagement>
+		<system>BugTracker.net</system>
+		<url>http://172.16.4.150/btnet/newdev/</url>
+	</issueManagement>
+	<!-- Continues Integration -->
+	<ciManagement>
+		<system>Hudson</system>
+		<url>http://172.16.103.82:8080/hudson-3.2.2/</url>
+		<notifiers>
+			<notifier>
+				<type>email</type>
+				<address>charlesd@bankservafrica.com</address>
+			</notifier>
+			<notifier>
+				<type>email</type>
+				<address>lukasl@bankservafrica.com</address>
+			</notifier>
+			<notifier>
+				<type>email</type>
+				<address>melvinm@bankservafrica.com</address>
+			</notifier>
+		</notifiers>
+	</ciManagement>
+	<!-- List the core committers -->
+	<developers>
+		<developer>
+			<id>SR</id>
+			<name>Saleha Rashad</name>
+			<email>salehar@bankservafrica.com</email>
+			<roles>
+				<role>Technical Architect</role>
+				<role>Technical Lead</role>
+				<role>Developer</role>
+			</roles>
+			<organization>BankservAfrica</organization>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>SC</id>
+			<name>Sifiso Cira</name>
+			<email>sifisoc@bankservafrica.com</email>
+			<roles>
+				<role>Technical Architect</role>
+				<role>Technical Lead</role>
+				<role>Developer</role>
+			</roles>
+			<organization>BankservAfrica</organization>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>NS</id>
+			<name>Nosipho Sibiya</name>
+			<email>nosiphos@bankservafrica.com</email>
+			<roles>
+				<role>Junior Developer</role>
+			</roles>
+			<organization>BankservAfrica</organization>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>DN</id>
+			<name>Dimakatso Ntloedibe</name>
+			<email>dimakatson@bankservafrica.com</email>
+			<roles>
+				<role>Learner</role>
+			</roles>
+			<organization>BankservAfrica</organization>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>ER</id>
+			<name>Elelwani Ravhuhali</name>
+			<email>elelwanir@bankservafrica.com</email>
+			<roles>
+				<role>Learner</role>
+			</roles>
+			<organization>BankservAfrica</organization>
+			<timezone>+2</timezone>
+		</developer>
+	</developers>
+	<!-- Contributors -->
+	<contributors>
+		<contributor>
+			<name>Gail Clarke</name>
+			<email>gailc@bankservafrica.com</email>
+			<roles>
+				<role>Product Owner</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Charles de Swardt</name>
+			<email>charlesd@bankservafrica.com</email>
+			<roles>
+				<role>Development Manager</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Navin Munthree</name>
+			<email>navinmd@bankservafrica.com</email>
+			<roles>
+				<role>Project Manager</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Martin Suchecki</name>
+			<email>martinsd@bankservafrica.com</email>
+			<roles>
+				<role>Business Analyst</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Lukas Lotz</name>
+			<email>lukasl@bankservafrica.com</email>
+			<roles>
+				<role>Systems Analyst</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Manika Mbangu</name>
+			<email>manikam@bankservafrica.com</email>
+			<roles>
+				<role>Test Lead</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Colin Davids</name>
+			<email>colnd@bankservafrica.com</email>
+			<roles>
+				<role>Test Analyst</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Tony Timm</name>
+			<email>tonyt@bankservafrica.com</email>
+			<roles>
+				<role>Test Analyst</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Martin Ince</name>
+			<email>martini@bankservafrica.com</email>
+			<roles>
+				<role>DBA</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+		<contributor>
+			<name>Mervin Pillay</name>
+			<email>mervinp@bankservafrica.com</email>
+			<roles>
+				<role>Infrastructure Manager</role>
+				<role>Server Support</role>
+			</roles>
+			<timezone>+2</timezone>
+		</contributor>
+	</contributors>
+	<!-- Mailing List -->
+	<mailingLists>
+		<mailingList>
+			<!--name>HotelDatabase project mailing list</name> <subscribe>dev-subscribe@wakaleo.com</subscribe> 
+				<unsubscribe>dev-unsubscribe@wakaleo.com</unsubscribe> <post>dev@wakaleo.com</post> 
+				<archive>http://mail-archives.wakaleo.com/modmbox/dev/</archive -->
+		</mailingList>
+	</mailingLists>
+	<!-- Source Control -->
+	<scm>
+		<!-- connection>scm:git:http://172.16.71.64/</connection -->
+		<developerConnection>scm:git:git@172.16.71.64:pasabinlist/pasabinlist-jsp.git</developerConnection>
+		<url>http://172.16.71.64/</url>
+	</scm>
+	<reporting>
+		<!--skin> <groupId>org.apache.maven.skins</groupId> <artifactId>maven-fluido-skin</artifactId> 
+			<version>1.4</version -->
+		<!-- artifactId>maven-classic-skin</artifactId> <artifactId>maven-default-skin</artifactId> 
+			<version>1.1</version> <artifactId>maven-stylus-skin</artifactId> <version>1.5</version> 
+			<artifactId>maven-fluido-skin</artifactId> <version>1.4</version> <artifactId>maven-application-skin</artifactId> 
+			<version>1.0</version -->
+		<!--/skin -->
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<outputDirectory>${basedir}/target/newsite</outputDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<outputDirectory>${basedir}/target/newsite</outputDirectory>
+				</configuration>
+			</plugin>
+			<!-- Clover code coverage start -->
+			<plugin>
+				<artifactId>maven-clover-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<!-- Clover code coverage end -->
+			<!-- checkstyle start -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle.plugin.version}</version>
+				<!-- Specifying configuration here will take effect on the execution 
+					of "mvn site", but will not take effect on the execution of "mvn checkstyle:checkstyle" -->
+				<configuration>
+					<!-- configLocation>checkstyle.xml</configLocation -->
+					<failOnViolation>false</failOnViolation>
+				</configuration>
+			</plugin>
+			<!-- checkstyle end -->
+			<!-- findbugs start -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<!--version>3.0.1</version -->
+				<version>${findbugs.plugin.version}</version>
+				<configuration>
+					<threshold>Low</threshold><!-- High|Normal|Low|Exp|Ignore -->
+					<effort>Default</effort><!-- Min|Default|Max -->
+				</configuration>
+			</plugin>
+			<!-- findbugs end -->
+			<!-- jxr start -->
+			<!-- plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin -->
+			<!-- jxr end -->
+			<!-- javadoc start -->
+			<!-- plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<links>
+						<link>http://commons.apache.org/lang/api</link>
+						<link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+						<link>http://this-one-will-not-work</link>
+					</links>
+				</configuration>
+			</plugin -->
+			<!-- javadoc end -->
+		</plugins>
+	</reporting>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.sun.tools.xjc.maven2</groupId>
+				<artifactId>maven-jaxb-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources</schemaDirectory>
+							<generateDirectory>src/main/java</generateDirectory>
+							<failOnError>false</failOnError>
+							<readOnly>false</readOnly>
+							<includeSchemas>
+								<includeSchema>**/*.xsd</includeSchema>
+							</includeSchemas>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

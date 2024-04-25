@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03">
+		<stream name="pbmd04ReportFile" format="csv">
+		   <record name="header" class="com.bsva.commons.model.MandateDailyTransModel" order="1" occurs="1">  
+	     	<field name="creditorBank" default="Creditor Bank" length="13" padding=" " justify="left"/>
+	      	<field name="debtorBank" default="Debtor Bank" length="11" padding=" " justify="left"/>
+	      	<field name="serviceId" default="Service Id" length="10" padding=" " justify="left"/>
+	      	<field name="txnType" default="Transaction Type" length="16" padding=" " justify="left"/>
+	      	<field name="actionDate" default="Action Date" length="11" padding=" " justify="left"/>
+	      	<field name="respDate" default="Response Date" length="13" padding=" " justify="left"/>
+	      	<field name="extractMsgId" default="Extract Message Id" length="18" padding=" " justify="left"/>
+	        <field name="mndtReqTransId" default="Mandate Request Transaction Id" length="30" padding=" " justify="left"/>
+	        <field name="mndtRefNumber" default="Mandate Reference Number" length="24" padding=" " justify="left"/>
+	        <field name="authCode" default="Authorisation Code" length="18" padding=" " justify="left"/>
+	        <field name="trxnStatus" default="Transaction Status" length="18" padding=" " justify="left"/>
+          </record>
+          
+		  <record name="header" class="com.bsva.commons.model.MandateDailyTransModel" order="2" occurs="0+">
+	      	<field name="creditorBank" length="6" padding=" " justify="left"/>
+	      	<field name="debtorBank"  length="6" padding=" " justify="left"/>
+	      	<field name="serviceId"  length="5" padding=" " justify="left"/>
+	      	<field name="txnType" length="3" padding=" " justify="left"/>
+	      	<field name="actionDate"  length="10" padding=" " justify="left"/>
+	      	<field name="respDate"  length="10" padding=" " justify="left"/>
+	      	<field name="extractMsgId"  length="35" padding=" " justify="left"/>
+	      	<field name="mndtReqTransId"  length="23" padding=" " justify="left"/>
+	      	<field name="mndtRefNumber"  length="22" padding=" " justify="left"/>  
+	      	<field name="authCode" length="4" padding=" " justify="left"/>
+	      	<field name="trxnStatus" length="1" padding=" " justify="left"/>
+		  </record> 
+		</stream>
+</beanio>

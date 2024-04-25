@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+	<fieldset class="fieldset">
+	<legend class="legend" wicket:id ="legend"></legend>
+		<span wicket:id="feedbackPanel"></span>
+	<form wicket:id="maintainFileSizeLimitPanel">
+	<div>  
+		<table border="0">
+		
+			<tr>
+				<td><span wicket:id ="label1"></span></td>
+				<td><input wicket:id="memberId" type="text"> </td>
+			</tr>
+			
+			<tr>
+				<td><span wicket:id ="label2"></span></td>
+				<td><input wicket:id="subService" type="text"> </td>
+			</tr>
+			<tr>
+				<td><span wicket:id ="label3"></span></td>
+				<td><input wicket:id="limit" type="text"> </td>
+			</tr>
+				<tr>
+				<td><span wicket:id ="label4"></span></td>
+				<td><select wicket:id="direction"></select> </td>
+			</tr>
+			<tr>
+				<td><span wicket:id ="label5"></span></td>
+				<td><select wicket:id="activeInd"></select> </td>
+			</tr>
+			
+		</table>
+		<br></br>
+		<span>
+			<input wicket:id="saveButton" type="submit" value="Save">
+			<input wicket:id="cancelButton" type="submit" value="Cancel">	
+		</span>
+		</div>
+	</form>
+	</fieldset>
+</wicket:panel>
+</body>
+</html>

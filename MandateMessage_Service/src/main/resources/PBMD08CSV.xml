@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03">
+		<stream name="PBMD08CSV" format="csv">
+		  <record name="header" class="com.bsva.commons.model.MndtRespOutstandingPerBankCsvModel" order="1" occurs="1">  
+	     	<field name="dbtrMemberName" default="Debtor Bank" length="13" padding=" " justify="left"/>
+	      	<field name="dbtrMemberNo" default="Member Number" length="13" padding=" " justify="left"/>
+	      	<field name="fileName" default="Message Id" length="10" padding=" " justify="left"/>
+	      	<field name="transType" default="Transaction Type" length="16" padding=" " justify="left"/>
+	        <field name="mandateReqTransId" default="Mandate Request Transaction Id" length="30" padding=" " justify="left"/>
+	        <field name="serviceId" default="Service Id" length="10" padding=" " justify="left"/>
+          </record>
+          
+           <record name="header" class="com.bsva.commons.model.MandateResponseOutstandingPerBankModel" order="2" occurs="0+">
+	      	<field name="dbtrMemberName" length="30" padding=" " justify="left"/>
+	      	<field name="dbtrMemberNo"  length="6" padding=" " justify="left"/>
+	      	<field name="fileName"  length="34" padding=" " justify="left"/>
+	      	<field name="transType" length="3" padding=" " justify="left"/>
+	      	<field name="mandateReqTransId"  length="35" padding=" " justify="left"/>
+	      	<field name="serviceId"  length="5" padding=" " justify="left"/>     
+		  </record> 
+		</stream>
+   
+		    
+</beanio>

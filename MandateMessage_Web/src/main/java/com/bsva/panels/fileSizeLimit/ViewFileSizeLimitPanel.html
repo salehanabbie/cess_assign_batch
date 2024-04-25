@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<wicket:panel>
+		<fieldset class="fieldset">
+			<legend class="legend">SysCtrl File Size Limit</legend>
+			<span wicket:id="feedbackPanel"></span>
+			<form wicket:id="form">
+				<div>
+			<table border= "0" cellspacing="10" cellpadding="3">
+				<tr>
+				<td><label>Member ID:</label></td>
+				<td><input wicket:id="searchMemberIdText" type="text">  </td>
+				<td><label> Sub Service : </label></td>
+				<td><input wicket:id="searchsubServceText" type="text"></td>
+				</tr>
+				 <tr>
+				<td> <input wicket:id="searchButton" type="submit" value="Search"></td>
+				<td> <input wicket:id="viewAllButton" type="submit" value="View All"></td>
+				</tr>
+				 </table>
+			<br></br>
+					<table wicket:id="dataTable" class="gridtable" />
+					<br></br> <span> 
+					    <input wicket:id="addButton" type="submit"value="Create"> 
+						<input wicket:id="updateButton" type="submit" value="Update">
+						
+					</span>
+				</div>
+			</form>
+		</fieldset>
+	</wicket:panel>
+</body>
+</html>

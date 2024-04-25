@@ -1,0 +1,132 @@
+<wicket:panel>
+	<br></br>
+	<!-- <span wicket:id="tabs" class="tabpanel">[tabbed panel will be here]</span> -->
+	<!-- <div wicket:id="feedback"></div> -->
+
+	<table>
+
+		<tr>
+			<td><fieldset>
+					<i>Please complete the required fields </i>
+				</fieldset></td>
+		</tr>
+		<tr>
+<form wicket:id="form">
+			<table>
+  <tr>
+<!--     <th>Column 1 Heading</th>
+    <th>Column 2 Heading</th> -->
+  </tr>
+  <tr>
+    <td><label wicket:id="messageId" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="messageIdTextField" type="text" size="20" /></td>
+    <td><label wicket:id="creditorName" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="creditorNameTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="mandateId" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="mandateIdTextField" type="text" size="20" /></td>
+    <td><label wicket:id="localInstrument" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="localInstrumentTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="fromDate" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="fromDateTextField" type="text" size="20" /></td>
+    <td><label wicket:id="firstCollectionDate" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="firstCollectionDateTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="collectionAmount" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="collectionAmountTextField" type="text" size="20" /></td>
+    <td><label wicket:id="creditorSchemaName" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="creditorSchemaNameTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="contactDetail" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="contactDetailTextField" type="text" size="20" /></td>
+    <td><label wicket:id="creditorBranchName" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="creditorBranchNameTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="creditorAccountNumber" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="creditorAccountNumberTextField" type="text" size="20" /></td>
+    <td><label wicket:id="ultimateCreditorName" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="ultimateCreditorNameTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="debtorAccountName" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="debtorAccountNameTextField" type="text" size="20" /></td>
+    <td><label wicket:id="debtorBranchNumber" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="debtorBranchNumberTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="ultimateDebtorName" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="ultimateDebtorNameTextField" type="text" size="20" /></td>
+    <td><label wicket:id="memberNumber" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="memberNumberTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="mandateRequestId" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="mandateRequestIdTextField" type="text" size="20" /></td>
+    <td><label wicket:id="frequency" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="frequencyTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="toDate" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="toDateTextField" type="text" size="20" /></td>
+    <td><label wicket:id="finalCollectionDate" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="finalCollectionDateTextField" type="text" size="20" /></td>
+  </tr>
+    <tr>
+    <td><label wicket:id="maximumAmount" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="maximumAmountTextField" type="text" size="20" /></td>
+    <td><label wicket:id="creditorBank" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="creditorBankTextField" type="text" size="20" /></td>
+  </tr>
+		
+    <tr>
+    <td><label wicket:id="debtorAccountNumber" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="debtorAccountNumberTextField" type="text" size="20" /></td>
+    <td><label wicket:id="debtorBank" class="requiredLabel">Message goes here</label> </td>
+    <td><input wicket:id="debtorBankTextField" type="text" size="20" /></td>
+  </tr>
+</table>
+</form>
+
+
+
+			<!-- <td>
+
+				<form wicket:id="form">
+					<fieldset class= "loginField">
+					<fieldset class="fieldset">
+						<legend class= "legend">Single CDV</legend>
+						<legend>Single CDV</legend>
+						<p>
+							<label wicket:id="accountLabel" class="requiredLabel">Message
+								goes here</label> 
+								<input wicket:id="accountNumber" type="text" size="20" />
+								
+							<label wicket:id="branchLabel" class="requiredLabel">Message
+								goes here</label> <input wicket:id="branch" type="text" size="6" /> <label
+								wicket:id="accounttypeLabel" class="requiredLabel">Message
+								goes here</label> <input wicket:id="accounttype" type="text" size="2" />
+							<input wicket:id="button" type="submit" value="Validate">
+						</p>
+						<label wicket:id="resultsLabel">Message goes here</label>
+						<p>
+										<input wicket:id="fileUpload" type="file" />
+						</p>
+						<div wicket:id="feedbackTwo"></div>
+					</fieldset>
+				</form>
+			</td>
+ -->
+
+		</tr>
+
+	</table>
+	<BR>
+	<BR>
+
+</wicket:panel>

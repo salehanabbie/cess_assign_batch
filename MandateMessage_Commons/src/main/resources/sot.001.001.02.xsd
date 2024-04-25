@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BSVA version 1.02 20160801 -->
+<xs:schema xmlns="urn:bsva:std:tech:xsd:sot.001.001.02" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:bsva:std:tech:xsd:sot.001.001.02" elementFormDefault="qualified">
+	<xs:element name="Document" type="Document"/>
+	<xs:simpleType name="BICFIIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1}"/>
+			<xs:pattern value=""/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ControlMessage">
+		<xs:sequence>
+			<xs:element name="PrcDte" type="ISODate"/>
+			<xs:element name="From" type="SenderReceiverId"/>
+			<xs:element name="To" type="SenderReceiverId"/>
+			<xs:element name="SvcName" type="Max5Text"/>
+			<xs:element name="MsgTp" type="MessageReference"/>
+			<xs:element name="TestLive" type="TestLiveIndicator"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Document">
+		<xs:sequence>
+			<xs:element name="CntrlMsg" type="ControlMessage"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ISODate">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="Max5Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Max6Text">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessageReference">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SOT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SenderReceiverId">
+		<xs:choice>
+			<xs:element name="MbrId" type="Max6Text"/>
+			<xs:element name="BICFI" type="BICFIIdentifier"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:simpleType name="TestLiveIndicator">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="T"/>
+			<xs:enumeration value="L"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

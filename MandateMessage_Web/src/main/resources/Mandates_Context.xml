@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+	xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx
+      					http://www.springframework.org/schema/tx/spring-tx.xsd
+      					http://www.springframework.org/schema/jee
+      					http://www.springframework.org/schema/jee/spring-jee.xsd
+      				    http://www.springframework.org/schema/task
+						http://www.springframework.org/schema/task/spring-task.xsd
+                        http://jax-ws.dev.java.net/spring/core
+                        http://jax-ws.dev.java.net/spring/core.xsd
+                        http://jax-ws.dev.java.net/spring/servlet
+                        http://jax-ws.dev.java.net/spring/servlet.xsd">
+
+
+
+
+	<!-- ======================================================================================================== -->
+	<!-- JEE Beans -->
+	<!-- These beans are already mapped to the container context using their 
+		JNDI ref -->
+	<!-- The bean is Spring wired with the EJB name and local interface that 
+		will be the re -->
+	<!-- These beans are Context aware all using the global spring transaction 
+		manager -->
+	<!-- They also can only exist in the service module to satisfy both the 
+		spring and JEE wiring -->
+	<!-- They are all Javax.ejb.StatelessSessionBeans that can be refenced with 
+		their local interfaces -->
+	<!-- ========================================================================================================= -->
+
+
+
+	<task:annotation-driven />
+
+</beans>

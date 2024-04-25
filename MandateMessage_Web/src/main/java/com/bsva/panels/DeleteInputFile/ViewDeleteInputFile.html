@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<wicket:panel>
+		<fieldset class="fieldset">
+		<legend class="legend">Delete Input File</legend>
+			<span wicket:id="feedbackPanel"></span>
+			<form wicket:id="deleteInputFilePanel">
+				<div>
+				<span align="right"> <label>File name:</label> 
+				<input wicket:id="searchText" type="text"> 
+				<input wicket:id="searchButton" type="submit" value="Search">
+					</span> <br></br>
+					<table wicket:id="dataTable" class="gridtable" />
+					<br></br> <span>
+					 <input wicket:id="deleteButton" type="submit" value="Delete">
+					  <input wicket:id="cancelButton" type="submit" value="Cancel">
+					</span>
+					</div>
+					
+			</form>
+		</fieldset>
+	</wicket:panel>
+
+</body>
+</html>

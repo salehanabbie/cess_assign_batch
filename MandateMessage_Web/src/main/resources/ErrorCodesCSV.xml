@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beanio xmlns="http://www.beanio.org/2012/03">
+	<stream name="errorCodesCSV" format="csv">
+		<record name="header" class="com.bsva.commons.model.ErrorCodesReportModel" order="1" occurs="1">
+			<field name="debtorBank" default="DEBTORBANK" length="50" padding=" " justify="left"/>
+			<field name="creditorBank" default="CREDITORBANK" length="50" padding=" " justify="left"/>
+			<field name="ultCreditor" default="ULTCREDITOR" length="50" padding=" " justify="left"/>
+			<field name="abbShortName" default="ABBSHORTNAME" length="50" padding=" " justify="left"/>
+			<field name="errorCodeDesc" default="ERRORCODEDESC" length="50" padding=" " justify="left"/>
+		</record>
+
+
+		<record name="header" class="com.bsva.commons.model.ErrorCodesReportModel" order="2" occurs="0+">
+			<field name="debtorBank" length="30" padding=" " justify="left"/>
+			<field name="creditorBank"  length="30" padding=" " justify="left"/>
+			<field name="ultCreditor"  length="10" padding=" " justify="left"/>
+			<field name="abbShortName" length="3" padding=" " justify="left"/>
+			<field name="errorCodeDesc"  length="20" padding=" " justify="left"/>
+		</record>
+	</stream>
+
+
+</beanio>

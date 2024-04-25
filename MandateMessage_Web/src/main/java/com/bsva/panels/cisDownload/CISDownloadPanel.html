@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+ <wicket:panel> 
+<fieldset class="fieldset">
+<legend class="legend">CIS Download</legend>
+<form wicket:id="form">
+<label>To manually run CIS Download, Click the CIS Download Button": &nbsp;&nbsp;&nbsp;&nbsp;</label>
+ <input wicket:id="cisDownloadButton" type="submit"  value="CIS Download"/>  
+<!--  <div wicket:id="progressBar" class="progress-bar" style="height:1.1em;"></div>&nbsp;&nbsp;&nbsp;
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<label wicket:id="progressBarPercentage" style="font-size:30px"></label> -->
+   <br></br>
+  <span wicket:id="feedbackPanel"></span>
+ </form>
+</fieldset>
+</wicket:panel> 
+</body>
+</html>
