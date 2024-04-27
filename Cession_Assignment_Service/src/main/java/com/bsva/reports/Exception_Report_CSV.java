@@ -15,11 +15,9 @@ import org.beanio.BeanWriter;
 import org.beanio.StreamFactory;
 
 import com.bsva.commons.model.CreditorBankModel;
-import com.bsva.commons.model.MandateDailyTransModel;
 import com.bsva.commons.model.SystemParameterModel;
 import com.bsva.entities.ExceptionReportEntityModel;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
-import com.bsva.entities.MdtOpsRepSeqNrEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.PropertyUtilRemote;
 import com.bsva.interfaces.ReportBeanRemote;
@@ -41,7 +39,7 @@ public class Exception_Report_CSV {
 	private final static String XML = "PBMD12CSV.xml";
 	private String fileName;
 
-	MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
+	CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
 	List<ExceptionReportEntityModel>mdtDailyRjctList;
 	List<CreditorBankModel> creditorBankModelList;
 	CreditorBankModel creditorBankModel;
@@ -79,7 +77,7 @@ public class Exception_Report_CSV {
 			reportNr = "PBMD12";
 		}
 		
-		reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(reportNr);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(reportNr);
 		if(reportNameEntity != null) {
 			
 			systemParameterModel = (SystemParameterModel) adminBeanRemote.retrieveWebActiveSysParameter();

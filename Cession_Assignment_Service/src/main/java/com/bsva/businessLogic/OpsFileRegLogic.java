@@ -1,5 +1,6 @@
 package com.bsva.businessLogic;
 
+import com.bsva.entities.CasOpsFileRegEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.AcOpsSotEotCntrlModel;
 import com.bsva.commons.model.OpsFileRegModel;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
 import com.bsva.translator.AdminTranslator;
 import com.bsva.translator.ServiceTranslator;
 /**
@@ -30,11 +30,11 @@ public OpsFileRegLogic(){
 		
 	}
 	
-	public List<OpsFileRegModel> retrieveAllDelDelivery(List<MdtOpsFileRegEntity> mdtOpsFileRegList)
+	public List<OpsFileRegModel> retrieveAllDelDelivery(List<CasOpsFileRegEntity> mdtOpsFileRegList)
 	{
 		List<OpsFileRegModel> opsFileRegList = new ArrayList<OpsFileRegModel>();
 		
-		for (MdtOpsFileRegEntity opsFileRegEntity : mdtOpsFileRegList) 
+		for (CasOpsFileRegEntity opsFileRegEntity : mdtOpsFileRegList)
 		{
 			OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
 			opsFileRegModel = new AdminTranslator().translateCommonsToOpsFileRegEntity(opsFileRegEntity);
@@ -45,19 +45,19 @@ public OpsFileRegLogic(){
 }
 
 
-	public MdtOpsFileRegEntity addOpsFileReg(OpsFileRegModel opsFileRegModel) {
+	public CasOpsFileRegEntity addOpsFileReg(OpsFileRegModel opsFileRegModel) {
 		
-		MdtOpsFileRegEntity mdtOpsFileRegEntity = new AdminTranslator().translateCommonsOpsFileRegModelToEntity(opsFileRegModel);
+		CasOpsFileRegEntity casOpsFileRegEntity = new AdminTranslator().translateCommonsOpsFileRegModelToEntity(opsFileRegModel);
 			
-			return  mdtOpsFileRegEntity; 
+			return casOpsFileRegEntity;
 		
 	}
 
-	public OpsFileRegModel retrieveDelDelivery(MdtOpsFileRegEntity MdtOpsFileRegEntity) {
+	public OpsFileRegModel retrieveDelDelivery(CasOpsFileRegEntity CasOpsFileRegEntity) {
 	
 	OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
 	
-	opsFileRegModel = new AdminTranslator().translateCommonsToOpsFileRegEntity(MdtOpsFileRegEntity);
+	opsFileRegModel = new AdminTranslator().translateCommonsToOpsFileRegEntity(CasOpsFileRegEntity);
 
 
 	return opsFileRegModel;
@@ -69,17 +69,19 @@ public OpsFileRegLogic(){
 
 	
 
-	public AcOpsSotEotCntrlModel retrieveMdtAcOpsSotEotCtrlEntity(MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity)
+	public AcOpsSotEotCntrlModel retrieveMdtAcOpsSotEotCtrlEntity(
+        CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity)
 	{
 		AcOpsSotEotCntrlModel localModel = new AcOpsSotEotCntrlModel();
-		localModel = new AdminTranslator(). translateAcOpsSotEotCntrlModelToEntity(mdtAcOpsSotEotCtrlEntity);
+		localModel = new AdminTranslator(). translateAcOpsSotEotCntrlModelToEntity(
+            casOpsSotEotCtrlEntity);
 		
 		return localModel;
 	}
 	
 	
 
-	public OpsFileRegModel retrieveOpsFileRegModel(MdtOpsFileRegEntity opsFileRegEntity) {
+	public OpsFileRegModel retrieveOpsFileRegModel(CasOpsFileRegEntity opsFileRegEntity) {
 		
 		OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
 		opsFileRegModel = new  ServiceTranslator().translateOpsFileRegEntityToCommonsModel(opsFileRegEntity);

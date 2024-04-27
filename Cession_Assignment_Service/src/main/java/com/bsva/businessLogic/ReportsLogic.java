@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.OutstandingResponsesModel;
 import com.bsva.commons.model.ReportsNamesModel;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
 import com.bsva.entities.OutstandingResponsesModelEntity;
 import com.bsva.translator.AdminTranslator;
 
@@ -21,14 +21,14 @@ public class ReportsLogic {
      }
 
 	
-	public List<ReportsNamesModel> retrieveAllReportNames(List<MdtCnfgReportNamesEntity> MdtCnfgReportNamesList)
+	public List<ReportsNamesModel> retrieveAllReportNames(List<CasCnfgReportNamesEntity> MdtCnfgReportNamesList)
 	{
 		
 		List<ReportsNamesModel> reportNamesList = new ArrayList<ReportsNamesModel>();
 		
 		ReportsNamesModel localModel;
 
-		for (MdtCnfgReportNamesEntity localEntity : MdtCnfgReportNamesList) 
+		for (CasCnfgReportNamesEntity localEntity : MdtCnfgReportNamesList)
 		
 		{
 			 localModel = new ReportsNamesModel();
@@ -39,17 +39,18 @@ public class ReportsLogic {
 		return reportNamesList;
 	  }
 	
-	public MdtCnfgReportNamesEntity addReportNames(ReportsNamesModel reportsNamesModel) {
-		MdtCnfgReportNamesEntity mdtCnfgReportNamesEntity = new AdminTranslator()
+	public CasCnfgReportNamesEntity addReportNames(ReportsNamesModel reportsNamesModel) {
+		CasCnfgReportNamesEntity casCnfgReportNamesEntity = new AdminTranslator()
 				.translateCommnsReportNamesModelToEntity(reportsNamesModel);
 
-		return mdtCnfgReportNamesEntity;
+		return casCnfgReportNamesEntity;
 	}
 	
-	public ReportsNamesModel retrieveReportNames(MdtCnfgReportNamesEntity mdtCnfgReportNamesEntity)
+	public ReportsNamesModel retrieveReportNames(CasCnfgReportNamesEntity casCnfgReportNamesEntity)
 	{
 		ReportsNamesModel localModel = new ReportsNamesModel();
-		localModel = new AdminTranslator().translateReportNamesEntityToCommonsModel(mdtCnfgReportNamesEntity);
+		localModel = new AdminTranslator().translateReportNamesEntityToCommonsModel(
+            casCnfgReportNamesEntity);
 		
 		return localModel;
 	  }

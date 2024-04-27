@@ -17,12 +17,11 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.CreditorBankModel;
-import com.bsva.commons.model.DebtorBankModel;
 import com.bsva.commons.model.SysctrlCompParamModel;
 import com.bsva.commons.model.SystemParameterModel;
 import com.bsva.entities.MandateResponseOutstandingPerBankEntityModel;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
-import com.bsva.entities.MdtOpsRepSeqNrEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
+import com.bsva.entities.CasOpsRepSeqNrEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.PropertyUtilRemote;
 import com.bsva.interfaces.ReportBeanRemote;
@@ -71,7 +70,7 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 	
 	DateFormat dateFormatFront = new SimpleDateFormat("yyyy-MM-dd");
 
-	MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
+	CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
 	String activeIndicator = "Y";
 
 	public PBMD08_DailyFiveDayOutstRespPDF() {
@@ -96,7 +95,7 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 		}
 
 		//Retrieve Report Name
-		reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbmd08);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbmd08);
 		if(reportNameEntity != null)
 		{
 			reportNr = reportNameEntity.getReportNr();
@@ -164,20 +163,20 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 		String bankId= memberId.substring(2, 6);
 		log.debug("bankId---->"+bankId);
 
-		MdtOpsRepSeqNrEntity mdtOpsRepSeqNrEntity = new MdtOpsRepSeqNrEntity();
-		mdtOpsRepSeqNrEntity = (MdtOpsRepSeqNrEntity)adminBeanRemote.retrieveRepSeqNr(reportNr,memberId);
+		CasOpsRepSeqNrEntity casOpsRepSeqNrEntity = new CasOpsRepSeqNrEntity();
+		casOpsRepSeqNrEntity = (CasOpsRepSeqNrEntity)adminBeanRemote.retrieveRepSeqNr(reportNr,memberId);
 
-		if(mdtOpsRepSeqNrEntity != null)
+		if(casOpsRepSeqNrEntity != null)
 		{
-			lastSeqNoUsed = Integer.valueOf(mdtOpsRepSeqNrEntity.getLastSeqNo());
+			lastSeqNoUsed = Integer.valueOf(casOpsRepSeqNrEntity.getLastSeqNo());
 			lastSeqNoUsed = lastSeqNoUsed + 1;
 		}
 		else
 			lastSeqNoUsed = 1;
 
 		strSeqNo = String.format("%06d",lastSeqNoUsed);
-		mdtOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
-		adminBeanRemote.updateReportSeqNr(mdtOpsRepSeqNrEntity);
+		casOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
+		adminBeanRemote.updateReportSeqNr(casOpsRepSeqNrEntity);
 
 		String reportSeqNo = strSeqNo.substring(3,6);
 		

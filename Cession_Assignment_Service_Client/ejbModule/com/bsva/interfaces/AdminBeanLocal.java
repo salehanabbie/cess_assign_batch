@@ -16,7 +16,6 @@ public interface AdminBeanLocal
 	public List<?> viewAllMandatesCountPerIncomingFiles();
 	public List<?> viewAllMessages ();
 	public List<?> viewAllFileStatus();
-	public List<?> viewAllOpsProcessControl() ;
 	public List<?> viewAllOpsRefSeqNumber() ;
 	public List<?> viewAllOpsAcSotEot() ;
 	public List<?> viewAllOpsCustomerParameters();
@@ -94,9 +93,6 @@ public interface AdminBeanLocal
 	public List<?> viewAllAuditTables();
 	public List<?> viewAuthTypeByCriteria(String authType) ;
 	public boolean createAuthtype(Object obj) ;
-	public List<?> viewAllRejectReasonCodes() ;
-	public List<?> viewRejectReasonCodesByCriteria(String rejectReasonCode);
-	public boolean createRejectReasonCodes(Object obj);
 	public List<?>retrieveOpsRefSeqNr();
 	public boolean createOpsRefSeqNr(Object obj);
     public List<?> viewProcessStatusByCriteria(String status);
@@ -132,10 +128,7 @@ public interface AdminBeanLocal
 	public List<?> viewAccountTypeByCriteria(String accountType); 	
 	public boolean createSeverityCodes(Object obj);
 	public List<?> viewSeverityCodesByCriteria(String severityCode);
-	public List<?> viewAllSeverityCode(); 
-	public List<?> viewAllStatusReasonCodes();
-	public List<?> viewStatusReasonCodesByCriteria(String statusReasonCode);
-	public boolean createStatusReasonCodes(Object obj);
+	public List<?> viewAllSeverityCode();
 	boolean createRecordId(Object obj);
 	public List<?> viewAllRecordId();
 	public List<?> viewRecordIdByCriteria(BigDecimal recordId);
@@ -220,7 +213,6 @@ public interface AdminBeanLocal
 	public List<?> retrieveRealTimeMndtBillingTxns(String txnType);
 	public List<?> retrieveRealTimeMndtBillingTxnsByCreditor(String instId);
 	public List<?> retrieveRealTimeMndtBillingTxnsByCreditorArcandOps(String instId, Date date);
-	public List<?> retrieveRejectionCodesForRejectionsReport();
 	public Object retrieveRealTimeNrOfAmendment(String amendReason, String memberId, String firstDate, String lastDate);
 	public Object retrieveMdte002RejectReasonDataPASA(String rejectReasonCode, String memberId, String firstDate, String lastDate);
 	public Object retrieveOnlinePASARejectionSummaryPAIN012(String reasonCode,String crBank, String firstDate, String lastDate);
@@ -238,7 +230,6 @@ public interface AdminBeanLocal
 	public Object retrieveErrCodeReportName(String reportNr);
 	public void generatePasaBatchRejections(Date frontDate);
 	public void generatePasaBatchAmendmentsReport(Date frontFromDate,Date frontToDate);
-	public void generatePerBankBatchMandateRejections();
 	public void generatePasaBatchOutstandingResponses(Date frontDate);
 	public void generatePerBankOutstandingResponses(Date frontEndDate);
 	public void generateBatchBillableTxnCreditor();

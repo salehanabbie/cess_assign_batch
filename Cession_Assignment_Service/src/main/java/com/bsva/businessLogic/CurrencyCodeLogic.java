@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bsva.commons.model.CurrencyCodesModel;
-import com.bsva.entities.MdtCnfgCurrencyCodesEntity;
+import com.bsva.entities.CasCnfgCurrencyCodesEntity;
 import com.bsva.translator.AdminTranslator;
 
 /**
@@ -14,11 +14,11 @@ import com.bsva.translator.AdminTranslator;
 public class CurrencyCodeLogic 
 {
 
-	public List<CurrencyCodesModel> retrieveAllCurrencyCodes(List<MdtCnfgCurrencyCodesEntity> mdtCurrencyCodesEntity)
+	public List<CurrencyCodesModel> retrieveAllCurrencyCodes(List<CasCnfgCurrencyCodesEntity> mdtCurrencyCodesEntity)
 	{
 			List<CurrencyCodesModel> currCodesList = new ArrayList<CurrencyCodesModel>();
 		
-			for (MdtCnfgCurrencyCodesEntity localEntity : mdtCurrencyCodesEntity) 
+			for (CasCnfgCurrencyCodesEntity localEntity : mdtCurrencyCodesEntity)
 			{
 				CurrencyCodesModel localModel = new CurrencyCodesModel();
 				localModel = new  AdminTranslator().translateCurrencyCodesEntityToCommonsModel(localEntity);
@@ -30,14 +30,14 @@ public class CurrencyCodeLogic
 	
 
 
-public MdtCnfgCurrencyCodesEntity addCurrencyCodes(CurrencyCodesModel currencyCodesModel)
+public CasCnfgCurrencyCodesEntity addCurrencyCodes(CurrencyCodesModel currencyCodesModel)
 {
-	MdtCnfgCurrencyCodesEntity mdtCurrencyCodes = new AdminTranslator().translateCommonsCurrencyCodesModelToEntity(currencyCodesModel);
+	CasCnfgCurrencyCodesEntity mdtCurrencyCodes = new AdminTranslator().translateCommonsCurrencyCodesModelToEntity(currencyCodesModel);
 	
 	return mdtCurrencyCodes; 
 }
 
-public CurrencyCodesModel retrieveCurrencyCode(MdtCnfgCurrencyCodesEntity mdtCurrencyCodesEntity)
+public CurrencyCodesModel retrieveCurrencyCode(CasCnfgCurrencyCodesEntity mdtCurrencyCodesEntity)
 {
 	CurrencyCodesModel localModel = new CurrencyCodesModel();
 	localModel = new AdminTranslator().translateCurrencyCodesEntityToCommonsModel(mdtCurrencyCodesEntity);

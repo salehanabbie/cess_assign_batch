@@ -1,29 +1,27 @@
 package com.bsva.authcoll.singletable.validation;
 
 import com.bsva.constants.Constants;
+import com.bsva.entities.CasConfigDataTimeEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
-import com.bsva.entities.MdtAcConfigDataTimeEntity;
-import com.bsva.entities.MdtAcOpsConfHdrsEntity;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
-import com.bsva.entities.MdtAcOpsGrpHdrEntity;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntity;
-import com.bsva.entities.MdtAcOpsTxnsBillReportEntity;
-import com.bsva.entities.MdtCnfgAccountTypeEntity;
-import com.bsva.entities.MdtCnfgAdjustmentCatEntity;
-import com.bsva.entities.MdtCnfgAmendmentCodesEntity;
-import com.bsva.entities.MdtCnfgAuthTypeEntity;
-import com.bsva.entities.MdtCnfgCancellationCodesEntity;
-import com.bsva.entities.MdtCnfgDebitValueTypeEntity;
-import com.bsva.entities.MdtCnfgErrorCodesEntity;
-import com.bsva.entities.MdtCnfgFrequencyCodesEntity;
-import com.bsva.entities.MdtCnfgLocalInstrCodesEntity;
-import com.bsva.entities.MdtCnfgReasonCodesEntity;
-import com.bsva.entities.MdtCnfgRejectReasonCodesEntity;
-import com.bsva.entities.MdtCnfgSequenceTypeEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
-import com.bsva.entities.MdtOpsServicesEntity;
+import com.bsva.entities.CasOpsConfHdrsEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsGrpHdrEntity;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsTxnsBillReportEntity;
+import com.bsva.entities.CasCnfgAccountTypeEntity;
+import com.bsva.entities.CasCnfgAdjustmentCatEntity;
+import com.bsva.entities.CasCnfgAmendmentCodesEntity;
+import com.bsva.entities.CasCnfgAuthTypeEntity;
+import com.bsva.entities.CasCnfgDebitValueTypeEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
+import com.bsva.entities.CasCnfgFrequencyCodesEntity;
+import com.bsva.entities.CasCnfgLocalInstrCodesEntity;
+import com.bsva.entities.CasCnfgReasonCodesEntity;
+import com.bsva.entities.CasCnfgSequenceTypeEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsServicesEntity;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.entities.SysCisBranchEntity;
 import com.bsva.interfaces.AdminBeanRemote;
@@ -75,37 +73,33 @@ public class Validation_ST {
   public static Logger log = Logger.getLogger("Validation_ST");
 
   //This must be reset at every file.
-  public MdtAcOpsMandateTxnsEntity mdtAcMandateTxnsEntityOriginal = null;
+  public CasOpsCessionAssignEntity mdtAcMandateTxnsEntityOriginal = null;
   protected CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
-  MdtAcOpsGrpHdrEntity opsGrpHdrEntity = null;
-  MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity = null;
-  List<MdtAcOpsMandateTxnsEntity> mdtAcOpsMandateTxnList;
+  CasOpsGrpHdrEntity opsGrpHdrEntity = null;
+  CasOpsCessionAssignEntity casOpsCessionAssignEntity = null;
+  List<CasOpsCessionAssignEntity> mdtAcOpsMandateTxnList;
   String incomingMsgId = null;
-  List<MdtCnfgLocalInstrCodesEntity> mdtCnfgLocalInstrCodesList;
+  List<CasCnfgLocalInstrCodesEntity> mdtCnfgLocalInstrCodesList;
   HashMap<String, String> listOfErrorCodes;
-  List<MdtOpsServicesEntity> opsServicesList = new ArrayList<MdtOpsServicesEntity>();
+  List<CasOpsServicesEntity> opsServicesList = new ArrayList<CasOpsServicesEntity>();
   List<SysCisBankEntity> sysCisBankList = new ArrayList<SysCisBankEntity>();
   List<SysCisBranchEntity> sysCisBranchList = new ArrayList<SysCisBranchEntity>();
-  List<MdtCnfgSequenceTypeEntity> cnfgSequenceTypeList = new ArrayList<MdtCnfgSequenceTypeEntity>();
-  List<MdtCnfgFrequencyCodesEntity> cnfgFrequencyCodesList =
-      new ArrayList<MdtCnfgFrequencyCodesEntity>();
-  List<MdtCnfgAccountTypeEntity> cnfgAccountTypesList = new ArrayList<MdtCnfgAccountTypeEntity>();
-  List<MdtCnfgAuthTypeEntity> cnfgAuthTypeList = new ArrayList<MdtCnfgAuthTypeEntity>();
-  List<MdtCnfgAdjustmentCatEntity> cnfgAdjustmentCatList =
-      new ArrayList<MdtCnfgAdjustmentCatEntity>();
-  List<MdtCnfgDebitValueTypeEntity> cnfgDebitValueTypeList =
-      new ArrayList<MdtCnfgDebitValueTypeEntity>();
-  List<MdtCnfgReasonCodesEntity> cnfgReasonCodesList = new ArrayList<MdtCnfgReasonCodesEntity>();
-  List<MdtCnfgAmendmentCodesEntity> cnfgAmendmentCodesList =
-      new ArrayList<MdtCnfgAmendmentCodesEntity>();
-  List<MdtCnfgCancellationCodesEntity> cnfgCancellationCodesList =
-      new ArrayList<MdtCnfgCancellationCodesEntity>();
-  List<MdtCnfgRejectReasonCodesEntity> cnfgRejectReasonCodesList =
-      new ArrayList<MdtCnfgRejectReasonCodesEntity>();
-  List<MdtCnfgErrorCodesEntity> cnfgErrorCodesList = new ArrayList<MdtCnfgErrorCodesEntity>();
-  List<MdtAcOpsFileSizeLimitEntity> opsFileSizeLimitList =
-      new ArrayList<MdtAcOpsFileSizeLimitEntity>();
-  MdtAcConfigDataTimeEntity mdtAcOpsConfigDataTime = new MdtAcConfigDataTimeEntity();
+  List<CasCnfgSequenceTypeEntity> cnfgSequenceTypeList = new ArrayList<CasCnfgSequenceTypeEntity>();
+  List<CasCnfgFrequencyCodesEntity> cnfgFrequencyCodesList =
+      new ArrayList<CasCnfgFrequencyCodesEntity>();
+  List<CasCnfgAccountTypeEntity> cnfgAccountTypesList = new ArrayList<CasCnfgAccountTypeEntity>();
+  List<CasCnfgAuthTypeEntity> cnfgAuthTypeList = new ArrayList<CasCnfgAuthTypeEntity>();
+  List<CasCnfgAdjustmentCatEntity> cnfgAdjustmentCatList =
+      new ArrayList<CasCnfgAdjustmentCatEntity>();
+  List<CasCnfgDebitValueTypeEntity> cnfgDebitValueTypeList =
+      new ArrayList<CasCnfgDebitValueTypeEntity>();
+  List<CasCnfgReasonCodesEntity> cnfgReasonCodesList = new ArrayList<CasCnfgReasonCodesEntity>();
+  List<CasCnfgAmendmentCodesEntity> cnfgAmendmentCodesList =
+      new ArrayList<CasCnfgAmendmentCodesEntity>();
+  List<CasCnfgErrorCodesEntity> cnfgErrorCodesList = new ArrayList<CasCnfgErrorCodesEntity>();
+  List<CasOpsFileSizeLimitEntity> opsFileSizeLimitList =
+      new ArrayList<CasOpsFileSizeLimitEntity>();
+  CasConfigDataTimeEntity casConfigDataTime = new CasConfigDataTimeEntity();
 
   public Validation_ST() {
     contextAdminBeanCheck();
@@ -124,13 +118,13 @@ public class Validation_ST {
   }
 
   public void populateConfigTableData(boolean sodBool) {
-    mdtAcOpsConfigDataTime = (MdtAcConfigDataTimeEntity) beanRemote.retrievePastTimeForConfData();
+    casConfigDataTime = (CasConfigDataTimeEntity) beanRemote.retrievePastTimeForConfData();
 
     long databaseTime = 0;
-    if (mdtAcOpsConfigDataTime == null) {
+    if (casConfigDataTime == null) {
       databaseTime = System.currentTimeMillis();
     } else {
-      databaseTime = mdtAcOpsConfigDataTime.getPastTimeInMill();
+      databaseTime = casConfigDataTime.getPastTimeInMill();
     }
     long anHourAgo = System.currentTimeMillis() - databaseTime;
 
@@ -141,9 +135,9 @@ public class Validation_ST {
         refreshConfigData();
 
         databaseTime = System.currentTimeMillis();
-        mdtAcOpsConfigDataTime.setId("1");
-        mdtAcOpsConfigDataTime.setPastTimeInMill(databaseTime);
-        boolean saved = beanRemote.createOrUpdatePastTimeForConfData(mdtAcOpsConfigDataTime);
+        casConfigDataTime.setId("1");
+        casConfigDataTime.setPastTimeInMill(databaseTime);
+        boolean saved = beanRemote.createOrUpdatePastTimeForConfData(casConfigDataTime);
 
         if (saved) {
           log.info("Refresh Config time saved");
@@ -187,12 +181,6 @@ public class Validation_ST {
             case "amendmentCodesData":
               cnfgAmendmentCodesList = Constants.CONSTANT_MAP.get(key);
               break;
-            case "cancellationCodesData":
-              cnfgCancellationCodesList = Constants.CONSTANT_MAP.get(key);
-              break;
-            case "rejectReasonCodesData":
-              cnfgRejectReasonCodesList = Constants.CONSTANT_MAP.get(key);
-              break;
             case "errorCodesData":
               cnfgErrorCodesList = Constants.CONSTANT_MAP.get(key);
               break;
@@ -209,7 +197,7 @@ public class Validation_ST {
   }
 
   private void refreshConfigData() {
-    opsServicesList = (List<MdtOpsServicesEntity>) valBeanRemote.findAllOpsServices();
+    opsServicesList = (List<CasOpsServicesEntity>) valBeanRemote.findAllOpsServices();
     Constants.CONSTANT_MAP.put("opsServicesData", opsServicesList);
 
     sysCisBankList = (List<SysCisBankEntity>) valBeanRemote.findAllCisBanks();
@@ -219,47 +207,39 @@ public class Validation_ST {
     Constants.CONSTANT_MAP.put("cisBranchData", sysCisBranchList);
 
     cnfgSequenceTypeList =
-        (List<MdtCnfgSequenceTypeEntity>) valBeanRemote.findAllConfigSequenceTypes();
+        (List<CasCnfgSequenceTypeEntity>) valBeanRemote.findAllConfigSequenceTypes();
     Constants.CONSTANT_MAP.put("sequenceTypeData", cnfgSequenceTypeList);
 
     cnfgFrequencyCodesList =
-        (List<MdtCnfgFrequencyCodesEntity>) valBeanRemote.findAllConfigFrequencyCodes();
+        (List<CasCnfgFrequencyCodesEntity>) valBeanRemote.findAllConfigFrequencyCodes();
     Constants.CONSTANT_MAP.put("frequencyCodesData", cnfgFrequencyCodesList);
 
     cnfgAccountTypesList =
-        (List<MdtCnfgAccountTypeEntity>) valBeanRemote.findAllConfigAccountTypes();
+        (List<CasCnfgAccountTypeEntity>) valBeanRemote.findAllConfigAccountTypes();
     Constants.CONSTANT_MAP.put("accountTypesData", cnfgAccountTypesList);
 
-    cnfgAuthTypeList = (List<MdtCnfgAuthTypeEntity>) valBeanRemote.findAllConfigAuthTypes();
+    cnfgAuthTypeList = (List<CasCnfgAuthTypeEntity>) valBeanRemote.findAllConfigAuthTypes();
     Constants.CONSTANT_MAP.put("authTypeData", cnfgAuthTypeList);
 
     cnfgAdjustmentCatList =
-        (List<MdtCnfgAdjustmentCatEntity>) valBeanRemote.findAllConfigAdjustmentCats();
+        (List<CasCnfgAdjustmentCatEntity>) valBeanRemote.findAllConfigAdjustmentCats();
     Constants.CONSTANT_MAP.put("adjustmentCatData", cnfgAdjustmentCatList);
 
     cnfgDebitValueTypeList =
-        (List<MdtCnfgDebitValueTypeEntity>) valBeanRemote.findAllConfigDebitValueTypes();
+        (List<CasCnfgDebitValueTypeEntity>) valBeanRemote.findAllConfigDebitValueTypes();
     Constants.CONSTANT_MAP.put("debitValueTypeData", cnfgDebitValueTypeList);
 
-    cnfgReasonCodesList = (List<MdtCnfgReasonCodesEntity>) valBeanRemote.findAllConfigReasonCodes();
+    cnfgReasonCodesList = (List<CasCnfgReasonCodesEntity>) valBeanRemote.findAllConfigReasonCodes();
     Constants.CONSTANT_MAP.put("reasonCodesData", cnfgReasonCodesList);
 
     cnfgAmendmentCodesList =
-        (List<MdtCnfgAmendmentCodesEntity>) valBeanRemote.findAllConfigAmendmentCodes();
+        (List<CasCnfgAmendmentCodesEntity>) valBeanRemote.findAllConfigAmendmentCodes();
     Constants.CONSTANT_MAP.put("amendmentCodesData", cnfgAmendmentCodesList);
 
-    cnfgCancellationCodesList =
-        (List<MdtCnfgCancellationCodesEntity>) valBeanRemote.findAllConfigCancellationCodes();
-    Constants.CONSTANT_MAP.put("cancellationCodesData", cnfgCancellationCodesList);
-
-    cnfgRejectReasonCodesList =
-        (List<MdtCnfgRejectReasonCodesEntity>) valBeanRemote.findAllConfigRejectReasonCodes();
-    Constants.CONSTANT_MAP.put("rejectReasonCodesData", cnfgRejectReasonCodesList);
-
-    cnfgErrorCodesList = (List<MdtCnfgErrorCodesEntity>) valBeanRemote.findAllConfigErrorCodes();
+    cnfgErrorCodesList = (List<CasCnfgErrorCodesEntity>) valBeanRemote.findAllConfigErrorCodes();
     Constants.CONSTANT_MAP.put("errorCodesData", cnfgErrorCodesList);
 
-    opsFileSizeLimitList = (List<MdtAcOpsFileSizeLimitEntity>) valBeanRemote.findAllFileSizeLimit();
+    opsFileSizeLimitList = (List<CasOpsFileSizeLimitEntity>) valBeanRemote.findAllFileSizeLimit();
     Constants.CONSTANT_MAP.put("fileSizeLimitData", opsFileSizeLimitList);
   }
 
@@ -313,7 +293,7 @@ public class Validation_ST {
    */
   public boolean validateServiceId(String serviceName, String validService) {
 	  if (serviceName != null && !serviceName.isEmpty()) {
-		  MdtOpsServicesEntity opsServEntity = findOpsServices(serviceName);
+		  CasOpsServicesEntity opsServEntity = findOpsServices(serviceName);
 
 		  if (opsServEntity == null) {
 			  return false;
@@ -391,8 +371,8 @@ public class Validation_ST {
     if (fileNo != null && !fileNo.isEmpty() && memberNo != null && !memberNo.isEmpty()) {
       //MdtSysctrlCustParamEntity localEntity = (MdtSysctrlCustParamEntity) valBeanRemote
 		// .validateFileNumberingInMsgId_004(memberNo);
-      MdtOpsCustParamEntity localEntity =
-          (MdtOpsCustParamEntity) valBeanRemote.validateFileNumberingInMsgId_004(memberNo);
+      CasOpsCustParamEntity localEntity =
+          (CasOpsCustParamEntity) valBeanRemote.validateFileNumberingInMsgId_004(memberNo);
       if (localEntity == null) {
         log.debug("Entity is null---------------");
         return "901004";
@@ -521,8 +501,8 @@ public class Validation_ST {
       log.debug("acSystem :" + acSystem);
       log.debug("###################################################################");
 
-      List<MdtAcOpsMandateTxnsEntity> mandateTxnList =
-          (List<MdtAcOpsMandateTxnsEntity>) fileProcBeanRemote.
+      List<CasOpsCessionAssignEntity> mandateTxnList =
+          (List<CasOpsCessionAssignEntity>) fileProcBeanRemote.
               validateOriginalMsgId(msgId);
       log.debug("the message id is *******" + msgId);
 
@@ -650,7 +630,7 @@ public class Validation_ST {
 	  if (reasonCode != null && !reasonCode.isEmpty()) {
 		  String trimmedReasonCode = reasonCode.trim();
 
-		  MdtCnfgReasonCodesEntity reasonCodesEntity = findReasonCodes(trimmedReasonCode);
+		  CasCnfgReasonCodesEntity reasonCodesEntity = findReasonCodes(trimmedReasonCode);
 		  if (reasonCodesEntity == null) {
 			  return false;
 		  } else {
@@ -682,7 +662,7 @@ public class Validation_ST {
     String trimAmendReason = amendReason.trim();
 
 	  if (trimAmendReason != null && !trimAmendReason.isEmpty() && trimAmendReason.length() != 0) {
-		  MdtCnfgAmendmentCodesEntity amendCodesEntity = findAmendmentCodes(trimAmendReason);
+		  CasCnfgAmendmentCodesEntity amendCodesEntity = findAmendmentCodes(trimAmendReason);
 		  if (amendCodesEntity == null) {
 			  return false;
 		  } else {
@@ -775,7 +755,7 @@ public class Validation_ST {
 	  if (seqCode != null && !seqCode.isEmpty()) {
 		  String trimmedSeqCode = seqCode.trim();
 
-		  MdtCnfgSequenceTypeEntity seqTypeEntity = findSequenceTypes(seqCode);
+		  CasCnfgSequenceTypeEntity seqTypeEntity = findSequenceTypes(seqCode);
 		  if (seqTypeEntity == null) {
 			  return false;
 		  } else {
@@ -808,7 +788,7 @@ public class Validation_ST {
   public boolean validateInstallmentFrequency(String freqCode) {
 	  if (freqCode != null && !freqCode.isEmpty()) {
 		  String trimmedFreqCode = freqCode.trim();
-		  MdtCnfgFrequencyCodesEntity frequencyCodeEntity = findFrequencyCodes(freqCode);
+		  CasCnfgFrequencyCodesEntity frequencyCodeEntity = findFrequencyCodes(freqCode);
 
 		  if (frequencyCodeEntity != null) {
 			  return true;
@@ -1600,33 +1580,6 @@ public class Validation_ST {
     }
   }
 
-
-  /**
-   * @param cancelReasonCode Rule 011_010
-   * @return
-   */
-  public boolean validateCancelReasonCode(String cancelReasonCode) {
-	  if (cancelReasonCode != null && !cancelReasonCode.isEmpty()) {
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgCancellationCodesEntity localEntity = (MdtCnfgCancellationCodesEntity)
-		  //			valBeanRemote.validateCancelReasonCode(reasonCode);
-		  MdtCnfgCancellationCodesEntity localEntity = findCancellationCodes(cancelReasonCode);
-		  if (localEntity != null) {
-			  //2019-02-05 SalehaR - CHG-155429
-			  if (localEntity.getCancellationCode().equalsIgnoreCase("MICN") ||
-					  localEntity.getCancellationCode().equalsIgnoreCase("MACN")) {
-				  return false;
-			  } else {
-				  return true;
-			  }
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
-  }
-
   /**
    * This is an AC MMM Rule 025 / 029
    *
@@ -1721,7 +1674,7 @@ public class Validation_ST {
 			  debitValueType = "USAGE BASED";
 		  }
 
-		  MdtCnfgDebitValueTypeEntity debitValueTypeEntity = findDebitValTypes(debitValueType);
+		  CasCnfgDebitValueTypeEntity debitValueTypeEntity = findDebitValTypes(debitValueType);
 		  if (debitValueTypeEntity == null) {
 			  return false;
 		  } else {
@@ -1766,7 +1719,7 @@ public class Validation_ST {
 		  String trimmedAdjCat = adjCategory.trim();
 		  log.debug("trimmedAdjCat: " + trimmedAdjCat);
 
-		  MdtCnfgAdjustmentCatEntity adjustmentCatEntity = findAdjustmentCat(adjCategory);
+		  CasCnfgAdjustmentCatEntity adjustmentCatEntity = findAdjustmentCat(adjCategory);
 		  if (adjustmentCatEntity == null) {
 			  return false;
 		  } else {
@@ -1856,10 +1809,10 @@ public class Validation_ST {
 		}
 	 */
 
-  public MdtAcOpsMandateTxnsEntity matchPain012(String origMndtReqTransId) {
-    List<MdtAcOpsMandateTxnsEntity> matchedList = new ArrayList<MdtAcOpsMandateTxnsEntity>();
-    TreeMap<String, MdtAcOpsMandateTxnsEntity> matchedMap =
-        new TreeMap<String, MdtAcOpsMandateTxnsEntity>();
+  public CasOpsCessionAssignEntity matchPain012(String origMndtReqTransId) {
+    List<CasOpsCessionAssignEntity> matchedList = new ArrayList<CasOpsCessionAssignEntity>();
+    TreeMap<String, CasOpsCessionAssignEntity> matchedMap =
+        new TreeMap<String, CasOpsCessionAssignEntity>();
 
     mdtAcMandateTxnsEntityOriginal = null;
     //		MdtAcOpsMandateTxnsEntity matchedMandate= null;
@@ -1975,17 +1928,17 @@ public class Validation_ST {
     //			return false;
   }
 
-  public MdtAcOpsMandateTxnsEntity matchPacs002ToOrigMandate(String mandateReqTranId,
+  public CasOpsCessionAssignEntity matchPacs002ToOrigMandate(String mandateReqTranId,
                                                              String messageType) {
     //		log.debug("XXXXXX*******LOOKING FOR MATCH FOR ST101******XXXXXXX");
     //		log.debug("mandateReqTranId: "+mandateReqTranId);
     //		log.debug("messageType: "+messageType);
 
-    MdtAcOpsMandateTxnsEntity matchedMandate = null;
+    CasOpsCessionAssignEntity matchedMandate = null;
     if (mandateReqTranId != null && !mandateReqTranId.isEmpty() && messageType != null &&
         !messageType.isEmpty()) {
       matchedMandate =
-          (MdtAcOpsMandateTxnsEntity) fileProcBeanRemote.matchPacs002ToOrigMandate(mandateReqTranId,
+          (CasOpsCessionAssignEntity) fileProcBeanRemote.matchPacs002ToOrigMandate(mandateReqTranId,
               messageType);
       if (matchedMandate != null) {
         mdtAcMandateTxnsEntityOriginal = matchedMandate;
@@ -1995,32 +1948,10 @@ public class Validation_ST {
     return matchedMandate;
   }
 
-  /**
-   * @param rejectReasonCode reason Code
-   *                         manres009
-   */
-  public boolean validateMandateRejectReasonCode(String rejectReasonCode) {
-	  if (rejectReasonCode != null && !rejectReasonCode.isEmpty()) {
-		  String trimmedRejReason = rejectReasonCode.trim();
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgRejectReasonCodesEntity localEntity = (MdtCnfgRejectReasonCodesEntity)
-		  //			valBeanRemote.validateMandateRejectReasonCode(trimmedRejReason);
-
-		  MdtCnfgRejectReasonCodesEntity localEntity = findRejectReasonCodes(trimmedRejReason);
-		  if (localEntity != null) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
-  }
-
   public boolean validateAuthenticationType(String authType) {
 	  if (authType != null) {
 		  String trimmedAuthType = authType.trim();
-		  MdtCnfgAuthTypeEntity cnfgAuthTypeEntity = findAuthTypes(trimmedAuthType);
+		  CasCnfgAuthTypeEntity cnfgAuthTypeEntity = findAuthTypes(trimmedAuthType);
 
 		  if (cnfgAuthTypeEntity == null) {
 			  return false;
@@ -2186,7 +2117,7 @@ public class Validation_ST {
 		  //			2019-10-06 SalehaR - Use Cached List
 		  //			MdtCnfgAccountTypeEntity localEntity = (MdtCnfgAccountTypeEntity)
 		  //			valBeanRemote.validateAccountType(trimmedAccType.toUpperCase());
-		  MdtCnfgAccountTypeEntity accTypeEntity = findAccountTypes(trimmedAccType);
+		  CasCnfgAccountTypeEntity accTypeEntity = findAccountTypes(trimmedAccType);
 		  if (accTypeEntity != null) {
 			  return true;
 		  } else {
@@ -2389,7 +2320,7 @@ public class Validation_ST {
 		  //			2019-10-06 SalehaR - Use Cached List
 		  //			MdtCnfgErrorCodesEntity localEntity = (MdtCnfgErrorCodesEntity) valBeanRemote
 		  //			.validateErrorCodes(errorCode);
-		  MdtCnfgErrorCodesEntity localEntity = findErrorCodes(errorCode);
+		  CasCnfgErrorCodesEntity localEntity = findErrorCodes(errorCode);
 		  if (localEntity != null) {
 			  return true;
 		  } else {
@@ -2439,8 +2370,8 @@ public class Validation_ST {
     //		2020/08/05 SalehaR ==  Duplicate Check Optimisation Reverted
     //		return fileProcBeanRemote.checkForDuplicateMRTI(mrti);
 
-    List<MdtAcOpsMandateTxnsEntity> mandateTxnList =
-        (List<MdtAcOpsMandateTxnsEntity>) fileProcBeanRemote.validateMndtReqTranIdUnique(
+    List<CasOpsCessionAssignEntity> mandateTxnList =
+        (List<CasOpsCessionAssignEntity>) fileProcBeanRemote.validateMndtReqTranIdUnique(
             trimMndtReqTranId);
 
     if (mandateTxnList != null & mandateTxnList.size() > 0) {
@@ -2588,8 +2519,8 @@ public class Validation_ST {
 
   public boolean validatePacs002MsgId(String msgId) {
 	  if (msgId != null && !msgId.isEmpty()) {
-		  List<MdtAcOpsConfHdrsEntity> mdtAcOpsConfHdrsList =
-				  (List<MdtAcOpsConfHdrsEntity>) valBeanRemote.validatePacs002MsgId(msgId);
+		  List<CasOpsConfHdrsEntity> mdtAcOpsConfHdrsList =
+				  (List<CasOpsConfHdrsEntity>) valBeanRemote.validatePacs002MsgId(msgId);
 		  log.debug("the message id is *******************************************" + msgId);
 		  if (mdtAcOpsConfHdrsList != null & mdtAcOpsConfHdrsList.size() > 0) {
 			  return false;
@@ -2639,13 +2570,13 @@ public class Validation_ST {
 
   public void populateErrorCodes() {
     try {
-      List<MdtCnfgErrorCodesEntity> errorCodesList =
-          (List<MdtCnfgErrorCodesEntity>) adminBeanRemote.retrieveActiveErrorCodes("Y");
+      List<CasCnfgErrorCodesEntity> errorCodesList =
+          (List<CasCnfgErrorCodesEntity>) adminBeanRemote.retrieveActiveErrorCodes("Y");
 
       if (errorCodesList != null && errorCodesList.size() > 0) {
         listOfErrorCodes = new HashMap<String, String>();
 
-        for (MdtCnfgErrorCodesEntity localEntity : errorCodesList) {
+        for (CasCnfgErrorCodesEntity localEntity : errorCodesList) {
           listOfErrorCodes.put(localEntity.getErrorCode(), localEntity.getErrorCodeDesc());
         }
       }
@@ -2656,14 +2587,14 @@ public class Validation_ST {
   }
 
   //	===================CACHEABLE STATIC DATA=============================//
-  private MdtOpsServicesEntity findOpsServices(final String serviceIdIn) {
+  private CasOpsServicesEntity findOpsServices(final String serviceIdIn) {
     if (serviceIdIn == null || opsServicesList == null || opsServicesList.isEmpty()) {
       return null;
     }
 
-    MdtOpsServicesEntity mdtOpsServiceEntity = IterableUtils.find(opsServicesList,
-        new Predicate<MdtOpsServicesEntity>() {
-          public boolean evaluate(MdtOpsServicesEntity opsServicesEntity) {
+    CasOpsServicesEntity mdtOpsServiceEntity = IterableUtils.find(opsServicesList,
+        new Predicate<CasOpsServicesEntity>() {
+          public boolean evaluate(CasOpsServicesEntity opsServicesEntity) {
             return ((serviceIdIn.equalsIgnoreCase(opsServicesEntity.getServiceIdIn())) &&
                 opsServicesEntity.getActiveInd().equalsIgnoreCase("Y"));
           }
@@ -2732,14 +2663,14 @@ public class Validation_ST {
     return sysCisBranchEntity;
   }
 
-  private MdtCnfgSequenceTypeEntity findSequenceTypes(final String sequenceType) {
+  private CasCnfgSequenceTypeEntity findSequenceTypes(final String sequenceType) {
     if (sequenceType == null || cnfgSequenceTypeList == null || cnfgSequenceTypeList.isEmpty()) {
       return null;
     }
 
-    MdtCnfgSequenceTypeEntity cnfgSeqTypeEntity = IterableUtils.find(cnfgSequenceTypeList,
-        new Predicate<MdtCnfgSequenceTypeEntity>() {
-          public boolean evaluate(MdtCnfgSequenceTypeEntity cnfgSeqTypeEntity) {
+    CasCnfgSequenceTypeEntity cnfgSeqTypeEntity = IterableUtils.find(cnfgSequenceTypeList,
+        new Predicate<CasCnfgSequenceTypeEntity>() {
+          public boolean evaluate(CasCnfgSequenceTypeEntity cnfgSeqTypeEntity) {
             return ((sequenceType.equalsIgnoreCase(cnfgSeqTypeEntity.getSeqTypeCode())) &&
                 cnfgSeqTypeEntity.getActiveInd().equalsIgnoreCase("Y"));
           }
@@ -2748,15 +2679,15 @@ public class Validation_ST {
     return cnfgSeqTypeEntity;
   }
 
-  private MdtCnfgFrequencyCodesEntity findFrequencyCodes(final String frequencyCode) {
+  private CasCnfgFrequencyCodesEntity findFrequencyCodes(final String frequencyCode) {
     if (frequencyCode == null || cnfgFrequencyCodesList == null ||
         cnfgFrequencyCodesList.isEmpty()) {
       return null;
     }
 
-    MdtCnfgFrequencyCodesEntity cnfgFreqCodeEntity = IterableUtils.find(cnfgFrequencyCodesList,
-        new Predicate<MdtCnfgFrequencyCodesEntity>() {
-          public boolean evaluate(MdtCnfgFrequencyCodesEntity cnfgFreqCodeEntity) {
+    CasCnfgFrequencyCodesEntity cnfgFreqCodeEntity = IterableUtils.find(cnfgFrequencyCodesList,
+        new Predicate<CasCnfgFrequencyCodesEntity>() {
+          public boolean evaluate(CasCnfgFrequencyCodesEntity cnfgFreqCodeEntity) {
             return ((frequencyCode.equalsIgnoreCase(cnfgFreqCodeEntity.getFrequencyCode())) &&
                 cnfgFreqCodeEntity.getActiveInd().equalsIgnoreCase("Y"));
           }
@@ -2765,15 +2696,15 @@ public class Validation_ST {
     return cnfgFreqCodeEntity;
   }
 
-  private MdtCnfgDebitValueTypeEntity findDebitValTypes(final String debitValType) {
+  private CasCnfgDebitValueTypeEntity findDebitValTypes(final String debitValType) {
     if (debitValType == null || cnfgDebitValueTypeList == null ||
         cnfgDebitValueTypeList.isEmpty()) {
       return null;
     }
 
-    MdtCnfgDebitValueTypeEntity cnfgDebitValTypesEntity = IterableUtils.find(cnfgDebitValueTypeList,
-        new Predicate<MdtCnfgDebitValueTypeEntity>() {
-          public boolean evaluate(MdtCnfgDebitValueTypeEntity debitValTypesEntity) {
+    CasCnfgDebitValueTypeEntity cnfgDebitValTypesEntity = IterableUtils.find(cnfgDebitValueTypeList,
+        new Predicate<CasCnfgDebitValueTypeEntity>() {
+          public boolean evaluate(CasCnfgDebitValueTypeEntity debitValTypesEntity) {
             return (
                 (debitValType.equalsIgnoreCase(debitValTypesEntity.getDebValueTypeDescription())) &&
                     debitValTypesEntity.getActiveInd().equalsIgnoreCase("Y"));
@@ -2782,14 +2713,14 @@ public class Validation_ST {
     return cnfgDebitValTypesEntity;
   }
 
-  private MdtCnfgAdjustmentCatEntity findAdjustmentCat(final String adjCategory) {
+  private CasCnfgAdjustmentCatEntity findAdjustmentCat(final String adjCategory) {
     if (adjCategory == null || cnfgAdjustmentCatList == null || cnfgAdjustmentCatList.isEmpty()) {
       return null;
     }
 
-    MdtCnfgAdjustmentCatEntity cnfgAdjCatEntity = IterableUtils.find(cnfgAdjustmentCatList,
-        new Predicate<MdtCnfgAdjustmentCatEntity>() {
-          public boolean evaluate(MdtCnfgAdjustmentCatEntity cnfgAdjCatEntity) {
+    CasCnfgAdjustmentCatEntity cnfgAdjCatEntity = IterableUtils.find(cnfgAdjustmentCatList,
+        new Predicate<CasCnfgAdjustmentCatEntity>() {
+          public boolean evaluate(CasCnfgAdjustmentCatEntity cnfgAdjCatEntity) {
             return ((adjCategory.equalsIgnoreCase(cnfgAdjCatEntity.getAdjustmentCategory())) &&
                 cnfgAdjCatEntity.getActiveInd().equalsIgnoreCase("Y"));
           }
@@ -2797,14 +2728,14 @@ public class Validation_ST {
     return cnfgAdjCatEntity;
   }
 
-  private MdtCnfgAuthTypeEntity findAuthTypes(final String authType) {
+  private CasCnfgAuthTypeEntity findAuthTypes(final String authType) {
     if (authType == null || cnfgAuthTypeList == null || cnfgAuthTypeList.isEmpty()) {
       return null;
     }
 
-    MdtCnfgAuthTypeEntity cnfgAuthTypeEntity = IterableUtils.find(cnfgAuthTypeList,
-        new Predicate<MdtCnfgAuthTypeEntity>() {
-          public boolean evaluate(MdtCnfgAuthTypeEntity cnfgAuthTypeEntity) {
+    CasCnfgAuthTypeEntity cnfgAuthTypeEntity = IterableUtils.find(cnfgAuthTypeList,
+        new Predicate<CasCnfgAuthTypeEntity>() {
+          public boolean evaluate(CasCnfgAuthTypeEntity cnfgAuthTypeEntity) {
             return ((authType.equalsIgnoreCase(cnfgAuthTypeEntity.getAuthType())) &&
                 cnfgAuthTypeEntity.getActiveInd().equalsIgnoreCase("Y"));
           }
@@ -2812,14 +2743,14 @@ public class Validation_ST {
     return cnfgAuthTypeEntity;
   }
 
-  private MdtCnfgAccountTypeEntity findAccountTypes(final String accType) {
+  private CasCnfgAccountTypeEntity findAccountTypes(final String accType) {
     if (accType == null || cnfgAccountTypesList == null || cnfgAccountTypesList.isEmpty()) {
       return null;
     }
 
-    MdtCnfgAccountTypeEntity cnfgAccTypesEntity = IterableUtils.find(cnfgAccountTypesList,
-        new Predicate<MdtCnfgAccountTypeEntity>() {
-          public boolean evaluate(MdtCnfgAccountTypeEntity cnfgAccTypesEntity) {
+    CasCnfgAccountTypeEntity cnfgAccTypesEntity = IterableUtils.find(cnfgAccountTypesList,
+        new Predicate<CasCnfgAccountTypeEntity>() {
+          public boolean evaluate(CasCnfgAccountTypeEntity cnfgAccTypesEntity) {
             return ((accType.equalsIgnoreCase(cnfgAccTypesEntity.getAccountTypeDescription())) &&
                 cnfgAccTypesEntity.getActiveInd().equalsIgnoreCase("Y"));
           }
@@ -2827,14 +2758,14 @@ public class Validation_ST {
     return cnfgAccTypesEntity;
   }
 
-  private MdtCnfgReasonCodesEntity findReasonCodes(final String reasonCode) {
+  private CasCnfgReasonCodesEntity findReasonCodes(final String reasonCode) {
     if (reasonCode == null || cnfgReasonCodesList == null || cnfgReasonCodesList.isEmpty()) {
       return null;
     }
 
-    MdtCnfgReasonCodesEntity cnfgReasonCodesEntity = IterableUtils.find(cnfgReasonCodesList,
-        new Predicate<MdtCnfgReasonCodesEntity>() {
-          public boolean evaluate(MdtCnfgReasonCodesEntity cnfgReasonCodesEntity) {
+    CasCnfgReasonCodesEntity cnfgReasonCodesEntity = IterableUtils.find(cnfgReasonCodesList,
+        new Predicate<CasCnfgReasonCodesEntity>() {
+          public boolean evaluate(CasCnfgReasonCodesEntity cnfgReasonCodesEntity) {
             return ((reasonCode.equalsIgnoreCase(cnfgReasonCodesEntity.getReasonCode())) &&
                 cnfgReasonCodesEntity.getActiveInd().equalsIgnoreCase("Y"));
           }
@@ -2842,16 +2773,16 @@ public class Validation_ST {
     return cnfgReasonCodesEntity;
   }
 
-  private MdtCnfgAmendmentCodesEntity findAmendmentCodes(final String amendmentCode) {
+  private CasCnfgAmendmentCodesEntity findAmendmentCodes(final String amendmentCode) {
     if (amendmentCode == null || cnfgAmendmentCodesList == null ||
         cnfgAmendmentCodesList.isEmpty()) {
       return null;
     }
 
-    MdtCnfgAmendmentCodesEntity cnfgAmendmentCodesEntity =
+    CasCnfgAmendmentCodesEntity cnfgAmendmentCodesEntity =
         IterableUtils.find(cnfgAmendmentCodesList,
-            new Predicate<MdtCnfgAmendmentCodesEntity>() {
-              public boolean evaluate(MdtCnfgAmendmentCodesEntity cnfgAmendmentCodesEntity) {
+            new Predicate<CasCnfgAmendmentCodesEntity>() {
+              public boolean evaluate(CasCnfgAmendmentCodesEntity cnfgAmendmentCodesEntity) {
                 return ((amendmentCode.equalsIgnoreCase(
                     cnfgAmendmentCodesEntity.getAmendmentCodes())) &&
                     cnfgAmendmentCodesEntity.getActiveInd().equalsIgnoreCase("Y"));
@@ -2860,50 +2791,14 @@ public class Validation_ST {
     return cnfgAmendmentCodesEntity;
   }
 
-  private MdtCnfgCancellationCodesEntity findCancellationCodes(final String cancellationCode) {
-    if (cancellationCode == null || cnfgCancellationCodesList == null ||
-        cnfgCancellationCodesList.isEmpty()) {
-      return null;
-    }
-
-    MdtCnfgCancellationCodesEntity cnfgCancellationCodesEntity =
-        IterableUtils.find(cnfgCancellationCodesList,
-            new Predicate<MdtCnfgCancellationCodesEntity>() {
-              public boolean evaluate(MdtCnfgCancellationCodesEntity cnfgCancellationCodesEntity) {
-                return ((cancellationCode.equalsIgnoreCase(
-                    cnfgCancellationCodesEntity.getCancellationCode())) &&
-                    cnfgCancellationCodesEntity.getActiveInd().equalsIgnoreCase("Y"));
-              }
-            });
-    return cnfgCancellationCodesEntity;
-  }
-
-  private MdtCnfgRejectReasonCodesEntity findRejectReasonCodes(final String rejectReasonCode) {
-    if (rejectReasonCode == null || cnfgRejectReasonCodesList == null ||
-        cnfgRejectReasonCodesList.isEmpty()) {
-      return null;
-    }
-
-    MdtCnfgRejectReasonCodesEntity cnfgRejectReasonCodesEntity =
-        IterableUtils.find(cnfgRejectReasonCodesList,
-            new Predicate<MdtCnfgRejectReasonCodesEntity>() {
-              public boolean evaluate(MdtCnfgRejectReasonCodesEntity cnfgRejectReasonCodesEntity) {
-                return ((rejectReasonCode.equalsIgnoreCase(
-                    cnfgRejectReasonCodesEntity.getRejectReasonCode())) &&
-                    cnfgRejectReasonCodesEntity.getActiveInd().equalsIgnoreCase("Y"));
-              }
-            });
-    return cnfgRejectReasonCodesEntity;
-  }
-
-  private MdtCnfgErrorCodesEntity findErrorCodes(final String errorCode) {
+  private CasCnfgErrorCodesEntity findErrorCodes(final String errorCode) {
     if (errorCode == null || cnfgErrorCodesList == null || cnfgErrorCodesList.isEmpty()) {
       return null;
     }
 
-    MdtCnfgErrorCodesEntity cnfgErrorCodesEntity = IterableUtils.find(cnfgErrorCodesList,
-        new Predicate<MdtCnfgErrorCodesEntity>() {
-          public boolean evaluate(MdtCnfgErrorCodesEntity cnfgErrorCodesEntity) {
+    CasCnfgErrorCodesEntity cnfgErrorCodesEntity = IterableUtils.find(cnfgErrorCodesList,
+        new Predicate<CasCnfgErrorCodesEntity>() {
+          public boolean evaluate(CasCnfgErrorCodesEntity cnfgErrorCodesEntity) {
             return ((errorCode.equalsIgnoreCase(cnfgErrorCodesEntity.getErrorCode())) &&
                 cnfgErrorCodesEntity.getActiveInd().equalsIgnoreCase("Y"));
           }
@@ -2916,14 +2811,14 @@ public class Validation_ST {
 	  if (memberNo != null && !memberNo.isEmpty() ||
 			  serviceName != null && !serviceName.isEmpty() ||
 			  inwardFileSize > 0) {
-		  MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity =
+		  CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity =
 				  findFileSizeLimt(serviceName, memberNo, inwardFileSize);
 
-		  if (mdtAcOpsFileSizeLimitEntity == null) {
+		  if (casOpsFileSizeLimitEntity == null) {
 			  return false;
 		  } else {
 
-			  if (inwardFileSize <= Integer.valueOf(mdtAcOpsFileSizeLimitEntity.getLimit())) {
+			  if (inwardFileSize <= Integer.valueOf(casOpsFileSizeLimitEntity.getLimit())) {
 				  return true;
 			  } else {
 				  return false;
@@ -2935,29 +2830,29 @@ public class Validation_ST {
   }
 
 
-  public MdtAcOpsFileSizeLimitEntity findFileSizeLimt(final String serviceName,
-                                                      final String memberNo,
-                                                      final Integer inwardFileSize) {
+  public CasOpsFileSizeLimitEntity findFileSizeLimt(final String serviceName,
+                                                    final String memberNo,
+                                                    final Integer inwardFileSize) {
     if (memberNo == null || serviceName == null || inwardFileSize < 0 ||
         opsFileSizeLimitList == null || opsFileSizeLimitList.isEmpty()) {
       return null;
     }
-    MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity =
-        IterableUtils.find(opsFileSizeLimitList, new Predicate<MdtAcOpsFileSizeLimitEntity>() {
+    CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity =
+        IterableUtils.find(opsFileSizeLimitList, new Predicate<CasOpsFileSizeLimitEntity>() {
 
           @Override
-          public boolean evaluate(MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity) {
+          public boolean evaluate(CasOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity) {
             // TODO Auto-generated method stub
             return
                 ((serviceName.equalsIgnoreCase(
-                    mdtAcOpsFileSizeLimitEntity.getMdtAcOpsFileSizeLimitPK().getSubService())) &&
+                    mdtAcOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getSubService())) &&
                     memberNo.equalsIgnoreCase(
-                        mdtAcOpsFileSizeLimitEntity.getMdtAcOpsFileSizeLimitPK().getMemberId()) &&
+                        mdtAcOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getMemberId()) &&
                     inwardFileSize <= Integer.valueOf(mdtAcOpsFileSizeLimitEntity.getLimit()));
           }
 
         });
-    return mdtAcOpsFileSizeLimitEntity;
+    return casOpsFileSizeLimitEntity;
 
   }
 
@@ -3006,17 +2901,17 @@ public class Validation_ST {
                                        String fileName) {
     //Populate Ops Txn Bill Table
 
-    MdtAcOpsTxnsBillReportEntity opsTxnsBillReport = new MdtAcOpsTxnsBillReportEntity();
+    CasOpsTxnsBillReportEntity opsTxnsBillReport = new CasOpsTxnsBillReportEntity();
 
     opsTxnsBillReport.setSystemSeqNo(new BigDecimal(123));
 
     opsTxnsBillReport.setProcessDate(casSysctrlSysParamEntity.getProcessDate());
 
-    MdtOpsFileRegEntity mdtOpsFileRegEntity =
-        (MdtOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
+    CasOpsFileRegEntity casOpsFileRegEntity =
+        (CasOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
 
-    if (mdtOpsFileRegEntity != null && mdtOpsFileRegEntity.getFileName() != null) {
-      opsTxnsBillReport.setDeliveryTime(mdtOpsFileRegEntity.getProcessDate());
+    if (casOpsFileRegEntity != null && casOpsFileRegEntity.getFileName() != null) {
+      opsTxnsBillReport.setDeliveryTime(casOpsFileRegEntity.getProcessDate());
     }
 
     opsTxnsBillReport.setFileName(fileName);

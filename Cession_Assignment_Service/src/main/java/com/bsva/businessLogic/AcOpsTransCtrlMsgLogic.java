@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bsva.commons.model.AcOpsTransCtrlMsgModel;
-import com.bsva.entities.MdtAcOpsTransCtrlMsgEntity;
+import com.bsva.entities.CasOpsTransCtrlMsgEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class AcOpsTransCtrlMsgLogic {
@@ -16,32 +16,34 @@ public class AcOpsTransCtrlMsgLogic {
 	}
 
 	
-	public List<AcOpsTransCtrlMsgModel> retrieveAllACOpsRecords(List<MdtAcOpsTransCtrlMsgEntity> AcOpsTransCtrlMsgEntityList) {
+	public List<AcOpsTransCtrlMsgModel> retrieveAllACOpsRecords(List<CasOpsTransCtrlMsgEntity> AcOpsTransCtrlMsgEntityList) {
 		List<AcOpsTransCtrlMsgModel> acOpsTransCtrlMsgModelList = new ArrayList<AcOpsTransCtrlMsgModel>();
 		AcOpsTransCtrlMsgModel acOpsTransCtrlMsgModel;
 		
-		for (MdtAcOpsTransCtrlMsgEntity mdtAcOpsTransCtrlMsgEntity:AcOpsTransCtrlMsgEntityList) 
+		for (CasOpsTransCtrlMsgEntity casOpsTransCtrlMsgEntity :AcOpsTransCtrlMsgEntityList)
 		{
 			acOpsTransCtrlMsgModel = new AcOpsTransCtrlMsgModel();
-			acOpsTransCtrlMsgModel = new AdminTranslator().translateMdtAcOpsTransCtrlMsgEntityToCommons(mdtAcOpsTransCtrlMsgEntity);
+			acOpsTransCtrlMsgModel = new AdminTranslator().translateMdtAcOpsTransCtrlMsgEntityToCommons(
+                casOpsTransCtrlMsgEntity);
 			acOpsTransCtrlMsgModelList.add(acOpsTransCtrlMsgModel);
 		}
 
 		return acOpsTransCtrlMsgModelList;
 	}
 
-	public MdtAcOpsTransCtrlMsgEntity addCtrlMsg(AcOpsTransCtrlMsgModel acOpsTransCtrlMsgModel) 
+	public CasOpsTransCtrlMsgEntity addCtrlMsg(AcOpsTransCtrlMsgModel acOpsTransCtrlMsgModel)
 	{
-		MdtAcOpsTransCtrlMsgEntity mdtAcOpsTransCtrlMsgEntity = new AdminTranslator().translateCommonsAcOpsTransCtrlModelToEntity(acOpsTransCtrlMsgModel);
-		return mdtAcOpsTransCtrlMsgEntity;
+		CasOpsTransCtrlMsgEntity casOpsTransCtrlMsgEntity = new AdminTranslator().translateCommonsAcOpsTransCtrlModelToEntity(acOpsTransCtrlMsgModel);
+		return casOpsTransCtrlMsgEntity;
 	}
 
 
 	
-	public AcOpsTransCtrlMsgModel retrieveMsgType(MdtAcOpsTransCtrlMsgEntity mdtAcOpsTransCtrlMsgEntity)
+	public AcOpsTransCtrlMsgModel retrieveMsgType(CasOpsTransCtrlMsgEntity casOpsTransCtrlMsgEntity)
 	{
 		AcOpsTransCtrlMsgModel localModel = new AcOpsTransCtrlMsgModel();
-		localModel = new AdminTranslator().translateMdtAcOpsTransCtrlMsgEntityToCommons(mdtAcOpsTransCtrlMsgEntity);
+		localModel = new AdminTranslator().translateMdtAcOpsTransCtrlMsgEntityToCommons(
+            casOpsTransCtrlMsgEntity);
 		
 		return localModel;
 	}

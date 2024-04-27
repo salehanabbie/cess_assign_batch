@@ -4,31 +4,30 @@ import com.bsva.FileWatcher;
 import com.bsva.PropertyUtil;
 import com.bsva.authcoll.singletable.validation.Validation_ST;
 import com.bsva.delivery.StartOfTransmissionExtract;
+import com.bsva.entities.CasOpsBillingCtrlsEntity;
 import com.bsva.entities.CasSysctrlCustParamEntity;
 import com.bsva.entities.CasSysctrlFileSizeLimitEntity;
 import com.bsva.entities.CasSysctrlSchedulerEntity;
 import com.bsva.entities.CasSysctrlServicesEntity;
 import com.bsva.entities.CasSysctrlSlaTimesEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
-import com.bsva.entities.MdtAcOpsBillingCtrlsEntity;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
-import com.bsva.entities.MdtAcOpsFileSizeLimitPK;
-import com.bsva.entities.MdtAcOpsProcessControlsEntity;
-import com.bsva.entities.MdtAcOpsSchedulerEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlPK;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsLastExtractTimesEntity;
-import com.bsva.entities.MdtOpsProcessControlsEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
-import com.bsva.entities.MdtOpsRefSeqNrPK;
-import com.bsva.entities.MdtOpsRepSeqNrEntity;
-import com.bsva.entities.MdtOpsRepSeqNrPK;
-import com.bsva.entities.MdtOpsServicesEntity;
-import com.bsva.entities.MdtOpsSlaTimesEntity;
-import com.bsva.entities.ObsSystemBillingCtrlsEntity;
-import com.bsva.entities.ObsSystemBillingCtrlsPK;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsFileSizeLimitPK;
+import com.bsva.entities.CasOpsProcessControlsEntity;
+import com.bsva.entities.CasOpsSchedulerEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsSotEotCtrlPK;
+import com.bsva.entities.CasCnfgReportNamesEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsLastExtractTimesEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsRefSeqNrPK;
+import com.bsva.entities.CasOpsRepSeqNrEntity;
+import com.bsva.entities.CasOpsRepSeqNrPK;
+import com.bsva.entities.CasOpsServicesEntity;
+import com.bsva.entities.CasOpsSlaTimesEntity;
+import com.bsva.entities.CasSystemBillingCtrlsEntity;
+import com.bsva.entities.CasSystemBillingCtrlsPK;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.QuartzSchedulerBeanRemote;
@@ -75,8 +74,7 @@ public class StartOfDayLogic {
   Date currentDate = new Date();
   CasSysctrlSysParamEntity casSysctrlSysParamEntity, mdtSysParamEntity;
   CasSysctrlSlaTimesEntity casSysctrlSlaTimesEntity;
-  MdtOpsProcessControlsEntity mdtOpsProcessControlsEntity = new MdtOpsProcessControlsEntity();
-  MdtAcOpsProcessControlsEntity mdtAcOpsProcessControlsEntity = new MdtAcOpsProcessControlsEntity();
+  CasOpsProcessControlsEntity casOpsProcessControlsEntity = new CasOpsProcessControlsEntity();
   List<CasSysctrlFileSizeLimitEntity> mdtSysctrlFileSizeLimitEntityList =
       new ArrayList<CasSysctrlFileSizeLimitEntity>();
   int lastSeqNo = 0000;
@@ -209,12 +207,12 @@ public class StartOfDayLogic {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    mdtAcOpsProcessControlsEntity =
-        (MdtAcOpsProcessControlsEntity) adminBeanRemote.retrieveCisDownloadInd(currDate);
+    casOpsProcessControlsEntity =
+        (CasOpsProcessControlsEntity) adminBeanRemote.retrieveCisDownloadInd(currDate);
 
-    if (mdtAcOpsProcessControlsEntity != null) {
-      if (mdtAcOpsProcessControlsEntity.getCisDownloadInd() != null &&
-          mdtAcOpsProcessControlsEntity.getCisDownloadInd().equalsIgnoreCase("N")) {
+    if (casOpsProcessControlsEntity != null) {
+      if (casOpsProcessControlsEntity.getCisDownloadInd() != null &&
+          casOpsProcessControlsEntity.getCisDownloadInd().equalsIgnoreCase("N")) {
         sodCheck = false;
         log.info(
             "CIS download not done for current day. Please run the CIS download in order to " +
@@ -254,8 +252,8 @@ public class StartOfDayLogic {
           //Populate Billing Table.
           populateBilling = populateBillingCntrlInfo();
           //Reset Billing Window number
-          MdtAcOpsBillingCtrlsEntity billingCtrlsEntity =
-              (MdtAcOpsBillingCtrlsEntity) serviceBeanRemote.retrieveBillingCtrls("BILLING");
+          CasOpsBillingCtrlsEntity billingCtrlsEntity =
+              (CasOpsBillingCtrlsEntity) serviceBeanRemote.retrieveBillingCtrls("BILLING");
           if (billingCtrlsEntity != null) {
             billingCtrlsEntity.setBillingWindow(Short.valueOf("0"));
             serviceBeanRemote.saveBillingCntrl(billingCtrlsEntity);
@@ -323,14 +321,14 @@ public class StartOfDayLogic {
     sysCntrlCustList =
         (List<CasSysctrlCustParamEntity>) adminBeanRemote.retrieveCustomerParameters();
     sysCisBankEntityList = (List<SysCisBankEntity>) adminBeanRemote.retrieveSysCisBank();
-    List<MdtOpsCustParamEntity> opsCustParam = new ArrayList<MdtOpsCustParamEntity>();
-    opsCustParam = (List<MdtOpsCustParamEntity>) adminBeanRemote.retrieveOpsCustParamTime();
+    List<CasOpsCustParamEntity> opsCustParam = new ArrayList<CasOpsCustParamEntity>();
+    opsCustParam = (List<CasOpsCustParamEntity>) adminBeanRemote.retrieveOpsCustParamTime();
 
 
     if (opsCustParam.size() == 0) {
       if (sysCntrlCustList.size() > 0) {
         for (CasSysctrlCustParamEntity syscntrCustEntity : sysCntrlCustList) {
-          MdtOpsCustParamEntity opsEntity = new MdtOpsCustParamEntity();
+          CasOpsCustParamEntity opsEntity = new CasOpsCustParamEntity();
           opsEntity.setInstId(syscntrCustEntity.getInstId());
           opsEntity.setManInitXsdNs(syscntrCustEntity.getManInitXsdNs());
           opsEntity.setManInitLstSeq(seqNo);
@@ -347,7 +345,6 @@ public class StartOfDayLogic {
           opsEntity.setActiveInd(syscntrCustEntity.getActiveInd());
           opsEntity.setCreatedBy(systemName);
           opsEntity.setCreatedDate(new Date());
-          opsEntity.setMdtReqIdReuseInd(syscntrCustEntity.getMdtReqIdReuseInd());
           opsEntity.setManRespXsdNs(syscntrCustEntity.getMdteRespXsdNs());
           opsEntity.setManReqXsdNs(syscntrCustEntity.getMdteReqXsdNs());
           opsEntity.setManReqLastFileNr(seqNo);
@@ -376,44 +373,6 @@ public class StartOfDayLogic {
       }
     }
     return saved;
-  }
-
-  public boolean populateOpsProcessControl() {
-    boolean saved = false;
-
-    sysCisBankEntityList = (List<SysCisBankEntity>) adminBeanRemote.retrieveSysCisBank();
-
-    List<MdtOpsProcessControlsEntity> opsProcessCntrlList =
-        new ArrayList<MdtOpsProcessControlsEntity>();
-    opsProcessCntrlList =
-        (List<MdtOpsProcessControlsEntity>) adminBeanRemote.retrieveOpsProcessControl();
-
-    if (opsProcessCntrlList.size() == 0) {
-      if (sysCisBankEntityList.size() > 0) {
-        for (SysCisBankEntity sysCisBankEntity : sysCisBankEntityList) {
-          MdtOpsProcessControlsEntity mdtOpsProcessCntrl = new MdtOpsProcessControlsEntity();
-
-          mdtOpsProcessCntrl.setActiveInd("Y");
-          mdtOpsProcessCntrl.setInstId(sysCisBankEntity.getMemberNo());
-          mdtOpsProcessCntrl.setMaxNrRecords(sysCisBankEntity.getMaxNrRecords());
-          mdtOpsProcessCntrl.setNrOfDaysProc(String.valueOf(sysCisBankEntity.getNrOfDaysProc()));
-          mdtOpsProcessCntrl.setPubHolProc(sysCisBankEntity.getPubHolProc());
-
-          saved = adminBeanRemote.createOpsProcessControls(mdtOpsProcessCntrl);
-        }
-      } else {
-        if (opsProcessCntrlList.size() > 0) {
-          log.info("The table still has data ,please run End of day to clean it out");
-        }
-      }
-    }
-
-    if (saved) {
-      log.info("Ops Process Controls Table  has been populated...");
-    }
-    return false;
-
-
   }
 
   public boolean populateSysParameters() throws ParseException {
@@ -548,21 +507,21 @@ public class StartOfDayLogic {
     mdtSysctrlSlaTimesEntityList =
         (List<CasSysctrlSlaTimesEntity>) adminBeanRemote.retrieveSlaTime();
 
-    List<MdtOpsSlaTimesEntity> mdtOpsSlaTimesEntityList = new ArrayList<MdtOpsSlaTimesEntity>();
+    List<CasOpsSlaTimesEntity> casOpsSlaTimesEntityList = new ArrayList<CasOpsSlaTimesEntity>();
 
-    mdtOpsSlaTimesEntityList = (List<MdtOpsSlaTimesEntity>) adminBeanRemote.retrieveOpsSlaTime();
+    casOpsSlaTimesEntityList = (List<CasOpsSlaTimesEntity>) adminBeanRemote.retrieveOpsSlaTime();
     log.debug("The sla times has ##############################" + mdtSysctrlSlaTimesEntityList);
-    if (mdtOpsSlaTimesEntityList != null && mdtOpsSlaTimesEntityList.size() == 0) {
+    if (casOpsSlaTimesEntityList != null && casOpsSlaTimesEntityList.size() == 0) {
       if (mdtSysctrlSlaTimesEntityList.size() > 0) {
         for (CasSysctrlSlaTimesEntity casSysctrlSlaTimesEntity : mdtSysctrlSlaTimesEntityList) {
 
-          MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity = new MdtOpsSlaTimesEntity();
+          CasOpsSlaTimesEntity casOpsSlaTimesEntity = new CasOpsSlaTimesEntity();
 
-          mdtOpsSlaTimesEntity.setEndTime(casSysctrlSlaTimesEntity.getEndTime());
-          mdtOpsSlaTimesEntity.setService(casSysctrlSlaTimesEntity.getService());
-          mdtOpsSlaTimesEntity.setStartTime(casSysctrlSlaTimesEntity.getStartTime());
-          saved = adminBeanRemote.createOpsSlaTimes(mdtOpsSlaTimesEntity);
-          log.debug("After saving we have the following data " + mdtOpsSlaTimesEntity);
+          casOpsSlaTimesEntity.setEndTime(casSysctrlSlaTimesEntity.getEndTime());
+          casOpsSlaTimesEntity.setService(casSysctrlSlaTimesEntity.getService());
+          casOpsSlaTimesEntity.setStartTime(casSysctrlSlaTimesEntity.getStartTime());
+          saved = adminBeanRemote.createOpsSlaTimes(casOpsSlaTimesEntity);
+          log.debug("After saving we have the following data " + casOpsSlaTimesEntity);
         }
       }
     }
@@ -582,19 +541,19 @@ public class StartOfDayLogic {
 
     sysCntrlServicesList =
         (List<CasSysctrlServicesEntity>) adminBeanRemote.retrieveServiceControl();
-    List<MdtOpsRefSeqNrEntity> opsRefSeqNrList = new ArrayList<MdtOpsRefSeqNrEntity>();
-    opsRefSeqNrList = (List<MdtOpsRefSeqNrEntity>) adminBeanRemote.retrieveOpsRefSeqNr();
+    List<CasOpsRefSeqNrEntity> opsRefSeqNrList = new ArrayList<CasOpsRefSeqNrEntity>();
+    opsRefSeqNrList = (List<CasOpsRefSeqNrEntity>) adminBeanRemote.retrieveOpsRefSeqNr();
 
     if (opsRefSeqNrList.size() == 0) {
       if (sysCntrlServicesList.size() > 0) {
         for (CasSysctrlServicesEntity syscntrServiceEntity : sysCntrlServicesList) {
           for (CasSysctrlCustParamEntity casSysctrlCustParamEntity : sysCntrlCustList) {
-            MdtOpsRefSeqNrEntity opsRefSeqNr = new MdtOpsRefSeqNrEntity();
-            MdtOpsRefSeqNrPK opsRefSeqPkEntity = new MdtOpsRefSeqNrPK();
+            CasOpsRefSeqNrEntity opsRefSeqNr = new CasOpsRefSeqNrEntity();
+            CasOpsRefSeqNrPK opsRefSeqPkEntity = new CasOpsRefSeqNrPK();
 
             opsRefSeqPkEntity.setServiceId(syscntrServiceEntity.getServiceIdOut());
             opsRefSeqPkEntity.setMemberNo(casSysctrlCustParamEntity.getInstId());
-            opsRefSeqNr.setMdtOpsRefSeqNrPK(opsRefSeqPkEntity);
+            opsRefSeqNr.setCasOpsRefSeqNrPK(opsRefSeqPkEntity);
             //opsRefSeqNr.setServiceId(syscntrServiceEntity.getServiceIdOut());
             opsRefSeqNr.setCreatedDate(new Date());
             opsRefSeqNr.setCreatedBy(systemName);
@@ -764,18 +723,18 @@ public class StartOfDayLogic {
     log.debug(
         "<<<<<<<<<<<<<<-----sysCntrlServicesList------->>>>>>>>>>>>>>" + sysCntrlServicesList);
 
-    List<MdtAcOpsSotEotCtrlEntity> mdtAcOpsSotEotCtrlEntityList =
-        new ArrayList<MdtAcOpsSotEotCtrlEntity>();
-    mdtAcOpsSotEotCtrlEntityList =
-        (List<MdtAcOpsSotEotCtrlEntity>) adminBeanRemote.retrieveACOpsSotEot();
+    List<CasOpsSotEotCtrlEntity> casOpsSotEotCtrlEntityList =
+        new ArrayList<CasOpsSotEotCtrlEntity>();
+    casOpsSotEotCtrlEntityList =
+        (List<CasOpsSotEotCtrlEntity>) adminBeanRemote.retrieveACOpsSotEot();
     log.debug("<<<<<<<<<<<<<<-----mdtAcOpsSotEotCtrlEntityList------->>>>>>>>>>>>>>" +
-        mdtAcOpsSotEotCtrlEntityList);
+        casOpsSotEotCtrlEntityList);
 
     sysCntrlCustList =
         (List<CasSysctrlCustParamEntity>) adminBeanRemote.retrieveCustomerParameters();
     log.debug("<<<<<<<<<<<<<<-----sysCntrlCustList------->>>>>>>>>>>>>>" + sysCntrlCustList);
 
-    if (mdtAcOpsSotEotCtrlEntityList != null && mdtAcOpsSotEotCtrlEntityList.size() == 0) {
+    if (casOpsSotEotCtrlEntityList != null && casOpsSotEotCtrlEntityList.size() == 0) {
       if (sysCntrlServicesList != null && sysCntrlServicesList.size() > 0) {
         //POPULATE INPUT SERVICES
         for (CasSysctrlServicesEntity casSysctrlServicesEntity : sysCntrlServicesList) {
@@ -784,17 +743,17 @@ public class StartOfDayLogic {
               log.debug("SERVICE ID IN ~~~~~ :" + casSysctrlServicesEntity.getServiceIdIn());
               log.debug("MEMBER ~~~~~ :" + casSysctrlCustParamEntity.getInstId());
 
-              MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
-              MdtAcOpsSotEotCtrlPK mdtAcOpsSotEotCtrlPK = new MdtAcOpsSotEotCtrlPK();
-              mdtAcOpsSotEotCtrlPK.setInstId(casSysctrlCustParamEntity.getInstId());
-              mdtAcOpsSotEotCtrlPK.setServiceId(casSysctrlServicesEntity.getServiceIdIn());
-              mdtAcOpsSotEotCtrlEntity.setMdtAcOpsSotEotCtrlPK(mdtAcOpsSotEotCtrlPK);
-              mdtAcOpsSotEotCtrlEntity.setEotIn("N");
-              mdtAcOpsSotEotCtrlEntity.setSotIn("N");
-              mdtAcOpsSotEotCtrlEntity.setEotOut("N");
-              mdtAcOpsSotEotCtrlEntity.setSotOut("N");
+              CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
+              CasOpsSotEotCtrlPK casOpsSotEotCtrlPK = new CasOpsSotEotCtrlPK();
+              casOpsSotEotCtrlPK.setInstId(casSysctrlCustParamEntity.getInstId());
+              casOpsSotEotCtrlPK.setServiceId(casSysctrlServicesEntity.getServiceIdIn());
+              casOpsSotEotCtrlEntity.setCasOpsSotEotCtrlPK(casOpsSotEotCtrlPK);
+              casOpsSotEotCtrlEntity.setEotIn("N");
+              casOpsSotEotCtrlEntity.setSotIn("N");
+              casOpsSotEotCtrlEntity.setEotOut("N");
+              casOpsSotEotCtrlEntity.setSotOut("N");
 
-              saved = adminBeanRemote.createSotEot(mdtAcOpsSotEotCtrlEntity);
+              saved = adminBeanRemote.createSotEot(casOpsSotEotCtrlEntity);
             }
           }
         }
@@ -806,17 +765,17 @@ public class StartOfDayLogic {
               log.debug("SERVICE ID OUT ~~~~~ :" + casSysctrlServicesEntity.getServiceIdOut());
               log.debug("MEMBER ~~~~~ :" + casSysctrlCustParamEntity.getInstId());
 
-              MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
-              MdtAcOpsSotEotCtrlPK mdtAcOpsSotEotCtrlPK = new MdtAcOpsSotEotCtrlPK();
-              mdtAcOpsSotEotCtrlPK.setInstId(casSysctrlCustParamEntity.getInstId());
-              mdtAcOpsSotEotCtrlPK.setServiceId(casSysctrlServicesEntity.getServiceIdOut());
-              mdtAcOpsSotEotCtrlEntity.setMdtAcOpsSotEotCtrlPK(mdtAcOpsSotEotCtrlPK);
-              mdtAcOpsSotEotCtrlEntity.setEotIn("N");
-              mdtAcOpsSotEotCtrlEntity.setSotIn("N");
-              mdtAcOpsSotEotCtrlEntity.setEotOut("N");
-              mdtAcOpsSotEotCtrlEntity.setSotOut("N");
+              CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
+              CasOpsSotEotCtrlPK casOpsSotEotCtrlPK = new CasOpsSotEotCtrlPK();
+              casOpsSotEotCtrlPK.setInstId(casSysctrlCustParamEntity.getInstId());
+              casOpsSotEotCtrlPK.setServiceId(casSysctrlServicesEntity.getServiceIdOut());
+              casOpsSotEotCtrlEntity.setCasOpsSotEotCtrlPK(casOpsSotEotCtrlPK);
+              casOpsSotEotCtrlEntity.setEotIn("N");
+              casOpsSotEotCtrlEntity.setSotIn("N");
+              casOpsSotEotCtrlEntity.setEotOut("N");
+              casOpsSotEotCtrlEntity.setSotOut("N");
 
-              saved = adminBeanRemote.createSotEot(mdtAcOpsSotEotCtrlEntity);
+              saved = adminBeanRemote.createSotEot(casOpsSotEotCtrlEntity);
             }
           }
         }
@@ -836,10 +795,10 @@ public class StartOfDayLogic {
     sysCntrlServicesList =
         (List<CasSysctrlServicesEntity>) adminBeanRemote.retrieveServiceControl();
 
-    List<MdtOpsServicesEntity> opsServicesList = new ArrayList<MdtOpsServicesEntity>();
+    List<CasOpsServicesEntity> opsServicesList = new ArrayList<CasOpsServicesEntity>();
 
     //opsServicesList = (List<MdtOpsServicesEntity>) adminBeanRemote.retrieveOpsServicesTime();
-    opsServicesList = (List<MdtOpsServicesEntity>) adminBeanRemote.retrieveOpsServicesTime();
+    opsServicesList = (List<CasOpsServicesEntity>) adminBeanRemote.retrieveOpsServicesTime();
 
     if (opsServicesList.size() == 0) {
 
@@ -847,7 +806,7 @@ public class StartOfDayLogic {
 
         for (CasSysctrlServicesEntity syscntrlservice : sysCntrlServicesList) {
           if (syscntrlservice.getActiveInd().equalsIgnoreCase("Y")) {
-            MdtOpsServicesEntity opsServiceEntity = new MdtOpsServicesEntity();
+            CasOpsServicesEntity opsServiceEntity = new CasOpsServicesEntity();
 
             opsServiceEntity.setServiceIdIn(syscntrlservice.getServiceIdIn());
             opsServiceEntity.setServiceIdInDesc(syscntrlservice.getServiceIdInDesc());
@@ -888,29 +847,29 @@ public class StartOfDayLogic {
     sysctrlSchedulerList =
         (List<CasSysctrlSchedulerEntity>) adminBeanRemote.retrieveSysCntrlScheduler();
 
-    List<MdtAcOpsSchedulerEntity> opsSchedulerList = new ArrayList<MdtAcOpsSchedulerEntity>();
-    opsSchedulerList = (List<MdtAcOpsSchedulerEntity>) adminBeanRemote.retrieveOpsScheduler();
+    List<CasOpsSchedulerEntity> opsSchedulerList = new ArrayList<CasOpsSchedulerEntity>();
+    opsSchedulerList = (List<CasOpsSchedulerEntity>) adminBeanRemote.retrieveOpsScheduler();
 
     if (opsSchedulerList != null && opsSchedulerList.size() == 0) {
       if (sysctrlSchedulerList != null && sysctrlSchedulerList.size() > 0) {
         for (CasSysctrlSchedulerEntity syscntrSchedulerEntity : sysctrlSchedulerList) {
-          MdtAcOpsSchedulerEntity mdtAcOpsSchedulerEntity = new MdtAcOpsSchedulerEntity();
-          mdtAcOpsSchedulerEntity.setSchedulerKey(syscntrSchedulerEntity.getSchedulerKey());
-          mdtAcOpsSchedulerEntity.setSchedulerName(syscntrSchedulerEntity.getSchedulerName());
-          mdtAcOpsSchedulerEntity.setRescheduleTime(syscntrSchedulerEntity.getRescheduleTime());
+          CasOpsSchedulerEntity casOpsSchedulerEntity = new CasOpsSchedulerEntity();
+          casOpsSchedulerEntity.setSchedulerKey(syscntrSchedulerEntity.getSchedulerKey());
+          casOpsSchedulerEntity.setSchedulerName(syscntrSchedulerEntity.getSchedulerName());
+          casOpsSchedulerEntity.setRescheduleTime(syscntrSchedulerEntity.getRescheduleTime());
 
 			if (syscntrSchedulerEntity.getSchedulerName().equalsIgnoreCase("Start Of Day")) {
-				mdtAcOpsSchedulerEntity.setActiveInd("Y");
+				casOpsSchedulerEntity.setActiveInd("Y");
 			} else {
-				mdtAcOpsSchedulerEntity.setActiveInd("N");
+				casOpsSchedulerEntity.setActiveInd("N");
 			}
 
-          mdtAcOpsSchedulerEntity.setCreatedBy(systemName);
-          mdtAcOpsSchedulerEntity.setModifiedBy(systemName);
-          mdtAcOpsSchedulerEntity.setCreatedDate(new Date());
-          mdtAcOpsSchedulerEntity.setModifiedDate(new Date());
+          casOpsSchedulerEntity.setCreatedBy(systemName);
+          casOpsSchedulerEntity.setModifiedBy(systemName);
+          casOpsSchedulerEntity.setCreatedDate(new Date());
+          casOpsSchedulerEntity.setModifiedDate(new Date());
 
-          saved = adminBeanRemote.createOpsScheduler(mdtAcOpsSchedulerEntity);
+          saved = adminBeanRemote.createOpsScheduler(casOpsSchedulerEntity);
           log.info("OPS SCH SAVED---> " + saved);
         }
       }
@@ -926,19 +885,19 @@ public class StartOfDayLogic {
   public boolean populateBillingCntrlInfo() {
     boolean saved = false;
 
-    ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity = new ObsSystemBillingCtrlsEntity();
-    ObsSystemBillingCtrlsPK obsSystemBillingCtrlsPK = new ObsSystemBillingCtrlsPK();
+    CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity = new CasSystemBillingCtrlsEntity();
+    CasSystemBillingCtrlsPK casSystemBillingCtrlsPK = new CasSystemBillingCtrlsPK();
 
-    obsSystemBillingCtrlsPK.setProcessDate(currDate);
-    obsSystemBillingCtrlsPK.setSystemName("MANDATES");
-    obsSystemBillingCtrlsEntity.setObsSystemBillingCtrlsPK(obsSystemBillingCtrlsPK);
-    obsSystemBillingCtrlsEntity.setProcessStatus("A");
-    obsSystemBillingCtrlsEntity.setCreatedBy(systemName);
-    obsSystemBillingCtrlsEntity.setModifiedBy(systemName);
-    obsSystemBillingCtrlsEntity.setCreatedDate(new Date());
-    obsSystemBillingCtrlsEntity.setModifiedDate(new Date());
+    casSystemBillingCtrlsPK.setProcessDate(currDate);
+    casSystemBillingCtrlsPK.setSystemName("MANDATES");
+    casSystemBillingCtrlsEntity.setObsSystemBillingCtrlsPK(casSystemBillingCtrlsPK);
+    casSystemBillingCtrlsEntity.setProcessStatus("A");
+    casSystemBillingCtrlsEntity.setCreatedBy(systemName);
+    casSystemBillingCtrlsEntity.setModifiedBy(systemName);
+    casSystemBillingCtrlsEntity.setCreatedDate(new Date());
+    casSystemBillingCtrlsEntity.setModifiedDate(new Date());
 
-    saved = adminBeanRemote.createBillingCtrls(obsSystemBillingCtrlsEntity);
+    saved = adminBeanRemote.createBillingCtrls(casSystemBillingCtrlsEntity);
     log.info("OBS BillingCntrl SAVED---> " + saved);
 
     return saved;
@@ -948,24 +907,24 @@ public class StartOfDayLogic {
     contextAdminBeanCheck();
 
     boolean saved = false;
-    List<MdtCnfgReportNamesEntity> reportNamesList =
-        new ArrayList<MdtCnfgReportNamesEntity>();// list
-    reportNamesList = (List<MdtCnfgReportNamesEntity>) adminBeanRemote.retrieveActiveReportNr();
+    List<CasCnfgReportNamesEntity> reportNamesList =
+        new ArrayList<CasCnfgReportNamesEntity>();// list
+    reportNamesList = (List<CasCnfgReportNamesEntity>) adminBeanRemote.retrieveActiveReportNr();
     log.debug("reportNamesList --> " + reportNamesList);
-    List<MdtOpsRepSeqNrEntity> opsReportSeqNrList = new ArrayList<MdtOpsRepSeqNrEntity>();
-    opsReportSeqNrList = (List<MdtOpsRepSeqNrEntity>) adminBeanRemote.retrieveOpsReportSeqNr();
+    List<CasOpsRepSeqNrEntity> opsReportSeqNrList = new ArrayList<CasOpsRepSeqNrEntity>();
+    opsReportSeqNrList = (List<CasOpsRepSeqNrEntity>) adminBeanRemote.retrieveOpsReportSeqNr();
     log.debug("opsReportSeqNrList --> " + opsReportSeqNrList);
     if (opsReportSeqNrList.size() == 0) {
       log.debug("INSIDE FIRST IF!!!!");
       if (reportNamesList.size() > 0) {
         log.debug("INSIDE SECOND  IF!!!!");
-        for (MdtCnfgReportNamesEntity mdtCnfgReportNamesEntity : reportNamesList) {
+        for (CasCnfgReportNamesEntity casCnfgReportNamesEntity : reportNamesList) {
 
-          log.debug("Current Report Name ==> " + mdtCnfgReportNamesEntity.getReportNr());
+          log.debug("Current Report Name ==> " + casCnfgReportNamesEntity.getReportNr());
           //PASA Report
-          if (mdtCnfgReportNamesEntity.getReportNr().startsWith("PS")) {
-            MdtOpsRepSeqNrEntity mdtOpsRepSeqNr = new MdtOpsRepSeqNrEntity();
-            MdtOpsRepSeqNrPK opsReportSeqPk = new MdtOpsRepSeqNrPK();
+          if (casCnfgReportNamesEntity.getReportNr().startsWith("PS")) {
+            CasOpsRepSeqNrEntity mdtOpsRepSeqNr = new CasOpsRepSeqNrEntity();
+            CasOpsRepSeqNrPK opsReportSeqPk = new CasOpsRepSeqNrPK();
             //						try
             //						{
             //							String cDate = sdf1.format(currentDate);
@@ -977,12 +936,12 @@ public class StartOfDayLogic {
             //						}
             log.debug("Inside If of 1st For");
             opsReportSeqPk.setMemberNo("0000");
-            opsReportSeqPk.setReportNo(mdtCnfgReportNamesEntity.getReportNr());
+            opsReportSeqPk.setReportNo(casCnfgReportNamesEntity.getReportNr());
             //						opsReportSeqPk.setMemberNo(mdtSysctrlCustParamEntity.getInstId
 			  //						());
             opsReportSeqPk.setProcessDate(currDate);
             log.debug("currDate 1 ----> " + currDate);
-            mdtOpsRepSeqNr.setMdtOpsRepSeqNrEntityPK(opsReportSeqPk);
+            mdtOpsRepSeqNr.setCasOpsRepSeqNrEntityPK(opsReportSeqPk);
             //opsRefSeqNr.setServiceId(syscntrServiceEntity.getServiceIdOut());
             mdtOpsRepSeqNr.setCreatedDate(new Date());
             mdtOpsRepSeqNr.setCreatedBy(systemName);
@@ -1006,14 +965,14 @@ public class StartOfDayLogic {
               //								pe.printStackTrace();
               //							}
               log.debug("Inside 2nd for");
-              MdtOpsRepSeqNrEntity opsReportSeqNr = new MdtOpsRepSeqNrEntity();
-              MdtOpsRepSeqNrPK opsReportSeqPkEntity = new MdtOpsRepSeqNrPK();
+              CasOpsRepSeqNrEntity opsReportSeqNr = new CasOpsRepSeqNrEntity();
+              CasOpsRepSeqNrPK opsReportSeqPkEntity = new CasOpsRepSeqNrPK();
 
-              opsReportSeqPkEntity.setReportNo(mdtCnfgReportNamesEntity.getReportNr());
+              opsReportSeqPkEntity.setReportNo(casCnfgReportNamesEntity.getReportNr());
               opsReportSeqPkEntity.setMemberNo(casSysctrlCustParamEntity.getInstId());
               opsReportSeqPkEntity.setProcessDate(currDate);
               log.debug("currDate 2 ----> " + currDate);
-              opsReportSeqNr.setMdtOpsRepSeqNrEntityPK(opsReportSeqPkEntity);
+              opsReportSeqNr.setCasOpsRepSeqNrEntityPK(opsReportSeqPkEntity);
               //opsRefSeqNr.setServiceId(syscntrServiceEntity.getServiceIdOut());
               opsReportSeqNr.setCreatedDate(new Date());
               opsReportSeqNr.setCreatedBy(systemName);
@@ -1040,12 +999,12 @@ public class StartOfDayLogic {
     sysCntrlServicesList =
         (List<CasSysctrlServicesEntity>) adminBeanRemote.retrieveServiceControl();
 
-    List<MdtOpsLastExtractTimesEntity> opsLastExtractTimesList =
-        new ArrayList<MdtOpsLastExtractTimesEntity>();
+    List<CasOpsLastExtractTimesEntity> opsLastExtractTimesList =
+        new ArrayList<CasOpsLastExtractTimesEntity>();
 
 
     opsLastExtractTimesList =
-        (List<MdtOpsLastExtractTimesEntity>) adminBeanRemote.retrieveLastExtractTime();
+        (List<CasOpsLastExtractTimesEntity>) adminBeanRemote.retrieveLastExtractTime();
 
     if (opsLastExtractTimesList.size() == 0) {
 
@@ -1053,8 +1012,8 @@ public class StartOfDayLogic {
 
         for (CasSysctrlServicesEntity syscntrlservice : sysCntrlServicesList) {
           if (syscntrlservice.getActiveInd().equalsIgnoreCase("Y")) {
-            MdtOpsLastExtractTimesEntity mdtOpsLastExtractTimes =
-                new MdtOpsLastExtractTimesEntity();
+            CasOpsLastExtractTimesEntity mdtOpsLastExtractTimes =
+                new CasOpsLastExtractTimesEntity();
 
             mdtOpsLastExtractTimes.setServiceIdOut(syscntrlservice.getServiceIdOut());
             mdtOpsLastExtractTimes.setFileTransactionLimit(new BigInteger(transactionLimit));
@@ -1089,38 +1048,38 @@ public class StartOfDayLogic {
     mdtSysctrlFileSizeLimitEntityList =
         (List<CasSysctrlFileSizeLimitEntity>) adminBeanRemote.retrieveSysctrlFileSizeLimit();
 
-    List<MdtAcOpsFileSizeLimitEntity> mdtAcOpsFileSizeLimitEntityList =
-        new ArrayList<MdtAcOpsFileSizeLimitEntity>();
+    List<CasOpsFileSizeLimitEntity> casOpsFileSizeLimitEntityList =
+        new ArrayList<CasOpsFileSizeLimitEntity>();
 
 
-    mdtAcOpsFileSizeLimitEntityList =
-        (List<MdtAcOpsFileSizeLimitEntity>) adminBeanRemote.retrieveOpsFileSizeLimit();
+    casOpsFileSizeLimitEntityList =
+        (List<CasOpsFileSizeLimitEntity>) adminBeanRemote.retrieveOpsFileSizeLimit();
 
     log.debug("The file size limit has ##############################" +
         mdtSysctrlFileSizeLimitEntityList);
-    if (mdtAcOpsFileSizeLimitEntityList != null && mdtAcOpsFileSizeLimitEntityList.size() == 0) {
+    if (casOpsFileSizeLimitEntityList != null && casOpsFileSizeLimitEntityList.size() == 0) {
 
       if (mdtSysctrlFileSizeLimitEntityList.size() > 0) {
 
         for (CasSysctrlFileSizeLimitEntity casSysctrlFileSizeLimitEntity :
 				mdtSysctrlFileSizeLimitEntityList) {
 
-          MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity =
-              new MdtAcOpsFileSizeLimitEntity();
-          MdtAcOpsFileSizeLimitPK mdtAcOpsFileSizeLimitPK = new MdtAcOpsFileSizeLimitPK();
+          CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity =
+              new CasOpsFileSizeLimitEntity();
+          CasOpsFileSizeLimitPK casOpsFileSizeLimitPK = new CasOpsFileSizeLimitPK();
 
-          mdtAcOpsFileSizeLimitPK.setMemberId(
+          casOpsFileSizeLimitPK.setMemberId(
               casSysctrlFileSizeLimitEntity.getMdtSysctrlFileSizeLimitPK().getMemberId());
-          mdtAcOpsFileSizeLimitPK.setSubService(
+          casOpsFileSizeLimitPK.setSubService(
               casSysctrlFileSizeLimitEntity.getMdtSysctrlFileSizeLimitPK().getSubService());
-          mdtAcOpsFileSizeLimitEntity.setProcessDate(new Date());
-          mdtAcOpsFileSizeLimitEntity.setLimit(casSysctrlFileSizeLimitEntity.getLimit());
-          mdtAcOpsFileSizeLimitEntity.setDirection(casSysctrlFileSizeLimitEntity.getDirection());
-          mdtAcOpsFileSizeLimitEntity.setActiveId(casSysctrlFileSizeLimitEntity.getActiveId());
-          mdtAcOpsFileSizeLimitEntity.setMdtAcOpsFileSizeLimitPK(mdtAcOpsFileSizeLimitPK);
+          casOpsFileSizeLimitEntity.setProcessDate(new Date());
+          casOpsFileSizeLimitEntity.setLimit(casSysctrlFileSizeLimitEntity.getLimit());
+          casOpsFileSizeLimitEntity.setDirection(casSysctrlFileSizeLimitEntity.getDirection());
+          casOpsFileSizeLimitEntity.setActiveId(casSysctrlFileSizeLimitEntity.getActiveId());
+          casOpsFileSizeLimitEntity.setCasOpsFileSizeLimitPK(casOpsFileSizeLimitPK);
 
-          saved = adminBeanRemote.createOpsFileSizeLimit(mdtAcOpsFileSizeLimitEntity);
-          log.debug("After saving we have the following data " + mdtAcOpsFileSizeLimitEntity);
+          saved = adminBeanRemote.createOpsFileSizeLimit(casOpsFileSizeLimitEntity);
+          log.debug("After saving we have the following data " + casOpsFileSizeLimitEntity);
 
 
         }
@@ -1159,53 +1118,6 @@ public class StartOfDayLogic {
     Calendar cal = new GregorianCalendar(year, month - 1, day);
     int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
     return (Calendar.SUNDAY == dayOfWeek || Calendar.SATURDAY == dayOfWeek);
-  }
-
-  public void updateActiveIndProcessControl(
-      MdtOpsProcessControlsEntity mdtOpsProcessControlsEntity) {
-
-    boolean dateCheck = false;
-    String procDate = sdf.format(processingDate);
-    dateCheck = isWeekend(procDate);
-
-    sysCntrlCustList =
-        (List<CasSysctrlCustParamEntity>) adminBeanRemote.retrieveCustomerParameters();
-
-
-    sysCisBankEntityList = (List<SysCisBankEntity>) adminBeanRemote.retrieveSysCisBank();
-
-
-    for (SysCisBankEntity sysbankEntity : sysCisBankEntityList) {
-
-      for (CasSysctrlCustParamEntity custParaEntity : sysCntrlCustList) {
-        if (sysbankEntity != null) {
-
-          if (custParaEntity != null) {
-
-            if (sysbankEntity.getMemberNo() == custParaEntity.getInstId()) {
-              if (custParaEntity.getProcessDay().equals("6") ||
-                  (custParaEntity.getProcessDay().equals("7")) ||
-                  (custParaEntity.getProcessDay().equals("5")) && (dateCheck)) {
-
-                mdtOpsProcessControlsEntity.setActiveInd("N");
-                log.info("it is the weekend ,we cannot process");
-
-                boolean saved =
-                    adminBeanRemote.updateOpsProcessControls(mdtOpsProcessControlsEntity);
-
-                if (saved) {
-                  log.info("Active indicator updated");
-
-                }
-
-              }
-
-            }
-          }
-        }
-      }
-    }
-
   }
 
   public Date calculateOneDayExtra() throws ParseException {
@@ -1270,21 +1182,21 @@ public class StartOfDayLogic {
 
   public void generateSOT(String memberNo, String service) {
     //Retrieve SOT/EOT Ind
-    MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
-    mdtAcOpsSotEotCtrlEntity =
-        (MdtAcOpsSotEotCtrlEntity) serviceBeanRemote.retrieveSOTEOTCntrl(memberNo, service);
-    log.debug("mdtAcOpsSotEotCtrlEntity: " + mdtAcOpsSotEotCtrlEntity);
+    CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
+    casOpsSotEotCtrlEntity =
+        (CasOpsSotEotCtrlEntity) serviceBeanRemote.retrieveSOTEOTCntrl(memberNo, service);
+    log.debug("mdtAcOpsSotEotCtrlEntity: " + casOpsSotEotCtrlEntity);
 
-    if (mdtAcOpsSotEotCtrlEntity != null) {
+    if (casOpsSotEotCtrlEntity != null) {
       try {
-        if (mdtAcOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase(nonActiveInd)) {
+        if (casOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase(nonActiveInd)) {
           StartOfTransmissionExtract startOfTransmissionExtract =
               new StartOfTransmissionExtract(memberNo, service, "S");
           startOfTransmissionExtract.createStartOfTransmissionFile();
 
-          mdtAcOpsSotEotCtrlEntity.setSotOut(activeInd);
+          casOpsSotEotCtrlEntity.setSotOut(activeInd);
 
-          boolean updated = serviceBeanRemote.updateSOTEOTCntrl(mdtAcOpsSotEotCtrlEntity);
+          boolean updated = serviceBeanRemote.updateSOTEOTCntrl(casOpsSotEotCtrlEntity);
         }
       } catch (Exception e) {
         log.error(

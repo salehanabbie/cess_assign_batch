@@ -64,8 +64,6 @@ public interface ValidationBeanLocal {
 
   public Object retrieveOpsServiceIn(String inService);
 
-  public Object validateCancelReasonCode(String reasonCode);
-
   public boolean updateMsgLastFileSeqNr(Object obj, String process);
 
   public Object retrieveOpsCustomerParameters(String bicCode, String process);
@@ -85,15 +83,11 @@ public interface ValidationBeanLocal {
   public List<?> findOpsStatusDetByCriteria(String namedQuery, String fieldName, BigDecimal value,
                                             String txnId);
 
-  public Object validateRejectReasonCode(String reasonCode);
-
   public Object validateAdjustmentCategory(String adjCat);
-
-  public Object validateMandateRejectReasonCode(String rejectReasonCode);
 
   public Object validateExternalStatusReasonCode(String statusReasonCode);
 
-  public boolean saveMdtOpsMndtCount(Object obj);
+  public boolean saveOpsMndtCount(Object obj);
 
   public Object validateAccountType(String accountType);
 
@@ -157,10 +151,6 @@ public interface ValidationBeanLocal {
   public List<?> findAllConfigReasonCodes();
 
   public List<?> findAllConfigAmendmentCodes();
-
-  public List<?> findAllConfigCancellationCodes();
-
-  public List<?> findAllConfigRejectReasonCodes();
 
   public List<?> findAllConfigErrorCodes();
 

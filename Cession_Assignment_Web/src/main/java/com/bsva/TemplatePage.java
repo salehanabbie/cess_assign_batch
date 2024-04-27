@@ -17,11 +17,9 @@ import com.bsva.panels.ManualBilling.ManualBilling;
 import com.bsva.panels.ManualEndofDay.EndofDayPanel;
 import com.bsva.panels.ManualStartOfDay.ManualStartOfDay;
 import com.bsva.panels.PHIReports.ViewPHIReportsPanel;
-import com.bsva.panels.RejectReasonCodes.ViewRejectReasoCodesPanel;
 import com.bsva.panels.SodEodScreens.OpsViewFileSizeLimit;
 import com.bsva.panels.SodEodScreens.ViewOpsAcSotEotPanel;
 import com.bsva.panels.SodEodScreens.ViewOpsCustomerParameters;
-import com.bsva.panels.SodEodScreens.ViewOpsProcessControlPanel;
 import com.bsva.panels.SodEodScreens.ViewOpsRefSeqPanel;
 import com.bsva.panels.SodEodScreens.ViewOpsSlaTimesPanel;
 import com.bsva.panels.SodEodScreens.viewOpsServices;
@@ -56,7 +54,6 @@ import com.bsva.panels.schedulers.SchedulePanel;
 import com.bsva.panels.sequenceTypes.ViewSequenceTypesPanel;
 import com.bsva.panels.serverLogs.ViewServerLogsPanel;
 import com.bsva.panels.severityCodes.ViewSeverityCodesPanel;
-import com.bsva.panels.statusReasonCodes.ViewStatusReasonCodesPanel;
 import com.bsva.panels.sysCtrlSlaTimes.ViewSysCtrlSlaTimePanel;
 import com.bsva.panels.systemInfo.DelDeliveryPanel;
 import com.bsva.panels.systemInfo.SystemMonitorPanel;
@@ -312,21 +309,6 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 
 			}
 
-		};
-
-		AjaxFallbackLink<Void> rejectReasonCodeAjaxFallbacklink = new AjaxFallbackLink<Void>("subMenuLink") {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick(AjaxRequestTarget target) 
-			{
-				ViewRejectReasoCodesPanel   viewRejectReasoCodesPanel = new ViewRejectReasoCodesPanel("content");
-				viewRejectReasoCodesPanel.setOutputMarkupId(true);
-				viewRejectReasoCodesPanel.setOutputMarkupPlaceholderTag(true);
-				ajaxPanel.replaceWith(viewRejectReasoCodesPanel);
-				ajaxPanel = viewRejectReasoCodesPanel;
-				target.add(ajaxPanel);
-			}
 		};
 
 		AjaxFallbackLink<Void> startofdayFallbackLink = new AjaxFallbackLink<Void>(
@@ -983,31 +965,12 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 
 		};
 
-		AjaxFallbackLink<Void> viewStatusReasonCodesPanelAjaxFallbackLink = new AjaxFallbackLink<Void>(               "subMenuLink") {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-
-				ViewStatusReasonCodesPanel viewStatusReasonCodesPanel = new ViewStatusReasonCodesPanel("content");
-				viewStatusReasonCodesPanel.setOutputMarkupId(true);
-				viewStatusReasonCodesPanel.setOutputMarkupPlaceholderTag(true);
-				ajaxPanel.replaceWith(viewStatusReasonCodesPanel);
-				ajaxPanel = viewStatusReasonCodesPanel;
-				target.add(viewStatusReasonCodesPanel);
-
-			}
-
-		};
-
 		AjaxFallbackLink<Void> logOffAjaxFallbackLink = new AjaxFallbackLink<Void>("subMenuLink") {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onClick(AjaxRequestTarget target) 
 			{
-
 				//Update System Audit Log Information
 				AudSystemProcessModel audSystemProcessModel = new AudSystemProcessModel();
 				audSystemProcessModel.setProcess(controller.getProperty("AUD.SYSPROCESS.LOGOUT"));
@@ -1153,39 +1116,6 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 
 		};                                                                                                             
 
-		/*AjaxFallbackLink<Void> opsPublicHolidayLink  = new AjaxFallbackLink<Void>("subMenuLink") {
-																							private static final long serialVersionUID = 1L;
-
-																							@Override
-																							public void onClick(AjaxRequestTarget target) {
-
-																								ViewAcOpsPublicHolidayPanel viewAcOpsPublicHolidayPanel = new ViewAcOpsPublicHolidayPanel("content");
-																								viewAcOpsPublicHolidayPanel.setOutputMarkupId(true);
-																								viewAcOpsPublicHolidayPanel.setOutputMarkupPlaceholderTag(true);
-																								ajaxPanel.replaceWith(viewAcOpsPublicHolidayPanel);
-																								ajaxPanel = viewAcOpsPublicHolidayPanel;
-																								target.add(viewAcOpsPublicHolidayPanel);
-
-																							}
-
-																						};                */                                                                                             
-
-		AjaxFallbackLink<Void> opsProcessControlFallbackLink  = new AjaxFallbackLink<Void>( "subMenuLink") {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-
-				ViewOpsProcessControlPanel  viewOpsProcessControlPanel = new ViewOpsProcessControlPanel("content");
-				viewOpsProcessControlPanel.setOutputMarkupId(true);
-				viewOpsProcessControlPanel.setOutputMarkupPlaceholderTag(true);
-				ajaxPanel.replaceWith(viewOpsProcessControlPanel);
-				ajaxPanel = viewOpsProcessControlPanel;
-				target.add(viewOpsProcessControlPanel);
-
-			}
-
-		};             
 		AjaxFallbackLink<Void> deleteInputFileFallbackLink  = new AjaxFallbackLink<Void>(        "subMenuLink") {
 			private static final long serialVersionUID = 1L;
 
@@ -1467,13 +1397,11 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 		MenuItem frequencyCodesPanel = new MenuItem("Frequency Codes",frequencyCodesAjaxFallbackLink);
 		MenuItem localInstCodesPanel = new MenuItem("Local Instrument Codes",localintsrumentsCodesAjaxFallbackLink);
 		MenuItem reasonCodesPanel = new MenuItem("Reason Codes",reasonCodesAjaxFallbackLink);
-		MenuItem viewStatusReasonCodesPanel = new MenuItem("Status Reason Codes",viewStatusReasonCodesPanelAjaxFallbackLink);
 		MenuItem seqTypesPanel = new MenuItem("Sequence Types",sequenceTypesAjaxFallbackLink);
 		MenuItem viewReportConfgScreen = new MenuItem("Report Types",reportCnfgScreenAjaxFallbackLink);
 		MenuItem viewAuditTrackingScreenPanel = new MenuItem("Audit Tracking" ,viewAuditTrackingScreenPanelAjaxFallbackLink);
 		MenuItem viewSeverityCodesPanel = new MenuItem("Severity Codes", viewSeverityCodesPanelAjaxFallbackLink);
 		MenuItem viewProcessStatusPanel  = new MenuItem("Transaction Process Status" ,viewProcessStatusPanelAjaxFallbackLink);
-		MenuItem viewRejectReasonCode = new MenuItem("Reject Reason Codes",rejectReasonCodeAjaxFallbacklink);
 		MenuItem viewSystemControlServicesPanel = new MenuItem ("Services", systemControlServiceAjaxFallbackLink );
 		MenuItem viewAdjustmentCategoryPanel = new MenuItem ("Adjustment Category",viewAdjustmentCategoryPanelAjaxFallbackLink );
 		MenuItem viewSysCtrlSlaTimePanel = new MenuItem ("SLA Times", viewsSysCtrlSlaTimeAjaxFallbackLink);
@@ -1509,7 +1437,6 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 		MenuItem viewOpsCustomerParameters = new MenuItem("Ops Customer Parameters",opsCustomerParametersFallbackLink);
 		MenuItem viewAcOpsSotEot = new MenuItem("Monitor SOT/EOT",opsAcSotEotFallbackLink);
 		MenuItem viewOpsRefSeq = new MenuItem("Output File Sequence Nrs",opsRefSeqFallbackLink);
-		MenuItem viewOpsProcessCntrl = new MenuItem("Ops Process Control",opsProcessControlFallbackLink);
 		MenuItem viewOpsSlaTimes = new MenuItem("Ops SLA Times",viewopsSlaTimes);
 		//MenuItem viewAcOosPublicHoliday = new MenuItem("Ops Public Holiday",opsPublicHolidayLink);
 //		SalehaR-2020/07/28 - Remove CDV as per TDA
@@ -1631,8 +1558,6 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 																						systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);*/
 		systemCodesPM.getSubMenuItemList().add(debitValuePanel);
 		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
-		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
-		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
 		systemCodesPM.getSubMenuItemList().add(errorCodesPanel);
 		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);																		
 		systemCodesPM.getSubMenuItemList().add(viewFilestatusDescription);
@@ -1643,18 +1568,11 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
 		systemCodesPM.getSubMenuItemList().add(reasonCodesPanel);
 		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
-		systemCodesPM.getSubMenuItemList().add(viewRejectReasonCode);
-		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
 		systemCodesPM.getSubMenuItemList().add(seqTypesPanel);
 		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
 		systemCodesPM.getSubMenuItemList().add(viewSeverityCodesPanel);
 		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
-		systemCodesPM.getSubMenuItemList().add(viewStatusReasonCodesPanel);   
-		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
-		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
 		systemCodesPM.getSubMenuItemList().add(viewProcessStatusPanel);
-
-
 
 
 		// Adding submenus for system information

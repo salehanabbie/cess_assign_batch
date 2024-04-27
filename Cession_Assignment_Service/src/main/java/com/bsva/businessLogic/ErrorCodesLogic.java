@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.bsva.entities.MdtCnfgErrorCodesEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
 import com.bsva.commons.model.ConfgErrorCodesModel;
 import com.bsva.translator.AdminTranslator;
 /**
@@ -26,7 +26,7 @@ public class ErrorCodesLogic {
 	}
 
 
-	public List<ConfgErrorCodesModel> retrieveAllErrorCodes(List<MdtCnfgErrorCodesEntity> mdtErrorCodesList)
+	public List<ConfgErrorCodesModel> retrieveAllErrorCodes(List<CasCnfgErrorCodesEntity> mdtErrorCodesList)
 	{
 
 		//log.debug("in here");
@@ -35,7 +35,7 @@ public class ErrorCodesLogic {
 		ConfgErrorCodesModel errorModel;
 		//log.debug("out here");
 
-		for (MdtCnfgErrorCodesEntity errorEntity : mdtErrorCodesList) {
+		for (CasCnfgErrorCodesEntity errorEntity : mdtErrorCodesList) {
 			//log.debug(errorEntity);
 
 			 errorModel = new ConfgErrorCodesModel();
@@ -50,16 +50,16 @@ public class ErrorCodesLogic {
 
 
 	
-	public MdtCnfgErrorCodesEntity addErrorCode(ConfgErrorCodesModel errorCodesModel) {
+	public CasCnfgErrorCodesEntity addErrorCode(ConfgErrorCodesModel errorCodesModel) {
 
-		MdtCnfgErrorCodesEntity mdtErrorCodesEntity = new AdminTranslator().translateCommonsErrorModelToEntity(errorCodesModel);
+		CasCnfgErrorCodesEntity mdtErrorCodesEntity = new AdminTranslator().translateCommonsErrorModelToEntity(errorCodesModel);
 
 		return mdtErrorCodesEntity;
 	}
 
 
 
-	public ConfgErrorCodesModel retrieveErrorCode(MdtCnfgErrorCodesEntity mdtErrorCodesEntity)
+	public ConfgErrorCodesModel retrieveErrorCode(CasCnfgErrorCodesEntity mdtErrorCodesEntity)
 
 	{
 		ConfgErrorCodesModel localModel = new ConfgErrorCodesModel();

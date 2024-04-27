@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.SchedulerCommonsModel;
-import com.bsva.entities.MdtAcOpsSchedulerEntity;
+import com.bsva.entities.CasOpsSchedulerEntity;
 import com.bsva.entities.CasSysctrlSchedulerEntity;
 import com.bsva.translator.AdminTranslator;
 
@@ -56,30 +56,32 @@ public class SchedulerScreenLogic {
 		return localModel;
 	}
 	
-	public List<SchedulerCommonsModel> retrieveAllOpsSchedulers(List<MdtAcOpsSchedulerEntity> opsSchedulerList)
+	public List<SchedulerCommonsModel> retrieveAllOpsSchedulers(List<CasOpsSchedulerEntity> opsSchedulerList)
 	{
 			List<SchedulerCommonsModel> schedulerCommonsModelList = new ArrayList<SchedulerCommonsModel>();
 			SchedulerCommonsModel schedulerCommonsModel;
 		
-			for (MdtAcOpsSchedulerEntity mdtAcOpsSchedulerEntity : opsSchedulerList) 
+			for (CasOpsSchedulerEntity casOpsSchedulerEntity : opsSchedulerList)
 			{
 				schedulerCommonsModel = new SchedulerCommonsModel();
-				schedulerCommonsModel = new AdminTranslator().translateMdtOpsSchedulerEntityToCommonsModel(mdtAcOpsSchedulerEntity);
+				schedulerCommonsModel = new AdminTranslator().translateMdtOpsSchedulerEntityToCommonsModel(
+                    casOpsSchedulerEntity);
 				schedulerCommonsModelList.add(schedulerCommonsModel);
 			}
 		
 			return schedulerCommonsModelList;
 	}
 	
-	public List<SchedulerCommonsModel> retrieveAllAcOpsSchedulers(List<MdtAcOpsSchedulerEntity> mdtAcOpsSchedulerList)
+	public List<SchedulerCommonsModel> retrieveAllAcOpsSchedulers(List<CasOpsSchedulerEntity> mdtAcOpsSchedulerList)
 	{
 			List<SchedulerCommonsModel> schedulerCommonsModelList = new ArrayList<SchedulerCommonsModel>();
 			SchedulerCommonsModel schedulerCommonsModel;
 		
-			for (MdtAcOpsSchedulerEntity mdtAcOpsSchedulerEntity : mdtAcOpsSchedulerList) 
+			for (CasOpsSchedulerEntity casOpsSchedulerEntity : mdtAcOpsSchedulerList)
 			{			
 				schedulerCommonsModel = new SchedulerCommonsModel();
-				schedulerCommonsModel = new AdminTranslator().translateMdtOpsSchedulerEntityToCommonsModel(mdtAcOpsSchedulerEntity);
+				schedulerCommonsModel = new AdminTranslator().translateMdtOpsSchedulerEntityToCommonsModel(
+                    casOpsSchedulerEntity);
 				schedulerCommonsModelList.add(schedulerCommonsModel);
 			}
 		

@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.OpsStatusHdrsModel;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
 import com.bsva.translator.AdminTranslator;
 
 /***
@@ -29,11 +29,11 @@ public class OpsStatusHdrsLogic implements Serializable {
 		
 	}
 	
-	public List<OpsStatusHdrsModel> retrieveAllOpsStatusHdrs(List<MdtAcOpsStatusHdrsEntity> opsStatusHdrsEntityList)
+	public List<OpsStatusHdrsModel> retrieveAllOpsStatusHdrs(List<CasOpsStatusHdrsEntity> opsStatusHdrsEntityList)
 	{
 		List<OpsStatusHdrsModel> opsStatusHdrsList = new ArrayList<OpsStatusHdrsModel>();
 		
-		for (MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity : opsStatusHdrsEntityList) 
+		for (CasOpsStatusHdrsEntity opsStatusHdrsEntity : opsStatusHdrsEntityList)
 		{
 			OpsStatusHdrsModel opsStatusHdrsModel = new OpsStatusHdrsModel();
 			opsStatusHdrsModel = new AdminTranslator().translateOpsStatusHdrsEntityToCommonsModel(opsStatusHdrsEntity);
@@ -44,15 +44,15 @@ public class OpsStatusHdrsLogic implements Serializable {
 	}
 	
 	
-	public MdtAcOpsStatusHdrsEntity addOpsFileReg(OpsStatusHdrsModel opsStatusHdrsModel) {
+	public CasOpsStatusHdrsEntity addOpsFileReg(OpsStatusHdrsModel opsStatusHdrsModel) {
 		
-		MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity = new AdminTranslator().translateCommonsOpsStatusHdrsModelToEntity(opsStatusHdrsModel);
+		CasOpsStatusHdrsEntity opsStatusHdrsEntity = new AdminTranslator().translateCommonsOpsStatusHdrsModelToEntity(opsStatusHdrsModel);
 			
 			return  opsStatusHdrsEntity; 
 		
 	}
 	
-public OpsStatusHdrsModel retrieveOpsStatusHdrs(MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity) {
+public OpsStatusHdrsModel retrieveOpsStatusHdrs(CasOpsStatusHdrsEntity opsStatusHdrsEntity) {
 		
 	OpsStatusHdrsModel opsStatusHdrsModel = new OpsStatusHdrsModel();
 	opsStatusHdrsModel = new  AdminTranslator().translateOpsStatusHdrsEntityToCommonsModel(opsStatusHdrsEntity);

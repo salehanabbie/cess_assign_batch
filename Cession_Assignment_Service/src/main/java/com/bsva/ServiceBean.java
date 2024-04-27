@@ -41,6 +41,9 @@ import com.bsva.commons.model.SysCisBranchModel;
 import com.bsva.commons.model.SysctrlCompParamModel;
 import com.bsva.commons.model.SystemParameterReportModel;
 import com.bsva.entities.BatchOustandingResponseEntityModel;
+import com.bsva.entities.CasConfigDataTimeEntity;
+import com.bsva.entities.CasOpsBillingCtrlsEntity;
+import com.bsva.entities.CasOpsProcessControlsEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlProcessStatusEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
@@ -58,25 +61,22 @@ import com.bsva.entities.MdtAcArcConfDetailsEntity;
 import com.bsva.entities.MdtAcArcConfHdrsEntity;
 import com.bsva.entities.MdtAcArcStatusDetailsEntity;
 import com.bsva.entities.MdtAcArcStatusHdrsEntity;
-import com.bsva.entities.MdtAcConfigDataTimeEntity;
-import com.bsva.entities.MdtAcOpsBillingCtrlsEntity;
-import com.bsva.entities.MdtAcOpsConfDetailsEntity;
-import com.bsva.entities.MdtAcOpsConfHdrsEntity;
-import com.bsva.entities.MdtAcOpsDailyBillingEntity;
-import com.bsva.entities.MdtAcOpsGrpHdrEntity;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntity;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtAcOpsTransCtrlMsgEntity;
-import com.bsva.entities.MdtAcOpsTxnsBillReportEntity;
-import com.bsva.entities.MdtAcOpsTxnsBillingEntity;
-import com.bsva.entities.MdtCnfgErrorCodesEntity;
-import com.bsva.entities.MdtCnfgLocalInstrCodesEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
-import com.bsva.entities.MdtProcessControlEntity;
+import com.bsva.entities.CasOpsConfDetailsEntity;
+import com.bsva.entities.CasOpsConfHdrsEntity;
+import com.bsva.entities.CasOpsDailyBillingEntity;
+import com.bsva.entities.CasOpsGrpHdrEntity;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsTransCtrlMsgEntity;
+import com.bsva.entities.CasOpsTxnsBillReportEntity;
+import com.bsva.entities.CasOpsTxnsBillingEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
+import com.bsva.entities.CasCnfgLocalInstrCodesEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
 import com.bsva.entities.MonthlyVolumeCountEntityModel;
 import com.bsva.entities.ObsBillingStagingEntity;
 import com.bsva.entities.ObsTxnsBillStagingEntity;
@@ -146,26 +146,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		MonitorDirectory.monitor();
 	}
 
-
-	public Integer retrieveSeqNo() {
-		Integer seqNoFromDb = 0;
-
-		List<MdtProcessControlEntity> processCtlList = genericDAO.findAll(MdtProcessControlEntity.class);
-
-		if (processCtlList.size() > 0) {
-			MdtProcessControlEntity mdtProcessControlEntity = processCtlList.get(0);
-			seqNoFromDb = mdtProcessControlEntity.getLastSeq();
-		}
-
-		return seqNoFromDb;
-	}
-
 	@Override
 	public boolean createMdtAcOpsGrpHdrEntity(Object obj) {
 		try {
 
-			if (obj instanceof MdtAcOpsGrpHdrEntity) {
-				MdtAcOpsGrpHdrEntity mdtAcOpsAmendGrpHdrEntity = (MdtAcOpsGrpHdrEntity) obj;
+			if (obj instanceof CasOpsGrpHdrEntity) {
+				CasOpsGrpHdrEntity mdtAcOpsAmendGrpHdrEntity = (CasOpsGrpHdrEntity) obj;
 				genericDAO.saveOrUpdate(mdtAcOpsAmendGrpHdrEntity);
 
 				return true;
@@ -202,13 +188,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		List<OpsCustParamModel> opsSysctrlCumParaModel = new ArrayList<OpsCustParamModel>();
 
-		List<MdtOpsCustParamEntity> mdtOpsCustParamEntityList = new ArrayList<MdtOpsCustParamEntity>();
+		List<CasOpsCustParamEntity> casOpsCustParamEntityList = new ArrayList<CasOpsCustParamEntity>();
 
-		mdtOpsCustParamEntityList = genericDAO.findAll(MdtOpsCustParamEntity.class);
+		casOpsCustParamEntityList = genericDAO.findAll(CasOpsCustParamEntity.class);
 
-		if (mdtOpsCustParamEntityList.size() > 0) {
+		if (casOpsCustParamEntityList.size() > 0) {
 			OpsCustParamLogic opsCustParamLogic = new OpsCustParamLogic();
-			opsSysctrlCumParaModel = opsCustParamLogic.retrieveAllOpsCustParam(mdtOpsCustParamEntityList);
+			opsSysctrlCumParaModel = opsCustParamLogic.retrieveAllOpsCustParam(
+					casOpsCustParamEntityList);
 		}
 
 		return opsSysctrlCumParaModel;
@@ -223,10 +210,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 				OpsCustParamLogic opsCustParamLogic = new OpsCustParamLogic();
 
-				MdtOpsCustParamEntity mdtOpsCustParamEntity = new MdtOpsCustParamEntity();
+				CasOpsCustParamEntity casOpsCustParamEntity = new CasOpsCustParamEntity();
 
-				mdtOpsCustParamEntity = opsCustParamLogic.translateMdtOpsCustParam(opsSysctrlCumParaModel);
-				genericDAO.saveOrUpdate(mdtOpsCustParamEntity);
+				casOpsCustParamEntity = opsCustParamLogic.translateMdtOpsCustParam(opsSysctrlCumParaModel);
+				genericDAO.saveOrUpdate(casOpsCustParamEntity);
 
 			} else {
 				log.error("Unable to convert type to opsSysctrlCumParaModel.");
@@ -246,11 +233,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public List<?> retrieveOpsFileRegByCriteria(String namedQuery, String property, String value) {
 		List<OpsFileRegModel> opsFileRegList = new ArrayList<OpsFileRegModel>();
 		try {
-			List<MdtOpsFileRegEntity> mdtOpsFileRegList = genericDAO.findAllByNamedQuery(namedQuery, property, value);
+			List<CasOpsFileRegEntity> mdtOpsFileRegList = genericDAO.findAllByNamedQuery(namedQuery, property, value);
 
 			if (mdtOpsFileRegList.size() > 0) {
 				OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
-				for (MdtOpsFileRegEntity opsFileRegEntity : mdtOpsFileRegList) {
+				for (CasOpsFileRegEntity opsFileRegEntity : mdtOpsFileRegList) {
 					OpsFileRegModel localModel = opsFileRegLogic.retrieveOpsFileRegModel(opsFileRegEntity);
 					opsFileRegList.add(localModel);
 				}
@@ -271,11 +258,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		ConfgErrorCodesModel errorCodesModel = new ConfgErrorCodesModel();
 
 		try {
-			MdtCnfgErrorCodesEntity mdtCnfgErrorCodesEntity = (MdtCnfgErrorCodesEntity) genericDAO
+			CasCnfgErrorCodesEntity casCnfgErrorCodesEntity = (CasCnfgErrorCodesEntity) genericDAO
 					.findByNamedQuery("MdtCnfgErrorCodesEntity.findByErrorCode", "errorCode", errorCode);
-			if (mdtCnfgErrorCodesEntity != null) {
+			if (casCnfgErrorCodesEntity != null) {
 				ErrorCodesLogic errorCodesLogic = new ErrorCodesLogic();
-				errorCodesModel = errorCodesLogic.retrieveErrorCode(mdtCnfgErrorCodesEntity);
+				errorCodesModel = errorCodesLogic.retrieveErrorCode(casCnfgErrorCodesEntity);
 			}
 		} catch (ObjectNotFoundException onfe) {
 			log.error("No Object Exists on DB");
@@ -570,16 +557,16 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	{
 
 		List<OpsFileRegModel> fileRegList = new ArrayList<OpsFileRegModel>();
-		List<MdtOpsFileRegEntity> mdtOpsFileRegEntityList = null;
+		List<CasOpsFileRegEntity> casOpsFileRegEntityList = null;
 
 		try {
-			mdtOpsFileRegEntityList = (List<MdtOpsFileRegEntity>) genericDAO
+			casOpsFileRegEntityList = (List<CasOpsFileRegEntity>) genericDAO
 					.findAllByNamedQuery("MdtOpsFileRegEntity.findByInOutInd", "inOutInd", "O");
 
-			if (mdtOpsFileRegEntityList.size() > 0) {
+			if (casOpsFileRegEntityList.size() > 0) {
 				OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
 
-				for (MdtOpsFileRegEntity localEntity : mdtOpsFileRegEntityList) {
+				for (CasOpsFileRegEntity localEntity : casOpsFileRegEntityList) {
 
 					OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
 					opsFileRegModel = opsFileRegLogic.retrieveDelDelivery(localEntity);
@@ -672,7 +659,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public List<?> retrieveCaptureLocalInstCodes() {
 		// Entity Model List
-		List<MdtCnfgLocalInstrCodesEntity> localInstrEntityList = new ArrayList<MdtCnfgLocalInstrCodesEntity>();
+		List<CasCnfgLocalInstrCodesEntity> localInstrEntityList = new ArrayList<CasCnfgLocalInstrCodesEntity>();
 
 		// Commons Model List
 		List<LocalInstrumentCodesModel> localInstList = new ArrayList<LocalInstrumentCodesModel>();
@@ -691,11 +678,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		scalarList.add("localInstrumentDescription");
 		scalarList.add("activeInd");
 
-		localInstrEntityList = (List<MdtCnfgLocalInstrCodesEntity>) genericDAO.findBySql(sqlQuery, scalarList,
-				MdtCnfgLocalInstrCodesEntity.class);
+		localInstrEntityList = (List<CasCnfgLocalInstrCodesEntity>) genericDAO.findBySql(sqlQuery, scalarList,
+				CasCnfgLocalInstrCodesEntity.class);
 		if (localInstrEntityList.size() > 0) {
 			log.debug("localInstrEntityList: " + localInstrEntityList.toString());
-			for (MdtCnfgLocalInstrCodesEntity localEntity : localInstrEntityList) {
+			for (CasCnfgLocalInstrCodesEntity localEntity : localInstrEntityList) {
 				LocalInstrumentCodesModel localModel = new AdminTranslator()
 						.translateLocalInstrumentCodesEntityToCommonsModel(localEntity);
 				localInstList.add(localModel);
@@ -726,7 +713,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public List<?> retrieveMandateBySearchCriteria(String mandateId) {
 		// Entity Model List
-		List<MdtCnfgLocalInstrCodesEntity> localInstrEntityList = new ArrayList<MdtCnfgLocalInstrCodesEntity>();
+		List<CasCnfgLocalInstrCodesEntity> localInstrEntityList = new ArrayList<CasCnfgLocalInstrCodesEntity>();
 
 		// Commons Model List
 		List<LocalInstrumentCodesModel> localInstList = new ArrayList<LocalInstrumentCodesModel>();
@@ -745,11 +732,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		scalarList.add("localInstrumentDescription");
 		scalarList.add("activeInd");
 
-		localInstrEntityList = (List<MdtCnfgLocalInstrCodesEntity>) genericDAO.findBySql(sqlQuery, scalarList,
-				MdtCnfgLocalInstrCodesEntity.class);
+		localInstrEntityList = (List<CasCnfgLocalInstrCodesEntity>) genericDAO.findBySql(sqlQuery, scalarList,
+				CasCnfgLocalInstrCodesEntity.class);
 		if (localInstrEntityList.size() > 0) {
 			log.debug("localInstrEntityList: " + localInstrEntityList.toString());
-			for (MdtCnfgLocalInstrCodesEntity localEntity : localInstrEntityList) {
+			for (CasCnfgLocalInstrCodesEntity localEntity : localInstrEntityList) {
 				LocalInstrumentCodesModel localModel = new AdminTranslator()
 						.translateLocalInstrumentCodesEntityToCommonsModel(localEntity);
 				localInstList.add(localModel);
@@ -786,7 +773,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public Object retrieveOpsCustomerParameters(String bicCode) {
 		OpsCustParamModel sysCustParamModel = new OpsCustParamModel();
 		try {
-			MdtOpsCustParamEntity opsCustParamEntity = (MdtOpsCustParamEntity) genericDAO
+			CasOpsCustParamEntity opsCustParamEntity = (CasOpsCustParamEntity) genericDAO
 					.findByNamedQuery("MdtOpsCustParamEntity.findByBicCode", "bicCode", bicCode);
 			if (opsCustParamEntity != null) {
 				CustParamLogic customerCustParamLogic = new CustParamLogic();
@@ -988,7 +975,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		List<MandatesCountCommonsModel> mandatesCountModelList = new ArrayList<MandatesCountCommonsModel>();
 		try {
 
-			List<MdtAcOpsMndtCountEntity> mdtOpsMndtCountEntityList = genericDAO.findAll(MdtAcOpsMndtCountEntity.class);
+			List<CasOpsMndtCountEntity> mdtOpsMndtCountEntityList = genericDAO.findAll(
+					CasOpsMndtCountEntity.class);
 
 			if (mdtOpsMndtCountEntityList.size() > 0) {
 
@@ -1054,7 +1042,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	@Override
 	public List<?> retrieveActiveCustomerParameters() {
-		List<MdtOpsCustParamEntity> custParamsList = new ArrayList<MdtOpsCustParamEntity>();
+		List<CasOpsCustParamEntity> custParamsList = new ArrayList<CasOpsCustParamEntity>();
 
 		try {
 			custParamsList = genericDAO.findAllByNamedQuery("MdtOpsCustParamEntity.findByActiveInd", "activeInd", "Y");
@@ -1069,9 +1057,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	}
 
 	public Object retrieveErrorCodeDesc(String errorCode) {
-		MdtCnfgErrorCodesEntity mdtCnfgErrorCodesEntity = new MdtCnfgErrorCodesEntity();
+		CasCnfgErrorCodesEntity casCnfgErrorCodesEntity = new CasCnfgErrorCodesEntity();
 		try {
-			mdtCnfgErrorCodesEntity = (MdtCnfgErrorCodesEntity) genericDAO
+			casCnfgErrorCodesEntity = (CasCnfgErrorCodesEntity) genericDAO
 					.findByNamedQuery("MdtCnfgErrorCodesEntity.findByErrorCode", "errorCode", errorCode);
 		} catch (ObjectNotFoundException onfe) {
 			log.debug("No Object Exists on DB");
@@ -1079,12 +1067,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.error("Error on retrieveErrorCode: " + e.getMessage());
 			e.printStackTrace();
 		}
-		return mdtCnfgErrorCodesEntity;
+		return casCnfgErrorCodesEntity;
 	}
 
 	@Override
 	public List<?> retrieveStatusHdrs() {
-		List<MdtAcOpsStatusHdrsEntity> statusHdrsList = new ArrayList<MdtAcOpsStatusHdrsEntity>();
+		List<CasOpsStatusHdrsEntity> statusHdrsList = new ArrayList<CasOpsStatusHdrsEntity>();
 
 		try {
 			log.debug("---------------In the retrieve status headers method------------------");
@@ -1113,7 +1101,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public List<?> retrieveStatusHdrsByStatus(String status, String pacs002Service) 
 	{
-		List<MdtAcOpsStatusHdrsEntity> statusHdrsList = new ArrayList<MdtAcOpsStatusHdrsEntity>();
+		List<CasOpsStatusHdrsEntity> statusHdrsList = new ArrayList<CasOpsStatusHdrsEntity>();
 
 		try {
 			//SalehaR - 2016/02/20 - Scheduler not extracting by service
@@ -1123,7 +1111,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("service", pacs002Service);
 			parameters.put("processStatus", status);
 
-			statusHdrsList = (List<MdtAcOpsStatusHdrsEntity>) genericDAO .findAllByCriteria(MdtAcOpsStatusHdrsEntity.class, parameters);
+			statusHdrsList = (List<CasOpsStatusHdrsEntity>) genericDAO .findAllByCriteria(
+					CasOpsStatusHdrsEntity.class, parameters);
 
 		} catch (NullPointerException npe) {
 			log.error("NullPointer exception :" + npe.getMessage());
@@ -1140,7 +1129,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public List<?> retrieveStatusDetailsByStatus(String instId) 
 	{
-		List<MdtAcOpsStatusDetailsEntity> statusDtlsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+		List<CasOpsStatusDetailsEntity> statusDtlsList = new ArrayList<CasOpsStatusDetailsEntity>();
 
 		try {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -1148,7 +1137,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("processStatus", readyForExtractStatus);
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			statusDtlsList = (List<MdtAcOpsStatusDetailsEntity>) genericDAO .findAllByCriteria(MdtAcOpsStatusDetailsEntity.class, parameters);
+			statusDtlsList = (List<CasOpsStatusDetailsEntity>) genericDAO .findAllByCriteria(
+					CasOpsStatusDetailsEntity.class, parameters);
 			log.debug("---------------MdtAcOpsStatusDetailsEntity after findAllByCriteria: ------------------"
 					+ statusDtlsList);
 		} catch (NullPointerException npe) {
@@ -1167,9 +1157,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public boolean updateOpsStatusHdrs(Object obj) {
 		try {
 
-			if (obj instanceof MdtAcOpsStatusHdrsEntity) {
+			if (obj instanceof CasOpsStatusHdrsEntity) {
 
-				MdtAcOpsStatusHdrsEntity statusGrpHdrEntity = (MdtAcOpsStatusHdrsEntity) obj;
+				CasOpsStatusHdrsEntity statusGrpHdrEntity = (CasOpsStatusHdrsEntity) obj;
 				log.debug("<<<<<<<<<<<<<<<<<<<<<<<<statusGrpHdrEntity before UPDATE>>>>>>>>>>>>>>>>>>>>>>>>>:"
 						+ statusGrpHdrEntity);
 				genericDAO.saveOrUpdate(statusGrpHdrEntity);
@@ -1188,9 +1178,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	@Override
 	public Object retrieveSOTEOTCntrl(String memberNo, String serviceId) {
-		List<MdtAcOpsSotEotCtrlEntity> mdtAcOpsSotEotCtrlList = new ArrayList<MdtAcOpsSotEotCtrlEntity>();
+		List<CasOpsSotEotCtrlEntity> mdtAcOpsSotEotCtrlList = new ArrayList<CasOpsSotEotCtrlEntity>();
 
-		MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
+		CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
 		try {
 			log.debug("memberNo: " + memberNo);
 			log.debug("serviceId: " + serviceId);
@@ -1199,10 +1189,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("mdtAcOpsSotEotCtrlPK.instId", memberNo);
 			parameters.put("mdtAcOpsSotEotCtrlPK.serviceId", serviceId);
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			mdtAcOpsSotEotCtrlEntity = (MdtAcOpsSotEotCtrlEntity) genericDAO
-					.findByCriteria(MdtAcOpsSotEotCtrlEntity.class, parameters);
+			casOpsSotEotCtrlEntity = (CasOpsSotEotCtrlEntity) genericDAO
+					.findByCriteria(CasOpsSotEotCtrlEntity.class, parameters);
 			log.debug("---------------MdtAcOpsSotEotCtrlEntity after findByCriteria: ------------------"
-					+ mdtAcOpsSotEotCtrlEntity);
+					+ casOpsSotEotCtrlEntity);
 		} catch (ObjectNotFoundException onfe) {
 			log.debug("No Object Exists on DB");
 		} catch (Exception e) {
@@ -1210,12 +1200,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			e.printStackTrace();
 		}
 
-		return mdtAcOpsSotEotCtrlEntity;
+		return casOpsSotEotCtrlEntity;
 	}
 
 	@Override
 	public Object retrieveStatusErrors(BigDecimal hdrSeqNo, String errorType) {
-		List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+		List<CasOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<CasOpsStatusDetailsEntity>();
 
 		try {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -1223,8 +1213,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("errorType", errorType);
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			opsStatusDetailsList = (List<MdtAcOpsStatusDetailsEntity>) genericDAO
-					.findAllByCriteria(MdtAcOpsStatusDetailsEntity.class, parameters);
+			opsStatusDetailsList = (List<CasOpsStatusDetailsEntity>) genericDAO
+					.findAllByCriteria(CasOpsStatusDetailsEntity.class, parameters);
 			log.debug("---------------opsStatusDetailsList after findAllByCriteria: ------------------"
 					+ opsStatusDetailsList);
 		} catch (ObjectNotFoundException onfe) {
@@ -1239,7 +1229,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	@Override
 	public Object retrieveDistinctTxnErrors(BigDecimal hdrSeqNo, String errorType) {
-		List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+		List<CasOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<CasOpsStatusDetailsEntity>();
 
 		try {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -1247,7 +1237,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("errorType", errorType);
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			opsStatusDetailsList = (List<MdtAcOpsStatusDetailsEntity>) genericDAO.findDistinctByCriteria(MdtAcOpsStatusDetailsEntity.class, parameters, "txnId");
+			opsStatusDetailsList = (List<CasOpsStatusDetailsEntity>) genericDAO.findDistinctByCriteria(
+					CasOpsStatusDetailsEntity.class, parameters, "txnId");
 			log.debug("---------------opsStatusDetailsList after findAllByCriteria: ------------------"
 					+ opsStatusDetailsList);
 		} catch (ObjectNotFoundException onfe) {
@@ -1262,7 +1253,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	@Override
 	public Object retrieveTransactionErrors(String txnId, BigDecimal hdrSeqNo) {
-		List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+		List<CasOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<CasOpsStatusDetailsEntity>();
 
 		try {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -1270,7 +1261,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("statusHdrSeqNo", hdrSeqNo);
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			opsStatusDetailsList = (List<MdtAcOpsStatusDetailsEntity>) genericDAO.findAllByCriteria(MdtAcOpsStatusDetailsEntity.class, parameters);
+			opsStatusDetailsList = (List<CasOpsStatusDetailsEntity>) genericDAO.findAllByCriteria(
+					CasOpsStatusDetailsEntity.class, parameters);
 			log.debug("---------------opsStatusDetailsList after findAllByCriteria: ------------------"
 					+ opsStatusDetailsList);
 		} catch (ObjectNotFoundException onfe) {
@@ -1286,10 +1278,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public boolean updateSOTEOTCntrl(Object obj) {
 		try {
 
-			if (obj instanceof MdtAcOpsSotEotCtrlEntity) {
+			if (obj instanceof CasOpsSotEotCtrlEntity) {
 
-				MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = (MdtAcOpsSotEotCtrlEntity) obj;
-				genericDAO.saveOrUpdate(mdtAcOpsSotEotCtrlEntity);
+				CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = (CasOpsSotEotCtrlEntity) obj;
+				genericDAO.saveOrUpdate(casOpsSotEotCtrlEntity);
 
 				return true;
 			} else {
@@ -1316,9 +1308,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	}
 
 	public Object retrievePacs002Count(String messageId) {
-		MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = new MdtAcOpsMndtCountEntity();
+		CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
 		try {
-			mdtOpsMndtCountEntity = (MdtAcOpsMndtCountEntity) genericDAO
+			mdtOpsMndtCountEntity = (CasOpsMndtCountEntity) genericDAO
 					.findByNamedQuery("MdtAcOpsMndtCountEntity.findByMsgId", "msgId", messageId);
 		} catch (ObjectNotFoundException onfe) {
 			log.error("No Object Exists on DB");
@@ -1333,11 +1325,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public boolean createLoadEOTandSOT(Object obj) {
 
 		try {
-			if (obj instanceof MdtAcOpsTransCtrlMsgEntity) {
+			if (obj instanceof CasOpsTransCtrlMsgEntity) {
 
-				MdtAcOpsTransCtrlMsgEntity mdtAcOpsTransCtrlMsgEntity = (MdtAcOpsTransCtrlMsgEntity) obj;
-				log.debug("in the createLoadEOTand SOT Entity before save " + mdtAcOpsTransCtrlMsgEntity);
-				genericDAO.save(mdtAcOpsTransCtrlMsgEntity);
+				CasOpsTransCtrlMsgEntity casOpsTransCtrlMsgEntity = (CasOpsTransCtrlMsgEntity) obj;
+				log.debug("in the createLoadEOTand SOT Entity before save " +
+						casOpsTransCtrlMsgEntity);
+				genericDAO.save(casOpsTransCtrlMsgEntity);
 
 				return true;
 			} else {
@@ -1354,14 +1347,15 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	@Override
 	public Object retrieveStatusHdrsBySeqNo(BigDecimal seqNo) {
-		MdtAcOpsStatusHdrsEntity statusHdrsEntiy = new MdtAcOpsStatusHdrsEntity();
+		CasOpsStatusHdrsEntity statusHdrsEntiy = new CasOpsStatusHdrsEntity();
 
 		try {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("systemSeqNo", seqNo);
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			statusHdrsEntiy = (MdtAcOpsStatusHdrsEntity) genericDAO.findByCriteria(MdtAcOpsStatusHdrsEntity.class,
+			statusHdrsEntiy = (CasOpsStatusHdrsEntity) genericDAO.findByCriteria(
+					CasOpsStatusHdrsEntity.class,
 					parameters);
 			log.debug("---------------opsStatusDetailsList after findAllByCriteria: ------------------"
 					+ statusHdrsEntiy);
@@ -1380,7 +1374,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	@Override
 	public Object retrieveDistinctStatusDetails(String instId) {
-		List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+		List<CasOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<CasOpsStatusDetailsEntity>();
 
 		try {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -1388,7 +1382,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("processStatus", readyForExtractStatus);
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			opsStatusDetailsList = (List<MdtAcOpsStatusDetailsEntity>) genericDAO.findDistinctByCriteria(MdtAcOpsStatusDetailsEntity.class, parameters, "txnId");
+			opsStatusDetailsList = (List<CasOpsStatusDetailsEntity>) genericDAO.findDistinctByCriteria(
+					CasOpsStatusDetailsEntity.class, parameters, "txnId");
 			log.debug("---------------opsStatusDetailsList after findAllByCriteria: ------------------"
 					+ opsStatusDetailsList);
 		} catch (ObjectNotFoundException onfe) {
@@ -1403,7 +1398,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	@Override
 	public List<?> retrieveStatusDetailsByCriteria(String txnId) {
-		List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+		List<CasOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<CasOpsStatusDetailsEntity>();
 
 		try {
 			// opsStatusDetailsList = (List<MdtAcOpsStatusDetailsEntity>)
@@ -1413,8 +1408,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("txnId", txnId);
 			parameters.put("processStatus", readyForExtractStatus);
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			opsStatusDetailsList = (List<MdtAcOpsStatusDetailsEntity>) genericDAO
-					.findAllByCriteria(MdtAcOpsStatusDetailsEntity.class, parameters);
+			opsStatusDetailsList = (List<CasOpsStatusDetailsEntity>) genericDAO
+					.findAllByCriteria(CasOpsStatusDetailsEntity.class, parameters);
 			log.debug("---------------opsStatusDetailsList after findAllByCriteria: ------------------"
 					+ opsStatusDetailsList);
 
@@ -1432,9 +1427,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public boolean updateOpsStatusDetails(Object obj) {
 		try {
 
-			if (obj instanceof MdtAcOpsStatusDetailsEntity) {
+			if (obj instanceof CasOpsStatusDetailsEntity) {
 
-				MdtAcOpsStatusDetailsEntity statusDetailsEntity = (MdtAcOpsStatusDetailsEntity) obj;
+				CasOpsStatusDetailsEntity statusDetailsEntity = (CasOpsStatusDetailsEntity) obj;
 				genericDAO.saveOrUpdate(statusDetailsEntity);
 
 				return true;
@@ -1515,7 +1510,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		List<MandatesCountCommonsModel> mandatesCountIncomingList = new ArrayList<MandatesCountCommonsModel>();
 		try {
-			List<MdtAcOpsMndtCountEntity> mdtOpsMndtCountEntityList = genericDAO
+			List<CasOpsMndtCountEntity> mdtOpsMndtCountEntityList = genericDAO
 					.findAllByNamedQuery("MdtAcOpsMndtCountEntity.findByIncoming", "incoming", "Y");
 			if (mdtOpsMndtCountEntityList.size() > 0) {
 				mandatesCountIncomingList.clear();
@@ -1538,7 +1533,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public List<?> retrieveOutgoingMandatesCount() {
 		List<MandatesCountCommonsModel> mandatesCountCommonsModelList = new ArrayList<MandatesCountCommonsModel>();
 		try {
-			List<MdtAcOpsMndtCountEntity> mdtOpsMndtCountEntityList = genericDAO
+			List<CasOpsMndtCountEntity> mdtOpsMndtCountEntityList = genericDAO
 					.findAllByNamedQuery("MdtAcOpsMndtCountEntity.findByOutgoing", "outgoing", "Y");
 			if (mdtOpsMndtCountEntityList.size() > 0) {
 				mandatesCountCommonsModelList.clear();
@@ -1822,11 +1817,13 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		List<AcOpsTransCtrlMsgModel> acOpsTransCtrlMsgModelList = new ArrayList<AcOpsTransCtrlMsgModel>();
 
 		try{
-			List<MdtAcOpsTransCtrlMsgEntity>mdtAcOpsTransCtrlMsgEntityList = genericDAO.findAll(MdtAcOpsTransCtrlMsgEntity.class);
-			if(mdtAcOpsTransCtrlMsgEntityList.size() > 0)
+			List<CasOpsTransCtrlMsgEntity>
+					casOpsTransCtrlMsgEntityList = genericDAO.findAll(CasOpsTransCtrlMsgEntity.class);
+			if(casOpsTransCtrlMsgEntityList.size() > 0)
 			{
 				AcOpsTransCtrlMsgLogic acOpsTransCtrlMsgLogic = new AcOpsTransCtrlMsgLogic();
-				acOpsTransCtrlMsgModelList = acOpsTransCtrlMsgLogic.retrieveAllACOpsRecords(mdtAcOpsTransCtrlMsgEntityList);
+				acOpsTransCtrlMsgModelList = acOpsTransCtrlMsgLogic.retrieveAllACOpsRecords(
+						casOpsTransCtrlMsgEntityList);
 			}
 		} catch (ObjectNotFoundException onfe) {
 			log.error("No Object Exists on DB");
@@ -1841,7 +1838,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public Object retrieveDistinctConfDetails(String instId, String extService) 
 	{
-		List<MdtAcOpsConfDetailsEntity> opsConfDetailsList = new ArrayList<MdtAcOpsConfDetailsEntity>();
+		List<CasOpsConfDetailsEntity> opsConfDetailsList = new ArrayList<CasOpsConfDetailsEntity>();
 
 		try 
 		{
@@ -1851,7 +1848,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("processStatus", readyForExtractStatus);
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			opsConfDetailsList = (List<MdtAcOpsConfDetailsEntity>) genericDAO.findDistinctByCriteria(MdtAcOpsConfDetailsEntity.class, parameters, "txnId");
+			opsConfDetailsList = (List<CasOpsConfDetailsEntity>) genericDAO.findDistinctByCriteria(
+					CasOpsConfDetailsEntity.class, parameters, "txnId");
 			log.debug("---------------opsConfDetailsList after findAllByCriteria: ------------------"+ opsConfDetailsList);
 		} 
 		catch (ObjectNotFoundException onfe) 
@@ -1870,7 +1868,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public List<?> retrieveConfDetails(String txnId, String extService, String orgnlMsgType) 
 	{
-		List<MdtAcOpsConfDetailsEntity> confDetailsList = new ArrayList<MdtAcOpsConfDetailsEntity>();
+		List<CasOpsConfDetailsEntity> confDetailsList = new ArrayList<CasOpsConfDetailsEntity>();
 
 		try 
 		{
@@ -1880,7 +1878,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("extractService", extService);
 			parameters.put("orgnlMsgType", orgnlMsgType);
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			confDetailsList = (List<MdtAcOpsConfDetailsEntity>) genericDAO.findAllByCriteria(MdtAcOpsConfDetailsEntity.class, parameters);
+			confDetailsList = (List<CasOpsConfDetailsEntity>) genericDAO.findAllByCriteria(
+					CasOpsConfDetailsEntity.class, parameters);
 			log.debug("---------------confDetailsList after findAllByCriteria: ------------------"+ confDetailsList);
 
 		} catch (ObjectNotFoundException onfe) {
@@ -1895,14 +1894,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	@Override
 	public Object retrieveConfHdrsBySeqNo(BigDecimal seqNo) {
-		MdtAcOpsConfHdrsEntity confHdrsEntiy = new MdtAcOpsConfHdrsEntity();
+		CasOpsConfHdrsEntity confHdrsEntiy = new CasOpsConfHdrsEntity();
 
 		try {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("systemSeqNo", seqNo);
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			confHdrsEntiy = (MdtAcOpsConfHdrsEntity) genericDAO.findByCriteria(MdtAcOpsConfHdrsEntity.class,parameters);
+			confHdrsEntiy = (CasOpsConfHdrsEntity) genericDAO.findByCriteria(CasOpsConfHdrsEntity.class,parameters);
 			log.debug("---------------opsStatusDetailsList after findAllByCriteria: ------------------"+ confHdrsEntiy);
 
 		} catch (NullPointerException npe) {
@@ -1922,9 +1921,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public boolean updateConfDetails(Object obj) {
 		try {
 
-			if (obj instanceof MdtAcOpsConfDetailsEntity) {
+			if (obj instanceof CasOpsConfDetailsEntity) {
 
-				MdtAcOpsConfDetailsEntity confDetailsEntity = (MdtAcOpsConfDetailsEntity) obj;
+				CasOpsConfDetailsEntity confDetailsEntity = (CasOpsConfDetailsEntity) obj;
 				//				log.info("XXXXXX [confDetailsEntity before save] XXXXXXX "+confDetailsEntity);
 				genericDAO.saveOrUpdate(confDetailsEntity);
 
@@ -1944,9 +1943,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public boolean updateConfHdrs(Object obj) {
 		try {
 
-			if (obj instanceof MdtAcOpsConfHdrsEntity) {
+			if (obj instanceof CasOpsConfHdrsEntity) {
 
-				MdtAcOpsConfHdrsEntity confHdrEntity = (MdtAcOpsConfHdrsEntity) obj;
+				CasOpsConfHdrsEntity confHdrEntity = (CasOpsConfHdrsEntity) obj;
 				log.debug("<<<<<<<<<<<<<<<<<<<<<<<<confHdrEntity before UPDATE>>>>>>>>>>>>>>>>>>>>>>>>>:"+ confHdrEntity);
 				genericDAO.saveOrUpdate(confHdrEntity);
 
@@ -1965,14 +1964,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public List<?> retrieveConfStatusDetails(BigDecimal statusHdrSeqNo) {
 
-		List<MdtAcOpsStatusDetailsEntity> mdtAcOpsStatusDetailsEntityList = genericDAO.findAllByNamedQuery("MdtAcOpsStatusDetailsEntity.findByStatusHdrSeqNo","statusHdrSeqNo",statusHdrSeqNo);
-		return mdtAcOpsStatusDetailsEntityList;
+		List<CasOpsStatusDetailsEntity> casOpsStatusDetailsEntityList = genericDAO.findAllByNamedQuery("MdtAcOpsStatusDetailsEntity.findByStatusHdrSeqNo","statusHdrSeqNo",statusHdrSeqNo);
+		return casOpsStatusDetailsEntityList;
 	}
 
 	@Override
 	public List<?> retrieveConfDetailsByProcessStatus() 
 	{
-		List<MdtAcOpsConfDetailsEntity> mdtAcOpsConfDetailsList = new ArrayList<MdtAcOpsConfDetailsEntity>();
+		List<CasOpsConfDetailsEntity> mdtAcOpsConfDetailsList = new ArrayList<CasOpsConfDetailsEntity>();
 
 		try 
 		{	
@@ -1993,7 +1992,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public List<?> retrieveStatusHdrsByProcessStatus() 
 	{
-		List<MdtAcOpsStatusHdrsEntity> mdtAcOpsStatusHdrsList = new ArrayList<MdtAcOpsStatusHdrsEntity>();
+		List<CasOpsStatusHdrsEntity> mdtAcOpsStatusHdrsList = new ArrayList<CasOpsStatusHdrsEntity>();
 
 		try 
 		{	
@@ -2105,15 +2104,15 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.debug("generateDuplicateError.crAbbShrtName ---->"+crAbbShrtName);
 		log.debug("generateDuplicateError.mndtRefNo ---->"+mndtRefNo);
 
-		MdtAcOpsStatusHdrsEntity mdtAcOpsStatusHdrsEntity = (MdtAcOpsStatusHdrsEntity) genericDAO.findByNamedQuery("MdtAcOpsStatusHdrsEntity.findByOrgnlMsgId","orgnlMsgId", msgId);
-		log.debug("mdtAcOpsStatusHdrsEntity from Duplicate Error ---->"+mdtAcOpsStatusHdrsEntity);
+		CasOpsStatusHdrsEntity casOpsStatusHdrsEntity = (CasOpsStatusHdrsEntity) genericDAO.findByNamedQuery("MdtAcOpsStatusHdrsEntity.findByOrgnlMsgId","orgnlMsgId", msgId);
+		log.debug("mdtAcOpsStatusHdrsEntity from Duplicate Error ---->"+ casOpsStatusHdrsEntity);
 
-		if(mdtAcOpsStatusHdrsEntity != null)
+		if(casOpsStatusHdrsEntity != null)
 		{
-			MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity=new MdtAcOpsStatusDetailsEntity();
+			CasOpsStatusDetailsEntity opsStatusDetailsEntity=new CasOpsStatusDetailsEntity();
 
 			opsStatusDetailsEntity.setSystemSeqNo(new BigDecimal(123));
-			opsStatusDetailsEntity.setStatusHdrSeqNo(mdtAcOpsStatusHdrsEntity.getSystemSeqNo());
+			opsStatusDetailsEntity.setStatusHdrSeqNo(casOpsStatusHdrsEntity.getSystemSeqNo());
 			opsStatusDetailsEntity.setErrorCode("902205");
 			opsStatusDetailsEntity.setTxnId(txnId);
 			opsStatusDetailsEntity.setTxnStatus("RJCT");
@@ -2300,10 +2299,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public List<?> retrieveMndtCount() {
 
-		List<MdtAcOpsMndtCountEntity> mndtCountList = new ArrayList<MdtAcOpsMndtCountEntity>();
+		List<CasOpsMndtCountEntity> mndtCountList = new ArrayList<CasOpsMndtCountEntity>();
 
 		try{
-			mndtCountList=genericDAO.findAll(MdtAcOpsMndtCountEntity.class);
+			mndtCountList=genericDAO.findAll(CasOpsMndtCountEntity.class);
 			log.debug("mndtCountList---->"+mndtCountList);
 
 		} 
@@ -2326,9 +2325,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	{
 		try 
 		{
-			if (obj instanceof MdtAcOpsDailyBillingEntity) 
+			if (obj instanceof CasOpsDailyBillingEntity)
 			{
-				MdtAcOpsDailyBillingEntity opsDailyBillingEntity = (MdtAcOpsDailyBillingEntity) obj;
+				CasOpsDailyBillingEntity opsDailyBillingEntity = (CasOpsDailyBillingEntity) obj;
 				//				log.info("Entity in Save==> "+opsDailyBillingEntity);
 				genericDAO.save(opsDailyBillingEntity);
 
@@ -2354,12 +2353,13 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public List<?> retrieveDailyBillingInterCngInfo()
 	{
 		BigDecimal lastSeqNo= BigDecimal.ZERO;
-		List<MdtAcOpsDailyBillingEntity> dailyBillingInfoList = new ArrayList<MdtAcOpsDailyBillingEntity>();
+		List<CasOpsDailyBillingEntity> dailyBillingInfoList = new ArrayList<CasOpsDailyBillingEntity>();
 
 		HashMap<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("billExpStatus", "N");
 
-		dailyBillingInfoList = (List<MdtAcOpsDailyBillingEntity>) genericDAO.findAllByOrderCriteria(MdtAcOpsDailyBillingEntity.class, parameters, true, "systemSeqNo");
+		dailyBillingInfoList = (List<CasOpsDailyBillingEntity>) genericDAO.findAllByOrderCriteria(
+				CasOpsDailyBillingEntity.class, parameters, true, "systemSeqNo");
 		log.debug("Daily Billing Info List ==> "+dailyBillingInfoList);
 
 		//		2017-07-10 SalehaR - Move this to the billing export code
@@ -2384,11 +2384,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public Object retrieveBillingCtrls(String processName) 
 	{
-		MdtAcOpsBillingCtrlsEntity mdtAcOpsBillingCtrlsEntity = new MdtAcOpsBillingCtrlsEntity();
+		CasOpsBillingCtrlsEntity casOpsBillingCtrlsEntity = new CasOpsBillingCtrlsEntity();
 
 		try 
 		{
-			mdtAcOpsBillingCtrlsEntity = (MdtAcOpsBillingCtrlsEntity) genericDAO.findByNamedQuery("MdtAcOpsBillingCtrlsEntity.findByProcessType", "processType", processName);
+			casOpsBillingCtrlsEntity = (CasOpsBillingCtrlsEntity) genericDAO.findByNamedQuery("CasOpsBillingCtrlsEntity.findByProcessType", "processType", processName);
 		} 
 		catch (ObjectNotFoundException onfe) 
 		{
@@ -2399,7 +2399,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			e.printStackTrace();
 		}
 
-		return mdtAcOpsBillingCtrlsEntity;
+		return casOpsBillingCtrlsEntity;
 	}
 
 	@Override
@@ -2407,10 +2407,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	{
 		try 
 		{
-			if (obj instanceof MdtAcOpsBillingCtrlsEntity) 
+			if (obj instanceof CasOpsBillingCtrlsEntity)
 			{
-				MdtAcOpsBillingCtrlsEntity mdtAcOpsBillingCtrlsEntity = (MdtAcOpsBillingCtrlsEntity) obj;
-				genericDAO.saveOrUpdate(mdtAcOpsBillingCtrlsEntity);
+				CasOpsBillingCtrlsEntity casOpsBillingCtrlsEntity = (CasOpsBillingCtrlsEntity) obj;
+				genericDAO.saveOrUpdate(casOpsBillingCtrlsEntity);
 
 				return true;
 			} 
@@ -2430,7 +2430,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public List<?> retrieveInterchangeBillingData(String currentSeqNo, String lastSeqNo)
 	{
-		List<MdtAcOpsDailyBillingEntity> intChngBillingList = new ArrayList<MdtAcOpsDailyBillingEntity>();
+		List<CasOpsDailyBillingEntity> intChngBillingList = new ArrayList<CasOpsDailyBillingEntity>();
 
 		StringBuffer sb = new StringBuffer();
 
@@ -2469,7 +2469,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			if (obj instanceof ObsBillingStagingEntity) {
 				//				log.debug("In the billing staging entity<><><><><><><>");
 				ObsBillingStagingEntity obsBillingStagingEntity = (ObsBillingStagingEntity) obj;
-				log.info("<><><>obsBillingStagingEntity:<><><> "+obsBillingStagingEntity);
+				log.info("<><><>obsBillingStagingEntity:<><><> "+ obsBillingStagingEntity);
 				genericDAO.save(obsBillingStagingEntity);
 				return true;
 			} else {
@@ -3053,7 +3053,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 				HashMap<String, Object> parameters = new HashMap<String, Object>();
 				parameters.put("processStatus", readyForExtractStatus);
 
-				List<MdtAcOpsMandateTxnsEntity> opsMandateTxnsList = (List<MdtAcOpsMandateTxnsEntity>) genericDAO.findAllByCriteria(MdtAcOpsMandateTxnsEntity.class, parameters);
+				List<CasOpsCessionAssignEntity> opsMandateTxnsList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByCriteria(
+						CasOpsCessionAssignEntity.class, parameters);
 				if(opsMandateTxnsList != null && opsMandateTxnsList.size() > 0)
 				{
 					log.debug("opsMandateTxnsList.size(); =====> "+opsMandateTxnsList.size());
@@ -3078,7 +3079,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("processStatus", readyForExtractStatus);
 
-			List<MdtAcOpsConfDetailsEntity> opsConfDetailsCheckList = (List<MdtAcOpsConfDetailsEntity>) genericDAO.findAllByCriteria(MdtAcOpsConfDetailsEntity.class, parameters);
+			List<CasOpsConfDetailsEntity> opsConfDetailsCheckList = (List<CasOpsConfDetailsEntity>) genericDAO.findAllByCriteria(
+					CasOpsConfDetailsEntity.class, parameters);
 			if(opsConfDetailsCheckList != null && opsConfDetailsCheckList.size() > 0)
 			{
 				log.debug("opsConfDetailsCheckList.size(); =====> "+opsConfDetailsCheckList.size());
@@ -3103,7 +3105,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("processStatus", reportToBeProdStatus);
 
-			List<MdtAcOpsStatusHdrsEntity> statusRptCheckList = (List<MdtAcOpsStatusHdrsEntity>) genericDAO.findByCriteriaUsingTrunc(MdtAcOpsStatusHdrsEntity.class, parameters, "CREATE_DATE_TIME", "YYYY-MM-DD", strSysDate);
+			List<CasOpsStatusHdrsEntity> statusRptCheckList = (List<CasOpsStatusHdrsEntity>) genericDAO.findByCriteriaUsingTrunc(
+					CasOpsStatusHdrsEntity.class, parameters, "CREATE_DATE_TIME", "YYYY-MM-DD", strSysDate);
 			log.debug("statusRptCheckList.size(); =====> "+statusRptCheckList.size());
 			if(statusRptCheckList != null && statusRptCheckList.size() > 0)
 				statusRptsCheck = false;
@@ -3199,7 +3202,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public List<?> retrieveDailyBillingForArchive() 
 	{
-		List<MdtAcOpsDailyBillingEntity> dailyBillingList = new ArrayList<MdtAcOpsDailyBillingEntity>();
+		List<CasOpsDailyBillingEntity> dailyBillingList = new ArrayList<CasOpsDailyBillingEntity>();
 
 		try 
 		{
@@ -3223,9 +3226,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	{
 		try 
 		{
-			if (obj instanceof MdtAcOpsDailyBillingEntity) 
+			if (obj instanceof CasOpsDailyBillingEntity)
 			{
-				MdtAcOpsDailyBillingEntity opsDailyBillingEntity = (MdtAcOpsDailyBillingEntity) obj;
+				CasOpsDailyBillingEntity opsDailyBillingEntity = (CasOpsDailyBillingEntity) obj;
 				log.debug("Entity in Save==> "+opsDailyBillingEntity);
 				genericDAO.saveOrUpdate(opsDailyBillingEntity);
 
@@ -3381,7 +3384,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public Object retrieveDailyBillingByTxnId(String txnId, String service) 
 	{
-		MdtAcOpsDailyBillingEntity dailyBill = new MdtAcOpsDailyBillingEntity();
+		CasOpsDailyBillingEntity dailyBill = new CasOpsDailyBillingEntity();
 
 		try 
 		{
@@ -3390,7 +3393,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("subService", service);
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			dailyBill = (MdtAcOpsDailyBillingEntity) genericDAO.findByCriteria(MdtAcOpsDailyBillingEntity.class, parameters);
+			dailyBill = (CasOpsDailyBillingEntity) genericDAO.findByCriteria(
+					CasOpsDailyBillingEntity.class, parameters);
 			log.debug("---------------mndtList after findAllByCriteria: ------------------"+ dailyBill);
 		} 
 		catch (ObjectNotFoundException onfe) 
@@ -3762,7 +3766,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 			//			log.info("parameters =====> "+parameters);
 			//			List<MdtAcOpsMndtMsgEntity> painMsgsCheckList = (List<MdtAcOpsMndtMsgEntity>) genericDAO.findByCriteriaUsingTrunc(MdtAcOpsMndtMsgEntity.class, parameters, "CREATED_DATE", "YYYY-MM-DD", strSysDate);
-			List<MdtOpsFileRegEntity> fileStatusCheckList = genericDAO.findAllByNQCriteria("MdtOpsFileRegEntity.findByProcessDateTruncService", parameters);
+			List<CasOpsFileRegEntity> fileStatusCheckList = genericDAO.findAllByNQCriteria("MdtOpsFileRegEntity.findByProcessDateTruncService", parameters);
 
 			log.debug("fileStatusCheckList =====> "+fileStatusCheckList);
 			log.debug("fileStatusCheckList.size(); =====> "+fileStatusCheckList.size());
@@ -4771,10 +4775,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	@Override
 	public List<?> retrieveOpsFileReg() {
-		List<MdtOpsFileRegEntity> opsFileRegList = new ArrayList<MdtOpsFileRegEntity>();
+		List<CasOpsFileRegEntity> opsFileRegList = new ArrayList<CasOpsFileRegEntity>();
 
 		try{
-			opsFileRegList=genericDAO.findAll(MdtOpsFileRegEntity.class);
+			opsFileRegList=genericDAO.findAll(CasOpsFileRegEntity.class);
 			log.debug("opsFileRegList---->"+opsFileRegList);
 
 		} 
@@ -7719,7 +7723,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("extractService", service);
 			parameters.put("memberId", memberId);
 
-			List<MdtAcOpsConfDetailsEntity> opsConfDetailsCheckList = (List<MdtAcOpsConfDetailsEntity>) genericDAO.findAllByNQCriteria("MdtAcOpsConfDetailsEntity.findByExtractProcessStatusOutService", parameters);
+			List<CasOpsConfDetailsEntity> opsConfDetailsCheckList = (List<CasOpsConfDetailsEntity>) genericDAO.findAllByNQCriteria("MdtAcOpsConfDetailsEntity.findByExtractProcessStatusOutService", parameters);
 			if(opsConfDetailsCheckList != null && opsConfDetailsCheckList.size() > 0)
 			{
 				log.debug("opsConfDetailsCheckList.size(); =====> "+opsConfDetailsCheckList.size());
@@ -7758,7 +7762,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("service", service);
 			parameters.put("memberId", memberId);
 
-			List<MdtAcOpsStatusHdrsEntity> statusRptCheckList = (List<MdtAcOpsStatusHdrsEntity>) genericDAO.findAllByNQCriteria("MdtAcOpsStatusHdrsEntity.findByProStatusAndService",parameters);
+			List<CasOpsStatusHdrsEntity> statusRptCheckList = (List<CasOpsStatusHdrsEntity>) genericDAO.findAllByNQCriteria("MdtAcOpsStatusHdrsEntity.findByProStatusAndService",parameters);
 			log.debug("statusRptCheckList.size(); =====> "+statusRptCheckList.size());
 			if(statusRptCheckList != null && statusRptCheckList.size() > 0)
 				statusRptsCheck = false;
@@ -7782,9 +7786,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public boolean saveAcOpsTxnBilling(Object obj) {
 		try 
 		{
-			if (obj instanceof MdtAcOpsTxnsBillingEntity) 
+			if (obj instanceof CasOpsTxnsBillingEntity)
 			{
-				MdtAcOpsTxnsBillingEntity acOpsTxnsBillingEntity = (MdtAcOpsTxnsBillingEntity) obj;
+				CasOpsTxnsBillingEntity acOpsTxnsBillingEntity = (CasOpsTxnsBillingEntity) obj;
 				//				log.info("Entity in Save==> "+opsDailyBillingEntity);
 				genericDAO.save(acOpsTxnsBillingEntity);
 
@@ -7808,7 +7812,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public List<?> retrievetxnsBilingToExport(String nonActInd) {
 	
-		List<MdtAcOpsTxnsBillingEntity> mdtAcOpsTxnsBillingList = genericDAO.findAllByNamedQuery("MdtAcOpsTxnsBillingEntity.findByBillExpStatus","billExpStatus",nonActInd);
+		List<CasOpsTxnsBillingEntity> mdtAcOpsTxnsBillingList = genericDAO.findAllByNamedQuery("MdtAcOpsTxnsBillingEntity.findByBillExpStatus","billExpStatus",nonActInd);
 		return mdtAcOpsTxnsBillingList;
 	}
 
@@ -7837,9 +7841,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	public boolean updateOpsTxnBillingInd(Object obj) {
 		try 
 		{
-			if (obj instanceof MdtAcOpsTxnsBillingEntity) 
+			if (obj instanceof CasOpsTxnsBillingEntity)
 			{
-				MdtAcOpsTxnsBillingEntity opsTxnsBillingEntity = (MdtAcOpsTxnsBillingEntity) obj;
+				CasOpsTxnsBillingEntity opsTxnsBillingEntity = (CasOpsTxnsBillingEntity) obj;
 				log.info("Entity in Save==> "+opsTxnsBillingEntity);
 				genericDAO.saveOrUpdate(opsTxnsBillingEntity);
 
@@ -7911,15 +7915,15 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public Object retrievePastTimeForConfData() {
 		
-		List<MdtAcConfigDataTimeEntity> mdtAcOpsConfigDataTimeList = new ArrayList<MdtAcConfigDataTimeEntity>();
-		MdtAcConfigDataTimeEntity mdtAcOpsConfigDataTime = new MdtAcConfigDataTimeEntity();
+		List<CasConfigDataTimeEntity> casOpsConfigDataTimeList = new ArrayList<CasConfigDataTimeEntity>();
+		CasConfigDataTimeEntity casOpsConfigDataTime = new CasConfigDataTimeEntity();
 		
 		try {
-			mdtAcOpsConfigDataTimeList = genericDAO.findAll(MdtAcConfigDataTimeEntity.class);
+			casOpsConfigDataTimeList = genericDAO.findAll(CasConfigDataTimeEntity.class);
 			
-			if(mdtAcOpsConfigDataTimeList != null && mdtAcOpsConfigDataTimeList.size() > 0) {
-				for(MdtAcConfigDataTimeEntity mdtAcOpsConfigDataTimeLocal : mdtAcOpsConfigDataTimeList) {
-					mdtAcOpsConfigDataTime = mdtAcOpsConfigDataTimeLocal;
+			if(casOpsConfigDataTimeList != null && casOpsConfigDataTimeList.size() > 0) {
+				for(CasConfigDataTimeEntity mdtAcOpsConfigDataTimeLocal : casOpsConfigDataTimeList) {
+					casOpsConfigDataTime = mdtAcOpsConfigDataTimeLocal;
 				}
 			}
 		}
@@ -7928,17 +7932,17 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.error("Error on retrieveMdtAcOpsConfigDataTime: "+ e.getMessage());
 			e.printStackTrace();
 		}
-		return mdtAcOpsConfigDataTime;
+		return casOpsConfigDataTime;
 	}
 	
 	@Override
 	public Boolean createOrUpdatePastTimeForConfData(Object obj) {
 		Boolean updated = false;
 		try {
-			if (obj instanceof MdtAcConfigDataTimeEntity) {
-				MdtAcConfigDataTimeEntity mdtAcConfigDataTimeEntity = (MdtAcConfigDataTimeEntity) obj;
+			if (obj instanceof CasConfigDataTimeEntity) {
+				CasConfigDataTimeEntity casConfigDataTimeEntity = (CasConfigDataTimeEntity) obj;
 
-				genericDAO.saveOrUpdate(mdtAcConfigDataTimeEntity);
+				genericDAO.saveOrUpdate(casConfigDataTimeEntity);
 				updated = true;
 			} else {
 				log.error("Unable to convert type to MdtAcConfigDataTimeEntity.");
@@ -7962,10 +7966,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 				{
 					for (Object obj : opsTxnsBillReportList) 
 					{
-						if(obj instanceof MdtAcOpsTxnsBillReportEntity)
+						if(obj instanceof CasOpsTxnsBillReportEntity)
 						{
 
-							MdtAcOpsTxnsBillReportEntity localEntity = (MdtAcOpsTxnsBillReportEntity) obj;
+							CasOpsTxnsBillReportEntity localEntity = (CasOpsTxnsBillReportEntity) obj;
 							log.info("Writing to OpsTxnsBillReportTable table.... "+localEntity);
 							genericDAO.save(localEntity);
 							saved = true;

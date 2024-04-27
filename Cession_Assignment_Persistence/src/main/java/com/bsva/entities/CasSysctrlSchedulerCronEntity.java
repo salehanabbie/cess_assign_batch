@@ -24,7 +24,7 @@ import org.hibernate.annotations.Parameter;
  * @author SalehaR
  */
 @Entity
-@Table(name = "CAS_SYSCTRL_SCHEDULER_CRON", schema = "CASOWNER")
+@Table(name = "CAS_SYSCTRL_SCHEDULER_CRON", schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasSysctrlSchedulerCronEntity.findAll", query = "SELECT m FROM CasSysctrlSchedulerCronEntity m"),

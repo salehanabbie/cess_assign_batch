@@ -12,7 +12,7 @@ import com.bsva.Jobs.Jobs.EotExtractJob;
 import com.bsva.Jobs.Jobs.StartofDayJob;
 import com.bsva.beans.GenericDAO;
 import com.bsva.commons.model.SchedulerCronModel;
-import com.bsva.entities.MdtAcOpsSchedulerEntity;
+import com.bsva.entities.CasOpsSchedulerEntity;
 import com.bsva.entities.CasSysctrlSchedulerCronEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.QuartzSchedulerBeanLocal;
@@ -1088,26 +1088,26 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
                                            String activeInd) {
     boolean saved = false;
     //	Retrieve the opsScheduler
-    MdtAcOpsSchedulerEntity mdtAcOpsSchedulerEntity = new MdtAcOpsSchedulerEntity();
+    CasOpsSchedulerEntity casOpsSchedulerEntity = new CasOpsSchedulerEntity();
 
     try {
-      mdtAcOpsSchedulerEntity = (MdtAcOpsSchedulerEntity) genericDAO.findByNamedQuery(
+      casOpsSchedulerEntity = (CasOpsSchedulerEntity) genericDAO.findByNamedQuery(
           "MdtAcOpsSchedulerEntity.findBySchedulerName", "schedulerName", schedulerName);
-      log.debug("mdtAcOpsSchedulerEntity from DB: " + mdtAcOpsSchedulerEntity);
-      if (mdtAcOpsSchedulerEntity != null) {
+      log.debug("mdtAcOpsSchedulerEntity from DB: " + casOpsSchedulerEntity);
+      if (casOpsSchedulerEntity != null) {
         if (activeInd != null) {
-          mdtAcOpsSchedulerEntity.setActiveInd(activeInd);
+          casOpsSchedulerEntity.setActiveInd(activeInd);
         }
 
         if (reschTime != null) {
-          mdtAcOpsSchedulerEntity.setRescheduleTime(reschTime);
+          casOpsSchedulerEntity.setRescheduleTime(reschTime);
         }
 
-        mdtAcOpsSchedulerEntity.setModifiedBy(systemName);
-        mdtAcOpsSchedulerEntity.setModifiedDate(new Date());
-        log.debug("mdtAcOpsSchedulerEntity before save: " + mdtAcOpsSchedulerEntity);
+        casOpsSchedulerEntity.setModifiedBy(systemName);
+        casOpsSchedulerEntity.setModifiedDate(new Date());
+        log.debug("mdtAcOpsSchedulerEntity before save: " + casOpsSchedulerEntity);
 
-        saved = adminBeanRemote.createOpsScheduler(mdtAcOpsSchedulerEntity);
+        saved = adminBeanRemote.createOpsScheduler(casOpsSchedulerEntity);
         log.debug("OPS SCH SAVED---> " + saved);
       }
     } catch (ObjectNotFoundException onfe) {

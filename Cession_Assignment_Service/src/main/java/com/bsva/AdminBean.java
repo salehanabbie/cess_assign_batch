@@ -9,7 +9,6 @@ import com.bsva.businessLogic.AmendmentCodesLogic;
 import com.bsva.businessLogic.AuditTrackingLogic;
 import com.bsva.businessLogic.AuthTypeLogic;
 import com.bsva.businessLogic.CisDownloadLogic;
-import com.bsva.businessLogic.CnfgRejectReasonCodesLogic;
 import com.bsva.businessLogic.CompanyParametersLogic;
 import com.bsva.businessLogic.CurrencyCodeLogic;
 import com.bsva.businessLogic.CustParamLogic;
@@ -23,7 +22,6 @@ import com.bsva.businessLogic.LocalInstrumentCodesLogic;
 import com.bsva.businessLogic.OpsCustParamLogic;
 import com.bsva.businessLogic.OpsFileRegLogic;
 import com.bsva.businessLogic.OpsFileSizeLimitLogic;
-import com.bsva.businessLogic.OpsProcessControlLogic;
 import com.bsva.businessLogic.OpsRefSeqNumberLogic;
 import com.bsva.businessLogic.OpsServicesLogic;
 import com.bsva.businessLogic.OpsSlaTimesLogic;
@@ -37,7 +35,6 @@ import com.bsva.businessLogic.ServicesLogic;
 import com.bsva.businessLogic.SeverityCodes2Logic;
 import com.bsva.businessLogic.SeverityCodesLogic;
 import com.bsva.businessLogic.StartOfDayLogic;
-import com.bsva.businessLogic.StatusReasonCodesLogic;
 import com.bsva.businessLogic.SysCisBankLogic;
 import com.bsva.businessLogic.SysCisBranchLogic;
 import com.bsva.businessLogic.SysCtrlFileSizeLimitLogic;
@@ -62,7 +59,6 @@ import com.bsva.commons.model.AudSystemProcessModel;
 import com.bsva.commons.model.AuditTrackingModel;
 import com.bsva.commons.model.AuditTrackingSqlModel;
 import com.bsva.commons.model.CnfgAuthTypeModel;
-import com.bsva.commons.model.CnfgRejectReasonCodesModel;
 import com.bsva.commons.model.ConfgErrorCodesModel;
 import com.bsva.commons.model.ConfgSeverityCodesModel;
 import com.bsva.commons.model.CreditorBankModel;
@@ -85,7 +81,6 @@ import com.bsva.commons.model.MandatesCountCommonsModel;
 import com.bsva.commons.model.MndtSummaryTotalsModel;
 import com.bsva.commons.model.OpsCustParamModel;
 import com.bsva.commons.model.OpsFileRegModel;
-import com.bsva.commons.model.OpsProcessControlCommonsModel;
 import com.bsva.commons.model.OpsProcessControlModel;
 import com.bsva.commons.model.OpsRefSeqNumberCommonsModel;
 import com.bsva.commons.model.OpsSlaTimesCommonsModel;
@@ -102,7 +97,6 @@ import com.bsva.commons.model.SchedulerCronModel;
 import com.bsva.commons.model.SequenceTypesModel;
 import com.bsva.commons.model.ServicesModel;
 import com.bsva.commons.model.SeverityCodesModel;
-import com.bsva.commons.model.StatusReasonCodesModel;
 import com.bsva.commons.model.SysCisBankModel;
 import com.bsva.commons.model.SysCisBranchModel;
 import com.bsva.commons.model.SysCtrlFileSizeLimitModel;
@@ -116,7 +110,36 @@ import com.bsva.delivery.StartOfTransmissionExtract;
 import com.bsva.entities.AudSystemProcessEntity;
 import com.bsva.entities.AudTrackingEntity;
 import com.bsva.entities.AuditTrackingEntityModel;
+import com.bsva.entities.CasCnfgAccountTypeEntity;
+import com.bsva.entities.CasCnfgAdjustmentCatEntity;
+import com.bsva.entities.CasCnfgAmendmentCodesEntity;
+import com.bsva.entities.CasCnfgAuthTypeEntity;
+import com.bsva.entities.CasCnfgCurrencyCodesEntity;
+import com.bsva.entities.CasCnfgDebitValueTypeEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
+import com.bsva.entities.CasCnfgFrequencyCodesEntity;
+import com.bsva.entities.CasCnfgLocalInstrCodesEntity;
+import com.bsva.entities.CasCnfgReasonCodesEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
+import com.bsva.entities.CasCnfgSequenceTypeEntity;
+import com.bsva.entities.CasCnfgSeverityCodesEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsDailyBillingEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsLastExtractTimesEntity;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsProcessControlsEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsRepSeqNrEntity;
+import com.bsva.entities.CasOpsSchedulerEntity;
+import com.bsva.entities.CasOpsServicesEntity;
+import com.bsva.entities.CasOpsSlaTimesEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
 import com.bsva.entities.CasOpsSotEotEntityModel;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsTransCtrlMsgEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlCustParamEntity;
 import com.bsva.entities.CasSysctrlFileSizeLimitEntity;
@@ -127,6 +150,7 @@ import com.bsva.entities.CasSysctrlSchedulerEntity;
 import com.bsva.entities.CasSysctrlServicesEntity;
 import com.bsva.entities.CasSysctrlSlaTimesEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
+import com.bsva.entities.CasSystemBillingCtrlsEntity;
 import com.bsva.entities.CisMemberEntity;
 import com.bsva.entities.CreditorBankEntityModel;
 import com.bsva.entities.DebtorBankEntityModel;
@@ -139,40 +163,7 @@ import com.bsva.entities.MandateRejectionEntityModel;
 import com.bsva.entities.MandateResponseOutstandingPerBankEntityModel;
 import com.bsva.entities.MandatesCountCommonsModelEntity;
 import com.bsva.entities.MdtAcArcDailyBillingEntity;
-import com.bsva.entities.MdtAcOpsDailyBillingEntity;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
-import com.bsva.entities.MdtAcOpsProcessControlsEntity;
-import com.bsva.entities.MdtAcOpsSchedulerEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtAcOpsTransCtrlMsgEntity;
-import com.bsva.entities.MdtCnfgAccountTypeEntity;
-import com.bsva.entities.MdtCnfgAdjustmentCatEntity;
-import com.bsva.entities.MdtCnfgAmendmentCodesEntity;
-import com.bsva.entities.MdtCnfgAuthTypeEntity;
-import com.bsva.entities.MdtCnfgCurrencyCodesEntity;
-import com.bsva.entities.MdtCnfgDebitValueTypeEntity;
-import com.bsva.entities.MdtCnfgErrorCodesEntity;
-import com.bsva.entities.MdtCnfgFrequencyCodesEntity;
-import com.bsva.entities.MdtCnfgLocalInstrCodesEntity;
-import com.bsva.entities.MdtCnfgReasonCodesEntity;
-import com.bsva.entities.MdtCnfgRejectReasonCodesEntity;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
-import com.bsva.entities.MdtCnfgSequenceTypeEntity;
-import com.bsva.entities.MdtCnfgSeverityCodesEntity;
-import com.bsva.entities.MdtCnfgStatusReasonCodesEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
-import com.bsva.entities.MdtOpsLastExtractTimesEntity;
-import com.bsva.entities.MdtOpsProcessControlsEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
-import com.bsva.entities.MdtOpsRepSeqNrEntity;
-import com.bsva.entities.MdtOpsServicesEntity;
-import com.bsva.entities.MdtOpsSlaTimesEntity;
 import com.bsva.entities.MndtSummaryTotalsEntityModel;
-import com.bsva.entities.ObsSystemBillingCtrlsEntity;
 import com.bsva.entities.OutSotEotEntityModel;
 import com.bsva.entities.OutstandingResponsesDebtorModelEntity;
 import com.bsva.entities.OutstandingResponsesModelEntity;
@@ -196,7 +187,6 @@ import com.bsva.reports.PBMD01_DailyOutstandingResponsesReportPDF;
 import com.bsva.reports.PBMD08_DailyFiveDayOutstRespCSV;
 import com.bsva.reports.PBMD08_DailyFiveDayOutstRespPDF;
 import com.bsva.reports.PSMD08_FileStatsBatchExcelReport;
-import com.bsva.reports.PartBanksBatchRejectionsReport;
 import com.bsva.reports.PasaBatchAmendmentReport;
 import com.bsva.reports.PasaBatchOutstandingResponsesReport;
 import com.bsva.reports.PasaBatchRejectionsReport;
@@ -269,9 +259,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllLocalInstrumentCodes() {
     List<LocalInstrumentCodesModel> allLocalInstrCodes = new ArrayList<LocalInstrumentCodesModel>();
-    List<MdtCnfgLocalInstrCodesEntity> allMdtLocalInstrCodesEntityList =
-        new ArrayList<MdtCnfgLocalInstrCodesEntity>();
-    allMdtLocalInstrCodesEntityList = genericDAO.findAll(MdtCnfgLocalInstrCodesEntity.class);
+    List<CasCnfgLocalInstrCodesEntity> allMdtLocalInstrCodesEntityList =
+        new ArrayList<CasCnfgLocalInstrCodesEntity>();
+    allMdtLocalInstrCodesEntityList = genericDAO.findAll(CasCnfgLocalInstrCodesEntity.class);
 
 
     if (allMdtLocalInstrCodesEntityList.size() > 0) {
@@ -317,8 +307,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof LocalInstrumentCodesModel) {
         LocalInstrumentCodesModel localInstrCodesModel = (LocalInstrumentCodesModel) obj;
         LocalInstrumentCodesLogic localInsLogic = new LocalInstrumentCodesLogic();
-        MdtCnfgLocalInstrCodesEntity mdtLocalInstrumentCodesEntity =
-            new MdtCnfgLocalInstrCodesEntity();
+        CasCnfgLocalInstrCodesEntity mdtLocalInstrumentCodesEntity =
+            new CasCnfgLocalInstrCodesEntity();
 
         mdtLocalInstrumentCodesEntity = localInsLogic.addLocalInstrumentCode(localInstrCodesModel);
         genericDAO.saveOrUpdate(mdtLocalInstrumentCodesEntity);
@@ -340,9 +330,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public boolean updateACOpsEOTSOT(Object obj) {
     try {
 
-      if (obj instanceof MdtAcOpsSotEotCtrlEntity) {
-        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = (MdtAcOpsSotEotCtrlEntity) obj;
-        genericDAO.saveOrUpdate(mdtAcOpsSotEotCtrlEntity);
+      if (obj instanceof CasOpsSotEotCtrlEntity) {
+        CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = (CasOpsSotEotCtrlEntity) obj;
+        genericDAO.saveOrUpdate(casOpsSotEotCtrlEntity);
         return true;
       } else {
         log.debug("Unable to convert type to MdtAcOpsSotEotCtrlEntity .");
@@ -391,7 +381,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public Object retrieveFileRecordsGroupedByID(String memberNo, String serviceId) {
-    MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = new MdtAcOpsMndtCountEntity();
+    CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
     try {
       log.debug("memberNo: " + memberNo);
       log.debug("serviceId: " + serviceId);
@@ -401,7 +391,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       parameters.put("mdtOpsMndtCountPK.serviceId", serviceId);
       log.debug("---------------sparameters: ------------------" + parameters.toString());
       mdtOpsMndtCountEntity =
-          (MdtAcOpsMndtCountEntity) genericDAO.findByCriteria(MdtAcOpsMndtCountEntity.class,
+          (CasOpsMndtCountEntity) genericDAO.findByCriteria(CasOpsMndtCountEntity.class,
               parameters);
       log.debug("---------------mdtOpsMndtCountEntity after findByCriteria: ------------------" +
           mdtOpsMndtCountEntity);
@@ -419,14 +409,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllAuthTypes() {
     List<CnfgAuthTypeModel> allAuthTypes = new ArrayList<CnfgAuthTypeModel>();
-    List<MdtCnfgAuthTypeEntity> allMdtCnfgAuthTypeEntityList =
-        new ArrayList<MdtCnfgAuthTypeEntity>();
+    List<CasCnfgAuthTypeEntity> allCasCnfgAuthTypeEntityList =
+        new ArrayList<CasCnfgAuthTypeEntity>();
 
-    allMdtCnfgAuthTypeEntityList = genericDAO.findAll(MdtCnfgAuthTypeEntity.class);
+    allCasCnfgAuthTypeEntityList = genericDAO.findAll(CasCnfgAuthTypeEntity.class);
 
-    if (allMdtCnfgAuthTypeEntityList.size() > 0) {
+    if (allCasCnfgAuthTypeEntityList.size() > 0) {
       AuthTypeLogic authTypeLogic = new AuthTypeLogic();
-      allAuthTypes = authTypeLogic.retrieveAllAuthTypes(allMdtCnfgAuthTypeEntityList);
+      allAuthTypes = authTypeLogic.retrieveAllAuthTypes(allCasCnfgAuthTypeEntityList);
     }
 
     return allAuthTypes;
@@ -483,16 +473,16 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 }*/
 
   public List<?> viewAllMandatesCountPerIncomingFiles() {
-    List<MdtAcOpsMndtCountEntity> mdtOpsCountEntityList = new ArrayList<MdtAcOpsMndtCountEntity>();
+    List<CasOpsMndtCountEntity> mdtOpsCountEntityList = new ArrayList<CasOpsMndtCountEntity>();
     List<MandatesCountCommonsModel> mandatesCountList = new ArrayList<MandatesCountCommonsModel>();
 
-    mdtOpsCountEntityList = (List<MdtAcOpsMndtCountEntity>) genericDAO.findAllByNamedQuery(
+    mdtOpsCountEntityList = (List<CasOpsMndtCountEntity>) genericDAO.findAllByNamedQuery(
         "MdtAcOpsMndtCountEntity.findByIncoming", "incoming", "Y");
 
 
     if (mdtOpsCountEntityList.size() > 0) {
 
-      for (MdtAcOpsMndtCountEntity localEntity : mdtOpsCountEntityList) {
+      for (CasOpsMndtCountEntity localEntity : mdtOpsCountEntityList) {
 
         MandatesCountCommonsModel localModel = new MandatesCountCommonsModel();
         localModel =
@@ -508,13 +498,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
 
   public List<?> viewAllMessages() {
-    List<MdtAcOpsMndtCountEntity> mdtOpsCountEntityList = new ArrayList<MdtAcOpsMndtCountEntity>();
+    List<CasOpsMndtCountEntity> mdtOpsCountEntityList = new ArrayList<CasOpsMndtCountEntity>();
     List<MandatesCountCommonsModel> mandateCountList = new ArrayList<MandatesCountCommonsModel>();
 
-    mdtOpsCountEntityList = genericDAO.findAll(MdtAcOpsMndtCountEntity.class);
+    mdtOpsCountEntityList = genericDAO.findAll(CasOpsMndtCountEntity.class);
 
     if (mdtOpsCountEntityList.size() > 0) {
-      for (MdtAcOpsMndtCountEntity localEntity : mdtOpsCountEntityList) {
+      for (CasOpsMndtCountEntity localEntity : mdtOpsCountEntityList) {
         MandatesCountCommonsModel localModel = new MandatesCountCommonsModel();
         localModel =
             new AdminTranslator().translateMdtOpsMndtCountEntityToCommonsModel(localEntity);
@@ -526,16 +516,16 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   }
 
   public List<?> viewAllMandatesMessagesPerOutGoingFiles() {
-    List<MdtAcOpsMndtCountEntity> mdtOpsCountEntityList = new ArrayList<MdtAcOpsMndtCountEntity>();
+    List<CasOpsMndtCountEntity> mdtOpsCountEntityList = new ArrayList<CasOpsMndtCountEntity>();
 
     List<MandatesCountCommonsModel> mandateCountList = new ArrayList<MandatesCountCommonsModel>();
 
-    mdtOpsCountEntityList = (List<MdtAcOpsMndtCountEntity>) genericDAO.findAllByNamedQuery(
+    mdtOpsCountEntityList = (List<CasOpsMndtCountEntity>) genericDAO.findAllByNamedQuery(
         "MdtAcOpsMndtCountEntity.findByOutgoing", "outgoing", "Y");
 
 
     if (mdtOpsCountEntityList.size() > 0) {
-      for (MdtAcOpsMndtCountEntity localEntity : mdtOpsCountEntityList) {
+      for (CasOpsMndtCountEntity localEntity : mdtOpsCountEntityList) {
         MandatesCountCommonsModel localModel = new MandatesCountCommonsModel();
         localModel =
             new AdminTranslator().translateMdtOpsMndtCountEntityToCommonsModel(localEntity);
@@ -555,10 +545,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof CnfgAuthTypeModel) {
         CnfgAuthTypeModel localCnfgAuthTypesModel = (CnfgAuthTypeModel) obj;
         AuthTypeLogic authTypeLogic = new AuthTypeLogic();
-        MdtCnfgAuthTypeEntity mdtCnfgAuthTypeEntity = new MdtCnfgAuthTypeEntity();
+        CasCnfgAuthTypeEntity casCnfgAuthTypeEntity = new CasCnfgAuthTypeEntity();
 
-        mdtCnfgAuthTypeEntity = authTypeLogic.addAuthType(localCnfgAuthTypesModel);
-        genericDAO.saveOrUpdate(mdtCnfgAuthTypeEntity);
+        casCnfgAuthTypeEntity = authTypeLogic.addAuthType(localCnfgAuthTypesModel);
+        genericDAO.saveOrUpdate(casCnfgAuthTypeEntity);
         return true;
       } else {
         log.debug("Unable to convert type to Auth type.");
@@ -579,16 +569,16 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtCnfgAuthTypeEntity> mdtCnfgAuthTypeEntityList = genericDAO
+      List<CasCnfgAuthTypeEntity> casCnfgAuthTypeEntityList = genericDAO
           .findAllByNamedQuery("MdtCnfgAuthTypeEntity.findByAuthType", "authType",
               authType.toUpperCase());
 
-      if (mdtCnfgAuthTypeEntityList.size() > 0) {
+      if (casCnfgAuthTypeEntityList.size() > 0) {
 
         AuthTypeLogic authTypeLogic = new AuthTypeLogic();
-        for (MdtCnfgAuthTypeEntity mdtCnfgAuthTypeEntity : mdtCnfgAuthTypeEntityList) {
+        for (CasCnfgAuthTypeEntity casCnfgAuthTypeEntity : casCnfgAuthTypeEntityList) {
           CnfgAuthTypeModel authTypeModel = new CnfgAuthTypeModel();
-          authTypeModel = authTypeLogic.retrieveAuthType(mdtCnfgAuthTypeEntity);
+          authTypeModel = authTypeLogic.retrieveAuthType(casCnfgAuthTypeEntity);
           allAuthType.add(authTypeModel);
         }
       }
@@ -608,10 +598,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewAllSequenceTypes() {
     List<SequenceTypesModel> allSequenceTypes = new ArrayList<SequenceTypesModel>();
 
-    List<MdtCnfgSequenceTypeEntity> allMdtSeqTypeEntityList =
-        new ArrayList<MdtCnfgSequenceTypeEntity>();
+    List<CasCnfgSequenceTypeEntity> allMdtSeqTypeEntityList =
+        new ArrayList<CasCnfgSequenceTypeEntity>();
 
-    allMdtSeqTypeEntityList = genericDAO.findAll(MdtCnfgSequenceTypeEntity.class);
+    allMdtSeqTypeEntityList = genericDAO.findAll(CasCnfgSequenceTypeEntity.class);
 
     if (allMdtSeqTypeEntityList.size() > 0) {
       SequenceTypeLogic sequenceLogic = new SequenceTypeLogic();
@@ -628,7 +618,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof SequenceTypesModel) {
         SequenceTypesModel sequenceTypesModel = (SequenceTypesModel) obj;
         SequenceTypeLogic sequenceTypeLogic = new SequenceTypeLogic();
-        MdtCnfgSequenceTypeEntity mdtSequenceTypeEntity = new MdtCnfgSequenceTypeEntity();
+        CasCnfgSequenceTypeEntity mdtSequenceTypeEntity = new CasCnfgSequenceTypeEntity();
         mdtSequenceTypeEntity = sequenceTypeLogic.addSequenceTypeCode(sequenceTypesModel);
         genericDAO.saveOrUpdate(mdtSequenceTypeEntity);
         return true;
@@ -646,9 +636,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllCurrencyCodes() {
     List<CurrencyCodesModel> allCurrencyCodes = new ArrayList<CurrencyCodesModel>();
-    List<MdtCnfgCurrencyCodesEntity> allMdtCurrencyCodesEntityList =
-        new ArrayList<MdtCnfgCurrencyCodesEntity>();
-    allMdtCurrencyCodesEntityList = genericDAO.findAll(MdtCnfgCurrencyCodesEntity.class);
+    List<CasCnfgCurrencyCodesEntity> allMdtCurrencyCodesEntityList =
+        new ArrayList<CasCnfgCurrencyCodesEntity>();
+    allMdtCurrencyCodesEntityList = genericDAO.findAll(CasCnfgCurrencyCodesEntity.class);
 
     if (allMdtCurrencyCodesEntityList.size() > 0) {
       CurrencyCodeLogic currencyCodeLogic = new CurrencyCodeLogic();
@@ -662,9 +652,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllDebitValueTypes() {
     List<DebitValueTypeModel> allDebitValueTypes = new ArrayList<DebitValueTypeModel>();
-    List<MdtCnfgDebitValueTypeEntity> allMdtDebitValueTypesEntityList =
-        new ArrayList<MdtCnfgDebitValueTypeEntity>();
-    allMdtDebitValueTypesEntityList = genericDAO.findAll(MdtCnfgDebitValueTypeEntity.class);
+    List<CasCnfgDebitValueTypeEntity> allMdtDebitValueTypesEntityList =
+        new ArrayList<CasCnfgDebitValueTypeEntity>();
+    allMdtDebitValueTypesEntityList = genericDAO.findAll(CasCnfgDebitValueTypeEntity.class);
 
     if (allMdtDebitValueTypesEntityList.size() > 0) {
       DebitValueTypeLogic debitValueTypeLogic = new DebitValueTypeLogic();
@@ -679,9 +669,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewAllReasonCodes() {
 
     List<ReasonCodesModel> allReasonCodes = new ArrayList<ReasonCodesModel>();
-    List<MdtCnfgReasonCodesEntity> allMdtReasonCodesList =
-        new ArrayList<MdtCnfgReasonCodesEntity>();
-    allMdtReasonCodesList = genericDAO.findAll(MdtCnfgReasonCodesEntity.class);
+    List<CasCnfgReasonCodesEntity> allMdtReasonCodesList =
+        new ArrayList<CasCnfgReasonCodesEntity>();
+    allMdtReasonCodesList = genericDAO.findAll(CasCnfgReasonCodesEntity.class);
 
     if (allMdtReasonCodesList.size() > 0) {
       ReasonCodesLogic reasonCodesLogic = new ReasonCodesLogic();
@@ -700,7 +690,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof ReasonCodesModel) {
         ReasonCodesModel reasonCodesModel = (ReasonCodesModel) obj;
         ReasonCodesLogic reasonCodesLogic = new ReasonCodesLogic();
-        MdtCnfgReasonCodesEntity mdtReasonCodesEntity = new MdtCnfgReasonCodesEntity();
+        CasCnfgReasonCodesEntity mdtReasonCodesEntity = new CasCnfgReasonCodesEntity();
 
         mdtReasonCodesEntity = reasonCodesLogic.addReasonCodes(reasonCodesModel);
         genericDAO.saveOrUpdate(mdtReasonCodesEntity);
@@ -723,7 +713,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof CurrencyCodesModel) {
         CurrencyCodesModel currencyCodesModel = (CurrencyCodesModel) obj;
         CurrencyCodeLogic currencyCodeLogic = new CurrencyCodeLogic();
-        MdtCnfgCurrencyCodesEntity mdtCurrencyCodesEntity = new MdtCnfgCurrencyCodesEntity();
+        CasCnfgCurrencyCodesEntity mdtCurrencyCodesEntity = new CasCnfgCurrencyCodesEntity();
 
         mdtCurrencyCodesEntity = currencyCodeLogic.addCurrencyCodes(currencyCodesModel);
         genericDAO.saveOrUpdate(mdtCurrencyCodesEntity);
@@ -746,7 +736,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof FrequencyCodesModel) {
         FrequencyCodesModel frequencyCodesModel = (FrequencyCodesModel) obj;
         FrequencyCodesLogic frequencyCodesLogic = new FrequencyCodesLogic();
-        MdtCnfgFrequencyCodesEntity mdtFrequencyCodesEntity = new MdtCnfgFrequencyCodesEntity();
+        CasCnfgFrequencyCodesEntity mdtFrequencyCodesEntity = new CasCnfgFrequencyCodesEntity();
 
         mdtFrequencyCodesEntity = frequencyCodesLogic.addFrequencyCodes(frequencyCodesModel);
         genericDAO.saveOrUpdate(mdtFrequencyCodesEntity);
@@ -770,7 +760,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof DebitValueTypeModel) {
         DebitValueTypeModel debitValueTypeModel = (DebitValueTypeModel) obj;
         DebitValueTypeLogic debitValueTypeLogic = new DebitValueTypeLogic();
-        MdtCnfgDebitValueTypeEntity mdtDebitValueTypeEntity = new MdtCnfgDebitValueTypeEntity();
+        CasCnfgDebitValueTypeEntity mdtDebitValueTypeEntity = new CasCnfgDebitValueTypeEntity();
 
         mdtDebitValueTypeEntity = debitValueTypeLogic.adddebValueTypeCode(debitValueTypeModel);
         genericDAO.saveOrUpdate(mdtDebitValueTypeEntity);
@@ -791,9 +781,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewAllFrequencyCodes() {
 
     List<FrequencyCodesModel> allFrequencyCodes = new ArrayList<FrequencyCodesModel>();
-    List<MdtCnfgFrequencyCodesEntity> allMdtFrequencyCodesEntityList =
-        new ArrayList<MdtCnfgFrequencyCodesEntity>();
-    allMdtFrequencyCodesEntityList = genericDAO.findAll(MdtCnfgFrequencyCodesEntity.class);
+    List<CasCnfgFrequencyCodesEntity> allMdtFrequencyCodesEntityList =
+        new ArrayList<CasCnfgFrequencyCodesEntity>();
+    allMdtFrequencyCodesEntityList = genericDAO.findAll(CasCnfgFrequencyCodesEntity.class);
 
     if (allMdtFrequencyCodesEntityList.size() > 0) {
       FrequencyCodesLogic frequencyCodesLogic = new FrequencyCodesLogic();
@@ -811,13 +801,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtCnfgLocalInstrCodesEntity> mdtLocalInstrCodesList = genericDAO.findAllByNamedQuery(
+      List<CasCnfgLocalInstrCodesEntity> mdtLocalInstrCodesList = genericDAO.findAllByNamedQuery(
           "MdtCnfgLocalInstrCodesEntity.findByLocalInstrumentCodeLIKE", "localInstrumentCode",
           localInstrumentCode + "%");
 
       if (mdtLocalInstrCodesList.size() > 0) {
         LocalInstrumentCodesLogic localInsLogic = new LocalInstrumentCodesLogic();
-        for (MdtCnfgLocalInstrCodesEntity localEntity : mdtLocalInstrCodesList) {
+        for (CasCnfgLocalInstrCodesEntity localEntity : mdtLocalInstrCodesList) {
           LocalInstrumentCodesModel localModel = new LocalInstrumentCodesModel();
           localModel = localInsLogic.retrieveLocalInstrumentCode(localEntity);
           allLocalInstrCodes.add(localModel);
@@ -866,13 +856,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtCnfgReasonCodesEntity> mdtReasonCodesList =
+      List<CasCnfgReasonCodesEntity> mdtReasonCodesList =
           genericDAO.findAllByNamedQuery("MdtCnfgReasonCodesEntity.findByReasonCodeLIKE",
               "reasonCode", reasonCode.toUpperCase() + "%");
 
       if (mdtReasonCodesList.size() > 0) {
         ReasonCodesLogic reasonCodesLogic = new ReasonCodesLogic();
-        for (MdtCnfgReasonCodesEntity reasonEntity : mdtReasonCodesList) {
+        for (CasCnfgReasonCodesEntity reasonEntity : mdtReasonCodesList) {
           ReasonCodesModel reasonModel = new ReasonCodesModel();
           reasonModel = reasonCodesLogic.retrieveReasonCode(reasonEntity);
           allReasonCodes.add(reasonModel);
@@ -895,13 +885,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtAcOpsTransCtrlMsgEntity> mdtAcOpsTransCtrlMsgEntity =
+      List<CasOpsTransCtrlMsgEntity> casOpsTransCtrlMsgEntity =
           genericDAO.findAllByNamedQuery("MdtAcOpsTransCtrlMsgEntity.findByMsgType", "msgType",
               "EOT");
 
-      if (mdtAcOpsTransCtrlMsgEntity.size() > 0) {
+      if (casOpsTransCtrlMsgEntity.size() > 0) {
         AcOpsTransCtrlMsgLogic acOpsTransCtrlMsgLogic = new AcOpsTransCtrlMsgLogic();
-        for (MdtAcOpsTransCtrlMsgEntity localEntity : mdtAcOpsTransCtrlMsgEntity) {
+        for (CasOpsTransCtrlMsgEntity localEntity : casOpsTransCtrlMsgEntity) {
 
           if (localEntity.getActiveInd().equals("Y")) {
             AcOpsTransCtrlMsgModel localModel = new AcOpsTransCtrlMsgModel();
@@ -927,13 +917,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtCnfgFrequencyCodesEntity> mdtFrequencyCodesList =
+      List<CasCnfgFrequencyCodesEntity> mdtFrequencyCodesList =
           genericDAO.findAllByNamedQuery("MdtCnfgFrequencyCodesEntity.findByFrequencyCodeLIKE",
               "frequencyCode", frequencyCode.toUpperCase() + "%");
 
       if (mdtFrequencyCodesList.size() > 0) {
         FrequencyCodesLogic frequencyLogic = new FrequencyCodesLogic();
-        for (MdtCnfgFrequencyCodesEntity frequencyEntity : mdtFrequencyCodesList) {
+        for (CasCnfgFrequencyCodesEntity frequencyEntity : mdtFrequencyCodesList) {
           FrequencyCodesModel frequencyModel = new FrequencyCodesModel();
           frequencyModel = frequencyLogic.retrieveFrequencyCode(frequencyEntity);
           allFrequencyCodes.add(frequencyModel);
@@ -955,14 +945,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     log.debug("IN the view All debit value type--->");
     try {
 
-      List<MdtCnfgDebitValueTypeEntity> debitValueTypeEntityList =
+      List<CasCnfgDebitValueTypeEntity> debitValueTypeEntityList =
           genericDAO.findAllByNamedQuery("MdtCnfgDebitValueTypeEntity.findByDebValueTypeCodeLIKE",
               "debValueTypeCode", dbtValueTypeCode.toUpperCase() + "%");
 
       if (debitValueTypeEntityList != null && debitValueTypeEntityList.size() > 0) {
         log.debug("debitValueTypeEntityList: " + debitValueTypeEntityList.size());
         DebitValueTypeLogic debitValueTypeLogic = new DebitValueTypeLogic();
-        for (MdtCnfgDebitValueTypeEntity localEntity : debitValueTypeEntityList) {
+        for (CasCnfgDebitValueTypeEntity localEntity : debitValueTypeEntityList) {
           DebitValueTypeModel localModel = new DebitValueTypeModel();
           localModel = debitValueTypeLogic.retrievedebValueTypeCode(localEntity);
           allDbtValueTypeCodes.add(localModel);
@@ -980,13 +970,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewCurrencyCodesByCriteria(String countryCode) {
     List<CurrencyCodesModel> allCurrencyCodes = new ArrayList<CurrencyCodesModel>();
     try {
-      List<MdtCnfgCurrencyCodesEntity> mdtCurrencyCodesList =
+      List<CasCnfgCurrencyCodesEntity> mdtCurrencyCodesList =
           genericDAO.findAllByNamedQuery("MdtCnfgCurrencyCodesEntity.findByCountryCodeLIKE",
               "countryCode", countryCode.toUpperCase() + "%");
 
       if (mdtCurrencyCodesList.size() > 0) {
         CurrencyCodeLogic currencyLogic = new CurrencyCodeLogic();
-        for (MdtCnfgCurrencyCodesEntity localEntity : mdtCurrencyCodesList) {
+        for (CasCnfgCurrencyCodesEntity localEntity : mdtCurrencyCodesList) {
           CurrencyCodesModel localModel = new CurrencyCodesModel();
           localModel = currencyLogic.retrieveCurrencyCode(localEntity);
           allCurrencyCodes.add(localModel);
@@ -1009,14 +999,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtCnfgSequenceTypeEntity> mdtSeqTypesList =
+      List<CasCnfgSequenceTypeEntity> mdtSeqTypesList =
           genericDAO.findAllByNamedQuery("MdtCnfgSequenceTypeEntity.findBySeqTypeCodeLIKE",
               "seqTypeCode", seqCode.toUpperCase() + "%");
 
       if (mdtSeqTypesList.size() > 0) {
 
         SequenceTypeLogic seqLogic = new SequenceTypeLogic();
-        for (MdtCnfgSequenceTypeEntity seqTypeEntity : mdtSeqTypesList) {
+        for (CasCnfgSequenceTypeEntity seqTypeEntity : mdtSeqTypesList) {
           SequenceTypesModel seqTypeModel = new SequenceTypesModel();
           seqTypeModel = seqLogic.retrieveSequenceCode(seqTypeEntity);
           allSequenceCodes.add(seqTypeModel);
@@ -1074,13 +1064,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllErrorCodes(boolean order) {
     List<ConfgErrorCodesModel> allErrorCodes = new ArrayList<ConfgErrorCodesModel>();
-    List<MdtCnfgErrorCodesEntity> allMdtErrorCodesEntityList = null;
+    List<CasCnfgErrorCodesEntity> allMdtErrorCodesEntityList = null;
 
     if (order == true) {
       allMdtErrorCodesEntityList =
-          genericDAO.findAllOrdered(MdtCnfgErrorCodesEntity.class, "errorCode ASC ");
+          genericDAO.findAllOrdered(CasCnfgErrorCodesEntity.class, "errorCode ASC ");
     } else {
-      allMdtErrorCodesEntityList = genericDAO.findAll(MdtCnfgErrorCodesEntity.class);
+      allMdtErrorCodesEntityList = genericDAO.findAll(CasCnfgErrorCodesEntity.class);
     }
 
 
@@ -1094,35 +1084,17 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   }
 
   @Override
-  public List<?> viewAllOpsProcessControl() {
-    List<OpsProcessControlCommonsModel> allOpsProcessControlList =
-        new ArrayList<OpsProcessControlCommonsModel>();
-
-    List<MdtOpsProcessControlsEntity> allMdtOpsProcessControlsEntityList =
-        genericDAO.findAll(MdtOpsProcessControlsEntity.class);
-
-    if (allMdtOpsProcessControlsEntityList.size() > 0) {
-      OpsProcessControlLogic opsProcessControlLogic = new OpsProcessControlLogic();
-      allOpsProcessControlList = opsProcessControlLogic.retrieveAllOpsProcessControlCommonsModel(
-          allMdtOpsProcessControlsEntityList);
-    }
-
-    return allOpsProcessControlList;
-
-  }
-
-  @Override
   public List<?> viewAllOpsRefSeqNumber() {
     List<OpsRefSeqNumberCommonsModel> allOpsRefSeqNumberCommonsModelList =
         new ArrayList<OpsRefSeqNumberCommonsModel>();
 
-    List<MdtOpsRefSeqNrEntity> allMdtOpsRefSeqNrEntityList =
-        genericDAO.findAll(MdtOpsRefSeqNrEntity.class);
+    List<CasOpsRefSeqNrEntity> allCasOpsRefSeqNrEntityList =
+        genericDAO.findAll(CasOpsRefSeqNrEntity.class);
 
-    if (allMdtOpsRefSeqNrEntityList.size() > 0) {
+    if (allCasOpsRefSeqNrEntityList.size() > 0) {
       OpsRefSeqNumberLogic opsRefSeqNumberLogic = new OpsRefSeqNumberLogic();
       allOpsRefSeqNumberCommonsModelList =
-          opsRefSeqNumberLogic.retrieveAllOpsRefSeqNumber(allMdtOpsRefSeqNrEntityList);
+          opsRefSeqNumberLogic.retrieveAllOpsRefSeqNumber(allCasOpsRefSeqNrEntityList);
     }
 
     return allOpsRefSeqNumberCommonsModelList;
@@ -1133,13 +1105,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewAllOpsCustomerParameters() {
     List<OpsCustParamModel> allOpsCustParamModelList = new ArrayList<OpsCustParamModel>();
 
-    List<MdtOpsCustParamEntity> allMdtOpsCustParamEntityList =
-        genericDAO.findAll(MdtOpsCustParamEntity.class);
+    List<CasOpsCustParamEntity> allCasOpsCustParamEntityList =
+        genericDAO.findAll(CasOpsCustParamEntity.class);
 
-    if (allMdtOpsCustParamEntityList.size() > 0) {
+    if (allCasOpsCustParamEntityList.size() > 0) {
       OpsCustParamLogic opsCustParamLogic = new OpsCustParamLogic();
       allOpsCustParamModelList =
-          opsCustParamLogic.retrieveAllOpsCustParam(allMdtOpsCustParamEntityList);
+          opsCustParamLogic.retrieveAllOpsCustParam(allCasOpsCustParamEntityList);
     }
 
     return allOpsCustParamModelList;
@@ -1151,13 +1123,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<AcOpsSotEotCntrlModel> allAcOpsSotEotCntrlModelList =
         new ArrayList<AcOpsSotEotCntrlModel>();
 
-    List<MdtAcOpsSotEotCtrlEntity> allMdtAcOpsSotEotCtrlEntityList =
-        genericDAO.findAll(MdtAcOpsSotEotCtrlEntity.class);
+    List<CasOpsSotEotCtrlEntity> allCasOpsSotEotCtrlEntityList =
+        genericDAO.findAll(CasOpsSotEotCtrlEntity.class);
 
-    if (allMdtAcOpsSotEotCtrlEntityList.size() > 0) {
+    if (allCasOpsSotEotCtrlEntityList.size() > 0) {
       AcOpsSotEotLogic acOpsSotEotLogic = new AcOpsSotEotLogic();
       allAcOpsSotEotCntrlModelList =
-          acOpsSotEotLogic.retrieveAllMdtAcOpsSotEotCtrlEntityList(allMdtAcOpsSotEotCtrlEntityList);
+          acOpsSotEotLogic.retrieveAllMdtAcOpsSotEotCtrlEntityList(allCasOpsSotEotCtrlEntityList);
     }
 
     return allAcOpsSotEotCntrlModelList;
@@ -1171,17 +1143,17 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtAcOpsSotEotCtrlEntity> mdtAcOpsSotEotCtrlEntityList =
+      List<CasOpsSotEotCtrlEntity> casOpsSotEotCtrlEntityList =
           genericDAO.findAllByNamedQuery("MdtAcOpsSotEotCtrlEntity.findByInstId", "instId", instId);
 
-      if (mdtAcOpsSotEotCtrlEntityList.size() > 0) {
+      if (casOpsSotEotCtrlEntityList.size() > 0) {
 
         AcOpsSotEotLogic acOpsSotEotLogic = new AcOpsSotEotLogic();
 
-        for (MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity : mdtAcOpsSotEotCtrlEntityList) {
+        for (CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity : casOpsSotEotCtrlEntityList) {
           AcOpsSotEotCntrlModel acOpsSotEotCntrlModel = new AcOpsSotEotCntrlModel();
           acOpsSotEotCntrlModel =
-              acOpsSotEotLogic.retrieveMdtAcOpsSotEotCtrlEntity(mdtAcOpsSotEotCtrlEntity);
+              acOpsSotEotLogic.retrieveMdtAcOpsSotEotCtrlEntity(casOpsSotEotCtrlEntity);
           acOpsSotEotCntrlModelList.add(acOpsSotEotCntrlModel);
         }
       }
@@ -1220,7 +1192,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof ConfgErrorCodesModel) {
         ConfgErrorCodesModel errorCodesModel = (ConfgErrorCodesModel) obj;
         ErrorCodesLogic errorCodesLogic = new ErrorCodesLogic();
-        MdtCnfgErrorCodesEntity mdtErrorCodesEntity = new MdtCnfgErrorCodesEntity();
+        CasCnfgErrorCodesEntity mdtErrorCodesEntity = new CasCnfgErrorCodesEntity();
 
         mdtErrorCodesEntity = errorCodesLogic.addErrorCode(errorCodesModel);
         genericDAO.saveOrUpdate(mdtErrorCodesEntity);
@@ -1256,14 +1228,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtCnfgErrorCodesEntity> mdtErrorCodesList =
+      List<CasCnfgErrorCodesEntity> mdtErrorCodesList =
           genericDAO.findAllByNamedQuery("MdtCnfgErrorCodesEntity.findByErrorCodeLIKE", "errorCode",
               errorCode + "%");
 
       if (mdtErrorCodesList.size() > 0) {
 
         ErrorCodesLogic errorCodesLogic = new ErrorCodesLogic();
-        for (MdtCnfgErrorCodesEntity errorEntity : mdtErrorCodesList) {
+        for (CasCnfgErrorCodesEntity errorEntity : mdtErrorCodesList) {
           ConfgErrorCodesModel errorModel = new ConfgErrorCodesModel();
           errorModel = errorCodesLogic.retrieveErrorCode(errorEntity);
           allErrorCodes.add(errorModel);
@@ -1445,22 +1417,22 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> retrieveOpsSlaTime() {
 
-    List<MdtOpsSlaTimesEntity> mdtOpsSlaTimesEntityList = new ArrayList<MdtOpsSlaTimesEntity>();
+    List<CasOpsSlaTimesEntity> casOpsSlaTimesEntityList = new ArrayList<CasOpsSlaTimesEntity>();
 
-    mdtOpsSlaTimesEntityList = genericDAO.findAll(MdtOpsSlaTimesEntity.class);
+    casOpsSlaTimesEntityList = genericDAO.findAll(CasOpsSlaTimesEntity.class);
 
-    return mdtOpsSlaTimesEntityList;
+    return casOpsSlaTimesEntityList;
   }
 
   @Override
   public List<?> retrieveACOpsSotEot() {
 
-    List<MdtAcOpsSotEotCtrlEntity> mdtAcOpsSotEotCtrlEntityList =
-        new ArrayList<MdtAcOpsSotEotCtrlEntity>();
+    List<CasOpsSotEotCtrlEntity> casOpsSotEotCtrlEntityList =
+        new ArrayList<CasOpsSotEotCtrlEntity>();
 
-    mdtAcOpsSotEotCtrlEntityList = genericDAO.findAll(MdtAcOpsSotEotCtrlEntity.class);
+    casOpsSotEotCtrlEntityList = genericDAO.findAll(CasOpsSotEotCtrlEntity.class);
 
-    return mdtAcOpsSotEotCtrlEntityList;
+    return casOpsSotEotCtrlEntityList;
   }
 
 //Not needed for C&A
@@ -1484,15 +1456,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public List<?> retrieveOpsCustParamTime() {
-    List<MdtOpsCustParamEntity> opscustParamList = new ArrayList<MdtOpsCustParamEntity>();
-    opscustParamList = genericDAO.findAll(MdtOpsCustParamEntity.class);
+    List<CasOpsCustParamEntity> opscustParamList = new ArrayList<CasOpsCustParamEntity>();
+    opscustParamList = genericDAO.findAll(CasOpsCustParamEntity.class);
     return opscustParamList;
   }
 
   @Override
   public List<?> retrieveOpsMndtCount() {
 
-    List<MdtAcOpsMndtCountEntity> opsMndtList = new ArrayList<MdtAcOpsMndtCountEntity>();
+    List<CasOpsMndtCountEntity> opsMndtList = new ArrayList<CasOpsMndtCountEntity>();
     opsMndtList =
         genericDAO.findAllByNamedQuery("MdtAcOpsMndtCountEntity.findByIncoming", "incoming", "Y");
     return opsMndtList;
@@ -1501,33 +1473,33 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public List<?> retrieveMdtAcOpsDailyBilling() {
-    List<MdtAcOpsDailyBillingEntity> opsfDailyBillingList =
-        new ArrayList<MdtAcOpsDailyBillingEntity>();
-    opsfDailyBillingList = genericDAO.findAll(MdtAcOpsDailyBillingEntity.class);
+    List<CasOpsDailyBillingEntity> opsfDailyBillingList =
+        new ArrayList<CasOpsDailyBillingEntity>();
+    opsfDailyBillingList = genericDAO.findAll(CasOpsDailyBillingEntity.class);
 
     return opsfDailyBillingList;
   }
 
   @Override
   public List<?> retrieveOpsServicesTime() {
-    List<MdtOpsServicesEntity> opsServicesList = new ArrayList<MdtOpsServicesEntity>();
-    opsServicesList = genericDAO.findAll(MdtOpsServicesEntity.class);
+    List<CasOpsServicesEntity> opsServicesList = new ArrayList<CasOpsServicesEntity>();
+    opsServicesList = genericDAO.findAll(CasOpsServicesEntity.class);
     return opsServicesList;
   }
 
   public List<?> retrieveOpsRefSeqNr() {
 
-    List<MdtOpsRefSeqNrEntity> opsRefSeqNrList = new ArrayList<MdtOpsRefSeqNrEntity>();
-    opsRefSeqNrList = genericDAO.findAll(MdtOpsRefSeqNrEntity.class);
+    List<CasOpsRefSeqNrEntity> opsRefSeqNrList = new ArrayList<CasOpsRefSeqNrEntity>();
+    opsRefSeqNrList = genericDAO.findAll(CasOpsRefSeqNrEntity.class);
     return opsRefSeqNrList;
   }
 
 
   public List<?> retrieveOpsProcessControl() {
 
-    List<MdtOpsProcessControlsEntity> opsProcessCntrlList =
-        new ArrayList<MdtOpsProcessControlsEntity>();
-    opsProcessCntrlList = genericDAO.findAll(MdtOpsProcessControlsEntity.class);
+    List<CasOpsProcessControlsEntity> opsProcessCntrlList =
+        new ArrayList<CasOpsProcessControlsEntity>();
+    opsProcessCntrlList = genericDAO.findAll(CasOpsProcessControlsEntity.class);
 
     return opsProcessCntrlList;
 
@@ -1557,10 +1529,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof OpsFileRegModel) {
         OpsFileRegModel opsFileRegModel = (OpsFileRegModel) obj;
         OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
-        MdtOpsFileRegEntity mdtOpsFileRegEntity = new MdtOpsFileRegEntity();
+        CasOpsFileRegEntity casOpsFileRegEntity = new CasOpsFileRegEntity();
 
-        mdtOpsFileRegEntity = opsFileRegLogic.addOpsFileReg(opsFileRegModel);
-        genericDAO.saveOrUpdate(mdtOpsFileRegEntity);
+        casOpsFileRegEntity = opsFileRegLogic.addOpsFileReg(opsFileRegModel);
+        genericDAO.saveOrUpdate(casOpsFileRegEntity);
         return true;
       } else {
         log.error("Unable to convert type to OpsFileRegModel.");
@@ -1579,9 +1551,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewAllMandatesFiles() {
 
     List<OpsFileRegModel> opsFileRegModel = new ArrayList<OpsFileRegModel>();
-    List<MdtOpsFileRegEntity> mdtOpsFileRegList = new ArrayList<MdtOpsFileRegEntity>();
+    List<CasOpsFileRegEntity> mdtOpsFileRegList = new ArrayList<CasOpsFileRegEntity>();
 
-    mdtOpsFileRegList = genericDAO.findAll(MdtOpsFileRegEntity.class);
+    mdtOpsFileRegList = genericDAO.findAll(CasOpsFileRegEntity.class);
 
     if (mdtOpsFileRegList.size() > 0) {
       OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
@@ -1756,8 +1728,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   public Object retrieveCisDownloadInd(Date processDate) {
 
-    MdtAcOpsProcessControlsEntity mdtAcOpsProcessControlsEntity =
-        new MdtAcOpsProcessControlsEntity();
+    CasOpsProcessControlsEntity casOpsProcessControlsEntity =
+        new CasOpsProcessControlsEntity();
 
     try {
       HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -1780,10 +1752,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
 
       log.debug("---------------sparameters: ------------------" + parameters.toString());
-      mdtAcOpsProcessControlsEntity = (MdtAcOpsProcessControlsEntity) genericDAO.findByCriteria(
-          MdtAcOpsProcessControlsEntity.class, parameters);
+      casOpsProcessControlsEntity = (CasOpsProcessControlsEntity) genericDAO.findByCriteria(
+          CasOpsProcessControlsEntity.class, parameters);
       log.debug("---------------opsStatusDetailsList after findAllByCriteria: ------------------" +
-          mdtAcOpsProcessControlsEntity);
+          casOpsProcessControlsEntity);
 
     } catch (NullPointerException npe) {
       log.error("NullPointer exception :" + npe.getMessage());
@@ -1794,7 +1766,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       e.printStackTrace();
     }
 
-    return mdtAcOpsProcessControlsEntity;
+    return casOpsProcessControlsEntity;
 
     //                                            List<MdtAcOpsProcessControlsEntity>
     //                                            processControlsList = genericDAO
@@ -1890,9 +1862,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     List<OpsFileRegModel> opsFileRegModel = new ArrayList<OpsFileRegModel>();
 
-    List<MdtOpsFileRegEntity> mdtOpsFileRegList = new ArrayList<MdtOpsFileRegEntity>();
+    List<CasOpsFileRegEntity> mdtOpsFileRegList = new ArrayList<CasOpsFileRegEntity>();
 
-    mdtOpsFileRegList = genericDAO.findAll(MdtOpsFileRegEntity.class);
+    mdtOpsFileRegList = genericDAO.findAll(CasOpsFileRegEntity.class);
 
     if (mdtOpsFileRegList.size() > 0) {
       OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
@@ -1908,14 +1880,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtOpsFileRegEntity> mdtOpsFileRegList = genericDAO
+      List<CasOpsFileRegEntity> mdtOpsFileRegList = genericDAO
           .findAllByNamedQuery("MdtOpsFileRegEntity.findByFileName", "fileName",
               fileName.toUpperCase());
 
       if (mdtOpsFileRegList.size() > 0) {
 
         OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
-        for (MdtOpsFileRegEntity opsFileRegEntity : mdtOpsFileRegList) {
+        for (CasOpsFileRegEntity opsFileRegEntity : mdtOpsFileRegList) {
 
           OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
           opsFileRegModel = opsFileRegLogic.retrieveOpsFileRegModel(opsFileRegEntity);
@@ -2015,9 +1987,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewAllSeverityCodes() {
     List<ConfgSeverityCodesModel> confgSeverityCodesModelList =
         new ArrayList<ConfgSeverityCodesModel>();
-    List<MdtCnfgSeverityCodesEntity> mdtCnfgSeverityCodesList =
-        new ArrayList<MdtCnfgSeverityCodesEntity>();
-    mdtCnfgSeverityCodesList = genericDAO.findAll(MdtCnfgSeverityCodesEntity.class);
+    List<CasCnfgSeverityCodesEntity> mdtCnfgSeverityCodesList =
+        new ArrayList<CasCnfgSeverityCodesEntity>();
+    mdtCnfgSeverityCodesList = genericDAO.findAll(CasCnfgSeverityCodesEntity.class);
     if (mdtCnfgSeverityCodesList.size() > 0) {
       SeverityCodesLogic severityCodesLogic = new SeverityCodesLogic();
       confgSeverityCodesModelList =
@@ -2028,10 +2000,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public boolean createOpsCustParameters(Object obj) {
-    if (obj instanceof MdtOpsCustParamEntity) {
-      MdtOpsCustParamEntity mdtOpsCustParamEntity = (MdtOpsCustParamEntity) obj;
+    if (obj instanceof CasOpsCustParamEntity) {
+      CasOpsCustParamEntity casOpsCustParamEntity = (CasOpsCustParamEntity) obj;
       try {
-        genericDAO.save(mdtOpsCustParamEntity);
+        genericDAO.save(casOpsCustParamEntity);
         return true;
       } catch (Exception ex) {
         log.error("Error on createOpsCustParameters: " + ex.getMessage());
@@ -2044,10 +2016,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public boolean createAcOpsDailyBilling(Object obj) {
-    if (obj instanceof MdtAcOpsDailyBillingEntity) {
-      MdtAcOpsDailyBillingEntity mdtAcOpsDailyBillingEntity = (MdtAcOpsDailyBillingEntity) obj;
+    if (obj instanceof CasOpsDailyBillingEntity) {
+      CasOpsDailyBillingEntity casOpsDailyBillingEntity = (CasOpsDailyBillingEntity) obj;
       try {
-        genericDAO.save(mdtAcOpsDailyBillingEntity);
+        genericDAO.save(casOpsDailyBillingEntity);
         return true;
       } catch (Exception ex) {
         log.error("Error on createAcOpsDailyBilling: " + ex.getMessage());
@@ -2078,10 +2050,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public boolean createOpsRefSeqNr(Object obj) {
-    if (obj instanceof MdtOpsRefSeqNrEntity) {
-      MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity = (MdtOpsRefSeqNrEntity) obj;
+    if (obj instanceof CasOpsRefSeqNrEntity) {
+      CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = (CasOpsRefSeqNrEntity) obj;
       try {
-        genericDAO.save(mdtOpsRefSeqNrEntity);
+        genericDAO.save(casOpsRefSeqNrEntity);
         return true;
       } catch (Exception ex) {
         log.error("Error on createOpsRefSeqNrEntity: " + ex.getMessage());
@@ -2114,12 +2086,12 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   public boolean createSotEot(Object obj) {
 
-    if (obj instanceof MdtAcOpsSotEotCtrlEntity) {
-      MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = (MdtAcOpsSotEotCtrlEntity) obj;
+    if (obj instanceof CasOpsSotEotCtrlEntity) {
+      CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = (CasOpsSotEotCtrlEntity) obj;
 
 
       try {
-        genericDAO.save(mdtAcOpsSotEotCtrlEntity);
+        genericDAO.save(casOpsSotEotCtrlEntity);
         return true;
       } catch (Exception ex) {
 
@@ -2134,9 +2106,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public boolean createOpsProcessControls(Object obj) {
-    if (obj instanceof MdtOpsProcessControlsEntity) {
-      MdtOpsProcessControlsEntity mdtOpsProcessControlsEntity =
-          (MdtOpsProcessControlsEntity) obj;
+    if (obj instanceof CasOpsProcessControlsEntity) {
+      CasOpsProcessControlsEntity mdtOpsProcessControlsEntity =
+          (CasOpsProcessControlsEntity) obj;
       try {
         genericDAO.save(mdtOpsProcessControlsEntity);
         return true;
@@ -2178,11 +2150,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public boolean createOpsServices(Object obj) {
 
-    if (obj instanceof MdtOpsServicesEntity) {
-      MdtOpsServicesEntity mdtOpsServicesEntity = (MdtOpsServicesEntity) obj;
-      mdtOpsServicesEntity.setRecordId(new BigDecimal(99999));
+    if (obj instanceof CasOpsServicesEntity) {
+      CasOpsServicesEntity casOpsServicesEntity = (CasOpsServicesEntity) obj;
+      casOpsServicesEntity.setRecordId(new BigDecimal(99999));
       try {
-        genericDAO.save(mdtOpsServicesEntity);
+        genericDAO.save(casOpsServicesEntity);
         return true;
       } catch (Exception ex) {
         log.error("Error on createOpsServices: " + ex.getMessage());
@@ -2213,9 +2185,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public boolean updateOpsProcessControls(Object obj) {
-    if (obj instanceof MdtOpsProcessControlsEntity) {
-      MdtOpsProcessControlsEntity mdtOpsProcessControlsEntity =
-          (MdtOpsProcessControlsEntity) obj;
+    if (obj instanceof CasOpsProcessControlsEntity) {
+      CasOpsProcessControlsEntity mdtOpsProcessControlsEntity =
+          (CasOpsProcessControlsEntity) obj;
 
       try {
         genericDAO.saveOrUpdate(mdtOpsProcessControlsEntity);
@@ -2253,9 +2225,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public boolean deleteOpsServices(Object obj) {
 
     try {
-      if (obj instanceof MdtOpsServicesEntity) {
+      if (obj instanceof CasOpsServicesEntity) {
 
-        MdtOpsServicesEntity mdtopservice = new MdtOpsServicesEntity();
+        CasOpsServicesEntity mdtopservice = new CasOpsServicesEntity();
 
         genericDAO.delete(mdtopservice);
         return true;
@@ -2279,9 +2251,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public boolean deleteOpsCustParam(Object obj) {
 
     try {
-      if (obj instanceof MdtOpsCustParamEntity) {
+      if (obj instanceof CasOpsCustParamEntity) {
 
-        MdtOpsCustParamEntity mdtopsCustParam = new MdtOpsCustParamEntity();
+        CasOpsCustParamEntity mdtopsCustParam = new CasOpsCustParamEntity();
         genericDAO.delete(mdtopsCustParam);
         return true;
 
@@ -2303,9 +2275,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public boolean deleteOpsFileReg(Object obj) {
     try {
-      if (obj instanceof MdtOpsFileRegEntity) {
+      if (obj instanceof CasOpsFileRegEntity) {
 
-        MdtOpsFileRegEntity mdtopsFileReg = new MdtOpsFileRegEntity();
+        CasOpsFileRegEntity mdtopsFileReg = new CasOpsFileRegEntity();
         genericDAO.delete(mdtopsFileReg);
         return true;
 
@@ -2431,9 +2403,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllReportsName() {
     List<ReportsNamesModel> allReportNames = new ArrayList<ReportsNamesModel>();
-    List<MdtCnfgReportNamesEntity> allMdtCnfgReportNamesList =
-        new ArrayList<MdtCnfgReportNamesEntity>();
-    allMdtCnfgReportNamesList = genericDAO.findAll(MdtCnfgReportNamesEntity.class);
+    List<CasCnfgReportNamesEntity> allMdtCnfgReportNamesList =
+        new ArrayList<CasCnfgReportNamesEntity>();
+    allMdtCnfgReportNamesList = genericDAO.findAll(CasCnfgReportNamesEntity.class);
 
     if (allMdtCnfgReportNamesList.size() > 0) {
       ReportsLogic reportsLogic = new ReportsLogic();
@@ -2449,15 +2421,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtCnfgReportNamesEntity> mdtCnfgReportNamesEntityList =
+      List<CasCnfgReportNamesEntity> casCnfgReportNamesEntityList =
           genericDAO.findAllByNamedQuery("MdtCnfgReportNamesEntity.findByActiveInd", "activeInd",
               "Y");
 
 
-      if (mdtCnfgReportNamesEntityList.size() > 0) {
+      if (casCnfgReportNamesEntityList.size() > 0) {
         ReportsLogic reportsLogic = new ReportsLogic();
 
-        for (MdtCnfgReportNamesEntity localEntity : mdtCnfgReportNamesEntityList) {
+        for (CasCnfgReportNamesEntity localEntity : casCnfgReportNamesEntityList) {
           ReportsNamesModel localModel = new ReportsNamesModel();
           localModel = reportsLogic.retrieveReportNames(localEntity);
           allReportNames.add(localModel);
@@ -2480,14 +2452,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtCnfgReportNamesEntity> mdtCnfgReportNamesEntityList =
+      List<CasCnfgReportNamesEntity> casCnfgReportNamesEntityList =
           genericDAO.findAllByNamedQuery("MdtCnfgReportNamesEntity.findByReportNrLIKE", "reportNr",
               reportName + "%");
 
-      if (mdtCnfgReportNamesEntityList.size() > 0) {
+      if (casCnfgReportNamesEntityList.size() > 0) {
         ReportsLogic reportsLogic = new ReportsLogic();
 
-        for (MdtCnfgReportNamesEntity localEntity : mdtCnfgReportNamesEntityList) {
+        for (CasCnfgReportNamesEntity localEntity : casCnfgReportNamesEntityList) {
           ReportsNamesModel localModel = new ReportsNamesModel();
           localModel = reportsLogic.retrieveReportNames(localEntity);
           allReportNames.add(localModel);
@@ -2510,10 +2482,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof ReportsNamesModel) {
         ReportsNamesModel reportsNamesModel = (ReportsNamesModel) obj;
         ReportsLogic reportsLogic = new ReportsLogic();
-        MdtCnfgReportNamesEntity mdtCnfgReportNamesEntity = new MdtCnfgReportNamesEntity();
+        CasCnfgReportNamesEntity casCnfgReportNamesEntity = new CasCnfgReportNamesEntity();
 
-        mdtCnfgReportNamesEntity = reportsLogic.addReportNames(reportsNamesModel);
-        genericDAO.saveOrUpdate(mdtCnfgReportNamesEntity);
+        casCnfgReportNamesEntity = reportsLogic.addReportNames(reportsNamesModel);
+        genericDAO.saveOrUpdate(casCnfgReportNamesEntity);
         return true;
       } else {
         log.debug("Unable to convert type to Report Names.");
@@ -2558,9 +2530,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof OpsFileRegModel) {
         OpsFileRegModel opsFileRegModel = (OpsFileRegModel) obj;
         OpsFileRegLogic fileRegLogic = new OpsFileRegLogic();
-        MdtOpsFileRegEntity mdtOpsFileRegEntity = new MdtOpsFileRegEntity();
-        mdtOpsFileRegEntity = fileRegLogic.addOpsFileReg(opsFileRegModel);
-        genericDAO.delete(mdtOpsFileRegEntity);
+        CasOpsFileRegEntity casOpsFileRegEntity = new CasOpsFileRegEntity();
+        casOpsFileRegEntity = fileRegLogic.addOpsFileReg(opsFileRegModel);
+        genericDAO.delete(casOpsFileRegEntity);
 
         return true;
       } else {
@@ -2668,82 +2640,6 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   }
 
   @Override
-  public List<?> viewAllRejectReasonCodes() {
-    List<CnfgRejectReasonCodesModel> rejectReasonCodesModelList =
-        new ArrayList<CnfgRejectReasonCodesModel>();
-    List<MdtCnfgRejectReasonCodesEntity> mdtCnfgRejectReasonCodesEntityList =
-        new ArrayList<MdtCnfgRejectReasonCodesEntity>();
-    mdtCnfgRejectReasonCodesEntityList = genericDAO.findAll(MdtCnfgRejectReasonCodesEntity.class);
-
-    if (mdtCnfgRejectReasonCodesEntityList.size() > 0) {
-      CnfgRejectReasonCodesLogic rejectReasonCodesLogic = new CnfgRejectReasonCodesLogic();
-      rejectReasonCodesModelList = rejectReasonCodesLogic
-          .retrieveAllRejectReasonsCodes(mdtCnfgRejectReasonCodesEntityList);
-    }
-    return rejectReasonCodesModelList;
-  }
-
-  @Override
-  public List<?> viewRejectReasonCodesByCriteria(String rejectReasonCode) {
-    List<CnfgRejectReasonCodesModel> allRejectReasonCodes =
-        new ArrayList<CnfgRejectReasonCodesModel>();
-
-    try {
-      List<MdtCnfgRejectReasonCodesEntity> mdtCnfgRejectReasonCodesEntityList =
-          genericDAO.findAllByNamedQuery(
-              "MdtCnfgRejectReasonCodesEntity.findByRejectReasonCodeLIKE", "rejectReasonCode",
-              rejectReasonCode.toUpperCase() + "%");
-
-      if (mdtCnfgRejectReasonCodesEntityList.size() > 0) {
-
-        CnfgRejectReasonCodesLogic rejectReasonCodesLogic = new CnfgRejectReasonCodesLogic();
-        for (MdtCnfgRejectReasonCodesEntity mdtCnfgRejectReasonCodesEntity :
-            mdtCnfgRejectReasonCodesEntityList) {
-
-          CnfgRejectReasonCodesModel rejectReasonCodesModel = new CnfgRejectReasonCodesModel();
-          rejectReasonCodesModel = rejectReasonCodesLogic
-              .retrieveCnfgRejectReasonCodesModel(mdtCnfgRejectReasonCodesEntity);
-          allRejectReasonCodes.add(rejectReasonCodesModel);
-        }
-      }
-    } catch (ObjectNotFoundException onfe) {
-      log.error("No Object Exists on DB");
-    } catch (Exception e) {
-
-      log.error("Error on viewRejectReasonCodesByCriteria: " + e.getMessage());
-      e.printStackTrace();
-    }
-
-    return allRejectReasonCodes;
-  }
-
-  @Override
-  public boolean createRejectReasonCodes(Object obj) {
-
-    try {
-      if (obj instanceof CnfgRejectReasonCodesModel) {
-        CnfgRejectReasonCodesModel rejectReasonCodesModel = (CnfgRejectReasonCodesModel) obj;
-        CnfgRejectReasonCodesLogic rejectReasonCodesLogic = new CnfgRejectReasonCodesLogic();
-        MdtCnfgRejectReasonCodesEntity mdtCnfgRejectReasonCodesEntity =
-            new MdtCnfgRejectReasonCodesEntity();
-
-        mdtCnfgRejectReasonCodesEntity =
-            rejectReasonCodesLogic.addRejectReasonsCodes(rejectReasonCodesModel);
-        genericDAO.saveOrUpdate(mdtCnfgRejectReasonCodesEntity);
-        return true;
-      } else {
-        log.debug("Unable to convert type to rejectReasonCodes.");
-        return false;
-      }
-    } catch (Exception e) {
-      log.error("Error on createRejectReasonCodes: " + e.getMessage());
-
-      e.printStackTrace();
-      return false;
-    }
-  }
-
-  @Override
   public List<?> viewAllProcessStatus() {
     List<ProcessStatusModel> allProcessStatusList = new ArrayList<ProcessStatusModel>();
 
@@ -2809,11 +2705,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public boolean createOpsSlaTimes(Object obj) {
 
-    if (obj instanceof MdtOpsSlaTimesEntity) {
-      MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity = (MdtOpsSlaTimesEntity) obj;
+    if (obj instanceof CasOpsSlaTimesEntity) {
+      CasOpsSlaTimesEntity casOpsSlaTimesEntity = (CasOpsSlaTimesEntity) obj;
 
       try {
-        genericDAO.save(mdtOpsSlaTimesEntity);
+        genericDAO.save(casOpsSlaTimesEntity);
         return true;
       } catch (Exception ex) {
         log.error("Error on createOpsSlaTimes: " + ex.getMessage());
@@ -3072,14 +2968,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllServices() {
     List<ServicesModel> allServicesModel = new ArrayList<ServicesModel>();
-    List<MdtOpsServicesEntity> allMdtOpsServicesEntityList = new ArrayList<MdtOpsServicesEntity>();
-    allMdtOpsServicesEntityList =
-        genericDAO.findAllOrdered(MdtOpsServicesEntity.class, "serviceIdIn ASC ");
-    log.debug("allMdtOpsServicesEntityList**********" + allMdtOpsServicesEntityList);
+    List<CasOpsServicesEntity> allCasOpsServicesEntityList = new ArrayList<CasOpsServicesEntity>();
+    allCasOpsServicesEntityList =
+        genericDAO.findAllOrdered(CasOpsServicesEntity.class, "serviceIdIn ASC ");
+    log.debug("allMdtOpsServicesEntityList**********" + allCasOpsServicesEntityList);
 
-    if (allMdtOpsServicesEntityList.size() > 0) {
+    if (allCasOpsServicesEntityList.size() > 0) {
       ServicesLogic servicesLogic = new ServicesLogic();
-      allServicesModel = ServicesLogic.retreiveAllServices(allMdtOpsServicesEntityList);
+      allServicesModel = ServicesLogic.retreiveAllServices(allCasOpsServicesEntityList);
     }
     return allServicesModel;
   }
@@ -3104,7 +3000,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   public List<?> viewOpsFileRegByDirection(String direction, String fileName) {
     List<OpsFileRegModel> fileRegList = new ArrayList<OpsFileRegModel>();
-    List<MdtOpsFileRegEntity> mdtOpsFileRegEntityList = new ArrayList<MdtOpsFileRegEntity>();
+    List<CasOpsFileRegEntity> casOpsFileRegEntityList = new ArrayList<CasOpsFileRegEntity>();
 
     try {
       HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -3116,17 +3012,17 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 			(MdtOpsFileRegEntity.class, parameters);
 			log.info("---------------mdtOpsFileRegEntityList after findAllByCriteria:
 			------------------" + mdtOpsFileRegEntityList);*/
-      mdtOpsFileRegEntityList =
+      casOpsFileRegEntityList =
           genericDAO.findAllByNQCriteria("MdtOpsFileRegEntity.findByFileNameLike3", parameters);
       log.debug(
           "---------------mdtOpsFileRegEntityList after findAllByNQCriteria: ------------------" +
-              mdtOpsFileRegEntityList);
+              casOpsFileRegEntityList);
 
 
-      if (mdtOpsFileRegEntityList != null && mdtOpsFileRegEntityList.size() > 0) {
+      if (casOpsFileRegEntityList != null && casOpsFileRegEntityList.size() > 0) {
         OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
 
-        for (MdtOpsFileRegEntity localEntity : mdtOpsFileRegEntityList) {
+        for (CasOpsFileRegEntity localEntity : casOpsFileRegEntityList) {
 
           OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
           opsFileRegModel = opsFileRegLogic.retrieveDelDelivery(localEntity);
@@ -3240,14 +3136,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
         new ArrayList<AdjustmentCategoryModel>();
 
     try {
-      List<MdtCnfgAdjustmentCatEntity> allMdtCnfgAdjustmentCatEntityList =
+      List<CasCnfgAdjustmentCatEntity> allCasCnfgAdjustmentCatEntityList =
           genericDAO.findAllByNamedQuery("MdtCnfgAdjustmentCatEntity.findByAdjustmentCategory",
               "adjustmentCategory", adjustmentCategory);
 
-      if (allMdtCnfgAdjustmentCatEntityList.size() > 0) {
+      if (allCasCnfgAdjustmentCatEntityList.size() > 0) {
         AdjustmentCategoryLogic adjustmentCategoryLogic = new AdjustmentCategoryLogic();
 
-        for (MdtCnfgAdjustmentCatEntity localEntity : allMdtCnfgAdjustmentCatEntityList) {
+        for (CasCnfgAdjustmentCatEntity localEntity : allCasCnfgAdjustmentCatEntityList) {
           AdjustmentCategoryModel adjustmentCategoryModel = new AdjustmentCategoryModel();
           adjustmentCategoryModel = adjustmentCategoryLogic.retreiveAdjustmentCategory(localEntity);
           alladjustmentCategoryModel.add(adjustmentCategoryModel);
@@ -3268,14 +3164,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<AdjustmentCategoryModel> allAdjustmentCategoryList =
         new ArrayList<AdjustmentCategoryModel>();
 
-    List<MdtCnfgAdjustmentCatEntity> allMdtCnfgAdjustmentCatEntityList =
-        new ArrayList<MdtCnfgAdjustmentCatEntity>();
+    List<CasCnfgAdjustmentCatEntity> allCasCnfgAdjustmentCatEntityList =
+        new ArrayList<CasCnfgAdjustmentCatEntity>();
 
-    allMdtCnfgAdjustmentCatEntityList = genericDAO.findAll(MdtCnfgAdjustmentCatEntity.class);
-    if (allMdtCnfgAdjustmentCatEntityList.size() > 0) {
+    allCasCnfgAdjustmentCatEntityList = genericDAO.findAll(CasCnfgAdjustmentCatEntity.class);
+    if (allCasCnfgAdjustmentCatEntityList.size() > 0) {
       AdjustmentCategoryLogic adjustmentCategoryLogic = new AdjustmentCategoryLogic();
       allAdjustmentCategoryList =
-          adjustmentCategoryLogic.retreiveAllAdjustmentCategory(allMdtCnfgAdjustmentCatEntityList);
+          adjustmentCategoryLogic.retreiveAllAdjustmentCategory(allCasCnfgAdjustmentCatEntityList);
     }
 
     log.debug("allAdjustmentCategoryList*******************" + allAdjustmentCategoryList);
@@ -3316,11 +3212,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof AdjustmentCategoryModel) {
         AdjustmentCategoryModel adjustmentCategoryModel = (AdjustmentCategoryModel) obj;
         AdjustmentCategoryLogic adjustmentCategoryLogic = new AdjustmentCategoryLogic();
-        MdtCnfgAdjustmentCatEntity mdtCnfgAdjustmentCatEntity = new MdtCnfgAdjustmentCatEntity();
+        CasCnfgAdjustmentCatEntity casCnfgAdjustmentCatEntity = new CasCnfgAdjustmentCatEntity();
 
-        mdtCnfgAdjustmentCatEntity =
+        casCnfgAdjustmentCatEntity =
             adjustmentCategoryLogic.addAdjustmentCategory(adjustmentCategoryModel);
-        genericDAO.saveOrUpdate(mdtCnfgAdjustmentCatEntity);
+        genericDAO.saveOrUpdate(casCnfgAdjustmentCatEntity);
 
         return true;
       } else {
@@ -3339,20 +3235,20 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   public List<?> retrieveOpsStatusDetails(BigDecimal statusHdrSeqNo) {
     List<OpsStatusDetailsModel> opsStatusDetailsList = new ArrayList<OpsStatusDetailsModel>();
-    List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsEntityList =
-        new ArrayList<MdtAcOpsStatusDetailsEntity>();
+    List<CasOpsStatusDetailsEntity> opsStatusDetailsEntityList =
+        new ArrayList<CasOpsStatusDetailsEntity>();
     try {
       HashMap<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("statusHdrSeqNo", statusHdrSeqNo);
-      opsStatusDetailsEntityList = (List<MdtAcOpsStatusDetailsEntity>) genericDAO.findAllByCriteria(
-          MdtAcOpsStatusDetailsEntity.class, parameters);
+      opsStatusDetailsEntityList = (List<CasOpsStatusDetailsEntity>) genericDAO.findAllByCriteria(
+          CasOpsStatusDetailsEntity.class, parameters);
       log.debug(
           "---------------opsStatusDetailsEntityList after findAllByCriteria: ------------------" +
               opsStatusDetailsEntityList);
       if (opsStatusDetailsEntityList != null) {
         ViewFileStatusLogic viewFileStatusLogic = new ViewFileStatusLogic();
 
-        for (MdtAcOpsStatusDetailsEntity localEntity : opsStatusDetailsEntityList) {
+        for (CasOpsStatusDetailsEntity localEntity : opsStatusDetailsEntityList) {
           OpsStatusDetailsModel opsStatusDetailsModel = new OpsStatusDetailsModel();
           opsStatusDetailsModel =
               viewFileStatusLogic.translateOpsStatusDetEntityToCommonsModel(localEntity);
@@ -3376,8 +3272,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     OpsStatusHdrsModel opsStatusHdrsModel = new OpsStatusHdrsModel();
 
     try {
-      MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity =
-          (MdtAcOpsStatusHdrsEntity) genericDAO.findByNamedQuery(
+      CasOpsStatusHdrsEntity opsStatusHdrsEntity =
+          (CasOpsStatusHdrsEntity) genericDAO.findByNamedQuery(
               "MdtAcOpsStatusHdrsEntity.findByOrgnlMsgId", "orgnlMsgId", orgnlMsgId);
       if (opsStatusHdrsEntity != null) {
         ViewFileStatusLogic viewFileStatusLogic = new ViewFileStatusLogic();
@@ -3400,10 +3296,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     List<OpsStatusHdrsModel> opsStatusHdrsModelList = new ArrayList<OpsStatusHdrsModel>();
 
-    List<MdtAcOpsStatusHdrsEntity> opsStatusHdrsEntityList =
-        new ArrayList<MdtAcOpsStatusHdrsEntity>();
+    List<CasOpsStatusHdrsEntity> opsStatusHdrsEntityList =
+        new ArrayList<CasOpsStatusHdrsEntity>();
 
-    opsStatusHdrsEntityList = genericDAO.findAll(MdtAcOpsStatusHdrsEntity.class);
+    opsStatusHdrsEntityList = genericDAO.findAll(CasOpsStatusHdrsEntity.class);
 
     if (opsStatusHdrsEntityList.size() > 0) {
       OpsStatusHdrsLogic opsStatusHdrsLogic = new OpsStatusHdrsLogic();
@@ -3416,9 +3312,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllOpsStatusDetails() {
     List<OpsStatusDetailsModel> opsStatusDetailsModelList = new ArrayList<OpsStatusDetailsModel>();
-    List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsEntityList =
-        new ArrayList<MdtAcOpsStatusDetailsEntity>();
-    opsStatusDetailsEntityList = genericDAO.findAll(MdtAcOpsStatusDetailsEntity.class);
+    List<CasOpsStatusDetailsEntity> opsStatusDetailsEntityList =
+        new ArrayList<CasOpsStatusDetailsEntity>();
+    opsStatusDetailsEntityList = genericDAO.findAll(CasOpsStatusDetailsEntity.class);
 
     if (opsStatusDetailsEntityList.size() > 0) {
       OpsStatusDetailsLogic opsStatusDetailsLogic = new OpsStatusDetailsLogic();
@@ -3435,14 +3331,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> retrieveOpsCustomerParameters() {
     List<CustomerParametersModel> custParamsList = new ArrayList<CustomerParametersModel>();
-    List<MdtOpsCustParamEntity> allMdtOpsCustParamEntityList =
-        new ArrayList<MdtOpsCustParamEntity>();
-    allMdtOpsCustParamEntityList = genericDAO.findAll(MdtOpsCustParamEntity.class);
+    List<CasOpsCustParamEntity> allCasOpsCustParamEntityList =
+        new ArrayList<CasOpsCustParamEntity>();
+    allCasOpsCustParamEntityList = genericDAO.findAll(CasOpsCustParamEntity.class);
 
-    if (allMdtOpsCustParamEntityList.size() > 0) {
+    if (allCasOpsCustParamEntityList.size() > 0) {
       CustParamLogic custParamLogic = new CustParamLogic();
       custParamsList = custParamLogic.translateOpsCustParametersEntityToCommonsModel(
-          allMdtOpsCustParamEntityList);
+          allCasOpsCustParamEntityList);
 
       log.debug("Customer model from Bean --> " + custParamsList.toString());
     }
@@ -3585,10 +3481,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof AccountTypeModel) {
         AccountTypeModel accountTypeModel = (AccountTypeModel) obj;
         AccountTypeLogic accountTypeLogic = new AccountTypeLogic();
-        MdtCnfgAccountTypeEntity mdtCnfgAccountTypeEntity = new MdtCnfgAccountTypeEntity();
+        CasCnfgAccountTypeEntity casCnfgAccountTypeEntity = new CasCnfgAccountTypeEntity();
 
-        mdtCnfgAccountTypeEntity = accountTypeLogic.addAccountType(accountTypeModel);
-        genericDAO.saveOrUpdate(mdtCnfgAccountTypeEntity);
+        casCnfgAccountTypeEntity = accountTypeLogic.addAccountType(accountTypeModel);
+        genericDAO.saveOrUpdate(casCnfgAccountTypeEntity);
 
         return true;
       } else {
@@ -3610,13 +3506,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewAllAccountType() {
     List<AccountTypeModel> allAccountTypeList = new ArrayList<AccountTypeModel>();
 
-    List<MdtCnfgAccountTypeEntity> allMdtCnfgAccountTypeEntityList =
-        new ArrayList<MdtCnfgAccountTypeEntity>();
+    List<CasCnfgAccountTypeEntity> allCasCnfgAccountTypeEntityList =
+        new ArrayList<CasCnfgAccountTypeEntity>();
 
-    allMdtCnfgAccountTypeEntityList = genericDAO.findAll(MdtCnfgAccountTypeEntity.class);
-    if (allMdtCnfgAccountTypeEntityList.size() > 0) {
+    allCasCnfgAccountTypeEntityList = genericDAO.findAll(CasCnfgAccountTypeEntity.class);
+    if (allCasCnfgAccountTypeEntityList.size() > 0) {
       AccountTypeLogic accountTypeLogic = new AccountTypeLogic();
-      allAccountTypeList = accountTypeLogic.retreiveAllAccountType(allMdtCnfgAccountTypeEntityList);
+      allAccountTypeList = accountTypeLogic.retreiveAllAccountType(allCasCnfgAccountTypeEntityList);
     }
 
     return allAccountTypeList;
@@ -3628,15 +3524,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<AccountTypeModel> allAccountTypeModel = new ArrayList<AccountTypeModel>();
 
     try {
-      List<MdtCnfgAccountTypeEntity> allMdtCnfgAccountTypeEntity =
+      List<CasCnfgAccountTypeEntity> allCasCnfgAccountTypeEntity =
           genericDAO.findAllByNamedQuery("MdtCnfgAccountTypeEntity.findByAccountTypeCode",
               "accountTypeCode", accountTypeCode);
 
 
-      if (allMdtCnfgAccountTypeEntity.size() > 0) {
+      if (allCasCnfgAccountTypeEntity.size() > 0) {
         AccountTypeLogic accountTypeLogic = new AccountTypeLogic();
 
-        for (MdtCnfgAccountTypeEntity localEntity : allMdtCnfgAccountTypeEntity) {
+        for (CasCnfgAccountTypeEntity localEntity : allCasCnfgAccountTypeEntity) {
           AccountTypeModel accountTypeModel = new AccountTypeModel();
           accountTypeModel = accountTypeLogic.retreiveAccountType(localEntity);
           allAccountTypeModel.add(accountTypeModel);
@@ -3658,10 +3554,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof SeverityCodesModel) {
         SeverityCodesModel severityCodesModel = (SeverityCodesModel) obj;
         SeverityCodes2Logic severity2CodesLogic = new SeverityCodes2Logic();
-        MdtCnfgSeverityCodesEntity mdtCnfgSeverityCodesEntity = new MdtCnfgSeverityCodesEntity();
+        CasCnfgSeverityCodesEntity casCnfgSeverityCodesEntity = new CasCnfgSeverityCodesEntity();
 
-        mdtCnfgSeverityCodesEntity = severity2CodesLogic.addSeverityCodes(severityCodesModel);
-        genericDAO.saveOrUpdate(mdtCnfgSeverityCodesEntity);
+        casCnfgSeverityCodesEntity = severity2CodesLogic.addSeverityCodes(severityCodesModel);
+        genericDAO.saveOrUpdate(casCnfgSeverityCodesEntity);
 
         return true;
 
@@ -3683,28 +3579,28 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List viewSeverityCodesByCriteria(String severityCode) {
 
     List<SeverityCodesModel> allSeverityCodesModel = new ArrayList<SeverityCodesModel>();
-    List<MdtCnfgSeverityCodesEntity> allMdtCnfgSeverityCodesEntity =
-        new ArrayList<MdtCnfgSeverityCodesEntity>();
+    List<CasCnfgSeverityCodesEntity> allCasCnfgSeverityCodesEntity =
+        new ArrayList<CasCnfgSeverityCodesEntity>();
 
     try {
       log.info("String Value---> " + severityCode);
       Short sevCode = Short.parseShort(severityCode);
       log.info("Short Value---> " + sevCode);
 
-      MdtCnfgSeverityCodesEntity mdtCnfgSeverityCodesEntity =
-          (MdtCnfgSeverityCodesEntity) genericDAO.findByNamedQueryShort(
+      CasCnfgSeverityCodesEntity casCnfgSeverityCodesEntity =
+          (CasCnfgSeverityCodesEntity) genericDAO.findByNamedQueryShort(
               "MdtCnfgSeverityCodesEntity.findBySeverityCode", "severityCode", sevCode);
 
       //			MdtCnfgSeverityCodesEntity mdtCnfgSeverityCodesEntity  =
       //			(MdtCnfgSeverityCodesEntity) genericDAO.find(MdtCnfgSeverityCodesEntity.class,
       //			sevCode);
-      log.info("mdtCnfgSeverityCodesEntity: " + mdtCnfgSeverityCodesEntity);
+      log.info("mdtCnfgSeverityCodesEntity: " + casCnfgSeverityCodesEntity);
 
 
-      if (mdtCnfgSeverityCodesEntity != null) {
+      if (casCnfgSeverityCodesEntity != null) {
         SeverityCodes2Logic severity2CodesLogic = new SeverityCodes2Logic();
         SeverityCodesModel severityCodesModel = new SeverityCodesModel();
-        severityCodesModel = severity2CodesLogic.retreiveSeverityCodes(mdtCnfgSeverityCodesEntity);
+        severityCodesModel = severity2CodesLogic.retreiveSeverityCodes(casCnfgSeverityCodesEntity);
         allSeverityCodesModel.add(severityCodesModel);
       }
     } catch (ObjectNotFoundException onfe) {
@@ -3757,36 +3653,18 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewAllSeverityCode() {
     List<SeverityCodesModel> allSeverityCodesList = new ArrayList<SeverityCodesModel>();
 
-    List<MdtCnfgSeverityCodesEntity> allMdtCnfgSeverityCodesEntityList =
-        new ArrayList<MdtCnfgSeverityCodesEntity>();
+    List<CasCnfgSeverityCodesEntity> allCasCnfgSeverityCodesEntityList =
+        new ArrayList<CasCnfgSeverityCodesEntity>();
 
-    allMdtCnfgSeverityCodesEntityList = genericDAO.findAll(MdtCnfgSeverityCodesEntity.class);
-    if (allMdtCnfgSeverityCodesEntityList.size() > 0) {
+    allCasCnfgSeverityCodesEntityList = genericDAO.findAll(CasCnfgSeverityCodesEntity.class);
+    if (allCasCnfgSeverityCodesEntityList.size() > 0) {
       SeverityCodes2Logic severityCodes2Logic = new SeverityCodes2Logic();
       allSeverityCodesList =
-          severityCodes2Logic.retreiveAllSeverityCode(allMdtCnfgSeverityCodesEntityList);
+          severityCodes2Logic.retreiveAllSeverityCode(allCasCnfgSeverityCodesEntityList);
     }
 
     return allSeverityCodesList;
   }
-
-  @Override
-  public List<?> viewAllStatusReasonCodes() {
-    List<StatusReasonCodesModel> statusReasonCodesList = new ArrayList<StatusReasonCodesModel>();
-
-    List<MdtCnfgStatusReasonCodesEntity> mdtCnfgStatusReasonCodesEntityList =
-        new ArrayList<MdtCnfgStatusReasonCodesEntity>();
-
-    mdtCnfgStatusReasonCodesEntityList = genericDAO.findAll(MdtCnfgStatusReasonCodesEntity.class);
-    if (mdtCnfgStatusReasonCodesEntityList.size() > 0) {
-      StatusReasonCodesLogic statusReasonCodesLogic = new StatusReasonCodesLogic();
-      statusReasonCodesList =
-          statusReasonCodesLogic.retreiveStatusReasonCodes(mdtCnfgStatusReasonCodesEntityList);
-    }
-
-    return statusReasonCodesList;
-  }
-
   @Override
   public List<?> viewAllFileStatus() {
     List<FileStatusCommonsModel> fileStatusCommonsModelList =
@@ -3811,13 +3689,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     List<ServicesModel> servicesModelList = new ArrayList<ServicesModel>();
 
-    List<MdtOpsServicesEntity> mdtOpsServicesEntityList = new ArrayList<MdtOpsServicesEntity>();
+    List<CasOpsServicesEntity> casOpsServicesEntityList = new ArrayList<CasOpsServicesEntity>();
 
-    mdtOpsServicesEntityList = genericDAO.findAll(MdtOpsServicesEntity.class);
+    casOpsServicesEntityList = genericDAO.findAll(CasOpsServicesEntity.class);
 
-    if (mdtOpsServicesEntityList.size() > 0) {
+    if (casOpsServicesEntityList.size() > 0) {
       OpsServicesLogic opsServicesLogic = new OpsServicesLogic();
-      servicesModelList = opsServicesLogic.retrieveAllOpsServices(mdtOpsServicesEntityList);
+      servicesModelList = opsServicesLogic.retrieveAllOpsServices(casOpsServicesEntityList);
 
     }
 
@@ -3832,75 +3710,16 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<OpsSlaTimesCommonsModel> opsSlaTimesCommonsModelList =
         new ArrayList<OpsSlaTimesCommonsModel>();
 
-    List<MdtOpsSlaTimesEntity> mdtOpsSlaTimesEntityList = new ArrayList<MdtOpsSlaTimesEntity>();
+    List<CasOpsSlaTimesEntity> casOpsSlaTimesEntityList = new ArrayList<CasOpsSlaTimesEntity>();
 
-    mdtOpsSlaTimesEntityList = genericDAO.findAll(MdtOpsSlaTimesEntity.class);
-    if (mdtOpsSlaTimesEntityList.size() > 0) {
+    casOpsSlaTimesEntityList = genericDAO.findAll(CasOpsSlaTimesEntity.class);
+    if (casOpsSlaTimesEntityList.size() > 0) {
       OpsSlaTimesLogic opsSlaTimesLogic = new OpsSlaTimesLogic();
       opsSlaTimesCommonsModelList =
-          opsSlaTimesLogic.retrieveAllOpsSlaTimes(mdtOpsSlaTimesEntityList);
+          opsSlaTimesLogic.retrieveAllOpsSlaTimes(casOpsSlaTimesEntityList);
     }
 
     return opsSlaTimesCommonsModelList;
-  }
-
-  @Override
-  public List<?> viewStatusReasonCodesByCriteria(String statusReasonCode) {
-    List<StatusReasonCodesModel> allstatusReasonCodeModel = new ArrayList<StatusReasonCodesModel>();
-
-    try {
-      List<MdtCnfgStatusReasonCodesEntity> mdtCnfgStatusReasonCodesEntity =
-          genericDAO.findAllByNamedQuery(
-              "MdtCnfgStatusReasonCodesEntity.findByStatusReasonCodeLIKE", "statusReasonCode",
-              statusReasonCode + "%");
-
-
-      if (mdtCnfgStatusReasonCodesEntity.size() > 0) {
-        StatusReasonCodesLogic statusReasonCodesLogic = new StatusReasonCodesLogic();
-
-        for (MdtCnfgStatusReasonCodesEntity localEntity : mdtCnfgStatusReasonCodesEntity) {
-          StatusReasonCodesModel statusReasonCodeModel = new StatusReasonCodesModel();
-          statusReasonCodeModel = statusReasonCodesLogic.retreiveStatusReasonCodes(localEntity);
-          allstatusReasonCodeModel.add(statusReasonCodeModel);
-        }
-      }
-    } catch (ObjectNotFoundException onfe) {
-      log.error("No object Exists on DB");
-    } catch (Exception e) {
-      log.error("Error retreiveStatusReasonCodesTypeByCriteria: " + e.getMessage());
-      e.printStackTrace();
-    }
-    return allstatusReasonCodeModel;
-  }
-
-
-  @Override
-  public boolean createStatusReasonCodes(Object obj) {
-
-    try {
-      if (obj instanceof StatusReasonCodesModel) {
-        StatusReasonCodesModel statusReasonCodesModel = (StatusReasonCodesModel) obj;
-        StatusReasonCodesLogic statusReasonCodesLogic = new StatusReasonCodesLogic();
-        MdtCnfgStatusReasonCodesEntity mdtCnfgStatusReasonCodesEntity =
-            new MdtCnfgStatusReasonCodesEntity();
-
-        mdtCnfgStatusReasonCodesEntity =
-            statusReasonCodesLogic.addStatusReasonCodes(statusReasonCodesModel);
-        genericDAO.saveOrUpdate(mdtCnfgStatusReasonCodesEntity);
-
-        return true;
-      } else {
-        log.debug("Unable to convert type to StatusReasonCodes.");
-
-        return false;
-      }
-    } catch (Exception e) {
-      log.error("Error on createStatusReasonCodes:" + e.getMessage());
-      e.printStackTrace();
-
-      return false;
-    }
-
   }
 
   @Override
@@ -4117,10 +3936,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public List<?> retrieveInActiveCisDownload() {
-    List<MdtAcOpsProcessControlsEntity> mdtAcOpsProcessControlsList =
-        new ArrayList<MdtAcOpsProcessControlsEntity>();
+    List<CasOpsProcessControlsEntity> mdtAcOpsProcessControlsList =
+        new ArrayList<CasOpsProcessControlsEntity>();
 
-    mdtAcOpsProcessControlsList = genericDAO.findAll(MdtAcOpsProcessControlsEntity.class);
+    mdtAcOpsProcessControlsList = genericDAO.findAll(CasOpsProcessControlsEntity.class);
     log.debug(
         "mdtAcOpsProcessControlsList.size()in adminBean: " + mdtAcOpsProcessControlsList.size());
     log.debug("mdtAcOpsProcessControlsListin adminBean: " + mdtAcOpsProcessControlsList);
@@ -4130,11 +3949,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public boolean createCisDownload(Object obj) {
-    if (obj instanceof MdtAcOpsProcessControlsEntity) {
-      MdtAcOpsProcessControlsEntity mdtAcOpsProcessControlsEntity =
-          (MdtAcOpsProcessControlsEntity) obj;
+    if (obj instanceof CasOpsProcessControlsEntity) {
+      CasOpsProcessControlsEntity casOpsProcessControlsEntity =
+          (CasOpsProcessControlsEntity) obj;
       try {
-        genericDAO.save(mdtAcOpsProcessControlsEntity);
+        genericDAO.save(casOpsProcessControlsEntity);
         return true;
       } catch (Exception ex) {
         log.error("Error on createCisDownload :" + ex.getMessage());
@@ -4367,14 +4186,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
 
-      List<MdtOpsFileRegEntity> opsFileRegEntityList =
-          (List<MdtOpsFileRegEntity>) genericDAO.findAllByNamedQuery(
+      List<CasOpsFileRegEntity> opsFileRegEntityList =
+          (List<CasOpsFileRegEntity>) genericDAO.findAllByNamedQuery(
               "MdtOpsFileRegEntity.findByFileName", "fileName", fileName);
       //log.info("---------------opsFileRegEntityList: ------------------"+ opsFileRegEntityList);
 
       if (opsFileRegEntityList.size() > 0) {
         OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
-        for (MdtOpsFileRegEntity localEntity : opsFileRegEntityList) {
+        for (CasOpsFileRegEntity localEntity : opsFileRegEntityList) {
           OpsFileRegModel localModel = new OpsFileRegModel();
 
           localModel = opsFileRegLogic.retrieveDelDelivery(localEntity);
@@ -4399,7 +4218,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewFileStatusSearch(String memberNo, String service) {
     List<OpsFileRegModel> searchedFilesList = new ArrayList<OpsFileRegModel>();
-    List<MdtOpsFileRegEntity> opsFileRegList = new ArrayList<MdtOpsFileRegEntity>();
+    List<CasOpsFileRegEntity> opsFileRegList = new ArrayList<CasOpsFileRegEntity>();
     try {
 
       HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -4415,7 +4234,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
       if (opsFileRegList != null && opsFileRegList.size() > 0) {
         OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
-        for (MdtOpsFileRegEntity localEntity : opsFileRegList) {
+        for (CasOpsFileRegEntity localEntity : opsFileRegList) {
           OpsFileRegModel localModel = new OpsFileRegModel();
 
           localModel = opsFileRegLogic.retrieveDelDelivery(localEntity);
@@ -4435,7 +4254,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   public List<?> searchByFileName(String fileName) {
     List<OpsFileRegModel> searchedFilesList = new ArrayList<OpsFileRegModel>();
-    List<MdtOpsFileRegEntity> opsFileRegList = new ArrayList<MdtOpsFileRegEntity>();
+    List<CasOpsFileRegEntity> opsFileRegList = new ArrayList<CasOpsFileRegEntity>();
     try {
 
       HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -4451,7 +4270,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
       if (opsFileRegList != null && opsFileRegList.size() > 0) {
         OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
-        for (MdtOpsFileRegEntity localEntity : opsFileRegList) {
+        for (CasOpsFileRegEntity localEntity : opsFileRegList) {
           OpsFileRegModel localModel = new OpsFileRegModel();
 
           localModel = opsFileRegLogic.retrieveDelDelivery(localEntity);
@@ -4563,7 +4382,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List retrieveAllEotSot(String destMemberId, String serviceName, String sotInInd,
                                 String eotInInd, String sotOutInd, String eotOutInd) {
-    List<MdtAcOpsSotEotCtrlEntity> opsSotEotEntityList = new ArrayList<MdtAcOpsSotEotCtrlEntity>();
+    List<CasOpsSotEotCtrlEntity> opsSotEotEntityList = new ArrayList<CasOpsSotEotCtrlEntity>();
     List<AcOpsSotEotCntrlModel> opsSotEotModelList = new ArrayList<AcOpsSotEotCntrlModel>();
 
     try {
@@ -4581,15 +4400,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       parameters.put("eotIn", eotInInd);
       parameters.put("sotOut", sotOutInd);
       parameters.put("eotOut", eotOutInd);
-      opsSotEotEntityList = (List<MdtAcOpsSotEotCtrlEntity>) genericDAO.findAllByCriteria(
-          MdtAcOpsSotEotCtrlEntity.class, parameters);
+      opsSotEotEntityList = (List<CasOpsSotEotCtrlEntity>) genericDAO.findAllByCriteria(
+          CasOpsSotEotCtrlEntity.class, parameters);
 
 
       if (opsSotEotEntityList.size() > 0) {
 
 
         AcOpsSotEotLogic acOpsSotEotLogic = new AcOpsSotEotLogic();
-        for (MdtAcOpsSotEotCtrlEntity localEntity : opsSotEotEntityList) {
+        for (CasOpsSotEotCtrlEntity localEntity : opsSotEotEntityList) {
           AcOpsSotEotCntrlModel localModel = new AcOpsSotEotCntrlModel();
           localModel = acOpsSotEotLogic.retrieveMdtAcOpsSotEotCtrlEntity(localEntity);
           opsSotEotModelList.add(localModel);
@@ -4656,10 +4475,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
 
   public Object retrieveOpsService(String outgoingService) {
-    MdtOpsServicesEntity mdtOpsServicesEntity = new MdtOpsServicesEntity();
+    CasOpsServicesEntity casOpsServicesEntity = new CasOpsServicesEntity();
 
     try {
-      mdtOpsServicesEntity = (MdtOpsServicesEntity) genericDAO.findByNamedQuery(
+      casOpsServicesEntity = (CasOpsServicesEntity) genericDAO.findByNamedQuery(
           "MdtOpsServicesEntity.findByServiceIdOut", "serviceIdOut", outgoingService);
     } catch (ObjectNotFoundException ne) {
       log.debug("No matching record found:  " + ne.getMessage());
@@ -4669,7 +4488,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       e.printStackTrace();
     }
 
-    return mdtOpsServicesEntity;
+    return casOpsServicesEntity;
   }
 
   @Override
@@ -4725,18 +4544,18 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public List<?> retrieveOpsScheduler() {
-    List<MdtAcOpsSchedulerEntity> opsSchedulerList = new ArrayList<MdtAcOpsSchedulerEntity>();
-    opsSchedulerList = genericDAO.findAll(MdtAcOpsSchedulerEntity.class);
+    List<CasOpsSchedulerEntity> opsSchedulerList = new ArrayList<CasOpsSchedulerEntity>();
+    opsSchedulerList = genericDAO.findAll(CasOpsSchedulerEntity.class);
     return opsSchedulerList;
   }
 
   @Override
   public boolean createOpsScheduler(Object obj) {
     boolean saved = false;
-    if (obj instanceof MdtAcOpsSchedulerEntity) {
-      MdtAcOpsSchedulerEntity mdtAcOpsSchedulerEntity = (MdtAcOpsSchedulerEntity) obj;
+    if (obj instanceof CasOpsSchedulerEntity) {
+      CasOpsSchedulerEntity casOpsSchedulerEntity = (CasOpsSchedulerEntity) obj;
       try {
-        genericDAO.saveOrUpdate(mdtAcOpsSchedulerEntity);
+        genericDAO.saveOrUpdate(casOpsSchedulerEntity);
         saved = true;
       } catch (Exception ex) {
         log.error("Error on createOpsScheduler: " + ex.getMessage());
@@ -4825,10 +4644,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllOpsSchedulers() {
     List<SchedulerCommonsModel> allSchedulerList = new ArrayList<SchedulerCommonsModel>();
-    List<MdtAcOpsSchedulerEntity> allAcOpsSchedulerList = new ArrayList<MdtAcOpsSchedulerEntity>();
+    List<CasOpsSchedulerEntity> allAcOpsSchedulerList = new ArrayList<CasOpsSchedulerEntity>();
 
     allAcOpsSchedulerList =
-        genericDAO.findAllOrdered(MdtAcOpsSchedulerEntity.class, "schedulerKey ASC ");
+        genericDAO.findAllOrdered(CasOpsSchedulerEntity.class, "schedulerKey ASC ");
 
     log.debug(
         "The entity list has the following information ##############" + allAcOpsSchedulerList);
@@ -4855,7 +4674,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewEOTFile(String memberNo) {
     List<OpsFileRegModel> eotFileList = new ArrayList<OpsFileRegModel>();
-    List<MdtOpsFileRegEntity> opsFileRegEntityList = new ArrayList<MdtOpsFileRegEntity>();
+    List<CasOpsFileRegEntity> opsFileRegEntityList = new ArrayList<CasOpsFileRegEntity>();
     try {
 
       HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -4869,7 +4688,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
       if (opsFileRegEntityList != null && opsFileRegEntityList.size() > 0) {
         OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
-        for (MdtOpsFileRegEntity localEntity : opsFileRegEntityList) {
+        for (CasOpsFileRegEntity localEntity : opsFileRegEntityList) {
           OpsFileRegModel localModel = new OpsFileRegModel();
 
           localModel = opsFileRegLogic.retrieveDelDelivery(localEntity);
@@ -4889,17 +4708,17 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public List<?> viewEotMessages() {
-    List<MdtAcOpsTransCtrlMsgEntity> mdtAcOpsTransCtrlMsgEntityList =
-        new ArrayList<MdtAcOpsTransCtrlMsgEntity>();
+    List<CasOpsTransCtrlMsgEntity> casOpsTransCtrlMsgEntityList =
+        new ArrayList<CasOpsTransCtrlMsgEntity>();
 
     List<TransCtrlMsgModel> transCtrlMsgModelList = new ArrayList<TransCtrlMsgModel>();
 
-    mdtAcOpsTransCtrlMsgEntityList =
-        (List<MdtAcOpsTransCtrlMsgEntity>) genericDAO.findAllByNamedQuery(
+    casOpsTransCtrlMsgEntityList =
+        (List<CasOpsTransCtrlMsgEntity>) genericDAO.findAllByNamedQuery(
             "MdtAcOpsTransCtrlMsgEntity.findByMsgType", "msgType", "EOT");
 
-    if (mdtAcOpsTransCtrlMsgEntityList.size() > 0) {
-      for (MdtAcOpsTransCtrlMsgEntity localEntity : mdtAcOpsTransCtrlMsgEntityList) {
+    if (casOpsTransCtrlMsgEntityList.size() > 0) {
+      for (CasOpsTransCtrlMsgEntity localEntity : casOpsTransCtrlMsgEntityList) {
         TransCtrlMsgModel localModel = new TransCtrlMsgModel();
         localModel =
             new AdminTranslator().translateMdtAcOpsTransCtrlMsgEntityToCommonsModel(localEntity);
@@ -4949,10 +4768,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof AmendmentCodesModel) {
         AmendmentCodesModel amendmentCodesModel = (AmendmentCodesModel) obj;
         AmendmentCodesLogic amendmentCodesLogic = new AmendmentCodesLogic();
-        MdtCnfgAmendmentCodesEntity mdtCnfgAmendmentCodesEntity = new MdtCnfgAmendmentCodesEntity();
+        CasCnfgAmendmentCodesEntity casCnfgAmendmentCodesEntity = new CasCnfgAmendmentCodesEntity();
 
-        mdtCnfgAmendmentCodesEntity = amendmentCodesLogic.addAmendmentCodes(amendmentCodesModel);
-        genericDAO.saveOrUpdate(mdtCnfgAmendmentCodesEntity);
+        casCnfgAmendmentCodesEntity = amendmentCodesLogic.addAmendmentCodes(amendmentCodesModel);
+        genericDAO.saveOrUpdate(casCnfgAmendmentCodesEntity);
 
         return true;
       } else {
@@ -4974,14 +4793,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> viewAmendmentCodes() {
     List<AmendmentCodesModel> allAmendmentCodesList = new ArrayList<AmendmentCodesModel>();
 
-    List<MdtCnfgAmendmentCodesEntity> allMdtCnfgAmendmentCodesEntityList =
-        new ArrayList<MdtCnfgAmendmentCodesEntity>();
+    List<CasCnfgAmendmentCodesEntity> allCasCnfgAmendmentCodesEntityList =
+        new ArrayList<CasCnfgAmendmentCodesEntity>();
 
-    allMdtCnfgAmendmentCodesEntityList = genericDAO.findAll(MdtCnfgAmendmentCodesEntity.class);
-    if (allMdtCnfgAmendmentCodesEntityList.size() > 0) {
+    allCasCnfgAmendmentCodesEntityList = genericDAO.findAll(CasCnfgAmendmentCodesEntity.class);
+    if (allCasCnfgAmendmentCodesEntityList.size() > 0) {
       AmendmentCodesLogic amendmentCodesLogic = new AmendmentCodesLogic();
       allAmendmentCodesList =
-          amendmentCodesLogic.retreiveAllAmendmentCodes(allMdtCnfgAmendmentCodesEntityList);
+          amendmentCodesLogic.retreiveAllAmendmentCodes(allCasCnfgAmendmentCodesEntityList);
     }
 
     return allAmendmentCodesList;
@@ -4993,15 +4812,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<AmendmentCodesModel> allAmendmentCodesModel = new ArrayList<AmendmentCodesModel>();
 
     try {
-      List<MdtCnfgAmendmentCodesEntity> allMdtCnfgAmendmentCodesEntity =
+      List<CasCnfgAmendmentCodesEntity> allCasCnfgAmendmentCodesEntity =
           genericDAO.findAllByNamedQuery("MdtCnfgAmendmentCodesEntity.findByAmendmentCodesLIKE",
               "amendmentCodes", amendmentCodes + "%");
-      log.debug("allMdtCnfgAmendmentCodesEntity: " + allMdtCnfgAmendmentCodesEntity);
+      log.debug("allMdtCnfgAmendmentCodesEntity: " + allCasCnfgAmendmentCodesEntity);
 
-      if (allMdtCnfgAmendmentCodesEntity.size() > 0) {
+      if (allCasCnfgAmendmentCodesEntity.size() > 0) {
         AmendmentCodesLogic amendmentCodesLogic = new AmendmentCodesLogic();
 
-        for (MdtCnfgAmendmentCodesEntity localEntity : allMdtCnfgAmendmentCodesEntity) {
+        for (CasCnfgAmendmentCodesEntity localEntity : allCasCnfgAmendmentCodesEntity) {
           AmendmentCodesModel amendmentCodesModel = new AmendmentCodesModel();
           amendmentCodesModel = amendmentCodesLogic.retreiveAmendmentCodes(localEntity);
           allAmendmentCodesModel.add(amendmentCodesModel);
@@ -5019,7 +4838,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   @Override
   public List<?> retrieveAcitiveSot(String destMemberId, String serviceName, String eotOutInd) {
-    List<MdtAcOpsSotEotCtrlEntity> opsSotEotCtrlList = new ArrayList<MdtAcOpsSotEotCtrlEntity>();
+    List<CasOpsSotEotCtrlEntity> opsSotEotCtrlList = new ArrayList<CasOpsSotEotCtrlEntity>();
     try {
       HashMap<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("mdtAcOpsSotEotCtrlPK.instId", destMemberId);
@@ -5027,8 +4846,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       parameters.put("sotOut", eotOutInd);
       log.debug("eot parameters:--------->" + parameters.toString());
 
-      opsSotEotCtrlList = (List<MdtAcOpsSotEotCtrlEntity>) genericDAO.findAllByCriteria(
-          MdtAcOpsSotEotCtrlEntity.class, parameters);
+      opsSotEotCtrlList = (List<CasOpsSotEotCtrlEntity>) genericDAO.findAllByCriteria(
+          CasOpsSotEotCtrlEntity.class, parameters);
       log.debug("opsSotEotCtrlList after findAllByCriteria:------>" + opsSotEotCtrlList);
     } catch (ObjectNotFoundException onfe) {
       log.error("No Object Exists on DB");
@@ -5370,9 +5189,9 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public List<?> retrieveAmendmendReasonCode() {
 
     List<AmendmentCodesModel> amendmentCodesList = new ArrayList<AmendmentCodesModel>();
-    List<MdtCnfgAmendmentCodesEntity> amendmentCodesEntityList =
-        new ArrayList<MdtCnfgAmendmentCodesEntity>();
-    amendmentCodesEntityList = genericDAO.findAll(MdtCnfgAmendmentCodesEntity.class);
+    List<CasCnfgAmendmentCodesEntity> amendmentCodesEntityList =
+        new ArrayList<CasCnfgAmendmentCodesEntity>();
+    amendmentCodesEntityList = genericDAO.findAll(CasCnfgAmendmentCodesEntity.class);
 
     if (amendmentCodesEntityList.size() > 0) {
       AmendmentCodesLogic amendmentCodesLogic = new AmendmentCodesLogic();
@@ -5450,15 +5269,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
 
       //Retrieve Billable Transactions
-      List<MdtAcOpsDailyBillingEntity> dailyBillingList =
-          new ArrayList<MdtAcOpsDailyBillingEntity>();
+      List<CasOpsDailyBillingEntity> dailyBillingList =
+          new ArrayList<CasOpsDailyBillingEntity>();
       dailyBillingList =
           genericDAO.findAllByNamedQuery("MdtAcOpsDailyBillingEntity.findByTxnType", "txnType",
               txnType);
 
       if (dailyBillingList != null && dailyBillingList.size() > 0) {
 
-        for (MdtAcOpsDailyBillingEntity localEntity : dailyBillingList) {
+        for (CasOpsDailyBillingEntity localEntity : dailyBillingList) {
           String subService = localEntity.getSubService();
           //					log.info("Billing SubService ==> "+subService);
           //					log.debug("Billing txn status ==> "+localEntity.getTxnStatus());
@@ -5627,18 +5446,18 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
       //Retrieve Billable Transactions
-      List<MdtAcOpsDailyBillingEntity> dailyBillingList =
-          new ArrayList<MdtAcOpsDailyBillingEntity>();
+      List<CasOpsDailyBillingEntity> dailyBillingList =
+          new ArrayList<CasOpsDailyBillingEntity>();
 
       HashMap<String, Object> dailyBillParams = new HashMap<String, Object>();
       dailyBillParams.put("txnType", txnType);
       dailyBillParams.put("creditorBank", instId);
 
-      dailyBillingList = (List<MdtAcOpsDailyBillingEntity>) genericDAO.findAllByCriteria(
-          MdtAcOpsDailyBillingEntity.class, dailyBillParams);
+      dailyBillingList = (List<CasOpsDailyBillingEntity>) genericDAO.findAllByCriteria(
+          CasOpsDailyBillingEntity.class, dailyBillParams);
 
       if (dailyBillingList != null && dailyBillingList.size() > 0) {
-        for (MdtAcOpsDailyBillingEntity localEntity : dailyBillingList) {
+        for (CasOpsDailyBillingEntity localEntity : dailyBillingList) {
           String subService = localEntity.getSubService();
           log.debug("subService ==> " + subService);
 
@@ -5770,10 +5589,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   public boolean createBillingCtrls(Object obj) {
     try {
-      if (obj instanceof ObsSystemBillingCtrlsEntity) {
-        ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity = (ObsSystemBillingCtrlsEntity) obj;
+      if (obj instanceof CasSystemBillingCtrlsEntity) {
+        CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity = (CasSystemBillingCtrlsEntity) obj;
 
-        genericDAO.save(obsSystemBillingCtrlsEntity);
+        genericDAO.save(casSystemBillingCtrlsEntity);
 
         return true;
       } else {
@@ -5789,15 +5608,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   }
 
   public Object retrieveBillingCtrls(Date processDate) {
-    ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity = new ObsSystemBillingCtrlsEntity();
+    CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity = new CasSystemBillingCtrlsEntity();
 
     try {
       HashMap<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("obsSystemBillingCtrlsPK.processDate", processDate);
       parameters.put("obsSystemBillingCtrlsPK.systemName", "MANDATES");
 
-      obsSystemBillingCtrlsEntity =
-          (ObsSystemBillingCtrlsEntity) genericDAO.findByCriteria(ObsSystemBillingCtrlsEntity.class,
+      casSystemBillingCtrlsEntity =
+          (CasSystemBillingCtrlsEntity) genericDAO.findByCriteria(CasSystemBillingCtrlsEntity.class,
               parameters);
     } catch (ObjectNotFoundException onfe) {
       log.debug("No Object Exists on DB");
@@ -5806,15 +5625,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       e.printStackTrace();
     }
 
-    return obsSystemBillingCtrlsEntity;
+    return casSystemBillingCtrlsEntity;
   }
 
   @Override
   public boolean updateBillingCtrl(Object obj) {
     try {
-      if (obj instanceof ObsSystemBillingCtrlsEntity) {
-        ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity = (ObsSystemBillingCtrlsEntity) obj;
-        genericDAO.saveOrUpdate(obsSystemBillingCtrlsEntity);
+      if (obj instanceof CasSystemBillingCtrlsEntity) {
+        CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity = (CasSystemBillingCtrlsEntity) obj;
+        genericDAO.saveOrUpdate(casSystemBillingCtrlsEntity);
 
         return true;
       } else {
@@ -5940,10 +5759,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       if (obj instanceof OpsSlaTimesCommonsModel) {
         OpsSlaTimesCommonsModel amendmentCodesModel = (OpsSlaTimesCommonsModel) obj;
         OpsSlaTimesLogic opsSlaTimesLogic = new OpsSlaTimesLogic();
-        MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity = new MdtOpsSlaTimesEntity();
+        CasOpsSlaTimesEntity casOpsSlaTimesEntity = new CasOpsSlaTimesEntity();
 
-        mdtOpsSlaTimesEntity = opsSlaTimesLogic.addOpsSlaTimes(amendmentCodesModel);
-        genericDAO.saveOrUpdate(mdtOpsSlaTimesEntity);
+        casOpsSlaTimesEntity = opsSlaTimesLogic.addOpsSlaTimes(amendmentCodesModel);
+        genericDAO.saveOrUpdate(casOpsSlaTimesEntity);
 
         return true;
       } else {
@@ -5963,13 +5782,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public Object retrieveCisDownloadDate() {
     OpsProcessControlModel opsProcessCtrlsModel = null; /*= new OpsProcessControlModel();*/
-    List<MdtAcOpsProcessControlsEntity> mdtAcOpsProcessControlsEntityList =
-        new ArrayList<MdtAcOpsProcessControlsEntity>();
+    List<CasOpsProcessControlsEntity> casOpsProcessControlsEntityList =
+        new ArrayList<CasOpsProcessControlsEntity>();
 
-    mdtAcOpsProcessControlsEntityList = genericDAO.findAll(MdtAcOpsProcessControlsEntity.class);
+    casOpsProcessControlsEntityList = genericDAO.findAll(CasOpsProcessControlsEntity.class);
 
-    if (mdtAcOpsProcessControlsEntityList != null && mdtAcOpsProcessControlsEntityList.size() > 0) {
-      MdtAcOpsProcessControlsEntity localEntity = mdtAcOpsProcessControlsEntityList.get(0);
+    if (casOpsProcessControlsEntityList != null && casOpsProcessControlsEntityList.size() > 0) {
+      CasOpsProcessControlsEntity localEntity = casOpsProcessControlsEntityList.get(0);
       opsProcessCtrlsModel = new OpsProcessControlModel();
       opsProcessCtrlsModel =
           new AdminTranslator().translateMdtAcOpsProcessControlsEntityToCommonsModel(localEntity);
@@ -6048,14 +5867,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
         new ArrayList<OpsSlaTimesCommonsModel>();
 
     try {
-      List<MdtOpsSlaTimesEntity> mdtOpsSlaTimesEntity =
+      List<CasOpsSlaTimesEntity> casOpsSlaTimesEntity =
           genericDAO.findAllByNamedQuery("MdtOpsSlaTimesEntity.findByService", "service", service);
-      log.info("mdtOpsSlaTimesEntity: " + mdtOpsSlaTimesEntity);
+      log.info("mdtOpsSlaTimesEntity: " + casOpsSlaTimesEntity);
 
-      if (mdtOpsSlaTimesEntity.size() > 0) {
+      if (casOpsSlaTimesEntity.size() > 0) {
         OpsSlaTimesLogic opsSlaTimesLogic = new OpsSlaTimesLogic();
 
-        for (MdtOpsSlaTimesEntity localEntity : mdtOpsSlaTimesEntity) {
+        for (CasOpsSlaTimesEntity localEntity : casOpsSlaTimesEntity) {
           OpsSlaTimesCommonsModel opsSlaTimesCommonsModel = new OpsSlaTimesCommonsModel();
           opsSlaTimesCommonsModel = opsSlaTimesLogic.retrieveOpsSlaTimes(localEntity);
           opsSlaTimesCommonsModelList.add(opsSlaTimesCommonsModel);
@@ -6153,14 +5972,14 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     //List<MdtOpsFileRegEntity> mdtOpsFileRegEntityList = null;
 
     try {
-      List<MdtOpsFileRegEntity> mdtOpsFileRegEntityList =
-          (List<MdtOpsFileRegEntity>) genericDAO.findAllByNamedQuery(
+      List<CasOpsFileRegEntity> casOpsFileRegEntityList =
+          (List<CasOpsFileRegEntity>) genericDAO.findAllByNamedQuery(
               "MdtOpsFileRegEntity.findByInOutIndASC", "inOutInd", direction);
 
-      if (mdtOpsFileRegEntityList != null && mdtOpsFileRegEntityList.size() > 0) {
+      if (casOpsFileRegEntityList != null && casOpsFileRegEntityList.size() > 0) {
         OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
 
-        for (MdtOpsFileRegEntity localEntity : mdtOpsFileRegEntityList) {
+        for (CasOpsFileRegEntity localEntity : casOpsFileRegEntityList) {
 
           OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
           opsFileRegModel = opsFileRegLogic.retrieveDelDelivery(localEntity);
@@ -6181,12 +6000,12 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public Object retrieveEODTime() {
 
-    MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity;
-    mdtOpsSlaTimesEntity =
-        (MdtOpsSlaTimesEntity) genericDAO.findByNamedQuery("MdtOpsSlaTimesEntity.findByService",
+    CasOpsSlaTimesEntity casOpsSlaTimesEntity;
+    casOpsSlaTimesEntity =
+        (CasOpsSlaTimesEntity) genericDAO.findByNamedQuery("MdtOpsSlaTimesEntity.findByService",
             "service", "EOD");
 
-    return mdtOpsSlaTimesEntity;
+    return casOpsSlaTimesEntity;
   }
 
 
@@ -6232,18 +6051,18 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       //Retrieve Billable Transactions
-      List<MdtAcOpsDailyBillingEntity> dailyBillingList =
-          new ArrayList<MdtAcOpsDailyBillingEntity>();
+      List<CasOpsDailyBillingEntity> dailyBillingList =
+          new ArrayList<CasOpsDailyBillingEntity>();
 
       HashMap<String, Object> dailyBillParams = new HashMap<String, Object>();
       dailyBillParams.put("txnType", txnType);
       dailyBillParams.put("debtorBank", instId);
 
-      dailyBillingList = (List<MdtAcOpsDailyBillingEntity>) genericDAO.findAllByCriteria(
-          MdtAcOpsDailyBillingEntity.class, dailyBillParams);
+      dailyBillingList = (List<CasOpsDailyBillingEntity>) genericDAO.findAllByCriteria(
+          CasOpsDailyBillingEntity.class, dailyBillParams);
 
       if (dailyBillingList != null && dailyBillingList.size() > 0) {
-        for (MdtAcOpsDailyBillingEntity localEntity : dailyBillingList) {
+        for (CasOpsDailyBillingEntity localEntity : dailyBillingList) {
           String subService = localEntity.getSubService();
           log.debug("subService ==> " + subService);
 
@@ -6738,8 +6557,8 @@ null
 
 
 //			//Retrieve Billable Transactions
-      List<MdtAcOpsDailyBillingEntity> dailyBillingList =
-          new ArrayList<MdtAcOpsDailyBillingEntity>();
+      List<CasOpsDailyBillingEntity> dailyBillingList =
+          new ArrayList<CasOpsDailyBillingEntity>();
 //			2023/04/04 SalehaN  - Change inequality statement due to index being skipped.
 //			HashMap<String, Object> parameters = new HashMap<String, Object>();
 //			parameters.put("txnType",txnType);
@@ -6757,7 +6576,7 @@ null
       //Retrieve TT1
       if (dailyBillingList != null && dailyBillingList.size() > 0) {
         log.debug("dailyBillingList.size() ==>" + dailyBillingList.size());
-        for (MdtAcOpsDailyBillingEntity localEntity : dailyBillingList) {
+        for (CasOpsDailyBillingEntity localEntity : dailyBillingList) {
           String subService = localEntity.getSubService();
           //					log.debug("Billing SubService ==> "+subService);
           //					log.debug("Billing txn status ==> "+localEntity.getTxnStatus());
@@ -6795,17 +6614,17 @@ null
 
 
       //Retrieve Billable Transactions
-      List<MdtAcOpsDailyBillingEntity> dailyBillingList =
-          new ArrayList<MdtAcOpsDailyBillingEntity>();
+      List<CasOpsDailyBillingEntity> dailyBillingList =
+          new ArrayList<CasOpsDailyBillingEntity>();
       HashMap<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("creditorBank", instId);
 
-      dailyBillingList = (List<MdtAcOpsDailyBillingEntity>) genericDAO.findAllByOrderCriteria(
-          MdtAcOpsDailyBillingEntity.class, parameters, true, "actionDate");
+      dailyBillingList = (List<CasOpsDailyBillingEntity>) genericDAO.findAllByOrderCriteria(
+          CasOpsDailyBillingEntity.class, parameters, true, "actionDate");
 
       //Retrieve TT1
       if (dailyBillingList != null && dailyBillingList.size() > 0) {
-        for (MdtAcOpsDailyBillingEntity localEntity : dailyBillingList) {
+        for (CasOpsDailyBillingEntity localEntity : dailyBillingList) {
           String subService = localEntity.getSubService();
           //					log.debug("Billing SubService ==> "+subService);
           //					log.debug("Billing txn status ==> "+localEntity.getTxnStatus());
@@ -6843,8 +6662,8 @@ null
 
 
       //Retrieve Billable Transactions
-      List<MdtAcOpsDailyBillingEntity> dailyBillingList =
-          new ArrayList<MdtAcOpsDailyBillingEntity>();
+      List<CasOpsDailyBillingEntity> dailyBillingList =
+          new ArrayList<CasOpsDailyBillingEntity>();
       List<MdtAcArcDailyBillingEntity> dailyBillingArcList =
           new ArrayList<MdtAcArcDailyBillingEntity>();
       HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -6852,7 +6671,7 @@ null
       parameters.put("actionDate", date);
 
 
-      dailyBillingList = (List<MdtAcOpsDailyBillingEntity>) genericDAO.findAllByNQCriteria(
+      dailyBillingList = (List<CasOpsDailyBillingEntity>) genericDAO.findAllByNQCriteria(
           "MdtAcOpsDailyBillingEntity.findByCreatedDateSubSTR", parameters);
 
       dailyBillingArcList = (List<MdtAcArcDailyBillingEntity>) genericDAO.findAllByNQCriteria(
@@ -6863,7 +6682,7 @@ null
 
       //Retrieve TT1
       if (dailyBillingList != null && dailyBillingList.size() > 0) {
-        for (MdtAcOpsDailyBillingEntity localEntity : dailyBillingList) {
+        for (CasOpsDailyBillingEntity localEntity : dailyBillingList) {
           String subService = localEntity.getSubService();
           //					log.debug("Billing SubService ==> "+subService);
           //					log.debug("Billing txn status ==> "+localEntity.getTxnStatus());
@@ -6898,48 +6717,6 @@ null
 
     return mndtDailyTransList;
   }
-
-  @Override
-  public List<?> retrieveRejectionCodesForRejectionsReport() {
-    List<ReasonCodesModel> reportReasonCodesList = new ArrayList<ReasonCodesModel>();
-    ReasonCodesLogic reasonCodesLogic = new ReasonCodesLogic();
-
-    try {
-      //Retrieve Pain.012 Codes
-      List<MdtCnfgReasonCodesEntity> mdtReasonCodesList =
-          genericDAO.findAll(MdtCnfgReasonCodesEntity.class);
-
-      if (mdtReasonCodesList != null && mdtReasonCodesList.size() > 0) {
-
-        for (MdtCnfgReasonCodesEntity reasonEntity : mdtReasonCodesList) {
-          ReasonCodesModel reasonModel = new ReasonCodesModel();
-          reasonModel = reasonCodesLogic.retrieveReasonCode(reasonEntity);
-          reportReasonCodesList.add(reasonModel);
-        }
-      }
-
-
-      //Retrieve Mdte.002 Code
-      MdtCnfgRejectReasonCodesEntity mdtCnfgRejectReasonCodesEntity =
-          (MdtCnfgRejectReasonCodesEntity) genericDAO.findByNamedQuery(
-              "MdtCnfgRejectReasonCodesEntity.findByRejectReasonCode", "rejectReasonCode", "NMTC");
-      if (mdtCnfgRejectReasonCodesEntity != null) {
-        //Translate
-        ReasonCodesModel reasonModel = new ReasonCodesModel();
-        reasonModel =
-            reasonCodesLogic.retrieveReportReasonCode_mdte002(mdtCnfgRejectReasonCodesEntity);
-        reportReasonCodesList.add(reasonModel);
-      }
-    } catch (ObjectNotFoundException onfe) {
-      log.debug("No Object Exists on DB");
-    } catch (Exception e) {
-      log.error("Error on retrieveRejectionCodesForRejectionsReport: " + e.getMessage());
-      e.printStackTrace();
-    }
-
-    return reportReasonCodesList;
-  }
-
 
   @Override
   public Object retrieveRealTimeNrOfAmendment(String amendReason, String memberId, String firstDate,
@@ -7072,7 +6849,7 @@ null
   @Override
   public List<?> viewOpsSlaServicesWithoutCisSodEod(String cis, String sod, String eod) {
     List<OpsSlaTimesCommonsModel> opsSlaTimesCommonsList = new ArrayList<OpsSlaTimesCommonsModel>();
-    List<MdtOpsSlaTimesEntity> slaTimesEntityList = new ArrayList<MdtOpsSlaTimesEntity>();
+    List<CasOpsSlaTimesEntity> slaTimesEntityList = new ArrayList<CasOpsSlaTimesEntity>();
     try {
       HashMap<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("service1", cis);
@@ -7091,7 +6868,7 @@ null
       //			------------------" + slaTimesEntityList);
       if (slaTimesEntityList != null && slaTimesEntityList.size() > 0) {
         OpsSlaTimesLogic opsSlaTimesLogic = new OpsSlaTimesLogic();
-        for (MdtOpsSlaTimesEntity localEntity : slaTimesEntityList) {
+        for (CasOpsSlaTimesEntity localEntity : slaTimesEntityList) {
           //					log.info("Inside Method in AdminBean inside For LOOP
           //					--------------------------------------------------********************");
           OpsSlaTimesCommonsModel opsSlaTimesCommonsModel = new OpsSlaTimesCommonsModel();
@@ -7119,7 +6896,7 @@ null
       if (obj instanceof OpsSlaTimesCommonsModel) {
         OpsSlaTimesCommonsModel slaTimesModel = (OpsSlaTimesCommonsModel) obj;
         OpsSlaTimesLogic slaTimesLogic = new OpsSlaTimesLogic();
-        MdtOpsSlaTimesEntity slaTimesEntity = new MdtOpsSlaTimesEntity();
+        CasOpsSlaTimesEntity slaTimesEntity = new CasOpsSlaTimesEntity();
         slaTimesEntity = slaTimesLogic.addOpsSlaTimes(slaTimesModel);
         genericDAO.saveOrUpdate(slaTimesEntity);
         return true;
@@ -7137,10 +6914,10 @@ null
   @Override
   public Object retrieveOpsSlaTimes(String service) {
     OpsSlaTimesCommonsModel opsSlaTimesCommonsModel = new OpsSlaTimesCommonsModel();
-    MdtOpsSlaTimesEntity opsSlaTimesEntity = new MdtOpsSlaTimesEntity();
+    CasOpsSlaTimesEntity opsSlaTimesEntity = new CasOpsSlaTimesEntity();
     try {
       opsSlaTimesEntity =
-          (MdtOpsSlaTimesEntity) genericDAO.findByNamedQuery("MdtOpsSlaTimesEntity.findByService",
+          (CasOpsSlaTimesEntity) genericDAO.findByNamedQuery("MdtOpsSlaTimesEntity.findByService",
               "service", service);
       if (opsSlaTimesEntity != null) {
         OpsSlaTimesLogic opsSlaTimesLogic = new OpsSlaTimesLogic();
@@ -7253,10 +7030,10 @@ null
   }
 
   public Object retrieveReportName(String reportNr) {
-    MdtCnfgReportNamesEntity reportNameEntity = null;
+    CasCnfgReportNamesEntity reportNameEntity = null;
 
     try {
-      reportNameEntity = (MdtCnfgReportNamesEntity) genericDAO.findByNamedQuery(
+      reportNameEntity = (CasCnfgReportNamesEntity) genericDAO.findByNamedQuery(
           "MdtCnfgReportNamesEntity.findByReportNr", "reportNr", reportNr);
     } catch (Exception ex) {
       log.error("Error on retrieveReportName: " + ex.getMessage());
@@ -7270,12 +7047,12 @@ null
   public Object retrieveEndTime(String outService) {
 
 
-    MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity;
-    mdtOpsSlaTimesEntity =
-        (MdtOpsSlaTimesEntity) genericDAO.findByNamedQuery("MdtOpsSlaTimesEntity.findByService",
+    CasOpsSlaTimesEntity casOpsSlaTimesEntity;
+    casOpsSlaTimesEntity =
+        (CasOpsSlaTimesEntity) genericDAO.findByNamedQuery("MdtOpsSlaTimesEntity.findByService",
             "service", outService);
 
-    return mdtOpsSlaTimesEntity;
+    return casOpsSlaTimesEntity;
 
 		/*
 		OpsSlaTimesCommonsModel opsSlaTimesCommonsModel = new OpsSlaTimesCommonsModel();
@@ -7335,7 +7112,7 @@ null
   @Override
   public List<?> viewSystemStatusSearch(String memberNo, String service) {
     List<MandatesCountCommonsModel> searchedFileList = new ArrayList<MandatesCountCommonsModel>();
-    List<MdtAcOpsMndtCountEntity> mdtAcCountEntityList = new ArrayList<MdtAcOpsMndtCountEntity>();
+    List<CasOpsMndtCountEntity> mdtAcCountEntityList = new ArrayList<CasOpsMndtCountEntity>();
     log.info("mdtAcCountEntityList in ADMINBEAN BEFORE NAMED QUERY ----->" + mdtAcCountEntityList);
     log.info("searchedFileList in ADMINBEAN BEFORE NAMED QUERY ----->" + searchedFileList);
     try {
@@ -7348,7 +7125,7 @@ null
       log.info("searchedFileList in ADMINBEAN AFTER NAMED QUERY ----->" + searchedFileList);
       if (mdtAcCountEntityList != null && mdtAcCountEntityList.size() > 0) {
         SystemStatusLogic systemStatusLogic = new SystemStatusLogic();
-        for (MdtAcOpsMndtCountEntity localEntity : mdtAcCountEntityList) {
+        for (CasOpsMndtCountEntity localEntity : mdtAcCountEntityList) {
           MandatesCountCommonsModel localModel = new MandatesCountCommonsModel();
           localModel = systemStatusLogic.retrieveSystemStatusFile(localEntity);
           searchedFileList.add(localModel);
@@ -7368,9 +7145,9 @@ null
   }
 
   public List<?> retrieveOpsReportSeqNr() {
-    List<MdtOpsRepSeqNrEntity> opsReportSeqNrList = new ArrayList<MdtOpsRepSeqNrEntity>();
+    List<CasOpsRepSeqNrEntity> opsReportSeqNrList = new ArrayList<CasOpsRepSeqNrEntity>();
     try {
-      opsReportSeqNrList = genericDAO.findAll(MdtOpsRepSeqNrEntity.class);
+      opsReportSeqNrList = genericDAO.findAll(CasOpsRepSeqNrEntity.class);
     } catch (Exception ex) {
       log.error("Error on retrieveOpsReportSeqNr, " + ex.getMessage());
       ex.printStackTrace();
@@ -7382,8 +7159,8 @@ null
 
   @Override
   public boolean createOpsReportSeqNr(Object obj) {
-    if (obj instanceof MdtOpsRepSeqNrEntity) {
-      MdtOpsRepSeqNrEntity mdtOpsReportSeqNrEntity = (MdtOpsRepSeqNrEntity) obj;
+    if (obj instanceof CasOpsRepSeqNrEntity) {
+      CasOpsRepSeqNrEntity mdtOpsReportSeqNrEntity = (CasOpsRepSeqNrEntity) obj;
       try {
         genericDAO.save(mdtOpsReportSeqNrEntity);
         return true;
@@ -7397,8 +7174,8 @@ null
   }
 
   public List<?> retrieveActiveReportNr() {
-    List<MdtCnfgReportNamesEntity> reportNrEntityList = new ArrayList<MdtCnfgReportNamesEntity>();
-    reportNrEntityList = (List<MdtCnfgReportNamesEntity>) genericDAO.findAllByNamedQuery(
+    List<CasCnfgReportNamesEntity> reportNrEntityList = new ArrayList<CasCnfgReportNamesEntity>();
+    reportNrEntityList = (List<CasCnfgReportNamesEntity>) genericDAO.findAllByNamedQuery(
         "MdtCnfgReportNamesEntity.findByActiveInd", "activeInd", "Y");
     log.debug("reportNrEntityList in AdminBean ---> " + reportNrEntityList);
 
@@ -7408,7 +7185,7 @@ null
 
   @Override
   public Object retrieveRepSeqNr(String reportNr, String memberId) {
-    MdtOpsRepSeqNrEntity mdtOpsRepSeqNrEntity = null;
+    CasOpsRepSeqNrEntity casOpsRepSeqNrEntity = null;
 
     try {
       //			log.info("reportNo in repSeqNr: "+reportNr);
@@ -7418,10 +7195,10 @@ null
       parameters.put("mdtOpsRepSeqNrPK.memberNo", memberId);
       parameters.put("mdtOpsRepSeqNrPK.reportNo", reportNr);
       log.debug("---------------sparameters: ------------------" + parameters.toString());
-      mdtOpsRepSeqNrEntity =
-          (MdtOpsRepSeqNrEntity) genericDAO.findByCriteria(MdtOpsRepSeqNrEntity.class, parameters);
+      casOpsRepSeqNrEntity =
+          (CasOpsRepSeqNrEntity) genericDAO.findByCriteria(CasOpsRepSeqNrEntity.class, parameters);
       log.debug("---------------MdtOpsRefSeqNrEntity after findByCriteria: ------------------" +
-          mdtOpsRepSeqNrEntity);
+          casOpsRepSeqNrEntity);
 
       //mdtOpsFileSeqNrEntity = (MdtOpsRefSeqNrEntity) genericDAO.findByNamedQuery
       // ("MdtOpsRefSeqNrEntity.findByServiceId","mdtOpsRefSeqNrPK.serviceId", serviceId);
@@ -7431,16 +7208,16 @@ null
       log.error("Error on retrieveFileSeqNo:" + e.getMessage());
     }
 
-    return mdtOpsRepSeqNrEntity;
+    return casOpsRepSeqNrEntity;
 
   }
 
   @Override
   public boolean updateReportSeqNr(Object obj) {
-    if (obj instanceof MdtOpsRepSeqNrEntity) {
-      MdtOpsRepSeqNrEntity mdtOpsRepSeqNrEntity = (MdtOpsRepSeqNrEntity) obj;
+    if (obj instanceof CasOpsRepSeqNrEntity) {
+      CasOpsRepSeqNrEntity casOpsRepSeqNrEntity = (CasOpsRepSeqNrEntity) obj;
       try {
-        genericDAO.saveOrUpdate(mdtOpsRepSeqNrEntity);
+        genericDAO.saveOrUpdate(casOpsRepSeqNrEntity);
         return true;
       } catch (Exception ex) {
         log.error("Error on updateReportSeqNr: " + ex.getMessage());
@@ -7453,7 +7230,7 @@ null
 
 
   public List<?> retrieveActiveErrorCodes(String activeInd) {
-    List<MdtCnfgErrorCodesEntity> errorCodesList = null;
+    List<CasCnfgErrorCodesEntity> errorCodesList = null;
 
     try {
       errorCodesList =
@@ -7520,7 +7297,7 @@ null
       log.info("parameter in AdminBean ==> " + parameter);
       log.info("value in AdminBean ==> " + value);
 
-      List<MdtOpsServicesEntity> servEntity =
+      List<CasOpsServicesEntity> servEntity =
           genericDAO.findAllByNamedQuery(namedQuery, parameter, value);
       if (servEntity.size() > 0) {
         ServicesLogic servLogic = new ServicesLogic();
@@ -7545,7 +7322,7 @@ null
       log.info("parameter in AdminBean ==> " + parameter);
       log.info("value in AdminBean ==> " + value);
 
-      List<MdtOpsServicesEntity> servEntity =
+      List<CasOpsServicesEntity> servEntity =
           genericDAO.findAllByNamedQuery(namedQuery, parameter, value);
       if (servEntity.size() > 0) {
         ServicesLogic servLogic = new ServicesLogic();
@@ -7768,13 +7545,13 @@ null
   @Override
   public Object retrieveErrCodeReportName(String reportNr) {
     ReportsNamesModel reportsNamesModel = new ReportsNamesModel();
-    MdtCnfgReportNamesEntity mdtCnfgReportNamesEntity = new MdtCnfgReportNamesEntity();
+    CasCnfgReportNamesEntity casCnfgReportNamesEntity = new CasCnfgReportNamesEntity();
     try {
-      mdtCnfgReportNamesEntity = (MdtCnfgReportNamesEntity) genericDAO.findByNamedQuery(
+      casCnfgReportNamesEntity = (CasCnfgReportNamesEntity) genericDAO.findByNamedQuery(
           "MdtCnfgReportNamesEntity.findByReportNr", "reportNr", reportNr);
-      if (mdtCnfgReportNamesEntity != null) {
+      if (casCnfgReportNamesEntity != null) {
         ReportsLogic reportsLogic = new ReportsLogic();
-        reportsNamesModel = reportsLogic.retrieveReportNames(mdtCnfgReportNamesEntity);
+        reportsNamesModel = reportsLogic.retrieveReportNames(casCnfgReportNamesEntity);
         log.info("reportsNamesModel (Admin Bean) ==> " + reportsNamesModel);
       }
     } catch (ObjectNotFoundException onfe) {
@@ -7820,19 +7597,6 @@ null
       e.printStackTrace();
     } catch (Exception e) {
       log.error("<EX> Error on populating PSMD06 Report :" + e.getMessage());
-      e.printStackTrace();
-    }
-  }
-
-  public void generatePerBankBatchMandateRejections() {
-    try {
-      log.info("***********Generating PBMD03 Report*****************");
-      PartBanksBatchRejectionsReport pasaBanksBatchRejectionsReport =
-          new PartBanksBatchRejectionsReport();
-      pasaBanksBatchRejectionsReport.generateMndRejectBatchPerBankReport();
-      log.info("***********PBMD03 Report Completed*****************");
-    } catch (Exception e) {
-      log.error("<EX> Error on populating PBMD03 Report :" + e.getMessage());
       e.printStackTrace();
     }
   }
@@ -8020,7 +7784,7 @@ null
       log.info("parameter in AdminBean ==> " + parameter);
       log.info("value in AdminBean ==> " + value);
 
-      List<MdtOpsServicesEntity> opsServEntityList =
+      List<CasOpsServicesEntity> opsServEntityList =
           genericDAO.findAllByNamedQuery(namedQuery, parameter, value);
       log.info("opsServEntityList ==>" + opsServEntityList.size());
       if (opsServEntityList.size() > 0) {
@@ -8160,20 +7924,20 @@ null
 
   @Override
   public List retrieveLastExtractTime() {
-    List<MdtOpsLastExtractTimesEntity> opsLastExtractTimeList =
-        new ArrayList<MdtOpsLastExtractTimesEntity>();
-    opsLastExtractTimeList = genericDAO.findAll(MdtOpsLastExtractTimesEntity.class);
+    List<CasOpsLastExtractTimesEntity> opsLastExtractTimeList =
+        new ArrayList<CasOpsLastExtractTimesEntity>();
+    opsLastExtractTimeList = genericDAO.findAll(CasOpsLastExtractTimesEntity.class);
 
     return opsLastExtractTimeList;
   }
 
   @Override
   public boolean createOpLastExtractTimeEntiy(Object obj) {
-    if (obj instanceof MdtOpsLastExtractTimesEntity) {
-      MdtOpsLastExtractTimesEntity mdtOpsLastExtractTimesEntity =
-          (MdtOpsLastExtractTimesEntity) obj;
+    if (obj instanceof CasOpsLastExtractTimesEntity) {
+      CasOpsLastExtractTimesEntity casOpsLastExtractTimesEntity =
+          (CasOpsLastExtractTimesEntity) obj;
       try {
-        genericDAO.save(mdtOpsLastExtractTimesEntity);
+        genericDAO.save(casOpsLastExtractTimesEntity);
         return true;
       } catch (Exception ex) {
         log.error("Error on createOpLastExtractTimeEntiy: " + ex.getMessage());
@@ -8304,22 +8068,22 @@ null
   public List<?> retrieveOpsFileSizeLimit() {
 
 
-    List<MdtAcOpsFileSizeLimitEntity> mdtAcOpsFileSizeLimitEntityList =
-        new ArrayList<MdtAcOpsFileSizeLimitEntity>();
+    List<CasOpsFileSizeLimitEntity> casOpsFileSizeLimitEntityList =
+        new ArrayList<CasOpsFileSizeLimitEntity>();
 
-    mdtAcOpsFileSizeLimitEntityList = genericDAO.findAll(MdtAcOpsFileSizeLimitEntity.class);
+    casOpsFileSizeLimitEntityList = genericDAO.findAll(CasOpsFileSizeLimitEntity.class);
 
-    return mdtAcOpsFileSizeLimitEntityList;
+    return casOpsFileSizeLimitEntityList;
   }
 
   @Override
   public boolean createOpsFileSizeLimit(Object obj) {
-    if (obj instanceof MdtAcOpsFileSizeLimitEntity) {
-      MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity =
-          (MdtAcOpsFileSizeLimitEntity) obj;
+    if (obj instanceof CasOpsFileSizeLimitEntity) {
+      CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity =
+          (CasOpsFileSizeLimitEntity) obj;
 
       try {
-        genericDAO.save(mdtAcOpsFileSizeLimitEntity);
+        genericDAO.save(casOpsFileSizeLimitEntity);
         return true;
       } catch (Exception ex) {
         log.error("Error on createOpsFileSizeLimit: " + ex.getMessage());
@@ -9277,14 +9041,14 @@ null
 
     List<FileSizeLimitModel> fileSizeLimitModelList = new ArrayList<FileSizeLimitModel>();
 
-    List<MdtAcOpsFileSizeLimitEntity> mdtAcOpsFileSizeLimitEntityList =
-        new ArrayList<MdtAcOpsFileSizeLimitEntity>();
+    List<CasOpsFileSizeLimitEntity> casOpsFileSizeLimitEntityList =
+        new ArrayList<CasOpsFileSizeLimitEntity>();
 
-    mdtAcOpsFileSizeLimitEntityList = genericDAO.findAll(MdtAcOpsFileSizeLimitEntity.class);
-    if (mdtAcOpsFileSizeLimitEntityList.size() > 0) {
+    casOpsFileSizeLimitEntityList = genericDAO.findAll(CasOpsFileSizeLimitEntity.class);
+    if (casOpsFileSizeLimitEntityList.size() > 0) {
       OpsFileSizeLimitLogic opsFileSizeLimitLogic = new OpsFileSizeLimitLogic();
       fileSizeLimitModelList =
-          opsFileSizeLimitLogic.retrieveAllOpsFileSizeLimit(mdtAcOpsFileSizeLimitEntityList);
+          opsFileSizeLimitLogic.retrieveAllOpsFileSizeLimit(casOpsFileSizeLimitEntityList);
     }
 
     return fileSizeLimitModelList;
@@ -9293,7 +9057,7 @@ null
   @Override
   public List viewFileSizeLimitSearch(String memberId, String subService) {
     List<FileSizeLimitModel> fileSizeModelList = new ArrayList<FileSizeLimitModel>();
-    List<MdtAcOpsFileSizeLimitEntity> fileSizeEnList = new ArrayList<MdtAcOpsFileSizeLimitEntity>();
+    List<CasOpsFileSizeLimitEntity> fileSizeEnList = new ArrayList<CasOpsFileSizeLimitEntity>();
     try {
 
       HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -9301,15 +9065,15 @@ null
       parameters.put("mdtAcOpsFileSizeLimitPK.subService", subService);
 
       log.debug("parameters---> " + parameters.toString());
-      fileSizeEnList = (List<MdtAcOpsFileSizeLimitEntity>) genericDAO.findAllByCriteria(
-          MdtAcOpsFileSizeLimitEntity.class, parameters);
+      fileSizeEnList = (List<CasOpsFileSizeLimitEntity>) genericDAO.findAllByCriteria(
+          CasOpsFileSizeLimitEntity.class, parameters);
       log.debug("---------------fileSizeEnList after findAllByCriteria: ------------------" +
           fileSizeEnList);
 
 
       if (fileSizeEnList != null && fileSizeEnList.size() > 0) {
         OpsFileSizeLimitLogic opsFileSizeLimitLogic = new OpsFileSizeLimitLogic();
-        for (MdtAcOpsFileSizeLimitEntity localEntity : fileSizeEnList) {
+        for (CasOpsFileSizeLimitEntity localEntity : fileSizeEnList) {
           FileSizeLimitModel localModel = new FileSizeLimitModel();
 
           localModel = opsFileSizeLimitLogic.retrieveOpsFileSizeLimit(localEntity);
@@ -9452,7 +9216,7 @@ null
   @Override
   public List<?> retrievePBMD06RealTimeCreditorTransBilling(String creditorBank, Date reportDate) {
     List<MandateDailyTransModel> mndtDailyTransList = new ArrayList<MandateDailyTransModel>();
-    List<MdtAcOpsDailyBillingEntity> dailyBillingList = new ArrayList<MdtAcOpsDailyBillingEntity>();
+    List<CasOpsDailyBillingEntity> dailyBillingList = new ArrayList<CasOpsDailyBillingEntity>();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String repDate = sdf.format(reportDate);
 
@@ -9499,10 +9263,10 @@ null
       log.debug("scalarList: " + scalarList);
 
       dailyBillingList =
-          genericDAO.findBySql(sqlQuery, scalarList, MdtAcOpsDailyBillingEntity.class);
+          genericDAO.findBySql(sqlQuery, scalarList, CasOpsDailyBillingEntity.class);
 
       if (dailyBillingList != null && dailyBillingList.size() > 0) {
-        for (MdtAcOpsDailyBillingEntity localEntity : dailyBillingList) {
+        for (CasOpsDailyBillingEntity localEntity : dailyBillingList) {
           MandateDailyTransModel localModel = new MandateDailyTransModel();
           localModel = new AdminTranslator().translateDailyBillingEntityToModel(localEntity);
           //						log.debug("localModel ==> "+localModel);

@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.LocalInstrumentCodesModel;
-import com.bsva.entities.MdtCnfgLocalInstrCodesEntity;
+import com.bsva.entities.CasCnfgLocalInstrCodesEntity;
 import com.bsva.translator.AdminTranslator;
 
 /**
@@ -21,7 +21,7 @@ public class LocalInstrumentCodesLogic {
                 }
 
                 public List<LocalInstrumentCodesModel> retrieveAllLocalInstrumentCodes(
-                                                List<MdtCnfgLocalInstrCodesEntity> mdtLocalInstrCodesList) {
+                                                List<CasCnfgLocalInstrCodesEntity> mdtLocalInstrCodesList) {
 
                                 
 
@@ -29,7 +29,7 @@ public class LocalInstrumentCodesLogic {
                                 LocalInstrumentCodesModel localModel;
                              
 
-                                for (MdtCnfgLocalInstrCodesEntity localEntity : mdtLocalInstrCodesList) {
+                                for (CasCnfgLocalInstrCodesEntity localEntity : mdtLocalInstrCodesList) {
                                                
                                                  localModel = new LocalInstrumentCodesModel();
                                                 localModel = new AdminTranslator()
@@ -40,15 +40,16 @@ public class LocalInstrumentCodesLogic {
                                 return localInstrCodeList;
                 }
 
-                public MdtCnfgLocalInstrCodesEntity addLocalInstrumentCode(LocalInstrumentCodesModel localInstrumentCodesModel) 
+                public CasCnfgLocalInstrCodesEntity addLocalInstrumentCode(LocalInstrumentCodesModel localInstrumentCodesModel)
                 {
-                                MdtCnfgLocalInstrCodesEntity mdtLocalInstrumentCodesEntity = new AdminTranslator().translateCommonsInstrumentModelToEntity(localInstrumentCodesModel);
+                                CasCnfgLocalInstrCodesEntity mdtLocalInstrumentCodesEntity = new AdminTranslator().translateCommonsInstrumentModelToEntity(localInstrumentCodesModel);
 
                                 return mdtLocalInstrumentCodesEntity;
                 }
 
                 
-                public LocalInstrumentCodesModel retrieveLocalInstrumentCode(MdtCnfgLocalInstrCodesEntity mdtLocalInstrumentCodesEntity)
+                public LocalInstrumentCodesModel retrieveLocalInstrumentCode(
+                    CasCnfgLocalInstrCodesEntity mdtLocalInstrumentCodesEntity)
                 {
                                 LocalInstrumentCodesModel localModel = new LocalInstrumentCodesModel();
                                 localModel = new AdminTranslator().translateLocalInstrumentCodesEntityToCommonsModel(mdtLocalInstrumentCodesEntity);

@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import com.bsva.commons.model.OpsStatusDetailsModel;
 import com.bsva.commons.model.OpsStatusHdrsModel;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
 
 /**
  * @author SalehaR
@@ -14,7 +14,8 @@ import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
 public class ViewFileStatusLogic implements Serializable{
 
 	
-	public OpsStatusHdrsModel translateEntityToCommonsModel(MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity)
+	public OpsStatusHdrsModel translateEntityToCommonsModel(
+			CasOpsStatusHdrsEntity opsStatusHdrsEntity)
 	{
 		OpsStatusHdrsModel opsStatusHdrsModel = new OpsStatusHdrsModel();
 
@@ -37,7 +38,8 @@ public class ViewFileStatusLogic implements Serializable{
 	}
 	
 	
-	public OpsStatusDetailsModel translateOpsStatusDetEntityToCommonsModel (MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity)
+	public OpsStatusDetailsModel translateOpsStatusDetEntityToCommonsModel (
+        CasOpsStatusDetailsEntity opsStatusDetailsEntity)
 	{
 		OpsStatusDetailsModel opsStatusDetailsModel = new OpsStatusDetailsModel();
 		

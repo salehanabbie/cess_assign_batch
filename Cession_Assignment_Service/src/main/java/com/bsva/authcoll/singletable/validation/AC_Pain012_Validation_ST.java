@@ -1,5 +1,6 @@
 package com.bsva.authcoll.singletable.validation;
 
+import com.bsva.entities.CasOpsFileRegEntity;
 import iso.std.iso._20022.tech.xsd.pain_012_001.AcceptanceResult6;
 import iso.std.iso._20022.tech.xsd.pain_012_001.GroupHeader47;
 import iso.std.iso._20022.tech.xsd.pain_012_001.Mandate1;
@@ -17,14 +18,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import com.bsva.PropertyUtil;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntity;
-import com.bsva.entities.MdtCnfgErrorCodesEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
 import com.bsva.entities.SysCisBranchEntity;
 
 /* 
@@ -53,12 +53,12 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 	int mandateSeverity = 0;
 
 	/*_______________AC tables __________________*/
-	List<MdtAcOpsStatusHdrsEntity>opsStatusHdrsList=null;
-	List<MdtAcOpsStatusDetailsEntity>opsStatusDetailsList=null;
+	List<CasOpsStatusHdrsEntity>opsStatusHdrsList=null;
+	List<CasOpsStatusDetailsEntity>opsStatusDetailsList=null;
 
 	//Ac Entities declaration
-	MdtAcOpsStatusHdrsEntity  opsStatusHdrsEntity=null;
-	MdtAcOpsStatusDetailsEntity  opsStatusDetailsEntity=null;
+	CasOpsStatusHdrsEntity opsStatusHdrsEntity=null;
+	CasOpsStatusDetailsEntity opsStatusDetailsEntity=null;
 	public BigDecimal hdrSystemSeqNo = BigDecimal.ZERO;
 	CasSysctrlCompParamEntity mdtSysctrlCompParamEntity;
 
@@ -113,8 +113,8 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 			fileSizeLimit = 50000;
 		}
 
-		opsStatusHdrsList = new ArrayList<MdtAcOpsStatusHdrsEntity>();
-		opsStatusDetailsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+		opsStatusHdrsList = new ArrayList<CasOpsStatusHdrsEntity>();
+		opsStatusDetailsList = new ArrayList<CasOpsStatusDetailsEntity>();
 
 		hdrSystemSeqNo = BigDecimal.ZERO;
 		bicCodeValid = false;
@@ -456,11 +456,11 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 			opsStatusDetailsList.clear();
 		}
 
-		MdtOpsFileRegEntity mdtOpsFileRegEntity = (MdtOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
-		if(mdtOpsFileRegEntity != null)
+		CasOpsFileRegEntity casOpsFileRegEntity = (CasOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
+		if(casOpsFileRegEntity != null)
 		{
-			mdtOpsFileRegEntity.setGrpHdrMsgId(outMsgId);
-			valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+			casOpsFileRegEntity.setGrpHdrMsgId(outMsgId);
+			valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 		}
 
 		return grpHdrSeverity;
@@ -786,7 +786,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		//if(contractNum != null && mndtReqTransId != null)
 		if(mndtReqTransId != null)
 		{	
-			MdtAcOpsMandateTxnsEntity matchedMandate = matchPain012(mndtReqTransId);
+			CasOpsCessionAssignEntity matchedMandate = matchPain012(mndtReqTransId);
 
 			if(matchedMandate != null)
 			{
@@ -1359,9 +1359,9 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 			log.info("******************validateMandReqTranId_012.046 - FAILED.******************");
 		}
 
-		if(mndtReqTransId != null && mdtAcMandateTxnsEntityOriginal.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId() != null)
+		if(mndtReqTransId != null && mdtAcMandateTxnsEntityOriginal.getCasOpsCessionAssignEntityPK().getMandateReqTranId() != null)
 		{
-			if(mndtReqTransId.equalsIgnoreCase(mdtAcMandateTxnsEntityOriginal.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()))
+			if(mndtReqTransId.equalsIgnoreCase(mdtAcMandateTxnsEntityOriginal.getCasOpsCessionAssignEntityPK().getMandateReqTranId()))
 			{
 				mandateSeverity = mandateSeverity+0;
 				log.debug("******************validateMandReqTranId_012.049 - PASSED.******************");
@@ -2220,7 +2220,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		String achId,  creationDate, fileSeqNo,  msgId = null;
 		String outgoingService = "ST104";
 
-		MdtOpsCustParamEntity mdtOpsCustParamEntity = (MdtOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(instId, backEndProcess);
+		CasOpsCustParamEntity casOpsCustParamEntity = (CasOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(instId, backEndProcess);
 
 		try
 		{
@@ -2234,12 +2234,12 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				achId = "021";
 			}
 
-			MdtOpsRefSeqNrEntity  mdtOpsRefSeqNrEntity = new MdtOpsRefSeqNrEntity();
-			mdtOpsRefSeqNrEntity = (MdtOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
+			CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = new CasOpsRefSeqNrEntity();
+			casOpsRefSeqNrEntity = (CasOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
 
-			if(mdtOpsRefSeqNrEntity != null)
+			if(casOpsRefSeqNrEntity != null)
 			{
-				lastSeqNoUsed = Integer.valueOf(mdtOpsRefSeqNrEntity.getLastSeqNr());
+				lastSeqNoUsed = Integer.valueOf(casOpsRefSeqNrEntity.getLastSeqNr());
 				lastSeqNoUsed++;
 			}
 			else
@@ -2248,8 +2248,8 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 			log.debug("lastSeqNoUsed---->: "+lastSeqNoUsed);
 			fileSeqNo = String.format("%06d",lastSeqNoUsed);
 			log.debug("fileSeqNo---->: "+fileSeqNo);
-			mdtOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
-			valBeanRemote.updateOpsRefSeqNr(mdtOpsRefSeqNrEntity);
+			casOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
+			valBeanRemote.updateOpsRefSeqNr(casOpsRefSeqNrEntity);
 
 			//			creationDate = sdfFileDate.format(new Date());
 			//TRS16 Processing Rules					    
@@ -2273,11 +2273,11 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		return msgId;
 	}
 
-	public MdtCnfgErrorCodesEntity retrieveErrorCode(String errCode)
+	public CasCnfgErrorCodesEntity retrieveErrorCode(String errCode)
 	{
 		/*log.debug("valBeanRemote: "+ valBeanRemote);*/
-		MdtCnfgErrorCodesEntity mdtCnfgErrorCodesEntity = (MdtCnfgErrorCodesEntity) valBeanRemote.retrieveErrorCode(errCode);
-		return mdtCnfgErrorCodesEntity;
+		CasCnfgErrorCodesEntity casCnfgErrorCodesEntity = (CasCnfgErrorCodesEntity) valBeanRemote.retrieveErrorCode(errCode);
+		return casCnfgErrorCodesEntity;
 	}
 
 	public Date getCovertDateTime(XMLGregorianCalendar xmlGregorianCalendar) {
@@ -2300,7 +2300,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 	public void generateStatusErrorDetailsList(String errorCode, String txnId, String errorType)
 	{
-		opsStatusDetailsEntity=new MdtAcOpsStatusDetailsEntity();
+		opsStatusDetailsEntity=new CasOpsStatusDetailsEntity();
 
 		opsStatusDetailsEntity.setSystemSeqNo(new BigDecimal(123));
 		opsStatusDetailsEntity.setErrorCode(errorCode);
@@ -2329,7 +2329,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 	
 		if(opsStatusDetailsList.size() > 0)
 		{
-			for (MdtAcOpsStatusDetailsEntity localEntity : opsStatusDetailsList) {
+			for (CasOpsStatusDetailsEntity localEntity : opsStatusDetailsList) {
 				localEntity.setStatusHdrSeqNo(hdrSystemSeqNo);
 			}
 		
@@ -2345,7 +2345,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 	public BigDecimal generateStatusReportGrpHdr(GroupHeader47 groupHeader,  String groupStatus, String instgAgt)
 	{
-		opsStatusHdrsEntity=new MdtAcOpsStatusHdrsEntity();
+		opsStatusHdrsEntity=new CasOpsStatusHdrsEntity();
 		opsStatusHdrsEntity.setSystemSeqNo(new BigDecimal(999999));
 		opsStatusHdrsEntity.setHdrMsgId(outMsgId);
 		opsStatusHdrsEntity.setCreateDateTime(getCovertDateTime(groupHeader.getCreDtTm()));

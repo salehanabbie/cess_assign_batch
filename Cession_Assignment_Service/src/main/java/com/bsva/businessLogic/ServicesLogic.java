@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.ServicesModel;
-import com.bsva.entities.MdtOpsServicesEntity;
+import com.bsva.entities.CasOpsServicesEntity;
 import com.bsva.translator.AdminTranslator;
 
 /**
@@ -22,12 +22,12 @@ public class ServicesLogic
 
 	}
 
-	public static List<ServicesModel> retreiveAllServices(List<MdtOpsServicesEntity> allMdtOpsServicesEntityList) 
+	public static List<ServicesModel> retreiveAllServices(List<CasOpsServicesEntity> allCasOpsServicesEntityList)
 	{
 		
 		List<ServicesModel> servicesList = new ArrayList<ServicesModel>();
 		ServicesModel servicesmModel;
-		for (MdtOpsServicesEntity sysServicesEntity : allMdtOpsServicesEntityList) 
+		for (CasOpsServicesEntity sysServicesEntity : allCasOpsServicesEntityList)
 		{
 			servicesmModel = new ServicesModel();
 			servicesmModel = new AdminTranslator().translateMdtOpsServicesEntityToCommonsModel(sysServicesEntity);
@@ -36,26 +36,27 @@ public class ServicesLogic
 		return servicesList;	
 	}
 
-	public MdtOpsServicesEntity addServices(ServicesModel servicesModel) 
+	public CasOpsServicesEntity addServices(ServicesModel servicesModel)
 	{
-		MdtOpsServicesEntity mdtOpsServicesEntity = new AdminTranslator().transalateCommonsServicesModelToEntity(servicesModel);
+		CasOpsServicesEntity casOpsServicesEntity = new AdminTranslator().transalateCommonsServicesModelToEntity(servicesModel);
 		
-		return mdtOpsServicesEntity;
+		return casOpsServicesEntity;
 	}
 
-	public static ServicesModel retreiveServices(MdtOpsServicesEntity mdtOpsServicesEntity)
+	public static ServicesModel retreiveServices(CasOpsServicesEntity casOpsServicesEntity)
 	{
 		ServicesModel servcModels = new ServicesModel();
-		servcModels = new AdminTranslator().translateMdtOpsServicesEntityToCommonsModel(mdtOpsServicesEntity);
+		servcModels = new AdminTranslator().translateMdtOpsServicesEntityToCommonsModel(
+            casOpsServicesEntity);
 		
 		return servcModels;
 	}
 	
-	public static List<ServicesModel> retrieveIncomingServices(List<MdtOpsServicesEntity> allMdtOpsServicesEntityList)
+	public static List<ServicesModel> retrieveIncomingServices(List<CasOpsServicesEntity> allCasOpsServicesEntityList)
 	{
 		List<ServicesModel> servicesList = new ArrayList<ServicesModel>();
 		ServicesModel servicesmModel;
-		for (MdtOpsServicesEntity sysServicesEntity : allMdtOpsServicesEntityList)
+		for (CasOpsServicesEntity sysServicesEntity : allCasOpsServicesEntityList)
 		{
 			servicesmModel = new ServicesModel(); 
 			servicesmModel = new AdminTranslator().translateIncomingMdtOpsServicesEntityToCommonsModel(sysServicesEntity);
@@ -64,11 +65,11 @@ public class ServicesLogic
 		return servicesList;
 	}
 	
-	public static List<ServicesModel> retrieveOutgoingServices(List<MdtOpsServicesEntity> allMdtOpsServicesEntityList)
+	public static List<ServicesModel> retrieveOutgoingServices(List<CasOpsServicesEntity> allCasOpsServicesEntityList)
 	{
 		List<ServicesModel> servicesList = new ArrayList<ServicesModel>();
 		ServicesModel servicesmModel;
-		for (MdtOpsServicesEntity sysServicesEntity : allMdtOpsServicesEntityList) 
+		for (CasOpsServicesEntity sysServicesEntity : allCasOpsServicesEntityList)
 		{
 			servicesmModel = new ServicesModel(); 
 			servicesmModel = new AdminTranslator().translateOutgoingMdtOpsServicesEntityToCommonsModel(sysServicesEntity);

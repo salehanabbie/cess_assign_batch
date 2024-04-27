@@ -16,10 +16,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import com.bsva.beans.GenericDAO;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
 import com.bsva.interfaces.FileProcessBeanLocal;
 import com.bsva.interfaces.FileProcessBeanRemote;
 /**
@@ -50,19 +50,19 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 
 	public List<?> validateOriginalMsgId(String msgId)
 	{
-		List<MdtAcOpsMandateTxnsEntity> mdtTxnList = (List<MdtAcOpsMandateTxnsEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsMandateTxnsEntity.findByMsgId", "msgId",msgId);
+		List<CasOpsCessionAssignEntity> mdtTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsMandateTxnsEntity.findByMsgId", "msgId",msgId);
 		return mdtTxnList;
 	}
 
 	public List<?> validateMndtReqTranIdUnique(String mrti)
 	{
-		List<MdtAcOpsMandateTxnsEntity> mandateTxnList = (List<MdtAcOpsMandateTxnsEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsMandateTxnsEntity.findByMandateReqTranId", "mandateReqTranId",mrti);
+		List<CasOpsCessionAssignEntity> mandateTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsMandateTxnsEntity.findByMandateReqTranId", "mandateReqTranId",mrti);
 		return mandateTxnList;
 	}
 
 	public Object matchPain012ToOrigMandate(String manReqTransId, String messageType)
 	{
-		MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity = new MdtAcOpsMandateTxnsEntity();
+		CasOpsCessionAssignEntity casOpsCessionAssignEntity = new CasOpsCessionAssignEntity();
 
 		try 
 		{
@@ -75,8 +75,10 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			log.debug("---------------sparameters: ------------------"+ parameters.toString());
 			//			2019/10/04-SalehaR-Remove ProcessStatus from check	
 			//		    mdtAcOpsMandateTxnsEntity = (MdtAcOpsMandateTxnsEntity) genericDAO.findByCriteriaIN(MdtAcOpsMandateTxnsEntity.class, parameters, "processStatus",Arrays.asList(extractStatus, responseRecStatus, rejectedStatus, matchedStatus));
-			mdtAcOpsMandateTxnsEntity = (MdtAcOpsMandateTxnsEntity) genericDAO.findByCriteria(MdtAcOpsMandateTxnsEntity.class, parameters);
-			log.debug("---------------MdtAcOpsMandateTxnsEntity after findByCriteria: ------------------"+ mdtAcOpsMandateTxnsEntity);
+			casOpsCessionAssignEntity = (CasOpsCessionAssignEntity) genericDAO.findByCriteria(
+					CasOpsCessionAssignEntity.class, parameters);
+			log.debug("---------------MdtAcOpsMandateTxnsEntity after findByCriteria: ------------------"+
+					casOpsCessionAssignEntity);
 		} 
 		catch (ObjectNotFoundException onfe) 
 		{
@@ -88,12 +90,12 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			e.printStackTrace();
 		}
 
-		return mdtAcOpsMandateTxnsEntity;
+		return casOpsCessionAssignEntity;
 	}
 
 	public Object matchPacs002ToOrigMandate(String mndtReqTranId, String messageType)
 	{
-		MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity = new MdtAcOpsMandateTxnsEntity();
+		CasOpsCessionAssignEntity casOpsCessionAssignEntity = new CasOpsCessionAssignEntity();
 		try 
 		{
 			log.debug("mndtReqTranId: "+mndtReqTranId);
@@ -105,8 +107,10 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 
 			parameters.put("serviceId", messageType);
 			log.debug("---------------sparameters: ------------------"+ parameters.toString());
-			mdtAcOpsMandateTxnsEntity = (MdtAcOpsMandateTxnsEntity) genericDAO.findByCriteria(MdtAcOpsMandateTxnsEntity.class, parameters);
-			log.debug("---------------mdtAcOpsMndtMsgEntity after findByCriteria: ------------------"+ mdtAcOpsMandateTxnsEntity);
+			casOpsCessionAssignEntity = (CasOpsCessionAssignEntity) genericDAO.findByCriteria(
+					CasOpsCessionAssignEntity.class, parameters);
+			log.debug("---------------mdtAcOpsMndtMsgEntity after findByCriteria: ------------------"+
+					casOpsCessionAssignEntity);
 
 			//			2019/10/04-SalehaR-Remove ProcessStatus from check		
 			//			parameters.put("serviceId", messageType);
@@ -132,7 +136,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			e.printStackTrace();
 		}
 
-		return mdtAcOpsMandateTxnsEntity;
+		return casOpsCessionAssignEntity;
 	}
 
 	@Override
@@ -140,18 +144,19 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 	{
 		boolean isLoaded = false;
 		try {
-			if (obj instanceof MdtAcOpsMandateTxnsEntity) 
+			if (obj instanceof CasOpsCessionAssignEntity)
 			{
-				MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity = (MdtAcOpsMandateTxnsEntity) obj;
-				String savedmsg = genericDAO.save(mdtAcOpsMandateTxnsEntity);
+				CasOpsCessionAssignEntity casOpsCessionAssignEntity = (CasOpsCessionAssignEntity) obj;
+				String savedmsg = genericDAO.save(casOpsCessionAssignEntity);
 				log.debug("savedmsg ----> " + savedmsg);
 
 				if (savedmsg.equalsIgnoreCase("DUPL") || savedmsg.equalsIgnoreCase("ERROR")) {
 					isLoaded = false;
 					log.debug("Duplicated Detected");
 					// Create Duplicate Error
-					generateDuplicateError(mdtAcOpsMandateTxnsEntity.getMdtAcOpsMandateTxnsEntityPK().getMsgId(),
-							mdtAcOpsMandateTxnsEntity.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId(), 
+					generateDuplicateError(
+							casOpsCessionAssignEntity.getCasOpsCessionAssignEntityPK().getMsgId(),
+							casOpsCessionAssignEntity.getCasOpsCessionAssignEntityPK().getMandateReqTranId(),
 							debtorBrNo,crAbbShrtName, mndtRefNo);
 				} else {
 					isLoaded = true;
@@ -180,15 +185,15 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		log.debug("generateDuplicateError.crAbbShrtName ---->"+crAbbShrtName);
 		log.debug("generateDuplicateError.mndtRefNo ---->"+mndtRefNo);
 
-		MdtAcOpsStatusHdrsEntity mdtAcOpsStatusHdrsEntity = (MdtAcOpsStatusHdrsEntity) genericDAO.findByNamedQuery("MdtAcOpsStatusHdrsEntity.findByOrgnlMsgId","orgnlMsgId", msgId);
-		log.debug("mdtAcOpsStatusHdrsEntity from Duplicate Error ---->"+mdtAcOpsStatusHdrsEntity);
+		CasOpsStatusHdrsEntity casOpsStatusHdrsEntity = (CasOpsStatusHdrsEntity) genericDAO.findByNamedQuery("MdtAcOpsStatusHdrsEntity.findByOrgnlMsgId","orgnlMsgId", msgId);
+		log.debug("mdtAcOpsStatusHdrsEntity from Duplicate Error ---->"+ casOpsStatusHdrsEntity);
 
-		if(mdtAcOpsStatusHdrsEntity != null)
+		if(casOpsStatusHdrsEntity != null)
 		{
-			MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity=new MdtAcOpsStatusDetailsEntity();
+			CasOpsStatusDetailsEntity opsStatusDetailsEntity=new CasOpsStatusDetailsEntity();
 
 			opsStatusDetailsEntity.setSystemSeqNo(new BigDecimal(123));
-			opsStatusDetailsEntity.setStatusHdrSeqNo(mdtAcOpsStatusHdrsEntity.getSystemSeqNo());
+			opsStatusDetailsEntity.setStatusHdrSeqNo(casOpsStatusHdrsEntity.getSystemSeqNo());
 			opsStatusDetailsEntity.setErrorCode("902205");
 			opsStatusDetailsEntity.setTxnId(txnId);
 			opsStatusDetailsEntity.setTxnStatus("RJCT");
@@ -219,7 +224,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 	}
 
 	public List<?> retrieveMandatesForExtract(boolean debtMemType, String memberId, String serviceId, String procStatus) {
-		List<MdtAcOpsMandateTxnsEntity> extMandateList = new ArrayList<MdtAcOpsMandateTxnsEntity>();
+		List<CasOpsCessionAssignEntity> extMandateList = new ArrayList<CasOpsCessionAssignEntity>();
 
 		try 
 		{
@@ -232,7 +237,8 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 				parameters.put("creditorBank", memberId);
 			}
 			log.debug("---------------sparameters: ------------------"+ parameters.toString());
-			extMandateList = (List<MdtAcOpsMandateTxnsEntity>) genericDAO.findAllByCriteria(MdtAcOpsMandateTxnsEntity.class, parameters);
+			extMandateList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByCriteria(
+					CasOpsCessionAssignEntity.class, parameters);
 		} 
 		catch (ObjectNotFoundException onfe) 
 		{
@@ -250,10 +256,10 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 	{	
 		Boolean updated = false;
 		try {
-			if (obj instanceof MdtAcOpsMandateTxnsEntity) {
-				MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity = (MdtAcOpsMandateTxnsEntity) obj;
+			if (obj instanceof CasOpsCessionAssignEntity) {
+				CasOpsCessionAssignEntity casOpsCessionAssignEntity = (CasOpsCessionAssignEntity) obj;
 
-				genericDAO.saveOrUpdate(mdtAcOpsMandateTxnsEntity);
+				genericDAO.saveOrUpdate(casOpsCessionAssignEntity);
 				updated = true;
 			} else {
 				log.error("Unable to convert type to MdtAcOpsMandateTxnsEntity.");
@@ -609,7 +615,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			parameters.put("memberId", memberId);
 			log.debug("parameters =====> "+parameters);
 
-			List<MdtAcOpsMandateTxnsEntity> painMsgsCheckList = null;
+			List<CasOpsCessionAssignEntity> painMsgsCheckList = null;
 
 			if(serviceID.equalsIgnoreCase("MANAC")) {
 				painMsgsCheckList = genericDAO.findAllByNQCriteria("MdtAcOpsMandateTxnsEntity.findByCreatedDateTruncAndServiceIdCreditor", parameters);
@@ -730,22 +736,24 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 	
 	public TreeMap optimisedMatchPain012(String manReqTransId)
 	{
-		List<MdtAcOpsMandateTxnsEntity> matchedList = new ArrayList<MdtAcOpsMandateTxnsEntity>();
-		TreeMap<String, MdtAcOpsMandateTxnsEntity> matchedMap = new TreeMap<String, MdtAcOpsMandateTxnsEntity>();
+		List<CasOpsCessionAssignEntity> matchedList = new ArrayList<CasOpsCessionAssignEntity>();
+		TreeMap<String, CasOpsCessionAssignEntity> matchedMap = new TreeMap<String, CasOpsCessionAssignEntity>();
 		
 		try 
 		{
-			matchedList = (List<MdtAcOpsMandateTxnsEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsMandateTxnsEntity.matchingPain012", "mandateReqTranId",manReqTransId);
+			matchedList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsMandateTxnsEntity.matchingPain012", "mandateReqTranId",manReqTransId);
 			if(matchedList != null && matchedList.size() > 0)
 			{
 				if(matchedList.size() > 1) {
-					for (MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity : matchedList) {
-						matchedMap.put(mdtAcOpsMandateTxnsEntity.getServiceId(), mdtAcOpsMandateTxnsEntity);
+					for (CasOpsCessionAssignEntity casOpsCessionAssignEntity : matchedList) {
+						matchedMap.put(casOpsCessionAssignEntity.getServiceId(),
+								casOpsCessionAssignEntity);
 					}
 				}
 				else {
-					MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity = matchedList.get(0);
-					matchedMap.put(mdtAcOpsMandateTxnsEntity.getServiceId(), mdtAcOpsMandateTxnsEntity);
+					CasOpsCessionAssignEntity casOpsCessionAssignEntity = matchedList.get(0);
+					matchedMap.put(casOpsCessionAssignEntity.getServiceId(),
+							casOpsCessionAssignEntity);
 				}
 			}
 		} 
@@ -805,15 +813,16 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 //		}
 
 	public Map retrieveStatusReportRejections(BigDecimal hdrSeqNo, String errorType) {
-		List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
-		Map<String, List<MdtAcOpsStatusDetailsEntity>> statusDetailsMap = new HashMap<String, List<MdtAcOpsStatusDetailsEntity>>();
+		List<CasOpsStatusDetailsEntity> opsStatusDetailsList = new ArrayList<CasOpsStatusDetailsEntity>();
+		Map<String, List<CasOpsStatusDetailsEntity>> statusDetailsMap = new HashMap<String, List<CasOpsStatusDetailsEntity>>();
 
 		try {
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("statusHdrSeqNo", hdrSeqNo);
 			parameters.put("errorType", errorType);
 
-			opsStatusDetailsList = (List<MdtAcOpsStatusDetailsEntity>) genericDAO.findAllByCriteria(MdtAcOpsStatusDetailsEntity.class, parameters);
+			opsStatusDetailsList = (List<CasOpsStatusDetailsEntity>) genericDAO.findAllByCriteria(
+                CasOpsStatusDetailsEntity.class, parameters);
 			
 			if(opsStatusDetailsList != null && opsStatusDetailsList.size() > 0) 
 			{
@@ -821,9 +830,9 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 					{	
 						String txnId = opsStatusDetailsList.get(i).getTxnId();
 						
-						List<MdtAcOpsStatusDetailsEntity> txnErrorList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+						List<CasOpsStatusDetailsEntity> txnErrorList = new ArrayList<CasOpsStatusDetailsEntity>();
 						
-						for (MdtAcOpsStatusDetailsEntity statusDtlsEntity : opsStatusDetailsList) {
+						for (CasOpsStatusDetailsEntity statusDtlsEntity : opsStatusDetailsList) {
 							
 							if(statusDtlsEntity.getTxnId().equalsIgnoreCase(txnId)) {
 								txnErrorList.add(statusDtlsEntity);
@@ -984,23 +993,26 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 
 	public TreeMap retriveOutgoingService(String serviceId)
 	{
-		List<MdtAcOpsFileSizeLimitEntity> mdtAcOpsFileSizeLimitEntityList = new ArrayList<MdtAcOpsFileSizeLimitEntity>();
-		TreeMap<String, MdtAcOpsFileSizeLimitEntity> matchedMap = new TreeMap<String, MdtAcOpsFileSizeLimitEntity>();
+		List<CasOpsFileSizeLimitEntity>
+				casOpsFileSizeLimitEntityList = new ArrayList<CasOpsFileSizeLimitEntity>();
+		TreeMap<String, CasOpsFileSizeLimitEntity> matchedMap = new TreeMap<String, CasOpsFileSizeLimitEntity>();
 		try
 		{
-			mdtAcOpsFileSizeLimitEntityList = (List<MdtAcOpsFileSizeLimitEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsFileSizeLimitEntity.findBySubService", "subService",serviceId);
-			if(mdtAcOpsFileSizeLimitEntityList != null && mdtAcOpsFileSizeLimitEntityList.size() > 0)
+			casOpsFileSizeLimitEntityList = (List<CasOpsFileSizeLimitEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsFileSizeLimitEntity.findBySubService", "subService",serviceId);
+			if(casOpsFileSizeLimitEntityList != null && casOpsFileSizeLimitEntityList.size() > 0)
 			{
-				if(mdtAcOpsFileSizeLimitEntityList.size() > 1) {
+				if(casOpsFileSizeLimitEntityList.size() > 1) {
 					log.info("Many Txn in Map");
-					for (MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity : mdtAcOpsFileSizeLimitEntityList) {
-						matchedMap.put(mdtAcOpsFileSizeLimitEntity.getMdtAcOpsFileSizeLimitPK().getSubService(),mdtAcOpsFileSizeLimitEntity);
+					for (CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity : casOpsFileSizeLimitEntityList) {
+						matchedMap.put(casOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getSubService(),
+								casOpsFileSizeLimitEntity);
 					}
 				}
 				else {
 					log.info("one Txn in Map");
-					MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity = mdtAcOpsFileSizeLimitEntityList.get(0);
-					matchedMap.put(mdtAcOpsFileSizeLimitEntity.getMdtAcOpsFileSizeLimitPK().getSubService(),mdtAcOpsFileSizeLimitEntity);
+					CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity = casOpsFileSizeLimitEntityList.get(0);
+					matchedMap.put(casOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getSubService(),
+							casOpsFileSizeLimitEntity);
 			}
 		}
 		
@@ -1020,7 +1032,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 	
 	public Object retriveOutgoingService(String outgoingService, String destInstId)
 	{
-		MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity = new MdtAcOpsFileSizeLimitEntity();
+		CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity = new CasOpsFileSizeLimitEntity();
 
 		try
 		{
@@ -1028,7 +1040,8 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			parameters.put("mdtAcOpsFileSizeLimitPK.subService", outgoingService);
 			parameters.put("mdtAcOpsFileSizeLimitPK.memberId", destInstId);
 
-			mdtAcOpsFileSizeLimitEntity =  (MdtAcOpsFileSizeLimitEntity)genericDAO.findByCriteria(MdtAcOpsFileSizeLimitEntity.class, parameters);
+			casOpsFileSizeLimitEntity =  (CasOpsFileSizeLimitEntity)genericDAO.findByCriteria(
+					CasOpsFileSizeLimitEntity.class, parameters);
 		}
 		catch (ObjectNotFoundException ne)
 		{ 
@@ -1041,7 +1054,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			e.printStackTrace();
 		}
 
-		return mdtAcOpsFileSizeLimitEntity;
+		return casOpsFileSizeLimitEntity;
 	}
 
 	

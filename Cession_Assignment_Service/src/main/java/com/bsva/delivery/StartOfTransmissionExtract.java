@@ -24,8 +24,7 @@ import org.apache.log4j.Logger;
 
 import com.bsva.PropertyUtil;
 import com.bsva.commons.model.OpsFileRegModel;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtOpsServicesEntity;
+import com.bsva.entities.CasOpsServicesEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.interfaces.AdminBeanRemote;
@@ -302,11 +301,11 @@ public class StartOfTransmissionExtract
 				}
 
 				//Retrieve the msgType from the service Table
-				MdtOpsServicesEntity mdtOpsServicesEntity = (MdtOpsServicesEntity) adminBeanRemote.retrieveOpsService(serviceName);
+				CasOpsServicesEntity casOpsServicesEntity = (CasOpsServicesEntity) adminBeanRemote.retrieveOpsService(serviceName);
 				
-				if(mdtOpsServicesEntity != null)
+				if(casOpsServicesEntity != null)
 				{
-					fileType = mdtOpsServicesEntity.getMsgTypeId();
+					fileType = casOpsServicesEntity.getMsgTypeId();
 				}
 				
 // Removed hardcoding ---retrieve from database				

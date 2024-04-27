@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author SalehaR
  */
 @Entity
-@Table(name = "CAS_SYSCTRL_FILE_STATUS",schema = "CASOWNER")
+@Table(name = "CAS_SYSCTRL_FILE_STATUS",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasSysctrlFileStatusEntity.findAll", query = "SELECT m FROM CasSysctrlFileStatusEntity m"),

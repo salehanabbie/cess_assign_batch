@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 import org.beanio.BeanWriter;
 import org.beanio.StreamFactory;
 import com.bsva.commons.model.SystemParameterModel;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
 import com.bsva.entities.PasaMandateReportEntityModel;
 import com.bsva.entities.SysCisBranchEntity;
 import com.bsva.interfaces.AdminBeanRemote;
@@ -135,8 +135,8 @@ public class PasaMandateAmendmentReport
 		}
 
 		//Retrieve Report Name
-		MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
-	    reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(phirRepNr);
+		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
+	    reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(phirRepNr);
 	    
 	    if(reportNameEntity != null) {
 	    	

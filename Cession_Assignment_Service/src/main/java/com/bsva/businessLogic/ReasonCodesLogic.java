@@ -7,9 +7,7 @@ import java.util.List;
 
 
 import com.bsva.commons.model.ReasonCodesModel;
-import com.bsva.entities.MdtCnfgCancellationCodesEntity;
-import com.bsva.entities.MdtCnfgReasonCodesEntity;
-import com.bsva.entities.MdtCnfgRejectReasonCodesEntity;
+import com.bsva.entities.CasCnfgReasonCodesEntity;
 import com.bsva.translator.AdminTranslator;
 
 /**
@@ -24,11 +22,11 @@ public class ReasonCodesLogic {
 
 	}
 
-	public List<ReasonCodesModel> retreiveAllReasonCodes(List<MdtCnfgReasonCodesEntity> mdtReasonCodesList)
+	public List<ReasonCodesModel> retreiveAllReasonCodes(List<CasCnfgReasonCodesEntity> mdtReasonCodesList)
 	{
 		List<ReasonCodesModel> reasonCodesList = new ArrayList<ReasonCodesModel>();
 
-		for (MdtCnfgReasonCodesEntity reasonEntity : mdtReasonCodesList) 
+		for (CasCnfgReasonCodesEntity reasonEntity : mdtReasonCodesList)
 		{
 			ReasonCodesModel reasonModel = new ReasonCodesModel();
 			reasonModel = new AdminTranslator().transalateReasCodesToCommonsReasonModel(reasonEntity);
@@ -38,38 +36,17 @@ public class ReasonCodesLogic {
 		return reasonCodesList;
 	}
 
-
-
-	public MdtCnfgReasonCodesEntity addReasonCodes(ReasonCodesModel reasonCodesModel)
+	public CasCnfgReasonCodesEntity addReasonCodes(ReasonCodesModel reasonCodesModel)
 	{
-		MdtCnfgReasonCodesEntity mdtReasonCodes = new AdminTranslator().transalateCommonsReasonCodesModelToEntity(reasonCodesModel);
+		CasCnfgReasonCodesEntity mdtReasonCodes = new AdminTranslator().transalateCommonsReasonCodesModelToEntity(reasonCodesModel);
 
 		return mdtReasonCodes; 
 	}
 
-
-
-	public ReasonCodesModel retrieveReasonCode(MdtCnfgReasonCodesEntity mdtReasonCodesEntity)
+	public ReasonCodesModel retrieveReasonCode(CasCnfgReasonCodesEntity mdtReasonCodesEntity)
 	{
 		ReasonCodesModel localModel = new ReasonCodesModel();
 		localModel = new AdminTranslator().translateReasonCodesEntityToCommonsModel(mdtReasonCodesEntity);
-
-		return localModel;
-	}
-
-
-	public ReasonCodesModel retrieveReportReasonCode_mdte002(MdtCnfgRejectReasonCodesEntity mdtCnfgRejectReasonCodesEntity)
-	{
-		ReasonCodesModel localModel = new ReasonCodesModel();
-		localModel = new AdminTranslator().translateReportReasonCodesMdte002ToCommonsModel(mdtCnfgRejectReasonCodesEntity);
-
-		return localModel;
-	}
-
-	public ReasonCodesModel retrieveReportReasonCode_Canc(MdtCnfgCancellationCodesEntity mdtCnfgCancellationCodesEntity)
-	{
-		ReasonCodesModel localModel = new ReasonCodesModel();
-		localModel = new AdminTranslator().translateReportReasonCodesCancToCommonsModel(mdtCnfgCancellationCodesEntity);
 
 		return localModel;
 	}

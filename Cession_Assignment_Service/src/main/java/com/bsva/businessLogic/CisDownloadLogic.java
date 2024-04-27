@@ -6,8 +6,8 @@ import com.bsva.cis.persistence.dto.ACMemberDTO;
 import com.bsva.cis.persistence.dto.BranchDTO;
 import com.bsva.cis.persistence.dto.MemberDTO;
 import com.bsva.entities.CasSysctrlSlaTimesEntity;
-import com.bsva.entities.MdtAcOpsProcessControlsEntity;
-import com.bsva.entities.MdtOpsSlaTimesEntity;
+import com.bsva.entities.CasOpsProcessControlsEntity;
+import com.bsva.entities.CasOpsSlaTimesEntity;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.entities.SysCisBranchEntity;
 import com.bsva.interfaces.AdminBeanRemote;
@@ -46,7 +46,7 @@ public class CisDownloadLogic {
   CasSysctrlSlaTimesEntity casSysctrlSlaTimesEntity;
   public String cisFeedbackMsg;
   boolean cisCheck = false;
-  MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity;
+  CasOpsSlaTimesEntity casOpsSlaTimesEntity;
 
 
   public CisDownloadLogic() {
@@ -77,18 +77,18 @@ public class CisDownloadLogic {
       boolean cisBranchCDVParams = false;
       boolean cisDwnExists = false;
 
-      List<MdtAcOpsProcessControlsEntity> mdtAcOpsProcessControlsList =
-          new ArrayList<MdtAcOpsProcessControlsEntity>();
-      MdtAcOpsProcessControlsEntity mdtAcOpsProcessControlsEntity =
-          new MdtAcOpsProcessControlsEntity();
+      List<CasOpsProcessControlsEntity> mdtAcOpsProcessControlsList =
+          new ArrayList<CasOpsProcessControlsEntity>();
+      CasOpsProcessControlsEntity casOpsProcessControlsEntity =
+          new CasOpsProcessControlsEntity();
 
       mdtAcOpsProcessControlsList =
-          (List<MdtAcOpsProcessControlsEntity>) adminBeanRemote.retrieveInActiveCisDownload();
+          (List<CasOpsProcessControlsEntity>) adminBeanRemote.retrieveInActiveCisDownload();
       log.debug("mdtAcOpsProcessControlsListin cisDowloadLogic: " + mdtAcOpsProcessControlsList);
 
 
       if (mdtAcOpsProcessControlsList.size() > 0) {
-        for (MdtAcOpsProcessControlsEntity localEnity : mdtAcOpsProcessControlsList) {
+        for (CasOpsProcessControlsEntity localEnity : mdtAcOpsProcessControlsList) {
           if (localEnity.getProcessDate().equals(currentDate)) {
             cisDwnExists = true;
             //						log.debug("mdtAcOpsProcessControlsListin date: "+ localEnity
@@ -109,7 +109,7 @@ public class CisDownloadLogic {
         if (cisBankSaved && cisBranchSaved) {
           cisCheck = true;
           cisFeedbackMsg = "CIS Download has completed successfully !";
-          updateCisDownloadIndAndDate(mdtAcOpsProcessControlsEntity);
+          updateCisDownloadIndAndDate(casOpsProcessControlsEntity);
           //cisfeedbackMsg = "CIS Download has ran successfully";
         }
       }
@@ -243,12 +243,12 @@ public class CisDownloadLogic {
   }
 
   public void updateCisDownloadIndAndDate(
-      MdtAcOpsProcessControlsEntity mdtAcOpsProcessControlsEntity) {
-    mdtAcOpsProcessControlsEntity = new MdtAcOpsProcessControlsEntity();
+      CasOpsProcessControlsEntity casOpsProcessControlsEntity) {
+    casOpsProcessControlsEntity = new CasOpsProcessControlsEntity();
     // mdtSysctrlSysParamEntity= (MdtAcOpsProcessControlsEntity) adminBeanRemote
     // .retrieveActiveSysParameter();
-    if (mdtAcOpsProcessControlsEntity != null) {
-      mdtAcOpsProcessControlsEntity.setCisDownloadInd("Y");
+    if (casOpsProcessControlsEntity != null) {
+      casOpsProcessControlsEntity.setCisDownloadInd("Y");
 
       Calendar cal = Calendar.getInstance();
       cal.setTime(currentDate);
@@ -262,9 +262,9 @@ public class CisDownloadLogic {
       //Put it back in the Date object
       currentDate = cal.getTime();
 
-      mdtAcOpsProcessControlsEntity.setProcessDate(currentDate);
+      casOpsProcessControlsEntity.setProcessDate(currentDate);
 
-      boolean saved = adminBeanRemote.createCisDownload(mdtAcOpsProcessControlsEntity);
+      boolean saved = adminBeanRemote.createCisDownload(casOpsProcessControlsEntity);
       if (saved) {
         log.info("<===== CIS download indicator and date has been updated =====>");
       }

@@ -5,13 +5,13 @@ import com.bsva.commons.model.AudSystemProcessModel;
 import com.bsva.delivery.EndOfTransmissionExtract;
 import com.bsva.entities.CasSysctrlServicesEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
-import com.bsva.entities.MdtAcOpsMndtCountPK;
-import com.bsva.entities.MdtAcOpsSchedulerEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsServicesEntity;
-import com.bsva.entities.MdtOpsSlaTimesEntity;
-import com.bsva.entities.ObsSystemBillingCtrlsEntity;
+import com.bsva.entities.CasOpsMndtCountPK;
+import com.bsva.entities.CasOpsSchedulerEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsServicesEntity;
+import com.bsva.entities.CasOpsSlaTimesEntity;
+import com.bsva.entities.CasSystemBillingCtrlsEntity;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.QuartzSchedulerBeanRemote;
@@ -54,14 +54,14 @@ public class EndOfDayLogic {
   public static ValidationBeanRemote valBeanRemote;
   private static QuartzSchedulerBeanRemote quartzSchedulerBeanRemote;
   String file = null, destInstId = null, fileType = null, quartzSchedulerBeanRemoteservice = null;
-  List<MdtOpsCustParamEntity> custParamsList = new ArrayList<MdtOpsCustParamEntity>();
+  List<CasOpsCustParamEntity> custParamsList = new ArrayList<CasOpsCustParamEntity>();
   List<CasSysctrlServicesEntity> sysCntrlServicesList = new ArrayList<CasSysctrlServicesEntity>();
   // list
   String outgoingService = "MANOT";
   String processStatus = "C";
-  MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity;
+  CasOpsSlaTimesEntity casOpsSlaTimesEntity;
   Date currentDate = new Date();
-  private MdtAcOpsMndtCountPK mdtCountPk;
+  private CasOpsMndtCountPK mdtCountPk;
   public String feedbackMsg;
   boolean eodCheck = false;
   String activeInd, nonActiveInd;
@@ -137,10 +137,10 @@ public class EndOfDayLogic {
     casSysctrlSysParamEntity =
         (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
 
-    custParamsList = (List<MdtOpsCustParamEntity>) adminBeanRemote.retrieveOpsCustParamTime();
+    custParamsList = (List<CasOpsCustParamEntity>) adminBeanRemote.retrieveOpsCustParamTime();
     sysCntrlServicesList =
         (List<CasSysctrlServicesEntity>) adminBeanRemote.retrieveServiceControl();
-    mdtOpsSlaTimesEntity = (MdtOpsSlaTimesEntity) adminBeanRemote.retrieveEODTime();
+    casOpsSlaTimesEntity = (CasOpsSlaTimesEntity) adminBeanRemote.retrieveEODTime();
 
     SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
     Calendar cal = Calendar.getInstance();
@@ -150,8 +150,8 @@ public class EndOfDayLogic {
     String strrDate = parser.format(currentDate);
     log.info("Time: " + strrDate);
     Date userDate = parser.parse(strrDate);
-    Date eodTime = parser.parse(mdtOpsSlaTimesEntity.getStartTime());
-    Date endTime = parser.parse(mdtOpsSlaTimesEntity.getEndTime());
+    Date eodTime = parser.parse(casOpsSlaTimesEntity.getStartTime());
+    Date endTime = parser.parse(casOpsSlaTimesEntity.getEndTime());
     if (casSysctrlSysParamEntity != null) {
       if (casSysctrlSysParamEntity.getSodRunInd().equalsIgnoreCase("Y") &&
           casSysctrlSysParamEntity.getEodRunInd().equalsIgnoreCase("N") &&
@@ -165,14 +165,14 @@ public class EndOfDayLogic {
           log.debug("txnsToExtract frin Service Bean ==> " + txnsToExtract);
           if (txnsToExtract) {
             //Scheduler Check
-            List<MdtAcOpsSchedulerEntity> opsSchedulersList =
-                new ArrayList<MdtAcOpsSchedulerEntity>();
+            List<CasOpsSchedulerEntity> opsSchedulersList =
+                new ArrayList<CasOpsSchedulerEntity>();
             opsSchedulersList = adminBeanRemote.retrieveOpsScheduler();
             boolean activeSch = false;
             if (opsSchedulersList != null && opsSchedulersList.size() > 0) {
-              for (MdtAcOpsSchedulerEntity mdtAcOpsSchedulerEntity : opsSchedulersList) {
-                if (mdtAcOpsSchedulerEntity.getActiveInd().equalsIgnoreCase("Y") &&
-                    !(mdtAcOpsSchedulerEntity.getSchedulerKey().equalsIgnoreCase("b"))) {
+              for (CasOpsSchedulerEntity casOpsSchedulerEntity : opsSchedulersList) {
+                if (casOpsSchedulerEntity.getActiveInd().equalsIgnoreCase("Y") &&
+                    !(casOpsSchedulerEntity.getSchedulerKey().equalsIgnoreCase("b"))) {
                   activeSch = true;
                 }
               }
@@ -292,16 +292,16 @@ public class EndOfDayLogic {
                     String outService = servicesEntity.getServiceIdOut();
                     //										log.info("outService ===>
                     //										"+outService);
-                    MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity =
-                        new MdtAcOpsSotEotCtrlEntity();
-                    mdtAcOpsSotEotCtrlEntity =
-                        (MdtAcOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(memberId,
+                    CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity =
+                        new CasOpsSotEotCtrlEntity();
+                    casOpsSotEotCtrlEntity =
+                        (CasOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(memberId,
                             outService);
                     //										log.info("SOT/EOT CTRL CHECK ==>
                     //										"+mdtAcOpsSotEotCtrlEntity);
-                    if (mdtAcOpsSotEotCtrlEntity != null) {
-                      if (mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y") &&
-                          mdtAcOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase("Y")) {
+                    if (casOpsSotEotCtrlEntity != null) {
+                      if (casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y") &&
+                          casOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase("Y")) {
                         eotCheck = true;
                       }
                     } else {
@@ -436,13 +436,13 @@ public class EndOfDayLogic {
 
 
                       //update Billing Cntrls table
-                      ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity =
-                          (ObsSystemBillingCtrlsEntity) adminBeanRemote.retrieveBillingCtrls(
+                      CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity =
+                          (CasSystemBillingCtrlsEntity) adminBeanRemote.retrieveBillingCtrls(
                               casSysctrlSysParamEntity.getProcessDate());
-                      obsSystemBillingCtrlsEntity.setProcessStatus("C");
-                      obsSystemBillingCtrlsEntity.setModifiedBy("MANOWNER");
-                      obsSystemBillingCtrlsEntity.setModifiedDate(new Date());
-                      adminBeanRemote.updateBillingCtrl(obsSystemBillingCtrlsEntity);
+                      casSystemBillingCtrlsEntity.setProcessStatus("C");
+                      casSystemBillingCtrlsEntity.setModifiedBy("MANOWNER");
+                      casSystemBillingCtrlsEntity.setModifiedDate(new Date());
+                      adminBeanRemote.updateBillingCtrl(casSystemBillingCtrlsEntity);
 
                       eodCheck = true;
                     } else {
@@ -491,9 +491,9 @@ public class EndOfDayLogic {
           }
         } else {
           log.error("SLA TIME for EOD is not reached, Please run from " +
-              mdtOpsSlaTimesEntity.getStartTime() + "!");
+              casOpsSlaTimesEntity.getStartTime() + "!");
           feedbackMsg = ("SLA TIME for EOD is not reached, Please run from " +
-              mdtOpsSlaTimesEntity.getStartTime() + "!");
+              casOpsSlaTimesEntity.getStartTime() + "!");
           eodCheck = false;
         }
       } else {
@@ -851,20 +851,20 @@ public class EndOfDayLogic {
     //		acopsSotEotEntityList = (List<MdtAcOpsSotEotCtrlEntity>) adminBeanRemote
     //		.retrieveInactiveEOTIND();
 
-    MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
-    mdtAcOpsSotEotCtrlEntity =
-        (MdtAcOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(instgAgt, service);
+    CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
+    casOpsSotEotCtrlEntity =
+        (CasOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(instgAgt, service);
 
-    if (mdtAcOpsSotEotCtrlEntity != null) {
-      if (mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("N") &&
-          mdtAcOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase("Y")) {
+    if (casOpsSotEotCtrlEntity != null) {
+      if (casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("N") &&
+          casOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase("Y")) {
         String fileType = null;
         //Retrieve the msgType from the service Table
-        MdtOpsServicesEntity mdtOpsServicesEntity =
-            (MdtOpsServicesEntity) adminBeanRemote.retrieveOpsService(service);
+        CasOpsServicesEntity casOpsServicesEntity =
+            (CasOpsServicesEntity) adminBeanRemote.retrieveOpsService(service);
 
-        if (mdtOpsServicesEntity != null) {
-          fileType = mdtOpsServicesEntity.getMsgTypeId();
+        if (casOpsServicesEntity != null) {
+          fileType = casOpsServicesEntity.getMsgTypeId();
         }
         //Remove hardcoding --retrieve from database.
         //				  if(service.equalsIgnoreCase("ST100") || service.equalsIgnoreCase
@@ -884,9 +884,9 @@ public class EndOfDayLogic {
         EndOfTransmissionExtract endOfTransmission =
             new EndOfTransmissionExtract(instgAgt, service, fileType);
         endOfTransmission.createEndOfTransmissionFile();
-        mdtAcOpsSotEotCtrlEntity.setEotOut("Y");
+        casOpsSotEotCtrlEntity.setEotOut("Y");
 
-        boolean updated = adminBeanRemote.updateACOpsEOTSOT(mdtAcOpsSotEotCtrlEntity);
+        boolean updated = adminBeanRemote.updateACOpsEOTSOT(casOpsSotEotCtrlEntity);
 
         if (updated) {
           log.debug("The End of transmission indicator has been updated ");

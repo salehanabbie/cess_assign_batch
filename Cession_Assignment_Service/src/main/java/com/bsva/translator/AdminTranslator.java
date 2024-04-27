@@ -74,42 +74,37 @@ import com.bsva.entities.CisMemberEntity;
 import com.bsva.entities.IamSessionEntity;
 import com.bsva.entities.IncSotEotEntityModel;
 import com.bsva.entities.MdtAcArcDailyBillingEntity;
-import com.bsva.entities.MdtAcOpsDailyBillingEntity;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
-import com.bsva.entities.MdtAcOpsFileSizeLimitPK;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
-import com.bsva.entities.MdtAcOpsMndtCountPK;
-import com.bsva.entities.MdtAcOpsProcessControlsEntity;
-import com.bsva.entities.MdtAcOpsSchedulerEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlPK;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtAcOpsTransCtrlMsgEntity;
-import com.bsva.entities.MdtCnfgAccountTypeEntity;
-import com.bsva.entities.MdtCnfgAdjustmentCatEntity;
-import com.bsva.entities.MdtCnfgAmendmentCodesEntity;
-import com.bsva.entities.MdtCnfgAuthTypeEntity;
-import com.bsva.entities.MdtCnfgCancellationCodesEntity;
-import com.bsva.entities.MdtCnfgCurrencyCodesEntity;
-import com.bsva.entities.MdtCnfgDebitValueTypeEntity;
-import com.bsva.entities.MdtCnfgErrorCodesEntity;
-import com.bsva.entities.MdtCnfgFrequencyCodesEntity;
-import com.bsva.entities.MdtCnfgLocalInstrCodesEntity;
-import com.bsva.entities.MdtCnfgReasonCodesEntity;
-import com.bsva.entities.MdtCnfgRejectReasonCodesEntity;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
-import com.bsva.entities.MdtCnfgSequenceTypeEntity;
-import com.bsva.entities.MdtCnfgSeverityCodesEntity;
-import com.bsva.entities.MdtCnfgStatusReasonCodesEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
-import com.bsva.entities.MdtOpsProcessControlsEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
-import com.bsva.entities.MdtOpsRefSeqNrPK;
-import com.bsva.entities.MdtOpsServicesEntity;
-import com.bsva.entities.MdtOpsSlaTimesEntity;
-import com.bsva.entities.MdtSysctrlBillingParamEntity;
+import com.bsva.entities.CasOpsDailyBillingEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsFileSizeLimitPK;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsMndtCountPK;
+import com.bsva.entities.CasOpsProcessControlsEntity;
+import com.bsva.entities.CasOpsSchedulerEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsSotEotCtrlPK;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsTransCtrlMsgEntity;
+import com.bsva.entities.CasCnfgAccountTypeEntity;
+import com.bsva.entities.CasCnfgAdjustmentCatEntity;
+import com.bsva.entities.CasCnfgAmendmentCodesEntity;
+import com.bsva.entities.CasCnfgAuthTypeEntity;
+import com.bsva.entities.CasCnfgCurrencyCodesEntity;
+import com.bsva.entities.CasCnfgDebitValueTypeEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
+import com.bsva.entities.CasCnfgFrequencyCodesEntity;
+import com.bsva.entities.CasCnfgLocalInstrCodesEntity;
+import com.bsva.entities.CasCnfgReasonCodesEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
+import com.bsva.entities.CasCnfgSequenceTypeEntity;
+import com.bsva.entities.CasCnfgSeverityCodesEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsRefSeqNrPK;
+import com.bsva.entities.CasOpsServicesEntity;
+import com.bsva.entities.CasOpsSlaTimesEntity;
 import com.bsva.entities.OutSotEotEntityModel;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.entities.SysCisBranchEntity;
@@ -123,9 +118,9 @@ import org.apache.log4j.Logger;
 public class AdminTranslator {
   public static Logger log = Logger.getLogger(AdminTranslator.class);
 
-  public MdtCnfgLocalInstrCodesEntity translateCommonsInstrumentModelToEntity(
+  public CasCnfgLocalInstrCodesEntity translateCommonsInstrumentModelToEntity(
       LocalInstrumentCodesModel localInstrumentCodesModel) {
-    MdtCnfgLocalInstrCodesEntity mdtLocalInstrEntity = new MdtCnfgLocalInstrCodesEntity();
+    CasCnfgLocalInstrCodesEntity mdtLocalInstrEntity = new CasCnfgLocalInstrCodesEntity();
 
     mdtLocalInstrEntity.setLocalInstrumentCode(localInstrumentCodesModel.getLocalInstrumentCode());
     mdtLocalInstrEntity.setLocalInstrumentDescription(
@@ -140,7 +135,7 @@ public class AdminTranslator {
   }
 
   public LocalInstrumentCodesModel translateLocalInstrumentCodesEntityToCommonsModel(
-      MdtCnfgLocalInstrCodesEntity mdtLocalInstrumentCodesEntity) {
+      CasCnfgLocalInstrCodesEntity mdtLocalInstrumentCodesEntity) {
     LocalInstrumentCodesModel localInstrumentCodesModel = new LocalInstrumentCodesModel();
 
     localInstrumentCodesModel.setLocalInstrumentCode(
@@ -156,9 +151,9 @@ public class AdminTranslator {
     return localInstrumentCodesModel;
   }
 
-  public MdtCnfgReasonCodesEntity transalateCommonsReasonCodesModelToEntity(
+  public CasCnfgReasonCodesEntity transalateCommonsReasonCodesModelToEntity(
       ReasonCodesModel reasonCodesModel) {
-    MdtCnfgReasonCodesEntity mdtReasCodes = new MdtCnfgReasonCodesEntity();
+    CasCnfgReasonCodesEntity mdtReasCodes = new CasCnfgReasonCodesEntity();
 
     mdtReasCodes.setReasonCode(reasonCodesModel.getReasonCode());
     mdtReasCodes.setReasonCodeDescription(reasonCodesModel.getReasonCodeDescription());
@@ -174,7 +169,7 @@ public class AdminTranslator {
 
 
   public ReasonCodesModel transalateReasCodesToCommonsReasonModel(
-      MdtCnfgReasonCodesEntity mdtReasonCodes) {
+      CasCnfgReasonCodesEntity mdtReasonCodes) {
     ReasonCodesModel reasonCodesModel = new ReasonCodesModel();
 
     reasonCodesModel.setReasonCode(mdtReasonCodes.getReasonCode());
@@ -189,9 +184,9 @@ public class AdminTranslator {
     return reasonCodesModel;
   }
 
-  public MdtCnfgSequenceTypeEntity translateCommonsSequenceTypesModelToEntity(
+  public CasCnfgSequenceTypeEntity translateCommonsSequenceTypesModelToEntity(
       SequenceTypesModel sequenceTypesModel) {
-    MdtCnfgSequenceTypeEntity mdtSeqTypeEntity = new MdtCnfgSequenceTypeEntity();
+    CasCnfgSequenceTypeEntity mdtSeqTypeEntity = new CasCnfgSequenceTypeEntity();
 
     mdtSeqTypeEntity.setSeqTypeCode(sequenceTypesModel.getSequenceCode());
     mdtSeqTypeEntity.setSeqTypeDesc(sequenceTypesModel.getSequenceDescription());
@@ -205,7 +200,7 @@ public class AdminTranslator {
 
 
   public SequenceTypesModel translateSequenceTypeEntityToSequenceTypesCommonsModel(
-      MdtCnfgSequenceTypeEntity mdtSequenceTypeEntity) {
+      CasCnfgSequenceTypeEntity mdtSequenceTypeEntity) {
     SequenceTypesModel sequenceTypesModel = new SequenceTypesModel();
 
     sequenceTypesModel.setSequenceCode(mdtSequenceTypeEntity.getSeqTypeCode());
@@ -219,7 +214,7 @@ public class AdminTranslator {
   }
 
   public CurrencyCodesModel translateCurrencyCodesEntityToCommonsModel(
-      MdtCnfgCurrencyCodesEntity mdtCurrencyCodesEntity) {
+      CasCnfgCurrencyCodesEntity mdtCurrencyCodesEntity) {
     CurrencyCodesModel currencyCodesModel = new CurrencyCodesModel();
 
     currencyCodesModel.setAlphaCurrCode(mdtCurrencyCodesEntity.getAlphaCurrCode());
@@ -236,7 +231,7 @@ public class AdminTranslator {
   }
 
   public DebitValueTypeModel translateDebitValueTypeEntityToCommonsModel(
-      MdtCnfgDebitValueTypeEntity mdtDebitValueTypeEntity) {
+      CasCnfgDebitValueTypeEntity mdtDebitValueTypeEntity) {
     DebitValueTypeModel debitValueTypeModel = new DebitValueTypeModel();
 
     debitValueTypeModel.setDebValueTypeCode(mdtDebitValueTypeEntity.getDebValueTypeCode());
@@ -250,9 +245,9 @@ public class AdminTranslator {
     return debitValueTypeModel;
   }
 
-  public MdtCnfgDebitValueTypeEntity translateCommonsDebitValueModelToEntity(
+  public CasCnfgDebitValueTypeEntity translateCommonsDebitValueModelToEntity(
       DebitValueTypeModel debitValueTypeModel) {
-    MdtCnfgDebitValueTypeEntity mdtDebitValueTypeEntity = new MdtCnfgDebitValueTypeEntity();
+    CasCnfgDebitValueTypeEntity mdtDebitValueTypeEntity = new CasCnfgDebitValueTypeEntity();
 
     mdtDebitValueTypeEntity.setDebValueTypeCode(debitValueTypeModel.getDebValueTypeCode());
     mdtDebitValueTypeEntity.setDebValueTypeDescription(debitValueTypeModel.getDebValueTypeDesc());
@@ -265,53 +260,53 @@ public class AdminTranslator {
     return mdtDebitValueTypeEntity;
   }
 
-  public MdtAcOpsTransCtrlMsgEntity translateCommonsAcOpsTransCtrlModelToEntity(
+  public CasOpsTransCtrlMsgEntity translateCommonsAcOpsTransCtrlModelToEntity(
       AcOpsTransCtrlMsgModel acOpsTransCtrlMsgModel) {
 
-    MdtAcOpsTransCtrlMsgEntity mdtAcOpsTransCtrlMsgEntity = new MdtAcOpsTransCtrlMsgEntity();
-    mdtAcOpsTransCtrlMsgEntity.setActiveInd(acOpsTransCtrlMsgModel.getActiveInd());
-    mdtAcOpsTransCtrlMsgEntity.setCtrlMsgId(acOpsTransCtrlMsgModel.getCtrlMsgId());
-    mdtAcOpsTransCtrlMsgEntity.setMemberIdFm(acOpsTransCtrlMsgModel.getMemberIdFm());
-    mdtAcOpsTransCtrlMsgEntity.setMemberIdTo(acOpsTransCtrlMsgModel.getMemberIdTo());
-    mdtAcOpsTransCtrlMsgEntity.setMsgType(acOpsTransCtrlMsgModel.getMsgType());
-    mdtAcOpsTransCtrlMsgEntity.setNrOfFiles(acOpsTransCtrlMsgModel.getNrOfFiles());
-    mdtAcOpsTransCtrlMsgEntity.setNrOfFilesReceived(acOpsTransCtrlMsgModel.getNrOfFilesReceived());
-    mdtAcOpsTransCtrlMsgEntity.setNrOfRecords(acOpsTransCtrlMsgModel.getNrOfRecords());
-    mdtAcOpsTransCtrlMsgEntity.setProcessDate(acOpsTransCtrlMsgModel.getProcessDate());
-    mdtAcOpsTransCtrlMsgEntity.setServiceId(acOpsTransCtrlMsgModel.getServiceId());
-    mdtAcOpsTransCtrlMsgEntity.setSystemStatus(acOpsTransCtrlMsgModel.getSystemStatus());
-    mdtAcOpsTransCtrlMsgEntity.setValidRecordsReceived(
+    CasOpsTransCtrlMsgEntity casOpsTransCtrlMsgEntity = new CasOpsTransCtrlMsgEntity();
+    casOpsTransCtrlMsgEntity.setActiveInd(acOpsTransCtrlMsgModel.getActiveInd());
+    casOpsTransCtrlMsgEntity.setCtrlMsgId(acOpsTransCtrlMsgModel.getCtrlMsgId());
+    casOpsTransCtrlMsgEntity.setMemberIdFm(acOpsTransCtrlMsgModel.getMemberIdFm());
+    casOpsTransCtrlMsgEntity.setMemberIdTo(acOpsTransCtrlMsgModel.getMemberIdTo());
+    casOpsTransCtrlMsgEntity.setMsgType(acOpsTransCtrlMsgModel.getMsgType());
+    casOpsTransCtrlMsgEntity.setNrOfFiles(acOpsTransCtrlMsgModel.getNrOfFiles());
+    casOpsTransCtrlMsgEntity.setNrOfFilesReceived(acOpsTransCtrlMsgModel.getNrOfFilesReceived());
+    casOpsTransCtrlMsgEntity.setNrOfRecords(acOpsTransCtrlMsgModel.getNrOfRecords());
+    casOpsTransCtrlMsgEntity.setProcessDate(acOpsTransCtrlMsgModel.getProcessDate());
+    casOpsTransCtrlMsgEntity.setServiceId(acOpsTransCtrlMsgModel.getServiceId());
+    casOpsTransCtrlMsgEntity.setSystemStatus(acOpsTransCtrlMsgModel.getSystemStatus());
+    casOpsTransCtrlMsgEntity.setValidRecordsReceived(
         acOpsTransCtrlMsgModel.getValidRecordsReceived());
-    mdtAcOpsTransCtrlMsgEntity.setValueOfRecords(acOpsTransCtrlMsgModel.getValueOfRecords());
-    mdtAcOpsTransCtrlMsgEntity.setValueOfRecordsCurr(
+    casOpsTransCtrlMsgEntity.setValueOfRecords(acOpsTransCtrlMsgModel.getValueOfRecords());
+    casOpsTransCtrlMsgEntity.setValueOfRecordsCurr(
         acOpsTransCtrlMsgModel.getValueOfRecordsCurr());
-    return mdtAcOpsTransCtrlMsgEntity;
+    return casOpsTransCtrlMsgEntity;
 
 
   }
 
   public AcOpsTransCtrlMsgModel translateMdtAcOpsTransCtrlMsgEntityToCommons(
-      MdtAcOpsTransCtrlMsgEntity mdtAcOpsTransCtrlMsgEntity) {
+      CasOpsTransCtrlMsgEntity casOpsTransCtrlMsgEntity) {
     AcOpsTransCtrlMsgModel acOpsTransCtrlMsgModel = new AcOpsTransCtrlMsgModel();
 
-    acOpsTransCtrlMsgModel.setActiveInd(mdtAcOpsTransCtrlMsgEntity.getActiveInd());
-    acOpsTransCtrlMsgModel.setCtrlMsgId(mdtAcOpsTransCtrlMsgEntity.getCtrlMsgId());
-    acOpsTransCtrlMsgModel.setMemberIdFm(mdtAcOpsTransCtrlMsgEntity.getMemberIdFm());
-    acOpsTransCtrlMsgModel.setMemberIdTo(mdtAcOpsTransCtrlMsgEntity.getMemberIdTo());
-    acOpsTransCtrlMsgModel.setMsgType(mdtAcOpsTransCtrlMsgEntity.getMsgType());
-    acOpsTransCtrlMsgModel.setNrOfFiles(mdtAcOpsTransCtrlMsgEntity.getNrOfFiles());
-    acOpsTransCtrlMsgModel.setNrOfFilesReceived(mdtAcOpsTransCtrlMsgEntity.getNrOfFilesReceived());
-    acOpsTransCtrlMsgModel.setNrOfRecords(mdtAcOpsTransCtrlMsgEntity.getNrOfRecords());
+    acOpsTransCtrlMsgModel.setActiveInd(casOpsTransCtrlMsgEntity.getActiveInd());
+    acOpsTransCtrlMsgModel.setCtrlMsgId(casOpsTransCtrlMsgEntity.getCtrlMsgId());
+    acOpsTransCtrlMsgModel.setMemberIdFm(casOpsTransCtrlMsgEntity.getMemberIdFm());
+    acOpsTransCtrlMsgModel.setMemberIdTo(casOpsTransCtrlMsgEntity.getMemberIdTo());
+    acOpsTransCtrlMsgModel.setMsgType(casOpsTransCtrlMsgEntity.getMsgType());
+    acOpsTransCtrlMsgModel.setNrOfFiles(casOpsTransCtrlMsgEntity.getNrOfFiles());
+    acOpsTransCtrlMsgModel.setNrOfFilesReceived(casOpsTransCtrlMsgEntity.getNrOfFilesReceived());
+    acOpsTransCtrlMsgModel.setNrOfRecords(casOpsTransCtrlMsgEntity.getNrOfRecords());
     acOpsTransCtrlMsgModel.setNrOfRecordsReceived(
-        mdtAcOpsTransCtrlMsgEntity.getNrOfRecordsReceived());
-    acOpsTransCtrlMsgModel.setProcessDate(mdtAcOpsTransCtrlMsgEntity.getProcessDate());
-    acOpsTransCtrlMsgModel.setServiceId(mdtAcOpsTransCtrlMsgEntity.getServiceId());
-    acOpsTransCtrlMsgModel.setSystemStatus(mdtAcOpsTransCtrlMsgEntity.getSystemStatus());
+        casOpsTransCtrlMsgEntity.getNrOfRecordsReceived());
+    acOpsTransCtrlMsgModel.setProcessDate(casOpsTransCtrlMsgEntity.getProcessDate());
+    acOpsTransCtrlMsgModel.setServiceId(casOpsTransCtrlMsgEntity.getServiceId());
+    acOpsTransCtrlMsgModel.setSystemStatus(casOpsTransCtrlMsgEntity.getSystemStatus());
     acOpsTransCtrlMsgModel.setValidRecordsReceived(
-        mdtAcOpsTransCtrlMsgEntity.getValidRecordsReceived());
-    acOpsTransCtrlMsgModel.setValueOfRecords(mdtAcOpsTransCtrlMsgEntity.getValueOfRecords());
+        casOpsTransCtrlMsgEntity.getValidRecordsReceived());
+    acOpsTransCtrlMsgModel.setValueOfRecords(casOpsTransCtrlMsgEntity.getValueOfRecords());
     acOpsTransCtrlMsgModel.setValueOfRecordsCurr(
-        mdtAcOpsTransCtrlMsgEntity.getValueOfRecordsCurr());
+        casOpsTransCtrlMsgEntity.getValueOfRecordsCurr());
 
     return acOpsTransCtrlMsgModel;
   }
@@ -379,43 +374,43 @@ public class AdminTranslator {
   }
 
   public ConfgSeverityCodesModel translateCnfgSeverityCodesEntityToWebModel(
-      MdtCnfgSeverityCodesEntity mdtCnfgSeverityCodesEntity) {
+      CasCnfgSeverityCodesEntity casCnfgSeverityCodesEntity) {
 
     ConfgSeverityCodesModel confgSeverityCodesModel = new ConfgSeverityCodesModel();
 
-    confgSeverityCodesModel.setSeverityCode(mdtCnfgSeverityCodesEntity.getSeverityCode());
-    confgSeverityCodesModel.setSeverityCodeDesc(mdtCnfgSeverityCodesEntity.getSeverityCodeDesc());
-    confgSeverityCodesModel.setCreatedBy(mdtCnfgSeverityCodesEntity.getCreatedBy());
-    confgSeverityCodesModel.setCreatedDate(mdtCnfgSeverityCodesEntity.getCreatedDate());
-    confgSeverityCodesModel.setModifiedBy(mdtCnfgSeverityCodesEntity.getModifiedBy());
-    confgSeverityCodesModel.setModifiedBy(mdtCnfgSeverityCodesEntity.getModifiedBy());
+    confgSeverityCodesModel.setSeverityCode(casCnfgSeverityCodesEntity.getSeverityCode());
+    confgSeverityCodesModel.setSeverityCodeDesc(casCnfgSeverityCodesEntity.getSeverityCodeDesc());
+    confgSeverityCodesModel.setCreatedBy(casCnfgSeverityCodesEntity.getCreatedBy());
+    confgSeverityCodesModel.setCreatedDate(casCnfgSeverityCodesEntity.getCreatedDate());
+    confgSeverityCodesModel.setModifiedBy(casCnfgSeverityCodesEntity.getModifiedBy());
+    confgSeverityCodesModel.setModifiedBy(casCnfgSeverityCodesEntity.getModifiedBy());
 
     log.debug("Translator CnfgSeverity: " + confgSeverityCodesModel);
     return confgSeverityCodesModel;
   }
 
 
-  public MdtCnfgSeverityCodesEntity translateCommonsConfgSeverityCodesModelToEntity(
+  public CasCnfgSeverityCodesEntity translateCommonsConfgSeverityCodesModelToEntity(
       ConfgSeverityCodesModel confgSeverityCodesModel) {
 
-    MdtCnfgSeverityCodesEntity mdtCnfgSeverityCodesEntity = new MdtCnfgSeverityCodesEntity();
+    CasCnfgSeverityCodesEntity casCnfgSeverityCodesEntity = new CasCnfgSeverityCodesEntity();
 
-    mdtCnfgSeverityCodesEntity.setSeverityCode(confgSeverityCodesModel.getSeverityCode());
-    mdtCnfgSeverityCodesEntity.setSeverityCodeDesc(confgSeverityCodesModel.getSeverityCodeDesc());
-    mdtCnfgSeverityCodesEntity.setCreatedBy(confgSeverityCodesModel.getCreatedBy());
-    mdtCnfgSeverityCodesEntity.setCreatedDate(confgSeverityCodesModel.getCreatedDate());
-    mdtCnfgSeverityCodesEntity.setModifiedBy(confgSeverityCodesModel.getModifiedBy());
-    mdtCnfgSeverityCodesEntity.setModifiedBy(confgSeverityCodesModel.getModifiedBy());
+    casCnfgSeverityCodesEntity.setSeverityCode(confgSeverityCodesModel.getSeverityCode());
+    casCnfgSeverityCodesEntity.setSeverityCodeDesc(confgSeverityCodesModel.getSeverityCodeDesc());
+    casCnfgSeverityCodesEntity.setCreatedBy(confgSeverityCodesModel.getCreatedBy());
+    casCnfgSeverityCodesEntity.setCreatedDate(confgSeverityCodesModel.getCreatedDate());
+    casCnfgSeverityCodesEntity.setModifiedBy(confgSeverityCodesModel.getModifiedBy());
+    casCnfgSeverityCodesEntity.setModifiedBy(confgSeverityCodesModel.getModifiedBy());
 
-    return mdtCnfgSeverityCodesEntity;
+    return casCnfgSeverityCodesEntity;
 
 
   }
 
 
-  public MdtCnfgFrequencyCodesEntity translateCommnsFrequencyCodeModelToEntity(
+  public CasCnfgFrequencyCodesEntity translateCommnsFrequencyCodeModelToEntity(
       FrequencyCodesModel frequencyCodesModel) {
-    MdtCnfgFrequencyCodesEntity mdtFrequencyCodesEntity = new MdtCnfgFrequencyCodesEntity();
+    CasCnfgFrequencyCodesEntity mdtFrequencyCodesEntity = new CasCnfgFrequencyCodesEntity();
 
     mdtFrequencyCodesEntity.setFrequencyCode(frequencyCodesModel.getFrequencyCode());
     mdtFrequencyCodesEntity.setFrequencyCodeDescription(
@@ -431,7 +426,7 @@ public class AdminTranslator {
 
 
   public FrequencyCodesModel translateFrequencyCodesEntityToCommonsModel(
-      MdtCnfgFrequencyCodesEntity mdtFrequencyCodesEntity) {
+      CasCnfgFrequencyCodesEntity mdtFrequencyCodesEntity) {
     FrequencyCodesModel frequencyCodesModel = new FrequencyCodesModel();
 
     frequencyCodesModel.setFrequencyCode(mdtFrequencyCodesEntity.getFrequencyCode());
@@ -448,7 +443,7 @@ public class AdminTranslator {
   }
 
   public CurrencyCodesModel translateCurrCodesToCommonsCurrencyModel(
-      MdtCnfgCurrencyCodesEntity currencyEntity) {
+      CasCnfgCurrencyCodesEntity currencyEntity) {
     CurrencyCodesModel currencyCodesModel = new CurrencyCodesModel();
     currencyCodesModel.setAlphaCurrCode(currencyEntity.getAlphaCurrCode());
     currencyCodesModel.setCountryCode(currencyEntity.getCountryCode());
@@ -463,10 +458,10 @@ public class AdminTranslator {
     return currencyCodesModel;
   }
 
-  public MdtCnfgCurrencyCodesEntity translateCommonsCurrencyCodesModelToEntity(
+  public CasCnfgCurrencyCodesEntity translateCommonsCurrencyCodesModelToEntity(
       CurrencyCodesModel currencyCodesModel) {
 
-    MdtCnfgCurrencyCodesEntity mdtCurrencyCodesEntity = new MdtCnfgCurrencyCodesEntity();
+    CasCnfgCurrencyCodesEntity mdtCurrencyCodesEntity = new CasCnfgCurrencyCodesEntity();
 
     mdtCurrencyCodesEntity.setAlphaCurrCode(currencyCodesModel.getAlphaCurrCode());
     mdtCurrencyCodesEntity.setCountryCode(currencyCodesModel.getCountryCode());
@@ -482,9 +477,9 @@ public class AdminTranslator {
   }
 
 
-  public MdtCnfgErrorCodesEntity translateCommonsErrorModelToEntity(
+  public CasCnfgErrorCodesEntity translateCommonsErrorModelToEntity(
       ConfgErrorCodesModel errorCodesModel) {
-    MdtCnfgErrorCodesEntity mdtErrorEntity = new MdtCnfgErrorCodesEntity();
+    CasCnfgErrorCodesEntity mdtErrorEntity = new CasCnfgErrorCodesEntity();
 
     mdtErrorEntity.setErrorCode(errorCodesModel.getErrorCode());
     mdtErrorEntity.setErrorCodeDesc(errorCodesModel.getErrorDescription());
@@ -500,7 +495,7 @@ public class AdminTranslator {
 
 
   public ConfgErrorCodesModel translateErrorCodesEntityToCommonsModel(
-      MdtCnfgErrorCodesEntity mdtErrorCodesEntity) {
+      CasCnfgErrorCodesEntity mdtErrorCodesEntity) {
     ConfgErrorCodesModel errorCodesModel = new ConfgErrorCodesModel();
 
     errorCodesModel.setErrorCode(mdtErrorCodesEntity.getErrorCode());
@@ -516,7 +511,7 @@ public class AdminTranslator {
   }
 
   public ReasonCodesModel translateReasonCodesEntityToCommonsModel(
-      MdtCnfgReasonCodesEntity mdtReasonCodesEntity) {
+      CasCnfgReasonCodesEntity mdtReasonCodesEntity) {
     ReasonCodesModel reasonCodeModel = new ReasonCodesModel();
 
     reasonCodeModel.setReasonCode(mdtReasonCodesEntity.getReasonCode());
@@ -596,7 +591,7 @@ public class AdminTranslator {
 
 
   public CustomerParametersModel translateCustomerParametersEntityToCommonsModel(
-      MdtOpsCustParamEntity custParamEntity) {
+      CasOpsCustParamEntity custParamEntity) {
     CustomerParametersModel custParamModel = new CustomerParametersModel();
 
     custParamModel.setActiveInd(custParamEntity.getActiveInd());
@@ -605,8 +600,6 @@ public class AdminTranslator {
     custParamModel.setManAmdXsdNs(custParamEntity.getManAmdXsdNs());
     custParamModel.setManCanXsdNs(custParamEntity.getManCanXsdNs());
     custParamModel.setManAccpXsdNs(custParamEntity.getManAccpXsdNs());
-    // custParamModel.setManReqXsdNs(custParamEntity.getManReqXsdNs());
-    custParamModel.setMdtReqIdReuseInd(custParamEntity.getMdtReqIdReuseInd());
     custParamModel.setManStatusRepXsdNs(custParamEntity.getManStatusRepXsdNs());
 
     return custParamModel;
@@ -642,40 +635,40 @@ public class AdminTranslator {
   }
 
 
-  public MdtOpsFileRegEntity translateCommonsOpsFileRegModelToEntity(
+  public CasOpsFileRegEntity translateCommonsOpsFileRegModelToEntity(
       OpsFileRegModel opsFileRegModel) {
 
-    MdtOpsFileRegEntity mdtOpsFileRegEntity = new MdtOpsFileRegEntity();
+    CasOpsFileRegEntity casOpsFileRegEntity = new CasOpsFileRegEntity();
 
-    mdtOpsFileRegEntity.setFileName(opsFileRegModel.getFileName());
-    mdtOpsFileRegEntity.setFilepath(opsFileRegModel.getFilepath());
-    mdtOpsFileRegEntity.setNameSpace(opsFileRegModel.getNameSpace());
-    mdtOpsFileRegEntity.setProcessDate(opsFileRegModel.getProcessDate());
-    mdtOpsFileRegEntity.setReason(opsFileRegModel.getReason());
-    mdtOpsFileRegEntity.setStatus(opsFileRegModel.getStatus());
-    mdtOpsFileRegEntity.setGrpHdrMsgId(opsFileRegModel.getGrpHdrMsgId());
-    mdtOpsFileRegEntity.setExtractMsgId(opsFileRegModel.getExtractMsgId());
-    mdtOpsFileRegEntity.setInOutInd(opsFileRegModel.getInOutInd());
-    mdtOpsFileRegEntity.setOnlineInd(opsFileRegModel.getOnlineInd());
+    casOpsFileRegEntity.setFileName(opsFileRegModel.getFileName());
+    casOpsFileRegEntity.setFilepath(opsFileRegModel.getFilepath());
+    casOpsFileRegEntity.setNameSpace(opsFileRegModel.getNameSpace());
+    casOpsFileRegEntity.setProcessDate(opsFileRegModel.getProcessDate());
+    casOpsFileRegEntity.setReason(opsFileRegModel.getReason());
+    casOpsFileRegEntity.setStatus(opsFileRegModel.getStatus());
+    casOpsFileRegEntity.setGrpHdrMsgId(opsFileRegModel.getGrpHdrMsgId());
+    casOpsFileRegEntity.setExtractMsgId(opsFileRegModel.getExtractMsgId());
+    casOpsFileRegEntity.setInOutInd(opsFileRegModel.getInOutInd());
+    casOpsFileRegEntity.setOnlineInd(opsFileRegModel.getOnlineInd());
 
 
-    return mdtOpsFileRegEntity;
+    return casOpsFileRegEntity;
   }
 
   public OpsFileRegModel translateCommonsToOpsFileRegEntity(
-      MdtOpsFileRegEntity mdtOpsFileRegEntity) {
+      CasOpsFileRegEntity casOpsFileRegEntity) {
     OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
 
-    opsFileRegModel.setFileName(mdtOpsFileRegEntity.getFileName());
-    opsFileRegModel.setFilepath(mdtOpsFileRegEntity.getFilepath());
-    opsFileRegModel.setNameSpace(mdtOpsFileRegEntity.getNameSpace());
-    opsFileRegModel.setProcessDate(mdtOpsFileRegEntity.getProcessDate());
-    opsFileRegModel.setReason(mdtOpsFileRegEntity.getReason());
-    opsFileRegModel.setStatus(mdtOpsFileRegEntity.getStatus());
-    opsFileRegModel.setGrpHdrMsgId(mdtOpsFileRegEntity.getGrpHdrMsgId());
-    opsFileRegModel.setExtractMsgId(mdtOpsFileRegEntity.getExtractMsgId());
-    opsFileRegModel.setInOutInd(mdtOpsFileRegEntity.getInOutInd());
-    opsFileRegModel.setOnlineInd(mdtOpsFileRegEntity.getOnlineInd());
+    opsFileRegModel.setFileName(casOpsFileRegEntity.getFileName());
+    opsFileRegModel.setFilepath(casOpsFileRegEntity.getFilepath());
+    opsFileRegModel.setNameSpace(casOpsFileRegEntity.getNameSpace());
+    opsFileRegModel.setProcessDate(casOpsFileRegEntity.getProcessDate());
+    opsFileRegModel.setReason(casOpsFileRegEntity.getReason());
+    opsFileRegModel.setStatus(casOpsFileRegEntity.getStatus());
+    opsFileRegModel.setGrpHdrMsgId(casOpsFileRegEntity.getGrpHdrMsgId());
+    opsFileRegModel.setExtractMsgId(casOpsFileRegEntity.getExtractMsgId());
+    opsFileRegModel.setInOutInd(casOpsFileRegEntity.getInOutInd());
+    opsFileRegModel.setOnlineInd(casOpsFileRegEntity.getOnlineInd());
 
     return opsFileRegModel;
   }
@@ -781,7 +774,7 @@ public class AdminTranslator {
 //	}
 
   public OpsCustParamModel translateMdtOpsCustParamEntityToCommonsModel(
-      MdtOpsCustParamEntity localEntity) {
+      CasOpsCustParamEntity localEntity) {
 
     OpsCustParamModel opsCustParaModel = new OpsCustParamModel();
 
@@ -800,11 +793,9 @@ public class AdminTranslator {
     opsCustParaModel.setManCanLastFileNr(localEntity.getManCanLastFileNr());
     opsCustParaModel.setManCanLstSeq(localEntity.getManCanLstSeq());
     opsCustParaModel.setManCanXsdNs(localEntity.getManCanXsdNs());
-    opsCustParaModel.setMdtReqIdReuseInd(localEntity.getMdtReqIdReuseInd());
     opsCustParaModel.setManInitLastFileNr(localEntity.getManInitLastFileNr());
     opsCustParaModel.setManInitLstSeq(localEntity.getManInitLstSeq());
     opsCustParaModel.setManInitXsdNs(localEntity.getManInitXsdNs());
-    opsCustParaModel.setMdtReqIdReuseInd(localEntity.getMdtReqIdReuseInd());
     opsCustParaModel.setManStatusRepLastFileNr(localEntity.getManStatusRepLastFileNr());
     opsCustParaModel.setManStatusRepLstSeq(localEntity.getManStatusRepLstSeq());
     opsCustParaModel.setManStatusRepXsdNs(localEntity.getManStatusRepXsdNs());
@@ -823,43 +814,41 @@ public class AdminTranslator {
 
   }
 
-  public MdtOpsCustParamEntity translateOpsCustParamToEntity(OpsCustParamModel opsCustParaModel) {
-    MdtOpsCustParamEntity mdtOpsCustParamEntity = new MdtOpsCustParamEntity();
+  public CasOpsCustParamEntity translateOpsCustParamToEntity(OpsCustParamModel opsCustParaModel) {
+    CasOpsCustParamEntity casOpsCustParamEntity = new CasOpsCustParamEntity();
 
 
-    mdtOpsCustParamEntity.setActiveInd(opsCustParaModel.getActiveInd());
-    mdtOpsCustParamEntity.setManAccpLstSeq(opsCustParaModel.getManAccpLstSeq());
-    mdtOpsCustParamEntity.setInstId(opsCustParaModel.getInstId());
-    mdtOpsCustParamEntity.setCreatedBy(opsCustParaModel.getCreatedBy());
-    mdtOpsCustParamEntity.setCreatedDate(opsCustParaModel.getCreatedDate());
-    mdtOpsCustParamEntity.setManAccpLastFileNr(opsCustParaModel.getManAccpLastFileNr());
-    mdtOpsCustParamEntity.setManAccpLastFileNr(opsCustParaModel.getManAccpLastFileNr());
-    mdtOpsCustParamEntity.setManAccpXsdNs(opsCustParaModel.getManAccpXsdNs());
-    mdtOpsCustParamEntity.setManAmdLastFileNr(opsCustParaModel.getManAmdLastFileNr());
-    mdtOpsCustParamEntity.setManAmdLstSeq(opsCustParaModel.getManAmdLstSeq());
-    mdtOpsCustParamEntity.setManAmdXsdNs(opsCustParaModel.getManAmdXsdNs());
-    mdtOpsCustParamEntity.setManCanLastFileNr(opsCustParaModel.getManCanLastFileNr());
-    mdtOpsCustParamEntity.setManCanLstSeq(opsCustParaModel.getManCanLstSeq());
-    mdtOpsCustParamEntity.setManCanXsdNs(opsCustParaModel.getManCanXsdNs());
-    mdtOpsCustParamEntity.setMdtReqIdReuseInd(opsCustParaModel.getMdtReqIdReuseInd());
-    mdtOpsCustParamEntity.setManInitLastFileNr(opsCustParaModel.getManInitLastFileNr());
-    mdtOpsCustParamEntity.setManInitLstSeq(opsCustParaModel.getManInitLstSeq());
-    mdtOpsCustParamEntity.setManInitXsdNs(opsCustParaModel.getManInitXsdNs());
-    mdtOpsCustParamEntity.setMdtReqIdReuseInd(opsCustParaModel.getMdtReqIdReuseInd());
-    mdtOpsCustParamEntity.setManStatusRepLastFileNr(opsCustParaModel.getManStatusRepLastFileNr());
-    mdtOpsCustParamEntity.setManStatusRepLstSeq(opsCustParaModel.getManStatusRepLstSeq());
-    mdtOpsCustParamEntity.setManStatusRepXsdNs(opsCustParaModel.getManStatusRepXsdNs());
-    mdtOpsCustParamEntity.setManConfirmXsdNs(opsCustParaModel.getManConfirmXsdNs());
-    mdtOpsCustParamEntity.setManConfirmLstSeq(opsCustParaModel.getManConfirmLstSeq());
-    mdtOpsCustParamEntity.setManConfirmLstFileNr(opsCustParaModel.getManConfirmLstFileNr());
-    mdtOpsCustParamEntity.setManReqXsdNs(opsCustParaModel.getManReqXsdNs());
-    mdtOpsCustParamEntity.setManReqLastFileNr(opsCustParaModel.getManReqLastFileNr());
-    mdtOpsCustParamEntity.setManReqLstSeq(opsCustParaModel.getManReqLstSeq());
-    mdtOpsCustParamEntity.setManRespXsdNs(opsCustParaModel.getManRespXsdNs());
-    mdtOpsCustParamEntity.setManRespLstSeq(opsCustParaModel.getManRespLstSeq());
-    mdtOpsCustParamEntity.setManRespLastFileNr(opsCustParaModel.getManRespLastFileNr());
+    casOpsCustParamEntity.setActiveInd(opsCustParaModel.getActiveInd());
+    casOpsCustParamEntity.setManAccpLstSeq(opsCustParaModel.getManAccpLstSeq());
+    casOpsCustParamEntity.setInstId(opsCustParaModel.getInstId());
+    casOpsCustParamEntity.setCreatedBy(opsCustParaModel.getCreatedBy());
+    casOpsCustParamEntity.setCreatedDate(opsCustParaModel.getCreatedDate());
+    casOpsCustParamEntity.setManAccpLastFileNr(opsCustParaModel.getManAccpLastFileNr());
+    casOpsCustParamEntity.setManAccpLastFileNr(opsCustParaModel.getManAccpLastFileNr());
+    casOpsCustParamEntity.setManAccpXsdNs(opsCustParaModel.getManAccpXsdNs());
+    casOpsCustParamEntity.setManAmdLastFileNr(opsCustParaModel.getManAmdLastFileNr());
+    casOpsCustParamEntity.setManAmdLstSeq(opsCustParaModel.getManAmdLstSeq());
+    casOpsCustParamEntity.setManAmdXsdNs(opsCustParaModel.getManAmdXsdNs());
+    casOpsCustParamEntity.setManCanLastFileNr(opsCustParaModel.getManCanLastFileNr());
+    casOpsCustParamEntity.setManCanLstSeq(opsCustParaModel.getManCanLstSeq());
+    casOpsCustParamEntity.setManCanXsdNs(opsCustParaModel.getManCanXsdNs());
+    casOpsCustParamEntity.setManInitLastFileNr(opsCustParaModel.getManInitLastFileNr());
+    casOpsCustParamEntity.setManInitLstSeq(opsCustParaModel.getManInitLstSeq());
+    casOpsCustParamEntity.setManInitXsdNs(opsCustParaModel.getManInitXsdNs());
+    casOpsCustParamEntity.setManStatusRepLastFileNr(opsCustParaModel.getManStatusRepLastFileNr());
+    casOpsCustParamEntity.setManStatusRepLstSeq(opsCustParaModel.getManStatusRepLstSeq());
+    casOpsCustParamEntity.setManStatusRepXsdNs(opsCustParaModel.getManStatusRepXsdNs());
+    casOpsCustParamEntity.setManConfirmXsdNs(opsCustParaModel.getManConfirmXsdNs());
+    casOpsCustParamEntity.setManConfirmLstSeq(opsCustParaModel.getManConfirmLstSeq());
+    casOpsCustParamEntity.setManConfirmLstFileNr(opsCustParaModel.getManConfirmLstFileNr());
+    casOpsCustParamEntity.setManReqXsdNs(opsCustParaModel.getManReqXsdNs());
+    casOpsCustParamEntity.setManReqLastFileNr(opsCustParaModel.getManReqLastFileNr());
+    casOpsCustParamEntity.setManReqLstSeq(opsCustParaModel.getManReqLstSeq());
+    casOpsCustParamEntity.setManRespXsdNs(opsCustParaModel.getManRespXsdNs());
+    casOpsCustParamEntity.setManRespLstSeq(opsCustParaModel.getManRespLstSeq());
+    casOpsCustParamEntity.setManRespLastFileNr(opsCustParaModel.getManRespLastFileNr());
 
-    return mdtOpsCustParamEntity;
+    return casOpsCustParamEntity;
   }
 
   public MdtSysCtrlSysParamModel translateMdtSysCtrlSysParamEntityToCommonsModel(
@@ -885,35 +874,35 @@ public class AdminTranslator {
   }
 
   public ReportsNamesModel translateReportNamesEntityToCommonsModel(
-      MdtCnfgReportNamesEntity mdtCnfgReportNamesEntity) {
+      CasCnfgReportNamesEntity casCnfgReportNamesEntity) {
     ReportsNamesModel reportsNamesModel = new ReportsNamesModel();
 
-    reportsNamesModel.setActiveInd(mdtCnfgReportNamesEntity.getActiveInd());
-    reportsNamesModel.setReportName(mdtCnfgReportNamesEntity.getReportName());
-    reportsNamesModel.setReportNr(mdtCnfgReportNamesEntity.getReportNr());
-    reportsNamesModel.setInternalInd(mdtCnfgReportNamesEntity.getInternalInd());
-    reportsNamesModel.setCreatedBy(mdtCnfgReportNamesEntity.getCreatedBy());
-    reportsNamesModel.setCreatedDate(mdtCnfgReportNamesEntity.getCreatedDate());
-    reportsNamesModel.setModifiedBy(mdtCnfgReportNamesEntity.getModifiedBy());
-    reportsNamesModel.setModifiedDate(mdtCnfgReportNamesEntity.getModifiedDate());
+    reportsNamesModel.setActiveInd(casCnfgReportNamesEntity.getActiveInd());
+    reportsNamesModel.setReportName(casCnfgReportNamesEntity.getReportName());
+    reportsNamesModel.setReportNr(casCnfgReportNamesEntity.getReportNr());
+    reportsNamesModel.setInternalInd(casCnfgReportNamesEntity.getInternalInd());
+    reportsNamesModel.setCreatedBy(casCnfgReportNamesEntity.getCreatedBy());
+    reportsNamesModel.setCreatedDate(casCnfgReportNamesEntity.getCreatedDate());
+    reportsNamesModel.setModifiedBy(casCnfgReportNamesEntity.getModifiedBy());
+    reportsNamesModel.setModifiedDate(casCnfgReportNamesEntity.getModifiedDate());
 
     return reportsNamesModel;
   }
 
-  public MdtCnfgReportNamesEntity translateCommnsReportNamesModelToEntity(
+  public CasCnfgReportNamesEntity translateCommnsReportNamesModelToEntity(
       ReportsNamesModel reportsNamesModel) {
-    MdtCnfgReportNamesEntity mdtCnfgReportNamesEntity = new MdtCnfgReportNamesEntity();
+    CasCnfgReportNamesEntity casCnfgReportNamesEntity = new CasCnfgReportNamesEntity();
 
-    mdtCnfgReportNamesEntity.setActiveInd(reportsNamesModel.getActiveInd());
-    mdtCnfgReportNamesEntity.setReportName(reportsNamesModel.getReportName());
-    mdtCnfgReportNamesEntity.setReportNr(reportsNamesModel.getReportNr());
-    mdtCnfgReportNamesEntity.setInternalInd(reportsNamesModel.getInternalInd());
-    mdtCnfgReportNamesEntity.setCreatedBy(reportsNamesModel.getCreatedBy());
-    mdtCnfgReportNamesEntity.setCreatedDate(reportsNamesModel.getCreatedDate());
-    mdtCnfgReportNamesEntity.setModifiedBy(reportsNamesModel.getModifiedBy());
-    mdtCnfgReportNamesEntity.setModifiedDate(reportsNamesModel.getModifiedDate());
+    casCnfgReportNamesEntity.setActiveInd(reportsNamesModel.getActiveInd());
+    casCnfgReportNamesEntity.setReportName(reportsNamesModel.getReportName());
+    casCnfgReportNamesEntity.setReportNr(reportsNamesModel.getReportNr());
+    casCnfgReportNamesEntity.setInternalInd(reportsNamesModel.getInternalInd());
+    casCnfgReportNamesEntity.setCreatedBy(reportsNamesModel.getCreatedBy());
+    casCnfgReportNamesEntity.setCreatedDate(reportsNamesModel.getCreatedDate());
+    casCnfgReportNamesEntity.setModifiedBy(reportsNamesModel.getModifiedBy());
+    casCnfgReportNamesEntity.setModifiedDate(reportsNamesModel.getModifiedDate());
 
-    return mdtCnfgReportNamesEntity;
+    return casCnfgReportNamesEntity;
   }
 
   public CasSysctrlCompParamEntity translateSysctrlCompEntityToCommonsModel(
@@ -1063,61 +1052,25 @@ public class AdminTranslator {
     return mdtSysctrlCompParamEntity;
   }
 
-  public MdtCnfgRejectReasonCodesEntity transalateCommonsRejectReasonCodesModelToEntity(
-      CnfgRejectReasonCodesModel rejectReasonCodesModel) {
-    MdtCnfgRejectReasonCodesEntity mdtCnfgRejectReasonCodesEntity =
-        new MdtCnfgRejectReasonCodesEntity();
-    mdtCnfgRejectReasonCodesEntity.setRejectReasonCode(
-        rejectReasonCodesModel.getRejectReasonCode());
-    mdtCnfgRejectReasonCodesEntity.setRejectReasonDesc(
-        rejectReasonCodesModel.getRejectReasonDesc());
-    mdtCnfgRejectReasonCodesEntity.setActiveInd(rejectReasonCodesModel.getActiveInd());
-    mdtCnfgRejectReasonCodesEntity.setCreatedBy(rejectReasonCodesModel.getCreatedBy());
-    mdtCnfgRejectReasonCodesEntity.setCreatedDate(rejectReasonCodesModel.getCreatedDate());
-    mdtCnfgRejectReasonCodesEntity.setModifiedBy(rejectReasonCodesModel.getModifiedBy());
-    mdtCnfgRejectReasonCodesEntity.setModifiedDate(rejectReasonCodesModel.getModifiedDate());
-
-    return mdtCnfgRejectReasonCodesEntity;
-  }
-
-
-  public CnfgRejectReasonCodesModel transalateCnfgRejectReasonCodesEntityToCommonsRejectReasonModel(
-      MdtCnfgRejectReasonCodesEntity mdtCnfgRejectReasonCodesEntity) {
-    CnfgRejectReasonCodesModel rejectReasonCodesModel = new CnfgRejectReasonCodesModel();
-
-    rejectReasonCodesModel.setRejectReasonCode(
-        mdtCnfgRejectReasonCodesEntity.getRejectReasonCode());
-    rejectReasonCodesModel.setRejectReasonDesc(
-        mdtCnfgRejectReasonCodesEntity.getRejectReasonDesc());
-    rejectReasonCodesModel.setActiveInd(mdtCnfgRejectReasonCodesEntity.getActiveInd());
-    rejectReasonCodesModel.setCreatedBy(mdtCnfgRejectReasonCodesEntity.getCreatedBy());
-    rejectReasonCodesModel.setCreatedDate(mdtCnfgRejectReasonCodesEntity.getCreatedDate());
-    rejectReasonCodesModel.setModifiedBy(mdtCnfgRejectReasonCodesEntity.getModifiedBy());
-    rejectReasonCodesModel.setModifiedDate(mdtCnfgRejectReasonCodesEntity.getModifiedDate());
-
-    return rejectReasonCodesModel;
-
-  }
-
   public CnfgAuthTypeModel translateCnfgAuthTypeEntityToCommonsModel(
-      MdtCnfgAuthTypeEntity mdtCnfgAuthTypeEntity) {
+      CasCnfgAuthTypeEntity casCnfgAuthTypeEntity) {
     CnfgAuthTypeModel authTypeModel = new CnfgAuthTypeModel();
 
-    authTypeModel.setActiveInd(mdtCnfgAuthTypeEntity.getActiveInd());
-    authTypeModel.setAuthType(mdtCnfgAuthTypeEntity.getAuthType());
-    authTypeModel.setAuthTypeDescription(mdtCnfgAuthTypeEntity.getAuthTypeDescription());
+    authTypeModel.setActiveInd(casCnfgAuthTypeEntity.getActiveInd());
+    authTypeModel.setAuthType(casCnfgAuthTypeEntity.getAuthType());
+    authTypeModel.setAuthTypeDescription(casCnfgAuthTypeEntity.getAuthTypeDescription());
 
     return authTypeModel;
   }
 
-  public MdtCnfgAuthTypeEntity translateCommnsAuthtypeModelToEntity(
+  public CasCnfgAuthTypeEntity translateCommnsAuthtypeModelToEntity(
       CnfgAuthTypeModel CnfgAuthTypeModel) {
-    MdtCnfgAuthTypeEntity mdtCnfgAuthTypeEntity = new MdtCnfgAuthTypeEntity();
+    CasCnfgAuthTypeEntity casCnfgAuthTypeEntity = new CasCnfgAuthTypeEntity();
 
-    mdtCnfgAuthTypeEntity.setActiveInd(CnfgAuthTypeModel.getActiveInd());
-    mdtCnfgAuthTypeEntity.setAuthType(CnfgAuthTypeModel.getAuthType());
-    mdtCnfgAuthTypeEntity.setAuthTypeDescription(CnfgAuthTypeModel.getAuthTypeDescription());
-    return mdtCnfgAuthTypeEntity;
+    casCnfgAuthTypeEntity.setActiveInd(CnfgAuthTypeModel.getActiveInd());
+    casCnfgAuthTypeEntity.setAuthType(CnfgAuthTypeModel.getAuthType());
+    casCnfgAuthTypeEntity.setAuthTypeDescription(CnfgAuthTypeModel.getAuthTypeDescription());
+    return casCnfgAuthTypeEntity;
   }
 
 
@@ -1187,9 +1140,9 @@ public class AdminTranslator {
 //		}
 
 
-  public MdtOpsServicesEntity transalateCommonsServicesModelToEntity(ServicesModel servicesModel) {
+  public CasOpsServicesEntity transalateCommonsServicesModelToEntity(ServicesModel servicesModel) {
 
-    MdtOpsServicesEntity servicesEntity = new MdtOpsServicesEntity();
+    CasOpsServicesEntity servicesEntity = new CasOpsServicesEntity();
 
     servicesEntity.setCreatedBy(servicesModel.getCreatedBy());
     servicesEntity.setCreatedDate(servicesModel.getCreatedDate());
@@ -1212,31 +1165,31 @@ public class AdminTranslator {
 
 
   public ServicesModel translateMdtOpsServicesEntityToCommonsModel(
-      MdtOpsServicesEntity mdtOpsServicesEntity) {
+      CasOpsServicesEntity casOpsServicesEntity) {
 
     ServicesModel servicesModel = new ServicesModel();
 
-    servicesModel.setCreatedBy(mdtOpsServicesEntity.getCreatedBy());
-    servicesModel.setCreatedDate(mdtOpsServicesEntity.getCreatedDate());
-    servicesModel.setModifiedBy(mdtOpsServicesEntity.getModifiedBy());
-    servicesModel.setModifiedDate(mdtOpsServicesEntity.getModifiedDate());
-    servicesModel.setRecordId(mdtOpsServicesEntity.getRecordId());
-    servicesModel.setServiceIdIn(mdtOpsServicesEntity.getServiceIdIn());
-    servicesModel.setServiceIdInDesc(mdtOpsServicesEntity.getServiceIdInDesc());
-    servicesModel.setServiceIdOut(mdtOpsServicesEntity.getServiceIdOut());
-    servicesModel.setServiceIdOutDesc(mdtOpsServicesEntity.getServiceIdOutDesc());
-    servicesModel.setProcessDate(mdtOpsServicesEntity.getProcessDate());
-    servicesModel.setProcessStatus(mdtOpsServicesEntity.getProcessStatus());
-    servicesModel.setServiceIdOutSlaTime(mdtOpsServicesEntity.getServiceIdOutSlaTime());
-    servicesModel.setActiveInd(mdtOpsServicesEntity.getActiveInd());
-    servicesModel.setMsgTypeId(mdtOpsServicesEntity.getMsgTypeId());
+    servicesModel.setCreatedBy(casOpsServicesEntity.getCreatedBy());
+    servicesModel.setCreatedDate(casOpsServicesEntity.getCreatedDate());
+    servicesModel.setModifiedBy(casOpsServicesEntity.getModifiedBy());
+    servicesModel.setModifiedDate(casOpsServicesEntity.getModifiedDate());
+    servicesModel.setRecordId(casOpsServicesEntity.getRecordId());
+    servicesModel.setServiceIdIn(casOpsServicesEntity.getServiceIdIn());
+    servicesModel.setServiceIdInDesc(casOpsServicesEntity.getServiceIdInDesc());
+    servicesModel.setServiceIdOut(casOpsServicesEntity.getServiceIdOut());
+    servicesModel.setServiceIdOutDesc(casOpsServicesEntity.getServiceIdOutDesc());
+    servicesModel.setProcessDate(casOpsServicesEntity.getProcessDate());
+    servicesModel.setProcessStatus(casOpsServicesEntity.getProcessStatus());
+    servicesModel.setServiceIdOutSlaTime(casOpsServicesEntity.getServiceIdOutSlaTime());
+    servicesModel.setActiveInd(casOpsServicesEntity.getActiveInd());
+    servicesModel.setMsgTypeId(casOpsServicesEntity.getMsgTypeId());
 
     return servicesModel;
   }
 
-  public MdtAcOpsStatusHdrsEntity translateCommonsOpsStatusHdrsModelToEntity(
+  public CasOpsStatusHdrsEntity translateCommonsOpsStatusHdrsModelToEntity(
       OpsStatusHdrsModel opsStatusHdrsModel) {
-    MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity = new MdtAcOpsStatusHdrsEntity();
+    CasOpsStatusHdrsEntity opsStatusHdrsEntity = new CasOpsStatusHdrsEntity();
 
     opsStatusHdrsEntity.setSystemSeqNo(opsStatusHdrsModel.getSystemSeqNo());
     opsStatusHdrsEntity.setHdrMsgId(opsStatusHdrsModel.getHdrMsgId());
@@ -1260,7 +1213,7 @@ public class AdminTranslator {
 
 
   public OpsStatusHdrsModel translateOpsStatusHdrsEntityToCommonsModel(
-      MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity) {
+      CasOpsStatusHdrsEntity opsStatusHdrsEntity) {
 
     OpsStatusHdrsModel opsStatusHdrsModel = new OpsStatusHdrsModel();
 
@@ -1284,9 +1237,9 @@ public class AdminTranslator {
     return opsStatusHdrsModel;
   }
 
-  public MdtAcOpsStatusDetailsEntity translateCommonsOpsStatusDetailsModelToEntity(
+  public CasOpsStatusDetailsEntity translateCommonsOpsStatusDetailsModelToEntity(
       OpsStatusDetailsModel opsStatusDetailsModel) {
-    MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity = new MdtAcOpsStatusDetailsEntity();
+    CasOpsStatusDetailsEntity opsStatusDetailsEntity = new CasOpsStatusDetailsEntity();
 
     opsStatusDetailsEntity.setSystemSeqNo(opsStatusDetailsModel.getSystemSeqNo());
     opsStatusDetailsEntity.setStatusHdrSeqNo(opsStatusDetailsModel.getStatusHdrSeqNo());
@@ -1309,7 +1262,7 @@ public class AdminTranslator {
 
 
   public OpsStatusDetailsModel translateOpsStatusDetailsEntityToCommonsModel(
-      MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity) {
+      CasOpsStatusDetailsEntity opsStatusDetailsEntity) {
     OpsStatusDetailsModel opsStatusDetailsModel = new OpsStatusDetailsModel();
 
     opsStatusDetailsModel.setSystemSeqNo(opsStatusDetailsEntity.getSystemSeqNo());
@@ -1328,41 +1281,41 @@ public class AdminTranslator {
     return opsStatusDetailsModel;
   }
 
-  public MdtAcOpsMndtCountEntity translateCommonsMdtModelCountToEntity(
+  public CasOpsMndtCountEntity translateCommonsMdtModelCountToEntity(
       MandatesCountCommonsModel mandateCountModel) {
 
-    MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = new MdtAcOpsMndtCountEntity();
-    MdtAcOpsMndtCountPK mdtOpsMndtCountPK = new MdtAcOpsMndtCountPK();
-    mdtOpsMndtCountPK.setInstId(mandateCountModel.getInstId());
-    mdtOpsMndtCountPK.setMsgId(mandateCountModel.getMsgId());
-    mdtOpsMndtCountPK.setServiceId(mandateCountModel.getServiceId());
-    mdtOpsMndtCountEntity.setMdtAcOpsMndtCountPK(mdtOpsMndtCountPK);
-    mdtOpsMndtCountEntity.setFileName(mandateCountModel.getFileName());
-    mdtOpsMndtCountEntity.setIncoming(mandateCountModel.getIncoming());
-    mdtOpsMndtCountEntity.setNrOfFiles(mandateCountModel.getNrOfFiles());
-    mdtOpsMndtCountEntity.setNrOfMsgs(mandateCountModel.getNrOfMsgs());
-    mdtOpsMndtCountEntity.setOutgoing(mandateCountModel.getOutgoing());
-    mdtOpsMndtCountEntity.setNrMsgsRejected(mandateCountModel.getNrMsgsRejected());
-    mdtOpsMndtCountEntity.setProcessDate(mandateCountModel.getProcessDate());
-    mdtOpsMndtCountEntity.setNrMsgsAccepted(mandateCountModel.getNrMsgsAccepted());
-    mdtOpsMndtCountEntity.setNrMsgsExtracted(mandateCountModel.getNrMsgsExtracted());
-    return mdtOpsMndtCountEntity;
+    CasOpsMndtCountEntity casOpsMndtCountEntity = new CasOpsMndtCountEntity();
+    CasOpsMndtCountPK casOpsMndtCountPK = new CasOpsMndtCountPK();
+    casOpsMndtCountPK.setInstId(mandateCountModel.getInstId());
+    casOpsMndtCountPK.setMsgId(mandateCountModel.getMsgId());
+    casOpsMndtCountPK.setServiceId(mandateCountModel.getServiceId());
+    casOpsMndtCountEntity.setCasOpsMndtCountPK(casOpsMndtCountPK);
+    casOpsMndtCountEntity.setFileName(mandateCountModel.getFileName());
+    casOpsMndtCountEntity.setIncoming(mandateCountModel.getIncoming());
+    casOpsMndtCountEntity.setNrOfFiles(mandateCountModel.getNrOfFiles());
+    casOpsMndtCountEntity.setNrOfMsgs(mandateCountModel.getNrOfMsgs());
+    casOpsMndtCountEntity.setOutgoing(mandateCountModel.getOutgoing());
+    casOpsMndtCountEntity.setNrMsgsRejected(mandateCountModel.getNrMsgsRejected());
+    casOpsMndtCountEntity.setProcessDate(mandateCountModel.getProcessDate());
+    casOpsMndtCountEntity.setNrMsgsAccepted(mandateCountModel.getNrMsgsAccepted());
+    casOpsMndtCountEntity.setNrMsgsExtracted(mandateCountModel.getNrMsgsExtracted());
+    return casOpsMndtCountEntity;
 
 
   }
 
 
   public MandatesCountCommonsModel translateMdtOpsMndtCountEntityToCommonsModel(
-      MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity) {
+      CasOpsMndtCountEntity mdtOpsMndtCountEntity) {
 
     MandatesCountCommonsModel mandatesCountCommonsModel = new MandatesCountCommonsModel();
 
     mandatesCountCommonsModel.setFileName(mdtOpsMndtCountEntity.getFileName());
     mandatesCountCommonsModel.setProcessDate(mdtOpsMndtCountEntity.getProcessDate());
-    mandatesCountCommonsModel.setInstId(mdtOpsMndtCountEntity.getMdtAcOpsMndtCountPK().getInstId());
+    mandatesCountCommonsModel.setInstId(mdtOpsMndtCountEntity.getCasOpsMndtCountPK().getInstId());
     mandatesCountCommonsModel.setServiceId(
-        mdtOpsMndtCountEntity.getMdtAcOpsMndtCountPK().getServiceId());
-    mandatesCountCommonsModel.setMsgId(mdtOpsMndtCountEntity.getMdtAcOpsMndtCountPK().getMsgId());
+        mdtOpsMndtCountEntity.getCasOpsMndtCountPK().getServiceId());
+    mandatesCountCommonsModel.setMsgId(mdtOpsMndtCountEntity.getCasOpsMndtCountPK().getMsgId());
     mandatesCountCommonsModel.setIncoming(mdtOpsMndtCountEntity.getIncoming());
     mandatesCountCommonsModel.setNrOfFiles(mdtOpsMndtCountEntity.getNrOfFiles());
     mandatesCountCommonsModel.setNrOfMsgs(mdtOpsMndtCountEntity.getNrOfMsgs());
@@ -1378,7 +1331,7 @@ public class AdminTranslator {
   }
 
   public AdjustmentCategoryModel translateMdtCnfgAdjustmentCatEntityToCommonsModel(
-      MdtCnfgAdjustmentCatEntity localEntity) {
+      CasCnfgAdjustmentCatEntity localEntity) {
 
     AdjustmentCategoryModel adjustmentCategoryModel = new AdjustmentCategoryModel();
 
@@ -1393,45 +1346,45 @@ public class AdminTranslator {
     return adjustmentCategoryModel;
   }
 
-  public MdtCnfgAdjustmentCatEntity translateCommnsAdjustmentCategoryModelToEntity(
+  public CasCnfgAdjustmentCatEntity translateCommnsAdjustmentCategoryModelToEntity(
       AdjustmentCategoryModel adjustmentCategoryModel) {
 
-    MdtCnfgAdjustmentCatEntity mdtCnfgAdjustmentCatEntity = new MdtCnfgAdjustmentCatEntity();
+    CasCnfgAdjustmentCatEntity casCnfgAdjustmentCatEntity = new CasCnfgAdjustmentCatEntity();
 
-    mdtCnfgAdjustmentCatEntity.setAdjustmentCategory(
+    casCnfgAdjustmentCatEntity.setAdjustmentCategory(
         adjustmentCategoryModel.getAdjustmentCategory());
-    mdtCnfgAdjustmentCatEntity.setAdjustmentCategoryDesc(
+    casCnfgAdjustmentCatEntity.setAdjustmentCategoryDesc(
         adjustmentCategoryModel.getAdjustmentCategoryDesc());
-    mdtCnfgAdjustmentCatEntity.setActiveInd(adjustmentCategoryModel.getActiveInd());
-    mdtCnfgAdjustmentCatEntity.setCreatedBy(adjustmentCategoryModel.getCreatedBy());
-    mdtCnfgAdjustmentCatEntity.setCreatedDate(adjustmentCategoryModel.getCreatedDate());
-    mdtCnfgAdjustmentCatEntity.setModifiedBy(adjustmentCategoryModel.getModifiedBy());
-    mdtCnfgAdjustmentCatEntity.setModifiedDate(adjustmentCategoryModel.getModifiedDate());
+    casCnfgAdjustmentCatEntity.setActiveInd(adjustmentCategoryModel.getActiveInd());
+    casCnfgAdjustmentCatEntity.setCreatedBy(adjustmentCategoryModel.getCreatedBy());
+    casCnfgAdjustmentCatEntity.setCreatedDate(adjustmentCategoryModel.getCreatedDate());
+    casCnfgAdjustmentCatEntity.setModifiedBy(adjustmentCategoryModel.getModifiedBy());
+    casCnfgAdjustmentCatEntity.setModifiedDate(adjustmentCategoryModel.getModifiedDate());
 
-    return mdtCnfgAdjustmentCatEntity;
+    return casCnfgAdjustmentCatEntity;
   }
 
-  public MdtCnfgAccountTypeEntity translateCommnsAccountTypeModelToEntity(
+  public CasCnfgAccountTypeEntity translateCommnsAccountTypeModelToEntity(
       AccountTypeModel accountTypeModel) {
 
-    MdtCnfgAccountTypeEntity mdtCnfgAccountTypeEntity = new MdtCnfgAccountTypeEntity();
+    CasCnfgAccountTypeEntity casCnfgAccountTypeEntity = new CasCnfgAccountTypeEntity();
 
-    mdtCnfgAccountTypeEntity.setAccountTypeCode(accountTypeModel.getAccountTypeCode());
-    mdtCnfgAccountTypeEntity.setAccountTypeDescription(
+    casCnfgAccountTypeEntity.setAccountTypeCode(accountTypeModel.getAccountTypeCode());
+    casCnfgAccountTypeEntity.setAccountTypeDescription(
         accountTypeModel.getAccountTypeDescription());
-    mdtCnfgAccountTypeEntity.setActiveInd(accountTypeModel.getActiveInd());
-    mdtCnfgAccountTypeEntity.setCreatedBy(accountTypeModel.getCreatedBy());
-    mdtCnfgAccountTypeEntity.setCreatedDate(accountTypeModel.getCreatedDate());
-    mdtCnfgAccountTypeEntity.setModifiedBy(accountTypeModel.getModifiedBy());
-    mdtCnfgAccountTypeEntity.setModifiedDate(accountTypeModel.getModifiedDate());
+    casCnfgAccountTypeEntity.setActiveInd(accountTypeModel.getActiveInd());
+    casCnfgAccountTypeEntity.setCreatedBy(accountTypeModel.getCreatedBy());
+    casCnfgAccountTypeEntity.setCreatedDate(accountTypeModel.getCreatedDate());
+    casCnfgAccountTypeEntity.setModifiedBy(accountTypeModel.getModifiedBy());
+    casCnfgAccountTypeEntity.setModifiedDate(accountTypeModel.getModifiedDate());
 
-    return mdtCnfgAccountTypeEntity;
+    return casCnfgAccountTypeEntity;
 
 
   }
 
   public AccountTypeModel translateMdtCnfgAccountTypeEntityToCommonsModel(
-      MdtCnfgAccountTypeEntity localEntity) {
+      CasCnfgAccountTypeEntity localEntity) {
 
     AccountTypeModel accountTypeModel = new AccountTypeModel();
 
@@ -1447,7 +1400,7 @@ public class AdminTranslator {
   }
 
   public SeverityCodesModel translateMdtCnfgSeverityCodesEntityTocommonsModel(
-      MdtCnfgSeverityCodesEntity localEntity) {
+      CasCnfgSeverityCodesEntity localEntity) {
     log.debug("Admin Translator Entity---> " + localEntity);
     SeverityCodesModel severityCodesModel = new SeverityCodesModel();
 
@@ -1466,59 +1419,23 @@ public class AdminTranslator {
     return severityCodesModel;
   }
 
-  public MdtCnfgSeverityCodesEntity translateCommnsSeverityCodesModelToEntity(
+  public CasCnfgSeverityCodesEntity translateCommnsSeverityCodesModelToEntity(
       SeverityCodesModel severityCodesModel) {
 
-    MdtCnfgSeverityCodesEntity mdtCnfgSeverityCodesEntity = new MdtCnfgSeverityCodesEntity();
+    CasCnfgSeverityCodesEntity casCnfgSeverityCodesEntity = new CasCnfgSeverityCodesEntity();
 
 
-    mdtCnfgSeverityCodesEntity.setSeverityCode(severityCodesModel.getSeverityCode());
-    mdtCnfgSeverityCodesEntity.setSeverityCodeDesc(severityCodesModel.getSeverityCodeDesc());
-    mdtCnfgSeverityCodesEntity.setCreatedBy(severityCodesModel.getCreatedBy());
-    mdtCnfgSeverityCodesEntity.setCreatedDate(severityCodesModel.getCreatedDate());
-    mdtCnfgSeverityCodesEntity.setModifiedBy(severityCodesModel.getModifiedBy());
-    mdtCnfgSeverityCodesEntity.setModifiedDate(severityCodesModel.getModifiedDate());
-    mdtCnfgSeverityCodesEntity.setActiveInd(severityCodesModel.getActiveInd());
+    casCnfgSeverityCodesEntity.setSeverityCode(severityCodesModel.getSeverityCode());
+    casCnfgSeverityCodesEntity.setSeverityCodeDesc(severityCodesModel.getSeverityCodeDesc());
+    casCnfgSeverityCodesEntity.setCreatedBy(severityCodesModel.getCreatedBy());
+    casCnfgSeverityCodesEntity.setCreatedDate(severityCodesModel.getCreatedDate());
+    casCnfgSeverityCodesEntity.setModifiedBy(severityCodesModel.getModifiedBy());
+    casCnfgSeverityCodesEntity.setModifiedDate(severityCodesModel.getModifiedDate());
+    casCnfgSeverityCodesEntity.setActiveInd(severityCodesModel.getActiveInd());
 
-
-    return mdtCnfgSeverityCodesEntity;
+    return casCnfgSeverityCodesEntity;
   }
 
-  public StatusReasonCodesModel translateMdtCnfgStatusReasonCodesEntityToCommonsModel(
-      MdtCnfgStatusReasonCodesEntity localEntity) {
-
-    StatusReasonCodesModel statusReasonCodesModel = new StatusReasonCodesModel();
-
-    statusReasonCodesModel.setStatusReasonCode(localEntity.getStatusReasonCode());
-    statusReasonCodesModel.setStatusReasonCodeDescription(
-        localEntity.getStatusReasonCodeDescription());
-    statusReasonCodesModel.setActiveInd(localEntity.getActiveInd());
-    statusReasonCodesModel.setCreatedBy(localEntity.getCreatedBy());
-    statusReasonCodesModel.setCreatedDate(localEntity.getCreatedDate());
-    statusReasonCodesModel.setModifiedBy(localEntity.getModifiedBy());
-    statusReasonCodesModel.setModifiedDate(localEntity.getModifiedDate());
-
-    return statusReasonCodesModel;
-  }
-
-  public MdtCnfgStatusReasonCodesEntity translateCommnsStatusReasonCodesModelToEntity(
-      StatusReasonCodesModel statusReasonCodesModel) {
-
-    MdtCnfgStatusReasonCodesEntity mdtCnfgStatusReasonCodesEntity =
-        new MdtCnfgStatusReasonCodesEntity();
-
-    mdtCnfgStatusReasonCodesEntity.setStatusReasonCode(
-        statusReasonCodesModel.getStatusReasonCode());
-    mdtCnfgStatusReasonCodesEntity.setStatusReasonCodeDescription(
-        statusReasonCodesModel.getStatusReasonCodeDescription());
-    mdtCnfgStatusReasonCodesEntity.setActiveInd(statusReasonCodesModel.getActiveInd());
-    mdtCnfgStatusReasonCodesEntity.setCreatedBy(statusReasonCodesModel.getCreatedBy());
-    mdtCnfgStatusReasonCodesEntity.setCreatedDate(statusReasonCodesModel.getCreatedDate());
-    mdtCnfgStatusReasonCodesEntity.setModifiedBy(statusReasonCodesModel.getModifiedBy());
-    mdtCnfgStatusReasonCodesEntity.setModifiedDate(statusReasonCodesModel.getModifiedDate());
-
-    return mdtCnfgStatusReasonCodesEntity;
-  }
 
   public CasSysctrlServicesEntity translateCommonsSystemControlServicesModelToEntity(
       SystemControlServicesModel systemControlServicesModel) {
@@ -1589,112 +1506,74 @@ public class AdminTranslator {
     return sysCisBankEntity;
   }
 
-
-  public MdtOpsProcessControlsEntity translateCommonsMdtOpsProcessControlsModelToEntity(
-      OpsProcessControlCommonsModel opsProcessControlCommonsModel) {
-
-    MdtOpsProcessControlsEntity mdtOpsProcessControlsEntity = new MdtOpsProcessControlsEntity();
-    mdtOpsProcessControlsEntity.setActiveInd(opsProcessControlCommonsModel.getActiveInd());
-    mdtOpsProcessControlsEntity.setInstId(opsProcessControlCommonsModel.getInstId());
-    mdtOpsProcessControlsEntity.setMaxNrRecords(opsProcessControlCommonsModel.getMaxNrRecords());
-    mdtOpsProcessControlsEntity.setNrOfDaysProc(opsProcessControlCommonsModel.getNrOfDaysProc());
-    mdtOpsProcessControlsEntity.setProcessDate(opsProcessControlCommonsModel.getProcessDate());
-    mdtOpsProcessControlsEntity.setPubHolProc(opsProcessControlCommonsModel.getPubHolProc());
-
-    return mdtOpsProcessControlsEntity;
-
-  }
-
-  public OpsProcessControlCommonsModel translateMdtOpsProcessControlsEntityToModel(
-      MdtOpsProcessControlsEntity mdtOpsProcessControlsEntity) {
-
-    OpsProcessControlCommonsModel opsProcessControlCommonsModel =
-        new OpsProcessControlCommonsModel();
-    opsProcessControlCommonsModel.setActiveInd(mdtOpsProcessControlsEntity.getActiveInd());
-    opsProcessControlCommonsModel.setInstId(mdtOpsProcessControlsEntity.getInstId());
-    opsProcessControlCommonsModel.setMaxNrRecords(mdtOpsProcessControlsEntity.getMaxNrRecords());
-    opsProcessControlCommonsModel.setNrOfDaysProc(mdtOpsProcessControlsEntity.getNrOfDaysProc());
-    opsProcessControlCommonsModel.setProcessDate(mdtOpsProcessControlsEntity.getProcessDate());
-    opsProcessControlCommonsModel.setPubHolProc(mdtOpsProcessControlsEntity.getPubHolProc());
-
-    return opsProcessControlCommonsModel;
-
-
-  }
-
-
-  public MdtOpsRefSeqNrEntity translateMdtOpsRefSeqNrEntityToComonsModel(
+  public CasOpsRefSeqNrEntity translateMdtOpsRefSeqNrEntityToComonsModel(
       OpsRefSeqNumberCommonsModel opsRefSeqNumberCommonsModel) {
-    MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity = new MdtOpsRefSeqNrEntity();
-    MdtOpsRefSeqNrPK mdtOpsRefSeqNrPK = new MdtOpsRefSeqNrPK();
+    CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = new CasOpsRefSeqNrEntity();
+    CasOpsRefSeqNrPK casOpsRefSeqNrPK = new CasOpsRefSeqNrPK();
 
-    mdtOpsRefSeqNrEntity.setCreatedBy(opsRefSeqNumberCommonsModel.getCreatedBy());
-    mdtOpsRefSeqNrEntity.setCreatedDate(opsRefSeqNumberCommonsModel.getCreatedDate());
-    mdtOpsRefSeqNrEntity.setLastFileNr(opsRefSeqNumberCommonsModel.getLastFileNr());
-    mdtOpsRefSeqNrEntity.setLastSeqNr(opsRefSeqNumberCommonsModel.getLastSeqNr());
-    mdtOpsRefSeqNrEntity.setModifiedBy(opsRefSeqNumberCommonsModel.getModifiedBy());
-    mdtOpsRefSeqNrEntity.setModifiedDate(opsRefSeqNumberCommonsModel.getModifiedDate());
-    mdtOpsRefSeqNrPK.setMemberNo(opsRefSeqNumberCommonsModel.getMemberNo());
-    mdtOpsRefSeqNrPK.setServiceId(opsRefSeqNumberCommonsModel.getServiceId());
-    mdtOpsRefSeqNrEntity.setMdtOpsRefSeqNrPK(mdtOpsRefSeqNrPK);
+    casOpsRefSeqNrEntity.setCreatedBy(opsRefSeqNumberCommonsModel.getCreatedBy());
+    casOpsRefSeqNrEntity.setCreatedDate(opsRefSeqNumberCommonsModel.getCreatedDate());
+    casOpsRefSeqNrEntity.setLastFileNr(opsRefSeqNumberCommonsModel.getLastFileNr());
+    casOpsRefSeqNrEntity.setLastSeqNr(opsRefSeqNumberCommonsModel.getLastSeqNr());
+    casOpsRefSeqNrEntity.setModifiedBy(opsRefSeqNumberCommonsModel.getModifiedBy());
+    casOpsRefSeqNrEntity.setModifiedDate(opsRefSeqNumberCommonsModel.getModifiedDate());
+    casOpsRefSeqNrPK.setMemberNo(opsRefSeqNumberCommonsModel.getMemberNo());
+    casOpsRefSeqNrPK.setServiceId(opsRefSeqNumberCommonsModel.getServiceId());
+    casOpsRefSeqNrEntity.setCasOpsRefSeqNrPK(casOpsRefSeqNrPK);
 
 
-    return mdtOpsRefSeqNrEntity;
+    return casOpsRefSeqNrEntity;
 
   }
 
   public OpsRefSeqNumberCommonsModel translateOpsRefSeqNumberCommonsModelToEntity(
-      MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity) {
-    MdtOpsRefSeqNrPK mdtOpsRefSeqNrPK = new MdtOpsRefSeqNrPK();
-    OpsRefSeqNumberCommonsModel opsRefSeqNumberCommonsModel = new OpsRefSeqNumberCommonsModel();
-    opsRefSeqNumberCommonsModel.setCreatedBy(mdtOpsRefSeqNrEntity.getCreatedBy());
-    opsRefSeqNumberCommonsModel.setCreatedDate(mdtOpsRefSeqNrEntity.getCreatedDate());
-    opsRefSeqNumberCommonsModel.setLastFileNr(mdtOpsRefSeqNrEntity.getLastFileNr());
-    opsRefSeqNumberCommonsModel.setLastSeqNr(mdtOpsRefSeqNrEntity.getLastSeqNr());
-    opsRefSeqNumberCommonsModel.setMemberNo(
-        mdtOpsRefSeqNrEntity.getMdtOpsRefSeqNrPK().getMemberNo());
-    opsRefSeqNumberCommonsModel.setModifiedBy(mdtOpsRefSeqNrEntity.getModifiedBy());
-    opsRefSeqNumberCommonsModel.setModifiedDate(mdtOpsRefSeqNrEntity.getModifiedDate());
-    opsRefSeqNumberCommonsModel.setServiceId(
-        mdtOpsRefSeqNrEntity.getMdtOpsRefSeqNrPK().getServiceId());
-    mdtOpsRefSeqNrEntity.setMdtOpsRefSeqNrPK(mdtOpsRefSeqNrPK);
-    return opsRefSeqNumberCommonsModel;
+      CasOpsRefSeqNrEntity casOpsRefSeqNrEntity) {
 
+    OpsRefSeqNumberCommonsModel opsRefSeqNumberCommonsModel = new OpsRefSeqNumberCommonsModel();
+    opsRefSeqNumberCommonsModel.setCreatedBy(casOpsRefSeqNrEntity.getCreatedBy());
+    opsRefSeqNumberCommonsModel.setCreatedDate(casOpsRefSeqNrEntity.getCreatedDate());
+    opsRefSeqNumberCommonsModel.setLastFileNr(casOpsRefSeqNrEntity.getLastFileNr());
+    opsRefSeqNumberCommonsModel.setLastSeqNr(casOpsRefSeqNrEntity.getLastSeqNr());
+    opsRefSeqNumberCommonsModel.setMemberNo(casOpsRefSeqNrEntity.getCasOpsRefSeqNrPK().getMemberNo());
+    opsRefSeqNumberCommonsModel.setModifiedBy(casOpsRefSeqNrEntity.getModifiedBy());
+    opsRefSeqNumberCommonsModel.setModifiedDate(casOpsRefSeqNrEntity.getModifiedDate());
+    opsRefSeqNumberCommonsModel.setServiceId(casOpsRefSeqNrEntity.getCasOpsRefSeqNrPK().getServiceId());
+    return opsRefSeqNumberCommonsModel;
 
   }
 
-  public MdtAcOpsSotEotCtrlEntity translateMdtAcOpsSotEotCtrlEntityToModel(
+  public CasOpsSotEotCtrlEntity translateMdtAcOpsSotEotCtrlEntityToModel(
       AcOpsSotEotCntrlModel acOpsSotEotCntrlModel) {
-    MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
+    CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
 
-    MdtAcOpsSotEotCtrlPK mdtAcOpsSotEotCtrlPK = new MdtAcOpsSotEotCtrlPK();
-    mdtAcOpsSotEotCtrlPK.setInstId(acOpsSotEotCntrlModel.getInstId());
-    mdtAcOpsSotEotCtrlPK.setServiceId(acOpsSotEotCntrlModel.getServiceId());
+    CasOpsSotEotCtrlPK casOpsSotEotCtrlPK = new CasOpsSotEotCtrlPK();
+    casOpsSotEotCtrlPK.setInstId(acOpsSotEotCntrlModel.getInstId());
+    casOpsSotEotCtrlPK.setServiceId(acOpsSotEotCntrlModel.getServiceId());
 
-    mdtAcOpsSotEotCtrlEntity.setMdtAcOpsSotEotCtrlPK(mdtAcOpsSotEotCtrlPK);
-    mdtAcOpsSotEotCtrlEntity.setEotIn(acOpsSotEotCntrlModel.getEotIn());
-    mdtAcOpsSotEotCtrlEntity.setEotOut(acOpsSotEotCntrlModel.getEotOut());
-    mdtAcOpsSotEotCtrlEntity.setSotIn(acOpsSotEotCntrlModel.getSotIn());
-    mdtAcOpsSotEotCtrlEntity.setSotOut(acOpsSotEotCntrlModel.getSotOut());
+    casOpsSotEotCtrlEntity.setCasOpsSotEotCtrlPK(casOpsSotEotCtrlPK);
+    casOpsSotEotCtrlEntity.setEotIn(acOpsSotEotCntrlModel.getEotIn());
+    casOpsSotEotCtrlEntity.setEotOut(acOpsSotEotCntrlModel.getEotOut());
+    casOpsSotEotCtrlEntity.setSotIn(acOpsSotEotCntrlModel.getSotIn());
+    casOpsSotEotCtrlEntity.setSotOut(acOpsSotEotCntrlModel.getSotOut());
 
 
-    return mdtAcOpsSotEotCtrlEntity;
+    return casOpsSotEotCtrlEntity;
 
   }
 
 
   public AcOpsSotEotCntrlModel translateAcOpsSotEotCntrlModelToEntity(
-      MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity) {
+      CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity) {
     AcOpsSotEotCntrlModel acOpsSotEotCntrlModel = new AcOpsSotEotCntrlModel();
-    MdtAcOpsSotEotCtrlPK mdtAcOpsSotEotCtrlPK = new MdtAcOpsSotEotCtrlPK();
-    acOpsSotEotCntrlModel.setEotIn(mdtAcOpsSotEotCtrlEntity.getEotIn());
-    acOpsSotEotCntrlModel.setEotOut(mdtAcOpsSotEotCtrlEntity.getEotOut());
-    acOpsSotEotCntrlModel.setInstId(mdtAcOpsSotEotCtrlEntity.getMdtAcOpsSotEotCtrlPK().getInstId());
+
+    acOpsSotEotCntrlModel.setEotIn(casOpsSotEotCtrlEntity.getEotIn());
+    acOpsSotEotCntrlModel.setEotOut(casOpsSotEotCtrlEntity.getEotOut());
+    acOpsSotEotCntrlModel.setInstId(casOpsSotEotCtrlEntity.getCasOpsSotEotCtrlPK().getInstId());
     acOpsSotEotCntrlModel.setServiceId(
-        mdtAcOpsSotEotCtrlEntity.getMdtAcOpsSotEotCtrlPK().getServiceId());
-    acOpsSotEotCntrlModel.setSotIn(mdtAcOpsSotEotCtrlEntity.getSotIn());
-    acOpsSotEotCntrlModel.setSotOut(mdtAcOpsSotEotCtrlEntity.getSotOut());
-    mdtAcOpsSotEotCtrlEntity.setMdtAcOpsSotEotCtrlPK(mdtAcOpsSotEotCtrlPK);
+        casOpsSotEotCtrlEntity.getCasOpsSotEotCtrlPK().getServiceId());
+    acOpsSotEotCntrlModel.setSotIn(casOpsSotEotCtrlEntity.getSotIn());
+    acOpsSotEotCntrlModel.setSotOut(casOpsSotEotCtrlEntity.getSotOut());
+
 
     return acOpsSotEotCntrlModel;
 
@@ -1728,33 +1607,33 @@ public class AdminTranslator {
 
 
   public SchedulerCommonsModel translateMdtOpsSchedulerEntityToCommonsModel(
-      MdtAcOpsSchedulerEntity mdtAcOpsSchedulerEntity) {
+      CasOpsSchedulerEntity casOpsSchedulerEntity) {
     SchedulerCommonsModel schedulerCommonsModel = new SchedulerCommonsModel();
-    schedulerCommonsModel.setActiveInd(mdtAcOpsSchedulerEntity.getActiveInd());
-    schedulerCommonsModel.setRescheduleTime(mdtAcOpsSchedulerEntity.getRescheduleTime());
-    schedulerCommonsModel.setSchedulerKey(mdtAcOpsSchedulerEntity.getSchedulerKey());
-    schedulerCommonsModel.setSchedulerName(mdtAcOpsSchedulerEntity.getSchedulerName());
+    schedulerCommonsModel.setActiveInd(casOpsSchedulerEntity.getActiveInd());
+    schedulerCommonsModel.setRescheduleTime(casOpsSchedulerEntity.getRescheduleTime());
+    schedulerCommonsModel.setSchedulerKey(casOpsSchedulerEntity.getSchedulerKey());
+    schedulerCommonsModel.setSchedulerName(casOpsSchedulerEntity.getSchedulerName());
 
     return schedulerCommonsModel;
   }
 
-  public MdtAcOpsProcessControlsEntity translateOpsProcessControlModelToEntity(
+  public CasOpsProcessControlsEntity translateOpsProcessControlModelToEntity(
       OpsProcessControlModel opsProcessControlModel) {
-    MdtAcOpsProcessControlsEntity mdtAcOpsProcessControlsEntity =
-        new MdtAcOpsProcessControlsEntity();
+    CasOpsProcessControlsEntity casOpsProcessControlsEntity =
+        new CasOpsProcessControlsEntity();
 
-    mdtAcOpsProcessControlsEntity.setCisDownloadInd(opsProcessControlModel.getCisDownloadInd());
-    mdtAcOpsProcessControlsEntity.setProcessDate(opsProcessControlModel.getProcessDate());
+    casOpsProcessControlsEntity.setCisDownloadInd(opsProcessControlModel.getCisDownloadInd());
+    casOpsProcessControlsEntity.setProcessDate(opsProcessControlModel.getProcessDate());
 
-    return mdtAcOpsProcessControlsEntity;
+    return casOpsProcessControlsEntity;
   }
 
   public OpsProcessControlModel translateMdtAcOpsProcessControlsEntityToCommonsModel(
-      MdtAcOpsProcessControlsEntity mdtAcOpsProcessControlsEntity) {
+      CasOpsProcessControlsEntity casOpsProcessControlsEntity) {
     OpsProcessControlModel opsProcessControlModel = new OpsProcessControlModel();
 
-    opsProcessControlModel.setCisDownloadInd(mdtAcOpsProcessControlsEntity.getCisDownloadInd());
-    opsProcessControlModel.setProcessDate(mdtAcOpsProcessControlsEntity.getProcessDate());
+    opsProcessControlModel.setCisDownloadInd(casOpsProcessControlsEntity.getCisDownloadInd());
+    opsProcessControlModel.setProcessDate(casOpsProcessControlsEntity.getProcessDate());
 
     return opsProcessControlModel;
   }
@@ -1783,75 +1662,75 @@ public class AdminTranslator {
   }
 
 
-  public MdtOpsSlaTimesEntity translateOpsSlaTimesCommonsModelToEntity(
+  public CasOpsSlaTimesEntity translateOpsSlaTimesCommonsModelToEntity(
       OpsSlaTimesCommonsModel opsSlaTimesCommonsModel) {
-    MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity = new MdtOpsSlaTimesEntity();
-    mdtOpsSlaTimesEntity.setEndTime(opsSlaTimesCommonsModel.getEndTime());
-    mdtOpsSlaTimesEntity.setService(opsSlaTimesCommonsModel.getService());
-    mdtOpsSlaTimesEntity.setStartTime(opsSlaTimesCommonsModel.getStartTime());
+    CasOpsSlaTimesEntity casOpsSlaTimesEntity = new CasOpsSlaTimesEntity();
+    casOpsSlaTimesEntity.setEndTime(opsSlaTimesCommonsModel.getEndTime());
+    casOpsSlaTimesEntity.setService(opsSlaTimesCommonsModel.getService());
+    casOpsSlaTimesEntity.setStartTime(opsSlaTimesCommonsModel.getStartTime());
 
-    return mdtOpsSlaTimesEntity;
+    return casOpsSlaTimesEntity;
   }
 
 
   public OpsSlaTimesCommonsModel translateMdtOpsSlaTimesEntityToCommonsModel(
-      MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity) {
+      CasOpsSlaTimesEntity casOpsSlaTimesEntity) {
 
     OpsSlaTimesCommonsModel opsSlaTimesCommonsModel = new OpsSlaTimesCommonsModel();
 
-    opsSlaTimesCommonsModel.setEndTime(mdtOpsSlaTimesEntity.getEndTime());
-    opsSlaTimesCommonsModel.setService(mdtOpsSlaTimesEntity.getService());
-    opsSlaTimesCommonsModel.setStartTime(mdtOpsSlaTimesEntity.getStartTime());
+    opsSlaTimesCommonsModel.setEndTime(casOpsSlaTimesEntity.getEndTime());
+    opsSlaTimesCommonsModel.setService(casOpsSlaTimesEntity.getService());
+    opsSlaTimesCommonsModel.setStartTime(casOpsSlaTimesEntity.getStartTime());
 
     return opsSlaTimesCommonsModel;
   }
 
 
-  public MdtAcOpsTransCtrlMsgEntity translateTransCtrlMsgModelToEntity(
+  public CasOpsTransCtrlMsgEntity translateTransCtrlMsgModelToEntity(
       TransCtrlMsgModel transCtrlMsgModel) {
-    MdtAcOpsTransCtrlMsgEntity mdtAcOpsTransCtrlMsgEntity = new MdtAcOpsTransCtrlMsgEntity();
+    CasOpsTransCtrlMsgEntity casOpsTransCtrlMsgEntity = new CasOpsTransCtrlMsgEntity();
 
-    mdtAcOpsTransCtrlMsgEntity.setActiveInd(transCtrlMsgModel.getActiveInd());
-    mdtAcOpsTransCtrlMsgEntity.setCtrlMsgId(transCtrlMsgModel.getCtrlMsgId());
-    mdtAcOpsTransCtrlMsgEntity.setMemberIdFm(transCtrlMsgModel.getMemberIdFm());
-    mdtAcOpsTransCtrlMsgEntity.setMemberIdTo(transCtrlMsgModel.getMemberIdTo());
-    mdtAcOpsTransCtrlMsgEntity.setMsgType(transCtrlMsgModel.getMsgType());
-    mdtAcOpsTransCtrlMsgEntity.setNrOfFiles(transCtrlMsgModel.getNrOfFiles());
-    mdtAcOpsTransCtrlMsgEntity.setNrOfFilesReceived(transCtrlMsgModel.getNrOfFilesReceived());
-    mdtAcOpsTransCtrlMsgEntity.setNrOfRecords(transCtrlMsgModel.getNrOfRecords());
-    mdtAcOpsTransCtrlMsgEntity.setNrOfRecordsReceived(transCtrlMsgModel.getNrOfRecordsReceived());
-    mdtAcOpsTransCtrlMsgEntity.setProcessDate(transCtrlMsgModel.getProcessDate());
-    mdtAcOpsTransCtrlMsgEntity.setServiceId(transCtrlMsgModel.getServiceId());
-    mdtAcOpsTransCtrlMsgEntity.setSystemStatus(transCtrlMsgModel.getSystemStatus());
-    mdtAcOpsTransCtrlMsgEntity.setValidRecordsReceived(transCtrlMsgModel.getValidRecordsReceived());
-    mdtAcOpsTransCtrlMsgEntity.setValueOfRecords(transCtrlMsgModel.getValueOfRecords());
-    mdtAcOpsTransCtrlMsgEntity.setValueOfRecordsCurr(transCtrlMsgModel.getValueOfRecordsCurr());
+    casOpsTransCtrlMsgEntity.setActiveInd(transCtrlMsgModel.getActiveInd());
+    casOpsTransCtrlMsgEntity.setCtrlMsgId(transCtrlMsgModel.getCtrlMsgId());
+    casOpsTransCtrlMsgEntity.setMemberIdFm(transCtrlMsgModel.getMemberIdFm());
+    casOpsTransCtrlMsgEntity.setMemberIdTo(transCtrlMsgModel.getMemberIdTo());
+    casOpsTransCtrlMsgEntity.setMsgType(transCtrlMsgModel.getMsgType());
+    casOpsTransCtrlMsgEntity.setNrOfFiles(transCtrlMsgModel.getNrOfFiles());
+    casOpsTransCtrlMsgEntity.setNrOfFilesReceived(transCtrlMsgModel.getNrOfFilesReceived());
+    casOpsTransCtrlMsgEntity.setNrOfRecords(transCtrlMsgModel.getNrOfRecords());
+    casOpsTransCtrlMsgEntity.setNrOfRecordsReceived(transCtrlMsgModel.getNrOfRecordsReceived());
+    casOpsTransCtrlMsgEntity.setProcessDate(transCtrlMsgModel.getProcessDate());
+    casOpsTransCtrlMsgEntity.setServiceId(transCtrlMsgModel.getServiceId());
+    casOpsTransCtrlMsgEntity.setSystemStatus(transCtrlMsgModel.getSystemStatus());
+    casOpsTransCtrlMsgEntity.setValidRecordsReceived(transCtrlMsgModel.getValidRecordsReceived());
+    casOpsTransCtrlMsgEntity.setValueOfRecords(transCtrlMsgModel.getValueOfRecords());
+    casOpsTransCtrlMsgEntity.setValueOfRecordsCurr(transCtrlMsgModel.getValueOfRecordsCurr());
 
-    return mdtAcOpsTransCtrlMsgEntity;
+    return casOpsTransCtrlMsgEntity;
 
 
   }
 
 
   public TransCtrlMsgModel translateMdtAcOpsTransCtrlMsgEntityToCommonsModel(
-      MdtAcOpsTransCtrlMsgEntity mdtAcOpsTransCtrlMsgEntity) {
+      CasOpsTransCtrlMsgEntity casOpsTransCtrlMsgEntity) {
     TransCtrlMsgModel transCtrlMsgModel = new TransCtrlMsgModel();
 
-    transCtrlMsgModel.setActiveInd(mdtAcOpsTransCtrlMsgEntity.getActiveInd());
-    transCtrlMsgModel.setCtrlMsgId(mdtAcOpsTransCtrlMsgEntity.getCtrlMsgId());
-    transCtrlMsgModel.setMemberIdFm(mdtAcOpsTransCtrlMsgEntity.getMemberIdFm());
-    transCtrlMsgModel.setMemberIdTo(mdtAcOpsTransCtrlMsgEntity.getMemberIdTo());
-    transCtrlMsgModel.setMsgType(mdtAcOpsTransCtrlMsgEntity.getMsgType());
-    transCtrlMsgModel.setNrOfFiles(mdtAcOpsTransCtrlMsgEntity.getNrOfFiles());
-    transCtrlMsgModel.setNrOfFilesReceived(mdtAcOpsTransCtrlMsgEntity.getNrOfFilesReceived());
-    transCtrlMsgModel.setNrOfRecords(mdtAcOpsTransCtrlMsgEntity.getNrOfRecords());
-    transCtrlMsgModel.setNrOfRecordsReceived(mdtAcOpsTransCtrlMsgEntity.getNrOfRecordsReceived());
-    transCtrlMsgModel.setProcessDate(mdtAcOpsTransCtrlMsgEntity.getProcessDate());
-    transCtrlMsgModel.setServiceId(mdtAcOpsTransCtrlMsgEntity.getServiceId());
-    transCtrlMsgModel.setSystemStatus(mdtAcOpsTransCtrlMsgEntity.getSystemStatus());
-    transCtrlMsgModel.setValidRecordsReceived(mdtAcOpsTransCtrlMsgEntity.getValidRecordsReceived());
-    transCtrlMsgModel.setValueOfRecords(mdtAcOpsTransCtrlMsgEntity.getValueOfRecords());
-    transCtrlMsgModel.setValueOfRecordsCurr(mdtAcOpsTransCtrlMsgEntity.getValueOfRecordsCurr());
+    transCtrlMsgModel.setActiveInd(casOpsTransCtrlMsgEntity.getActiveInd());
+    transCtrlMsgModel.setCtrlMsgId(casOpsTransCtrlMsgEntity.getCtrlMsgId());
+    transCtrlMsgModel.setMemberIdFm(casOpsTransCtrlMsgEntity.getMemberIdFm());
+    transCtrlMsgModel.setMemberIdTo(casOpsTransCtrlMsgEntity.getMemberIdTo());
+    transCtrlMsgModel.setMsgType(casOpsTransCtrlMsgEntity.getMsgType());
+    transCtrlMsgModel.setNrOfFiles(casOpsTransCtrlMsgEntity.getNrOfFiles());
+    transCtrlMsgModel.setNrOfFilesReceived(casOpsTransCtrlMsgEntity.getNrOfFilesReceived());
+    transCtrlMsgModel.setNrOfRecords(casOpsTransCtrlMsgEntity.getNrOfRecords());
+    transCtrlMsgModel.setNrOfRecordsReceived(casOpsTransCtrlMsgEntity.getNrOfRecordsReceived());
+    transCtrlMsgModel.setProcessDate(casOpsTransCtrlMsgEntity.getProcessDate());
+    transCtrlMsgModel.setServiceId(casOpsTransCtrlMsgEntity.getServiceId());
+    transCtrlMsgModel.setSystemStatus(casOpsTransCtrlMsgEntity.getSystemStatus());
+    transCtrlMsgModel.setValidRecordsReceived(casOpsTransCtrlMsgEntity.getValidRecordsReceived());
+    transCtrlMsgModel.setValueOfRecords(casOpsTransCtrlMsgEntity.getValueOfRecords());
+    transCtrlMsgModel.setValueOfRecordsCurr(casOpsTransCtrlMsgEntity.getValueOfRecordsCurr());
 
     return transCtrlMsgModel;
   }
@@ -1874,27 +1753,27 @@ public class AdminTranslator {
   }
 
 
-  public MdtCnfgAmendmentCodesEntity translateCommonsAmendmentCodesModelToEntity(
+  public CasCnfgAmendmentCodesEntity translateCommonsAmendmentCodesModelToEntity(
       AmendmentCodesModel amendmentCodesModel) {
 
-    MdtCnfgAmendmentCodesEntity mdtCnfgAmendmentCodesEntity = new MdtCnfgAmendmentCodesEntity();
+    CasCnfgAmendmentCodesEntity casCnfgAmendmentCodesEntity = new CasCnfgAmendmentCodesEntity();
 
-    mdtCnfgAmendmentCodesEntity.setAmendmentCodes(amendmentCodesModel.getAmendmentCodes());
-    mdtCnfgAmendmentCodesEntity.setAmendmentCodesDescription(
+    casCnfgAmendmentCodesEntity.setAmendmentCodes(amendmentCodesModel.getAmendmentCodes());
+    casCnfgAmendmentCodesEntity.setAmendmentCodesDescription(
         amendmentCodesModel.getAmendmentCodesDescription());
-    mdtCnfgAmendmentCodesEntity.setActiveInd(amendmentCodesModel.getActiveInd());
-    mdtCnfgAmendmentCodesEntity.setCreatedBy(amendmentCodesModel.getCreatedBy());
-    mdtCnfgAmendmentCodesEntity.setCreatedDate(amendmentCodesModel.getCreatedDate());
-    mdtCnfgAmendmentCodesEntity.setModifiedBy(amendmentCodesModel.getModifiedBy());
-    mdtCnfgAmendmentCodesEntity.setModifiedDate(amendmentCodesModel.getModifiedDate());
+    casCnfgAmendmentCodesEntity.setActiveInd(amendmentCodesModel.getActiveInd());
+    casCnfgAmendmentCodesEntity.setCreatedBy(amendmentCodesModel.getCreatedBy());
+    casCnfgAmendmentCodesEntity.setCreatedDate(amendmentCodesModel.getCreatedDate());
+    casCnfgAmendmentCodesEntity.setModifiedBy(amendmentCodesModel.getModifiedBy());
+    casCnfgAmendmentCodesEntity.setModifiedDate(amendmentCodesModel.getModifiedDate());
 
-    return mdtCnfgAmendmentCodesEntity;
+    return casCnfgAmendmentCodesEntity;
 
 
   }
 
   public AmendmentCodesModel translateMdtCnfgAmendmentCodesEntityToCommonsModel(
-      MdtCnfgAmendmentCodesEntity localEntity) {
+      CasCnfgAmendmentCodesEntity localEntity) {
 
     AmendmentCodesModel amendmentCodesModel = new AmendmentCodesModel();
 
@@ -2009,21 +1888,21 @@ public class AdminTranslator {
   }
 
   public MandateDailyTransModel translateDailyBillingEntityToModel(
-      MdtAcOpsDailyBillingEntity mdtAcOpsDailyBillingEntity) {
+      CasOpsDailyBillingEntity casOpsDailyBillingEntity) {
     MandateDailyTransModel mandateDailyTransModel = new MandateDailyTransModel();
 
-    mandateDailyTransModel.setCreditorBank(mdtAcOpsDailyBillingEntity.getCreditorBank());
-    mandateDailyTransModel.setDebtorBank(mdtAcOpsDailyBillingEntity.getDebtorBank());
-    mandateDailyTransModel.setServiceId(mdtAcOpsDailyBillingEntity.getSubService());
-    mandateDailyTransModel.setTxnType(mdtAcOpsDailyBillingEntity.getTxnType());
+    mandateDailyTransModel.setCreditorBank(casOpsDailyBillingEntity.getCreditorBank());
+    mandateDailyTransModel.setDebtorBank(casOpsDailyBillingEntity.getDebtorBank());
+    mandateDailyTransModel.setServiceId(casOpsDailyBillingEntity.getSubService());
+    mandateDailyTransModel.setTxnType(casOpsDailyBillingEntity.getTxnType());
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    mandateDailyTransModel.setActionDate(sdf.format(mdtAcOpsDailyBillingEntity.getActionDate()));
-    mandateDailyTransModel.setExtractMsgId(mdtAcOpsDailyBillingEntity.getExtMsgId());
-    mandateDailyTransModel.setMndtReqTransId(mdtAcOpsDailyBillingEntity.getTxnId());
-    mandateDailyTransModel.setMndtRefNumber(mdtAcOpsDailyBillingEntity.getMndtRefNum());
-    mandateDailyTransModel.setAuthCode(mdtAcOpsDailyBillingEntity.getAuthCode());
-    mandateDailyTransModel.setTrxnStatus(mdtAcOpsDailyBillingEntity.getTxnStatus());
-    mandateDailyTransModel.setRespDate(sdf.format(mdtAcOpsDailyBillingEntity.getRespDate()));
+    mandateDailyTransModel.setActionDate(sdf.format(casOpsDailyBillingEntity.getActionDate()));
+    mandateDailyTransModel.setExtractMsgId(casOpsDailyBillingEntity.getExtMsgId());
+    mandateDailyTransModel.setMndtReqTransId(casOpsDailyBillingEntity.getTxnId());
+    mandateDailyTransModel.setMndtRefNumber(casOpsDailyBillingEntity.getMndtRefNum());
+    mandateDailyTransModel.setAuthCode(casOpsDailyBillingEntity.getAuthCode());
+    mandateDailyTransModel.setTrxnStatus(casOpsDailyBillingEntity.getTxnStatus());
+    mandateDailyTransModel.setRespDate(sdf.format(casOpsDailyBillingEntity.getRespDate()));
 
     return mandateDailyTransModel;
   }
@@ -2048,49 +1927,17 @@ public class AdminTranslator {
     return mandateDailyTransModel;
   }
 
-  public ReasonCodesModel translateReportReasonCodesMdte002ToCommonsModel(
-      MdtCnfgRejectReasonCodesEntity mdtCnfgRejectReasonCodesEntity) {
-    ReasonCodesModel reasonCodeModel = new ReasonCodesModel();
-
-    reasonCodeModel.setReasonCode(mdtCnfgRejectReasonCodesEntity.getRejectReasonCode());
-    reasonCodeModel.setReasonCodeDescription(mdtCnfgRejectReasonCodesEntity.getRejectReasonDesc());
-    reasonCodeModel.setActiveInd(mdtCnfgRejectReasonCodesEntity.getActiveInd());
-    reasonCodeModel.setCreatedBy(mdtCnfgRejectReasonCodesEntity.getCreatedBy());
-    reasonCodeModel.setCreatedDate(mdtCnfgRejectReasonCodesEntity.getCreatedDate());
-    reasonCodeModel.setModifiedBy(mdtCnfgRejectReasonCodesEntity.getModifiedBy());
-    reasonCodeModel.setModifiedDate(mdtCnfgRejectReasonCodesEntity.getModifiedDate());
-    reasonCodeModel.setName(mdtCnfgRejectReasonCodesEntity.getRejectReasonDesc());
-
-    return reasonCodeModel;
-  }
-
-  public ReasonCodesModel translateReportReasonCodesCancToCommonsModel(
-      MdtCnfgCancellationCodesEntity mdtCnfgCancellationCodesEntity) {
-    ReasonCodesModel reasonCodeModel = new ReasonCodesModel();
-
-    reasonCodeModel.setReasonCode(mdtCnfgCancellationCodesEntity.getCancellationCode());
-    reasonCodeModel.setReasonCodeDescription(
-        mdtCnfgCancellationCodesEntity.getCancellationCodeDescription());
-    reasonCodeModel.setActiveInd(mdtCnfgCancellationCodesEntity.getActiveInd());
-    reasonCodeModel.setCreatedBy(mdtCnfgCancellationCodesEntity.getCreatedBy());
-    reasonCodeModel.setCreatedDate(mdtCnfgCancellationCodesEntity.getCreatedDate());
-    reasonCodeModel.setModifiedBy(mdtCnfgCancellationCodesEntity.getModifiedBy());
-    reasonCodeModel.setModifiedDate(mdtCnfgCancellationCodesEntity.getModifiedDate());
-    reasonCodeModel.setName(mdtCnfgCancellationCodesEntity.getCancellationCodeDescription());
-
-    return reasonCodeModel;
-  }
 
   public MandatesCountCommonsModel translateCommonsToSystemStatusEntity(
-      MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity) {
+      CasOpsMndtCountEntity mdtOpsMndtCountEntity) {
     MandatesCountCommonsModel mandatesCountCommonsModel = new MandatesCountCommonsModel();
 
     mandatesCountCommonsModel.setFileName(mdtOpsMndtCountEntity.getFileName());
     mandatesCountCommonsModel.setProcessDate(mdtOpsMndtCountEntity.getProcessDate());
-    mandatesCountCommonsModel.setInstId(mdtOpsMndtCountEntity.getMdtAcOpsMndtCountPK().getInstId());
+    mandatesCountCommonsModel.setInstId(mdtOpsMndtCountEntity.getCasOpsMndtCountPK().getInstId());
     mandatesCountCommonsModel.setServiceId(
-        mdtOpsMndtCountEntity.getMdtAcOpsMndtCountPK().getServiceId());
-    mandatesCountCommonsModel.setMsgId(mdtOpsMndtCountEntity.getMdtAcOpsMndtCountPK().getMsgId());
+        mdtOpsMndtCountEntity.getCasOpsMndtCountPK().getServiceId());
+    mandatesCountCommonsModel.setMsgId(mdtOpsMndtCountEntity.getCasOpsMndtCountPK().getMsgId());
     mandatesCountCommonsModel.setIncoming(mdtOpsMndtCountEntity.getIncoming());
     mandatesCountCommonsModel.setNrOfFiles(mdtOpsMndtCountEntity.getNrOfFiles());
     mandatesCountCommonsModel.setNrOfMsgs(mdtOpsMndtCountEntity.getNrOfMsgs());
@@ -2102,15 +1949,15 @@ public class AdminTranslator {
     return mandatesCountCommonsModel;
   }
 
-  public MdtAcOpsMndtCountEntity translateCommonstoEntitySystemStatus(
+  public CasOpsMndtCountEntity translateCommonstoEntitySystemStatus(
       MandatesCountCommonsModel mandateCountModel) {
-    MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = new MdtAcOpsMndtCountEntity();
-    MdtAcOpsMndtCountPK mdtOpsMndtCountPK = new MdtAcOpsMndtCountPK();
+    CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
+    CasOpsMndtCountPK mdtOpsMndtCountPK = new CasOpsMndtCountPK();
 
     mdtOpsMndtCountPK.setInstId(mandateCountModel.getInstId());
     mdtOpsMndtCountPK.setMsgId(mandateCountModel.getMsgId());
     mdtOpsMndtCountPK.setServiceId(mandateCountModel.getServiceId());
-    mdtOpsMndtCountEntity.setMdtAcOpsMndtCountPK(mdtOpsMndtCountPK);
+    mdtOpsMndtCountEntity.setCasOpsMndtCountPK(mdtOpsMndtCountPK);
     mdtOpsMndtCountEntity.setFileName(mandateCountModel.getFileName());
     mdtOpsMndtCountEntity.setIncoming(mandateCountModel.getIncoming());
     mdtOpsMndtCountEntity.setNrOfFiles(mandateCountModel.getNrOfFiles());
@@ -2136,56 +1983,54 @@ public class AdminTranslator {
   }
 
   public ServicesModel translateIncomingMdtOpsServicesEntityToCommonsModel(
-      MdtOpsServicesEntity mdtOpsServicesEntity) {
+      CasOpsServicesEntity casOpsServicesEntity) {
     ServicesModel servicesModel = new ServicesModel();
 
-    servicesModel.setCreatedBy(mdtOpsServicesEntity.getCreatedBy());
-    servicesModel.setCreatedDate(mdtOpsServicesEntity.getCreatedDate());
-    servicesModel.setModifiedBy(mdtOpsServicesEntity.getModifiedBy());
-    servicesModel.setModifiedDate(mdtOpsServicesEntity.getModifiedDate());
-    servicesModel.setRecordId(mdtOpsServicesEntity.getRecordId());
-    servicesModel.setServiceIdIn(mdtOpsServicesEntity.getServiceIdIn());
-    servicesModel.setServiceIdInDesc(mdtOpsServicesEntity.getServiceIdInDesc());
-    servicesModel.setProcessDate(mdtOpsServicesEntity.getProcessDate());
-    servicesModel.setProcessStatus(mdtOpsServicesEntity.getProcessStatus());
-    servicesModel.setServiceIdOutSlaTime(mdtOpsServicesEntity.getServiceIdOutSlaTime());
-    servicesModel.setActiveInd(mdtOpsServicesEntity.getActiveInd());
-    servicesModel.setMsgTypeId(mdtOpsServicesEntity.getMsgTypeId());
+    servicesModel.setCreatedBy(casOpsServicesEntity.getCreatedBy());
+    servicesModel.setCreatedDate(casOpsServicesEntity.getCreatedDate());
+    servicesModel.setModifiedBy(casOpsServicesEntity.getModifiedBy());
+    servicesModel.setModifiedDate(casOpsServicesEntity.getModifiedDate());
+    servicesModel.setRecordId(casOpsServicesEntity.getRecordId());
+    servicesModel.setServiceIdIn(casOpsServicesEntity.getServiceIdIn());
+    servicesModel.setServiceIdInDesc(casOpsServicesEntity.getServiceIdInDesc());
+    servicesModel.setProcessDate(casOpsServicesEntity.getProcessDate());
+    servicesModel.setProcessStatus(casOpsServicesEntity.getProcessStatus());
+    servicesModel.setServiceIdOutSlaTime(casOpsServicesEntity.getServiceIdOutSlaTime());
+    servicesModel.setActiveInd(casOpsServicesEntity.getActiveInd());
+    servicesModel.setMsgTypeId(casOpsServicesEntity.getMsgTypeId());
 
     return servicesModel;
   }
 
   public ServicesModel translateOutgoingMdtOpsServicesEntityToCommonsModel(
-      MdtOpsServicesEntity mdtOpsServicesEntity) {
+      CasOpsServicesEntity casOpsServicesEntity) {
     ServicesModel servicesModel = new ServicesModel();
 
-    servicesModel.setCreatedBy(mdtOpsServicesEntity.getCreatedBy());
-    servicesModel.setCreatedDate(mdtOpsServicesEntity.getCreatedDate());
-    servicesModel.setModifiedBy(mdtOpsServicesEntity.getModifiedBy());
-    servicesModel.setModifiedDate(mdtOpsServicesEntity.getModifiedDate());
-    servicesModel.setRecordId(mdtOpsServicesEntity.getRecordId());
-    servicesModel.setServiceIdOut(mdtOpsServicesEntity.getServiceIdOut());
-    servicesModel.setServiceIdOutDesc(mdtOpsServicesEntity.getServiceIdOutDesc());
-    servicesModel.setProcessDate(mdtOpsServicesEntity.getProcessDate());
-    servicesModel.setProcessStatus(mdtOpsServicesEntity.getProcessStatus());
-    servicesModel.setServiceIdOutSlaTime(mdtOpsServicesEntity.getServiceIdOutSlaTime());
-    servicesModel.setActiveInd(mdtOpsServicesEntity.getActiveInd());
-    servicesModel.setMsgTypeId(mdtOpsServicesEntity.getMsgTypeId());
+    servicesModel.setCreatedBy(casOpsServicesEntity.getCreatedBy());
+    servicesModel.setCreatedDate(casOpsServicesEntity.getCreatedDate());
+    servicesModel.setModifiedBy(casOpsServicesEntity.getModifiedBy());
+    servicesModel.setModifiedDate(casOpsServicesEntity.getModifiedDate());
+    servicesModel.setRecordId(casOpsServicesEntity.getRecordId());
+    servicesModel.setServiceIdOut(casOpsServicesEntity.getServiceIdOut());
+    servicesModel.setServiceIdOutDesc(casOpsServicesEntity.getServiceIdOutDesc());
+    servicesModel.setProcessDate(casOpsServicesEntity.getProcessDate());
+    servicesModel.setProcessStatus(casOpsServicesEntity.getProcessStatus());
+    servicesModel.setServiceIdOutSlaTime(casOpsServicesEntity.getServiceIdOutSlaTime());
+    servicesModel.setActiveInd(casOpsServicesEntity.getActiveInd());
+    servicesModel.setMsgTypeId(casOpsServicesEntity.getMsgTypeId());
 
     return servicesModel;
   }
 
   public IncSotEotModel translateIncSotEotCommonsModelToEntity(
-      MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity) {
+      CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity) {
     IncSotEotModel acOpsSotEotCntrlModel = new IncSotEotModel();
-    MdtAcOpsSotEotCtrlPK mdtAcOpsSotEotCtrlPK = new MdtAcOpsSotEotCtrlPK();
 
-    acOpsSotEotCntrlModel.setEotIn(mdtAcOpsSotEotCtrlEntity.getEotIn());
-    acOpsSotEotCntrlModel.setInstId(mdtAcOpsSotEotCtrlEntity.getMdtAcOpsSotEotCtrlPK().getInstId());
+    acOpsSotEotCntrlModel.setEotIn(casOpsSotEotCtrlEntity.getEotIn());
+    acOpsSotEotCntrlModel.setInstId(casOpsSotEotCtrlEntity.getCasOpsSotEotCtrlPK().getInstId());
     acOpsSotEotCntrlModel.setServiceId(
-        mdtAcOpsSotEotCtrlEntity.getMdtAcOpsSotEotCtrlPK().getServiceId());
-    acOpsSotEotCntrlModel.setSotIn(mdtAcOpsSotEotCtrlEntity.getSotIn());
-    mdtAcOpsSotEotCtrlEntity.setMdtAcOpsSotEotCtrlPK(mdtAcOpsSotEotCtrlPK);
+        casOpsSotEotCtrlEntity.getCasOpsSotEotCtrlPK().getServiceId());
+    acOpsSotEotCntrlModel.setSotIn(casOpsSotEotCtrlEntity.getSotIn());
 
     return acOpsSotEotCntrlModel;
   }
@@ -2215,41 +2060,40 @@ public class AdminTranslator {
   }
 
   public FileSizeLimitModel translateMdtAcOpsFileSizeLimitEntityToCommonsModel(
-      MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity) {
+      CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity) {
 
     FileSizeLimitModel fileSizeLimitModel = new FileSizeLimitModel();
-    MdtAcOpsFileSizeLimitPK mdtAcOpsFileSizeLimitPK = new MdtAcOpsFileSizeLimitPK();
+    CasOpsFileSizeLimitPK casOpsFileSizeLimitPK = new CasOpsFileSizeLimitPK();
 
     fileSizeLimitModel.setMemberId(
-        mdtAcOpsFileSizeLimitEntity.getMdtAcOpsFileSizeLimitPK().getMemberId());
+        casOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getMemberId());
     fileSizeLimitModel.setSubService(
-        mdtAcOpsFileSizeLimitEntity.getMdtAcOpsFileSizeLimitPK().getSubService());
+        casOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getSubService());
 
-    fileSizeLimitModel.setProcessDate(mdtAcOpsFileSizeLimitEntity.getProcessDate());
-    fileSizeLimitModel.setLimit(mdtAcOpsFileSizeLimitEntity.getLimit());
-    fileSizeLimitModel.setDirection(mdtAcOpsFileSizeLimitEntity.getDirection());
-    fileSizeLimitModel.setActiveId(mdtAcOpsFileSizeLimitEntity.getActiveId());
-    mdtAcOpsFileSizeLimitEntity.setMdtAcOpsFileSizeLimitPK(mdtAcOpsFileSizeLimitPK);
+    fileSizeLimitModel.setProcessDate(casOpsFileSizeLimitEntity.getProcessDate());
+    fileSizeLimitModel.setLimit(casOpsFileSizeLimitEntity.getLimit());
+    fileSizeLimitModel.setDirection(casOpsFileSizeLimitEntity.getDirection());
+    fileSizeLimitModel.setActiveId(casOpsFileSizeLimitEntity.getActiveId());
 
     return fileSizeLimitModel;
 
   }
 
-  public MdtAcOpsFileSizeLimitEntity translateOpsFileSizeLimitCommonsModelToEntity(
+  public CasOpsFileSizeLimitEntity translateOpsFileSizeLimitCommonsModelToEntity(
       FileSizeLimitModel fileSizeLimitModel) {
 
-    MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity = new MdtAcOpsFileSizeLimitEntity();
-    MdtAcOpsFileSizeLimitPK mdtAcOpsFileSizeLimitPK = new MdtAcOpsFileSizeLimitPK();
+    CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity = new CasOpsFileSizeLimitEntity();
+    CasOpsFileSizeLimitPK casOpsFileSizeLimitPK = new CasOpsFileSizeLimitPK();
 
-    mdtAcOpsFileSizeLimitPK.setMemberId(fileSizeLimitModel.getMemberId());
-    mdtAcOpsFileSizeLimitPK.setSubService(fileSizeLimitModel.getSubService());
-    mdtAcOpsFileSizeLimitEntity.setLimit(fileSizeLimitModel.getLimit());
-    mdtAcOpsFileSizeLimitEntity.setDirection(fileSizeLimitModel.getDirection());
-    mdtAcOpsFileSizeLimitEntity.setProcessDate(fileSizeLimitModel.getProcessDate());
-    mdtAcOpsFileSizeLimitEntity.setActiveId(fileSizeLimitModel.getActiveId());
-    mdtAcOpsFileSizeLimitEntity.setMdtAcOpsFileSizeLimitPK(mdtAcOpsFileSizeLimitPK);
+    casOpsFileSizeLimitPK.setMemberId(fileSizeLimitModel.getMemberId());
+    casOpsFileSizeLimitPK.setSubService(fileSizeLimitModel.getSubService());
+    casOpsFileSizeLimitEntity.setLimit(fileSizeLimitModel.getLimit());
+    casOpsFileSizeLimitEntity.setDirection(fileSizeLimitModel.getDirection());
+    casOpsFileSizeLimitEntity.setProcessDate(fileSizeLimitModel.getProcessDate());
+    casOpsFileSizeLimitEntity.setActiveId(fileSizeLimitModel.getActiveId());
+    casOpsFileSizeLimitEntity.setCasOpsFileSizeLimitPK(casOpsFileSizeLimitPK);
 
-    return mdtAcOpsFileSizeLimitEntity;
+    return casOpsFileSizeLimitEntity;
 
   }
 

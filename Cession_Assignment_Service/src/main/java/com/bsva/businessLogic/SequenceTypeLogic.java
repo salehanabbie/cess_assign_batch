@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.SequenceTypesModel;
-import com.bsva.entities.MdtCnfgSequenceTypeEntity;
+import com.bsva.entities.CasCnfgSequenceTypeEntity;
 import com.bsva.translator.AdminTranslator;
 
 /**
@@ -21,7 +21,7 @@ public class SequenceTypeLogic {
 		
 	}
 	
-	public List<SequenceTypesModel> retrieveAllSequenceTypes(List<MdtCnfgSequenceTypeEntity> mdtSeqTypesList)
+	public List<SequenceTypesModel> retrieveAllSequenceTypes(List<CasCnfgSequenceTypeEntity> mdtSeqTypesList)
 	{
 		
 		
@@ -29,7 +29,7 @@ public class SequenceTypeLogic {
 			SequenceTypesModel seqTypeModel;
 			
 		
-			for (MdtCnfgSequenceTypeEntity seqTypeEntity : mdtSeqTypesList) 
+			for (CasCnfgSequenceTypeEntity seqTypeEntity : mdtSeqTypesList)
 			{
 				
 			 seqTypeModel = new SequenceTypesModel();
@@ -41,15 +41,15 @@ public class SequenceTypeLogic {
 }
 	
 	
-	public MdtCnfgSequenceTypeEntity addSequenceTypeCode(
+	public CasCnfgSequenceTypeEntity addSequenceTypeCode(
 			SequenceTypesModel sequenceTypesModel) {
-		MdtCnfgSequenceTypeEntity mdtSequenceTypeEntity = new AdminTranslator()
+		CasCnfgSequenceTypeEntity mdtSequenceTypeEntity = new AdminTranslator()
 				.translateCommonsSequenceTypesModelToEntity(sequenceTypesModel);
 
 		return mdtSequenceTypeEntity;
 	}
 	
-	public SequenceTypesModel retrieveSequenceCode(MdtCnfgSequenceTypeEntity mdtSequenceTypeEntity)
+	public SequenceTypesModel retrieveSequenceCode(CasCnfgSequenceTypeEntity mdtSequenceTypeEntity)
 	{
 		SequenceTypesModel localModel = new SequenceTypesModel();
 		localModel = new AdminTranslator().translateSequenceTypeEntityToSequenceTypesCommonsModel(mdtSequenceTypeEntity);

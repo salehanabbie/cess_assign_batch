@@ -22,7 +22,6 @@ import iso.std.iso._20022.tech.xsd.pacs_002_001.TransactionIndividualStatus3Code
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,7 +32,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import javax.ejb.EJB;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -45,11 +43,11 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 import com.bsva.PropertyUtil;
 import com.bsva.commons.model.OpsFileRegModel;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.interfaces.AdminBeanRemote;
@@ -85,16 +83,16 @@ public class AC_StatusReport_Pacs002_001_04 {
 
 	CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
 	CasSysctrlSysParamEntity casSysctrlSysParamEntity;
-	MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity = null;
+	CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = null;
 	String serviceId, mdtReqId, instdIdFileName, instIdMsgId;
-	List<MdtAcOpsStatusHdrsEntity> statusGrpHdrList = null;
-	List<MdtAcOpsStatusDetailsEntity> grpHdrErrorList, transErrorList;
+	List<CasOpsStatusHdrsEntity> statusGrpHdrList = null;
+	List<CasOpsStatusDetailsEntity> grpHdrErrorList, transErrorList;
 
 	String pacs002ServiceName = null, outputFileBic = null, outgoingService = null;
 	int lastSeqNoUsed;
 	String groupStatus = null;
 	boolean populateOpi = false, populateOad = false;
-	MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity;
+	CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity;
 	private String urn = "urn:iso:std:iso:20022:tech:xsd:pacs.002.001.04";
 	public static boolean result;
 
@@ -130,8 +128,8 @@ public class AC_StatusReport_Pacs002_001_04 {
 
 		try 
 		{
-			statusGrpHdrList = new ArrayList<MdtAcOpsStatusHdrsEntity>();
-			statusGrpHdrList = (List<MdtAcOpsStatusHdrsEntity>) beanRemote.retrieveStatusHdrsByStatus(reportToBeProdStatus, pac002ServiceId);
+			statusGrpHdrList = new ArrayList<CasOpsStatusHdrsEntity>();
+			statusGrpHdrList = (List<CasOpsStatusHdrsEntity>) beanRemote.retrieveStatusHdrsByStatus(reportToBeProdStatus, pac002ServiceId);
 
 			if(statusGrpHdrList != null && statusGrpHdrList.size() > 0)
 			{
@@ -142,7 +140,7 @@ public class AC_StatusReport_Pacs002_001_04 {
 				
 				Document pacsDocument;
 				FIToFIPaymentStatusReportV04 fiToFiPmtStsRep04;
-				for (MdtAcOpsStatusHdrsEntity statusGrpHdrEntity : statusGrpHdrList) 
+				for (CasOpsStatusHdrsEntity statusGrpHdrEntity : statusGrpHdrList)
 				{
 					log.info("********GENERATING Status Report "+statusGrpHdrEntity.getHdrMsgId()+" ********");
 
@@ -161,12 +159,12 @@ public class AC_StatusReport_Pacs002_001_04 {
 					//Only Populate this section if GHErrorList is empty
 					if(!(grpHdrErrorList != null && grpHdrErrorList.size() > 0))
 					{	
-						Map<String, List<MdtAcOpsStatusDetailsEntity>> statusDetailsMap = new HashMap<String, List<MdtAcOpsStatusDetailsEntity>>();
+						Map<String, List<CasOpsStatusDetailsEntity>> statusDetailsMap = new HashMap<String, List<CasOpsStatusDetailsEntity>>();
 						statusDetailsMap = fileProcessBeanRemote.retrieveStatusReportRejections(statusGrpHdrEntity.getSystemSeqNo(), "TXN");
 						
 						if(statusDetailsMap != null && statusDetailsMap.size() > 0) {
 							
-							for (Map.Entry<String,List<MdtAcOpsStatusDetailsEntity>> entry : statusDetailsMap.entrySet()) {
+							for (Map.Entry<String,List<CasOpsStatusDetailsEntity>> entry : statusDetailsMap.entrySet()) {
 								//Populate them in file
 								PaymentTransaction33 paymentInfo = new PaymentTransaction33();	
 								paymentInfo = generateTransErrors(entry.getValue());
@@ -382,7 +380,7 @@ public class AC_StatusReport_Pacs002_001_04 {
 		return xmlCalendar;
 	}
 
-	public GroupHeader53 populateGroupHdr(MdtAcOpsStatusHdrsEntity statusGrpHdrEntity)
+	public GroupHeader53 populateGroupHdr(CasOpsStatusHdrsEntity statusGrpHdrEntity)
 	{
 		log.debug("-------------populating the Group Hdr--------------");
 		BranchAndFinancialInstitutionIdentification5 branchFinInfo;
@@ -455,9 +453,10 @@ public class AC_StatusReport_Pacs002_001_04 {
 		return grpHeader;		
 	}
 
-	public OriginalGroupHeader1 populateOriginalGrpHdrInfAndSts(MdtAcOpsStatusHdrsEntity statusGrpHdrEntity) 
+	public OriginalGroupHeader1 populateOriginalGrpHdrInfAndSts(
+			CasOpsStatusHdrsEntity statusGrpHdrEntity)
 	{
-		grpHdrErrorList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+		grpHdrErrorList = new ArrayList<CasOpsStatusDetailsEntity>();
 
 		//_______________POPULATE ORGNL GRP INFO & STATUS________________// 
 		OriginalGroupHeader1 orgGrpHdr = new OriginalGroupHeader1();
@@ -486,8 +485,8 @@ public class AC_StatusReport_Pacs002_001_04 {
 			//	    	   log.info("grp HRD status---------> "+ orgGrpHdr.getGrpSts());
 
 		}
-		List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList  = new ArrayList<MdtAcOpsStatusDetailsEntity>();
-		opsStatusDetailsList = (List<MdtAcOpsStatusDetailsEntity>) valBeanRemote.findOpsStatusDetByCriteria("MdtAcOpsStatusDetailsEntity.findByStatusHdrSeqNo", "statusHdrSeqNo", statusGrpHdrEntity.getSystemSeqNo(), null);
+		List<CasOpsStatusDetailsEntity> opsStatusDetailsList  = new ArrayList<CasOpsStatusDetailsEntity>();
+		opsStatusDetailsList = (List<CasOpsStatusDetailsEntity>) valBeanRemote.findOpsStatusDetByCriteria("MdtAcOpsStatusDetailsEntity.findByStatusHdrSeqNo", "statusHdrSeqNo", statusGrpHdrEntity.getSystemSeqNo(), null);
 		//	       log.info("opsStatusDetailsList.size(): "+ opsStatusDetailsList.size());
 		//			       log.info("statusGrpHdrEntity.getSystemSeqNo()------>"+statusGrpHdrEntity.getSystemSeqNo());
 		//	       log.info("opsStatusDetailsList--------->" +opsStatusDetailsList);
@@ -495,7 +494,7 @@ public class AC_StatusReport_Pacs002_001_04 {
 
 		if(opsStatusDetailsList != null && opsStatusDetailsList.size() > 0)
 		{
-			for (MdtAcOpsStatusDetailsEntity  opsStatusDetailsEntity: opsStatusDetailsList) 
+			for (CasOpsStatusDetailsEntity opsStatusDetailsEntity: opsStatusDetailsList)
 			{
 				if(opsStatusDetailsEntity.getErrorType().equalsIgnoreCase("HDR") && opsStatusDetailsEntity.getTxnStatus().equalsIgnoreCase("RJCT"))
 				{
@@ -507,7 +506,7 @@ public class AC_StatusReport_Pacs002_001_04 {
 
 		if(grpHdrErrorList != null && grpHdrErrorList.size() > 0)
 		{
-			for (MdtAcOpsStatusDetailsEntity grpHdrError : grpHdrErrorList) 
+			for (CasOpsStatusDetailsEntity grpHdrError : grpHdrErrorList)
 			{
 				StatusReasonInformation9 statRsnInfo = new StatusReasonInformation9();
 				StatusReason6Choice stRsnChoice = new StatusReason6Choice();
@@ -535,7 +534,7 @@ public class AC_StatusReport_Pacs002_001_04 {
 			NumberOfTransactionsPerStatus3 numberOfTransactionsPerStatus3;
 			//Retrieve MdtOpsCount.
 
-			MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = (MdtAcOpsMndtCountEntity) beanRemote.retrievePacs002Count(statusGrpHdrEntity.getOrgnlMsgId());
+			CasOpsMndtCountEntity mdtOpsMndtCountEntity = (CasOpsMndtCountEntity) beanRemote.retrievePacs002Count(statusGrpHdrEntity.getOrgnlMsgId());
 
 			if(mdtOpsMndtCountEntity != null)
 			{
@@ -584,17 +583,17 @@ public class AC_StatusReport_Pacs002_001_04 {
 			if(opsStatusDetailsList.size() > 0)
 			{
 
-				MdtAcOpsStatusDetailsEntity  mdtAcOpsStatusDetailsEntity = new MdtAcOpsStatusDetailsEntity();
+				CasOpsStatusDetailsEntity casOpsStatusDetailsEntity = new CasOpsStatusDetailsEntity();
 
-				mdtAcOpsStatusDetailsEntity = opsStatusDetailsList.get(0);
-				if(mdtAcOpsStatusDetailsEntity.getErrorType().equalsIgnoreCase("TXN") && mdtAcOpsStatusDetailsEntity.getTxnStatus().equalsIgnoreCase("RJCT"))
+				casOpsStatusDetailsEntity = opsStatusDetailsList.get(0);
+				if(casOpsStatusDetailsEntity.getErrorType().equalsIgnoreCase("TXN") && casOpsStatusDetailsEntity.getTxnStatus().equalsIgnoreCase("RJCT"))
 				{
 
 					//Populate # of Transactions per file
 					NumberOfTransactionsPerStatus3 numberOfTransactionsPerStatus3;
 					//Retrieve MdtOpsCount.
 
-					MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = (MdtAcOpsMndtCountEntity) beanRemote.retrievePacs002Count(statusGrpHdrEntity.getOrgnlMsgId());
+					CasOpsMndtCountEntity mdtOpsMndtCountEntity = (CasOpsMndtCountEntity) beanRemote.retrievePacs002Count(statusGrpHdrEntity.getOrgnlMsgId());
 
 
 					if(mdtOpsMndtCountEntity != null)
@@ -648,7 +647,7 @@ public class AC_StatusReport_Pacs002_001_04 {
 	
 	
 	
-	public PaymentTransaction33 generateTransErrors(List<MdtAcOpsStatusDetailsEntity> transErrorList) {
+	public PaymentTransaction33 generateTransErrors(List<CasOpsStatusDetailsEntity> transErrorList) {
 		PaymentTransaction33 transInfo = null;
 		transInfo = new PaymentTransaction33();
 
@@ -663,7 +662,7 @@ public class AC_StatusReport_Pacs002_001_04 {
 //		te_duration = (te_endTime - te_startTime) / 1000000;
 //		log.info("TXN ERRORS RETRIEVAL TIME IS "+DurationFormatUtils.formatDuration(te_duration, "HH:mm:ss.S")+" milliseconds. ");
 
-			MdtAcOpsStatusDetailsEntity transErrorEntity = new MdtAcOpsStatusDetailsEntity();
+			CasOpsStatusDetailsEntity transErrorEntity = new CasOpsStatusDetailsEntity();
 			transErrorEntity = transErrorList.get(0);
 			
 			if(transErrorEntity.getTxnId() != null)
@@ -671,7 +670,7 @@ public class AC_StatusReport_Pacs002_001_04 {
 
 			transInfo.setTxSts(TransactionIndividualStatus3Code.RJCT);
 
-			for (MdtAcOpsStatusDetailsEntity txnErrorEntity : transErrorList) 
+			for (CasOpsStatusDetailsEntity txnErrorEntity : transErrorList)
 			{
 				if(txnErrorEntity.getTxnStatus().equalsIgnoreCase("ACCP"))
 				{

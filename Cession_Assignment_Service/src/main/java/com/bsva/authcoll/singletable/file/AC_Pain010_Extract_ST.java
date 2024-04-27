@@ -17,7 +17,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.ejb.EJB;
@@ -35,14 +34,14 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 import com.bsva.PropertyUtil;
 import com.bsva.commons.model.OpsFileRegModel;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
-import com.bsva.entities.MdtAcOpsGrpHdrEntity;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntity;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
-import com.bsva.entities.MdtAcOpsMndtCountPK;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsGrpHdrEntity;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsMndtCountPK;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.SysCisBankEntity;
@@ -118,7 +117,7 @@ public class AC_Pain010_Extract_ST {
 	public static FileProcessBeanRemote fileProcessBeanRemote;
 	public static Logger log = Logger.getLogger(AC_Pain010_Extract_ST.class);
 
-	public List<MdtAcOpsMandateTxnsEntity> extractMandList;
+	public List<CasOpsCessionAssignEntity> extractMandList;
 	public Date todaysDate;
 
 	public String credName, debtName, ultCredName, ultDebtName, mdtRefNo;
@@ -129,11 +128,11 @@ public class AC_Pain010_Extract_ST {
 	String rdyToExtStatus = "3";
 	String outgoingService, inwardServ;
 
-	MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity;
+	CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity;
 	CasSysctrlCompParamEntity mdtSysctrlCompParamEntity;
 	CasSysctrlSysParamEntity casSysctrlSysParamEntity;
-	MdtAcOpsGrpHdrEntity opsAmendGrpHdrEntity = null;
-	MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity = null;
+	CasOpsGrpHdrEntity opsAmendGrpHdrEntity = null;
+	CasOpsCessionAssignEntity casOpsCessionAssignEntity = null;
 
 	SimpleDateFormat sdfFileDate = new SimpleDateFormat("yyyyMMdd");
 	String urn = "urn:iso:std:iso:20022:tech:xsd:pain.010.001.03";
@@ -146,10 +145,10 @@ public class AC_Pain010_Extract_ST {
 	long startTime, endTime, duration;
 	String testLiveIndProp = null;
 	List<SysCisBankEntity> sysCisBankList =null;
-	List<MdtAcOpsFileSizeLimitEntity>  opsFileSizeLimitList = null;
+	List<CasOpsFileSizeLimitEntity>  opsFileSizeLimitList = null;
 	int nrOfMsgs = 0;
-	List<MdtAcOpsMandateTxnsEntity> origTxnsList = null;
-	List<MdtOpsCustParamEntity> custParamsList = null;
+	List<CasOpsCessionAssignEntity> origTxnsList = null;
+	List<CasOpsCustParamEntity> custParamsList = null;
 	List<String>extOrigMRTIList=  null;
 	String processStatus = null;
 
@@ -182,14 +181,14 @@ public class AC_Pain010_Extract_ST {
 
 		casSysctrlSysParamEntity = new CasSysctrlSysParamEntity();
 		casSysctrlSysParamEntity = (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
-		origTxnsList = new ArrayList<MdtAcOpsMandateTxnsEntity>();
+		origTxnsList = new ArrayList<CasOpsCessionAssignEntity>();
 		String destInstId = null;
-		custParamsList = new ArrayList<MdtOpsCustParamEntity>();
-		custParamsList = (List<MdtOpsCustParamEntity>) beanRemote.retrieveActiveCustomerParameters();
+		custParamsList = new ArrayList<CasOpsCustParamEntity>();
+		custParamsList = (List<CasOpsCustParamEntity>) beanRemote.retrieveActiveCustomerParameters();
 
 		if(custParamsList.size() > 0)
 		{
-			for (MdtOpsCustParamEntity custParamEntity : custParamsList) 
+			for (CasOpsCustParamEntity custParamEntity : custParamsList)
 			{
 				destInstId = custParamEntity.getInstId();
 
@@ -198,26 +197,26 @@ public class AC_Pain010_Extract_ST {
 				if(sysCisBankList.size()>0)
 				{
 					//__________________Retrieve All Mandates for Extract______________________//
-					extractMandList = new ArrayList<MdtAcOpsMandateTxnsEntity>();
-					extractMandList = (List<MdtAcOpsMandateTxnsEntity>) fileProcessBeanRemote.retrieveMandatesForExtract(true, destInstId, inwardServ ,rdyToExtStatus);
+					extractMandList = new ArrayList<CasOpsCessionAssignEntity>();
+					extractMandList = (List<CasOpsCessionAssignEntity>) fileProcessBeanRemote.retrieveMandatesForExtract(true, destInstId, inwardServ ,rdyToExtStatus);
 
 					if(extractMandList != null && extractMandList.size() > 0)
 					{
 						
-						MdtAcOpsFileSizeLimitEntity mappedFileSizeLimit = (MdtAcOpsFileSizeLimitEntity) fileProcessBeanRemote.retriveOutgoingService(outgoingService,destInstId);
+						CasOpsFileSizeLimitEntity mappedFileSizeLimit = (CasOpsFileSizeLimitEntity) fileProcessBeanRemote.retriveOutgoingService(outgoingService,destInstId);
 						
-						if(mappedFileSizeLimit != null && destInstId.equalsIgnoreCase(mappedFileSizeLimit.getMdtAcOpsFileSizeLimitPK().getMemberId()))
+						if(mappedFileSizeLimit != null && destInstId.equalsIgnoreCase(mappedFileSizeLimit.getCasOpsFileSizeLimitPK().getMemberId()))
 						{
-							destInstId =mappedFileSizeLimit.getMdtAcOpsFileSizeLimitPK().getMemberId();
+							destInstId =mappedFileSizeLimit.getCasOpsFileSizeLimitPK().getMemberId();
 							String limit =mappedFileSizeLimit.getLimit();
 							log.debug("limit---->"+limit+"");
 							int fileLimit = Integer.valueOf(limit);
 
-						List<ArrayList<MdtAcOpsMandateTxnsEntity>> chunckedList = getChunks(extractMandList,fileLimit);
+						List<ArrayList<CasOpsCessionAssignEntity>> chunckedList = getChunks(extractMandList,fileLimit);
 						log.debug("fileLimit---->"+fileLimit+"");
 						log.debug("chunckedList---->"+chunckedList.size()+"");
 
-						for(ArrayList<MdtAcOpsMandateTxnsEntity> chunk :chunckedList)
+						for(ArrayList<CasOpsCessionAssignEntity> chunk :chunckedList)
 						{
 							
 							extOrigMRTIList = new ArrayList<String>();
@@ -234,14 +233,14 @@ public class AC_Pain010_Extract_ST {
 
 								mandateAmendmentRequestV03.setGrpHdr(groupHeader);
 								outFileName = createFileName(destInstId); 
-								for(MdtAcOpsMandateTxnsEntity extMandate : chunk)
+								for(CasOpsCessionAssignEntity extMandate : chunk)
 								{
 									MandateAmendment3 mandateAmendment = generateMandate(extMandate);
 									mandateAmendmentRequestV03.getUndrlygAmdmntDtls().add(mandateAmendment);
 
 									//Update Original Mandate
 									
-									extOrigMRTIList.add("'"+extMandate.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()+"'");
+									extOrigMRTIList.add("'"+extMandate.getCasOpsCessionAssignEntityPK().getMandateReqTranId()+"'");
 //									try 
 //									{
 //										extMandate.setProcessStatus(propertyUtil.getPropValue("ProcStatus.Extracted"));
@@ -250,7 +249,7 @@ public class AC_Pain010_Extract_ST {
 //										extMandate.setModifiedDate(todaysDate);
 //
 //										origTxnsList.add(extMandate);
-//										//fileProcessBeanRemote.updateMdtOpsMandateTxns(extMandate);
+//										//fileProcessBeanRemote.updatecasMandateTxns(extMandate);
 //									}
 //									catch (Exception ex) 
 //									{
@@ -285,17 +284,17 @@ public class AC_Pain010_Extract_ST {
 
 	}
 
-	private  ArrayList<ArrayList<MdtAcOpsMandateTxnsEntity>> getChunks(List<MdtAcOpsMandateTxnsEntity> extractMandList,int chunkSize)
+	private  ArrayList<ArrayList<CasOpsCessionAssignEntity>> getChunks(List<CasOpsCessionAssignEntity> extractMandList, int chunkSize)
 	{           
 	            AtomicInteger counter = new AtomicInteger();
 
-	            ArrayList<ArrayList<MdtAcOpsMandateTxnsEntity>> result = new ArrayList<ArrayList<MdtAcOpsMandateTxnsEntity>>();
+	            ArrayList<ArrayList<CasOpsCessionAssignEntity>> result = new ArrayList<ArrayList<CasOpsCessionAssignEntity>>();
 
-	            for(MdtAcOpsMandateTxnsEntity value : extractMandList)
+	            for(CasOpsCessionAssignEntity value : extractMandList)
 	            {               
 	                if (counter.getAndIncrement() % chunkSize == 0)
 	                {
-	                    result.add(new ArrayList<MdtAcOpsMandateTxnsEntity>());
+	                    result.add(new ArrayList<CasOpsCessionAssignEntity>());
 	                    
 	                }
 	                
@@ -424,7 +423,7 @@ public class AC_Pain010_Extract_ST {
 		return groupHeader;
 	}
 
-	public MandateAmendment3 generateMandate(MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity) 
+	public MandateAmendment3 generateMandate(CasOpsCessionAssignEntity casOpsCessionAssignEntity)
 	{
 		PostalAddress6  instgPostalAddress6, instgBrPostalAddress6, instrdPostalAddress6, instrdBrPostalAddress6;
 		ContactDetails2  instgContactDetails2, instrdContactDetails2;
@@ -460,94 +459,95 @@ public class AC_Pain010_Extract_ST {
 		BranchData2 crAgtBranchData2, drAgtBranchData2;
 
 		//********POPULATE MANDATE INFORMATION*************//
-		if(mdtAcOpsMandateTxnsEntity.getAmendReason() != null)
+		if(casOpsCessionAssignEntity.getAmendReason() != null)
 		{
 			MandateReason1Choice mandateReason1Choice = new MandateReason1Choice();
 
-			mandateReason1Choice.setPrtry(mdtAcOpsMandateTxnsEntity.getAmendReason());
+			mandateReason1Choice.setPrtry(casOpsCessionAssignEntity.getAmendReason());
 			mandateAmendmentReason1.setRsn(mandateReason1Choice);
 			mandateAmendment.setAmdmntRsn(mandateAmendmentReason1);
 		}
 
 		Mandate3 mandate = new Mandate3();
 
-		if(mdtAcOpsMandateTxnsEntity.getMandateId() != null)
-			mandate.setMndtId(mdtAcOpsMandateTxnsEntity.getMandateId());
+		if(casOpsCessionAssignEntity.getMandateId() != null)
+			mandate.setMndtId(casOpsCessionAssignEntity.getMandateId());
 		
-		if(mdtAcOpsMandateTxnsEntity.getContractRef() != null)
-			mandate.setMndtReqId(mdtAcOpsMandateTxnsEntity.getContractRef());
+		if(casOpsCessionAssignEntity.getContractRef() != null)
+			mandate.setMndtReqId(casOpsCessionAssignEntity.getContractRef());
 
 		mandateTypeInformation1 = new MandateTypeInformation1();
 		ServiceLevel8Choice serviceLevel8Choice = new ServiceLevel8Choice();
-		if(mdtAcOpsMandateTxnsEntity.getServiceLevel() != null)
+		if(casOpsCessionAssignEntity.getServiceLevel() != null)
 		{
-			serviceLevel8Choice.setPrtry(mdtAcOpsMandateTxnsEntity.getServiceLevel());
+			serviceLevel8Choice.setPrtry(casOpsCessionAssignEntity.getServiceLevel());
 			mandateTypeInformation1.setSvcLvl(serviceLevel8Choice);
 		}
 
-		if(mdtAcOpsMandateTxnsEntity.getLocalInstrCd() != null)
+		if(casOpsCessionAssignEntity.getLocalInstrCd() != null)
 		{
 			localInstrument2Choice = new LocalInstrument2Choice();
-			localInstrument2Choice.setPrtry(mdtAcOpsMandateTxnsEntity.getLocalInstrCd());
+			localInstrument2Choice.setPrtry(casOpsCessionAssignEntity.getLocalInstrCd());
 			mandateTypeInformation1.setLclInstrm(localInstrument2Choice);
 		}
 
-		if(mdtAcOpsMandateTxnsEntity.getServiceLevel() != null || mdtAcOpsMandateTxnsEntity.getLocalInstrCd() != null)
+		if(casOpsCessionAssignEntity.getServiceLevel() != null || casOpsCessionAssignEntity.getLocalInstrCd() != null)
 			mandate.setTp(mandateTypeInformation1);
 
 		mandateOccurrences2 = new MandateOccurrences2();
-		if(mdtAcOpsMandateTxnsEntity.getSequenceType() != null)
-			mandateOccurrences2.setSeqTp(SequenceType2Code.fromValue(mdtAcOpsMandateTxnsEntity.getSequenceType()));
+		if(casOpsCessionAssignEntity.getSequenceType() != null)
+			mandateOccurrences2.setSeqTp(SequenceType2Code.fromValue(casOpsCessionAssignEntity.getSequenceType()));
 
-		if(mdtAcOpsMandateTxnsEntity.getFrequency() != null)
-			mandateOccurrences2.setFrqcy(Frequency6Code.fromValue(mdtAcOpsMandateTxnsEntity.getFrequency()));
+		if(casOpsCessionAssignEntity.getFrequency() != null)
+			mandateOccurrences2.setFrqcy(Frequency6Code.fromValue(casOpsCessionAssignEntity.getFrequency()));
 
-		if(mdtAcOpsMandateTxnsEntity.getFirstCollDate() != null)
-			mandateOccurrences2.setFrstColltnDt(getGregorianDateWithoutTime(mdtAcOpsMandateTxnsEntity.getFirstCollDate()));
+		if(casOpsCessionAssignEntity.getFirstCollDate() != null)
+			mandateOccurrences2.setFrstColltnDt(getGregorianDateWithoutTime(
+					casOpsCessionAssignEntity.getFirstCollDate()));
 
-		if(mdtAcOpsMandateTxnsEntity.getSequenceType() != null || mdtAcOpsMandateTxnsEntity.getFrequency() != null || mdtAcOpsMandateTxnsEntity.getFirstCollDate() != null)
+		if(casOpsCessionAssignEntity.getSequenceType() != null || casOpsCessionAssignEntity.getFrequency() != null || casOpsCessionAssignEntity.getFirstCollDate() != null)
 			mandate.setOcrncs(mandateOccurrences2);
 
 		activeCurrencyAndAmount = new ActiveCurrencyAndAmount();
-		if(mdtAcOpsMandateTxnsEntity.getCollAmountCurr() != null)
-			activeCurrencyAndAmount.setCcy(mdtAcOpsMandateTxnsEntity.getCollAmountCurr());
+		if(casOpsCessionAssignEntity.getCollAmountCurr() != null)
+			activeCurrencyAndAmount.setCcy(casOpsCessionAssignEntity.getCollAmountCurr());
 
-		if(mdtAcOpsMandateTxnsEntity.getCollAmount() != null)
+		if(casOpsCessionAssignEntity.getCollAmount() != null)
 		{
-			String value = df.format(mdtAcOpsMandateTxnsEntity.getCollAmount());
+			String value = df.format(casOpsCessionAssignEntity.getCollAmount());
 			double dValue = Double.valueOf(value);
 			BigDecimal bigdecimalValue = new BigDecimal(dValue);
 			bigdecimalValue = bigdecimalValue.setScale(2, RoundingMode.HALF_UP);
 			activeCurrencyAndAmount.setValue(bigdecimalValue);
 		}
 
-		if(mdtAcOpsMandateTxnsEntity.getCollAmountCurr() != null || mdtAcOpsMandateTxnsEntity.getCollAmount() != null)
+		if(casOpsCessionAssignEntity.getCollAmountCurr() != null || casOpsCessionAssignEntity.getCollAmount() != null)
 			mandate.setColltnAmt(activeCurrencyAndAmount);
 
 		activeCurrencyAndAmountMax = new ActiveCurrencyAndAmount();
-		if(mdtAcOpsMandateTxnsEntity.getMaxAmountCurr() != null)
-			activeCurrencyAndAmountMax.setCcy(mdtAcOpsMandateTxnsEntity.getMaxAmountCurr());
+		if(casOpsCessionAssignEntity.getMaxAmountCurr() != null)
+			activeCurrencyAndAmountMax.setCcy(casOpsCessionAssignEntity.getMaxAmountCurr());
 
-		if(mdtAcOpsMandateTxnsEntity.getMaxAmount() != null)
+		if(casOpsCessionAssignEntity.getMaxAmount() != null)
 		{
-			String value = df.format(mdtAcOpsMandateTxnsEntity.getMaxAmount());
+			String value = df.format(casOpsCessionAssignEntity.getMaxAmount());
 			double dValue = Double.valueOf(value);
 			BigDecimal bigdecimalValue = new BigDecimal(dValue);
 			bigdecimalValue = bigdecimalValue.setScale(2, RoundingMode.HALF_UP);
 			activeCurrencyAndAmountMax.setValue(bigdecimalValue);
 		}
 
-		if(mdtAcOpsMandateTxnsEntity.getMaxAmountCurr() != null || mdtAcOpsMandateTxnsEntity.getMaxAmount() != null)
+		if(casOpsCessionAssignEntity.getMaxAmountCurr() != null || casOpsCessionAssignEntity.getMaxAmount() != null)
 			mandate.setMaxAmt(activeCurrencyAndAmountMax);
 
 		//********POPULATE CREDITOR SCHEME INFORMATION*************//
-		if(mdtAcOpsMandateTxnsEntity.getCredSchemeId() != null)
+		if(casOpsCessionAssignEntity.getCredSchemeId() != null)
 		{
 			crSchemePartyIdentification43 = new PartyIdentification43();
 			Party11Choice party11Choice = new Party11Choice();
 			OrganisationIdentification8 organisationIdentification8 = new OrganisationIdentification8();
 			GenericOrganisationIdentification1 genericOrganisationIdentification1 = new GenericOrganisationIdentification1();
-			genericOrganisationIdentification1.setId(mdtAcOpsMandateTxnsEntity.getCredSchemeId());
+			genericOrganisationIdentification1.setId(casOpsCessionAssignEntity.getCredSchemeId());
 			organisationIdentification8.getOthr().add(genericOrganisationIdentification1);
 			party11Choice.setOrgId(organisationIdentification8);
 			crSchemePartyIdentification43.setId(party11Choice);
@@ -556,29 +556,30 @@ public class AC_Pain010_Extract_ST {
 
 		//********POPULATE CREDITOR INFORMATION*************//
 		creditor = new PartyIdentification431();
-		if(mdtAcOpsMandateTxnsEntity.getCreditorName() != null)
-			creditor.setNm(mdtAcOpsMandateTxnsEntity.getCreditorName());
+		if(casOpsCessionAssignEntity.getCreditorName() != null)
+			creditor.setNm(casOpsCessionAssignEntity.getCreditorName());
 
-		if(mdtAcOpsMandateTxnsEntity.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId() != null)
+		if(casOpsCessionAssignEntity.getCasOpsCessionAssignEntityPK().getMandateReqTranId() != null)
 		{
 			Party11Choice1 party11Choice= new Party11Choice1();
 			OrganisationIdentification81 organisationIdentification8 = new OrganisationIdentification81();
 			GenericOrganisationIdentification1 genericOrganisationIdentification1 = new GenericOrganisationIdentification1();
-			genericOrganisationIdentification1.setId(mdtAcOpsMandateTxnsEntity.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId());
+			genericOrganisationIdentification1.setId(
+					casOpsCessionAssignEntity.getCasOpsCessionAssignEntityPK().getMandateReqTranId());
 			organisationIdentification8.getOthr().add(genericOrganisationIdentification1);
 			party11Choice.setOrgId(organisationIdentification8);
 			creditor.setId(party11Choice);
 		}
 
-		if(mdtAcOpsMandateTxnsEntity.getCredPhoneNr() != null || mdtAcOpsMandateTxnsEntity.getCredEmailAddr() != null)
+		if(casOpsCessionAssignEntity.getCredPhoneNr() != null || casOpsCessionAssignEntity.getCredEmailAddr() != null)
 		{
 			creditorContactDetails2 = new ContactDetails2();
 
-			if(mdtAcOpsMandateTxnsEntity.getCredPhoneNr() != null)
-				creditorContactDetails2.setPhneNb(mdtAcOpsMandateTxnsEntity.getCredPhoneNr());
+			if(casOpsCessionAssignEntity.getCredPhoneNr() != null)
+				creditorContactDetails2.setPhneNb(casOpsCessionAssignEntity.getCredPhoneNr());
 
-			if(mdtAcOpsMandateTxnsEntity.getCredEmailAddr() != null)
-				creditorContactDetails2.setEmailAdr(mdtAcOpsMandateTxnsEntity.getCredEmailAddr());
+			if(casOpsCessionAssignEntity.getCredEmailAddr() != null)
+				creditorContactDetails2.setEmailAdr(casOpsCessionAssignEntity.getCredEmailAddr());
 
 			creditor.setCtctDtls(creditorContactDetails2);
 		}
@@ -587,25 +588,25 @@ public class AC_Pain010_Extract_ST {
 			mandate.setCdtr(creditor);
 
 		//********POPULATE CREDITOR_ACCOUNT INFORMATION*************//
-		if(mdtAcOpsMandateTxnsEntity.getCredAccNum() != null)
+		if(casOpsCessionAssignEntity.getCredAccNum() != null)
 		{	
 			credCashAccount24 = new CashAccount24();
 			credAccountIdentification4Choice = new AccountIdentification4Choice();
 			GenericAccountIdentification1 credGenericAccountIdentification1 = new GenericAccountIdentification1();
-			credGenericAccountIdentification1.setId(mdtAcOpsMandateTxnsEntity.getCredAccNum());
+			credGenericAccountIdentification1.setId(casOpsCessionAssignEntity.getCredAccNum());
 			credAccountIdentification4Choice.setOthr(credGenericAccountIdentification1);
 			credCashAccount24.setId(credAccountIdentification4Choice);
 			mandate.setCdtrAcct(credCashAccount24);
 		}
 
 		//********POPULATE CREDITOR_AGENT INFORMATION*************//
-		if(mdtAcOpsMandateTxnsEntity.getCredBranchNr() != null)
+		if(casOpsCessionAssignEntity.getCredBranchNr() != null)
 		{
 			crAgtBr_FinId = new  BranchAndFinancialInstitutionIdentification5();
 			crAgtFiId = new FinancialInstitutionIdentification8();
 			crAgtClSystemMemberIdentification2 = new ClearingSystemMemberIdentification2();
 
-			crAgtClSystemMemberIdentification2.setMmbId(mdtAcOpsMandateTxnsEntity.getCredBranchNr());
+			crAgtClSystemMemberIdentification2.setMmbId(casOpsCessionAssignEntity.getCredBranchNr());
 			crAgtFiId.setClrSysMmbId(crAgtClSystemMemberIdentification2);
 
 			crAgtBr_FinId.setFinInstnId(crAgtFiId);
@@ -615,15 +616,15 @@ public class AC_Pain010_Extract_ST {
 		//********POPULATE ULTIMATE CREDITOR INFORMATION*************//
 		ultCreditor = new PartyIdentification43();
 
-		if(mdtAcOpsMandateTxnsEntity.getUltCredName() != null)
-			ultCreditor.setNm(mdtAcOpsMandateTxnsEntity.getUltCredName());
+		if(casOpsCessionAssignEntity.getUltCredName() != null)
+			ultCreditor.setNm(casOpsCessionAssignEntity.getUltCredName());
 
-		if(mdtAcOpsMandateTxnsEntity.getCredAbbShortName() != null)
+		if(casOpsCessionAssignEntity.getCredAbbShortName() != null)
 		{
 			Party11Choice party11Choice = new Party11Choice();
 			OrganisationIdentification8 organisationIdentification8 = new OrganisationIdentification8();
 			GenericOrganisationIdentification1 genericOrganisationIdentification1 = new GenericOrganisationIdentification1();
-			genericOrganisationIdentification1.setId(mdtAcOpsMandateTxnsEntity.getCredAbbShortName());
+			genericOrganisationIdentification1.setId(casOpsCessionAssignEntity.getCredAbbShortName());
 			organisationIdentification8.getOthr().add(genericOrganisationIdentification1);
 			party11Choice.setOrgId(organisationIdentification8);
 			ultCreditor.setId(party11Choice);
@@ -634,29 +635,29 @@ public class AC_Pain010_Extract_ST {
 
 		//********POPULATE DEBTOR INFORMATION*************//
 		debtor = new PartyIdentification43();
-		if(mdtAcOpsMandateTxnsEntity.getDebtorName() != null)
-			debtor.setNm(mdtAcOpsMandateTxnsEntity.getDebtorName());
+		if(casOpsCessionAssignEntity.getDebtorName() != null)
+			debtor.setNm(casOpsCessionAssignEntity.getDebtorName());
 
-		if(mdtAcOpsMandateTxnsEntity.getDebtorId() != null)
+		if(casOpsCessionAssignEntity.getDebtorId() != null)
 		{
 			Party11Choice debtParty11Choice = new Party11Choice();
 			PersonIdentification5 personIdentification5 = new PersonIdentification5();
 			GenericPersonIdentification1 genericPersonIdentification1 = new GenericPersonIdentification1();
-			genericPersonIdentification1.setId(mdtAcOpsMandateTxnsEntity.getDebtorId());
+			genericPersonIdentification1.setId(casOpsCessionAssignEntity.getDebtorId());
 			personIdentification5.getOthr().add(genericPersonIdentification1);
 			debtParty11Choice.setPrvtId(personIdentification5);
 			debtor.setId(debtParty11Choice);
 		}
 
-		if(mdtAcOpsMandateTxnsEntity.getDebtPhoneNr() != null || mdtAcOpsMandateTxnsEntity.getDebtEmailAddr() != null)
+		if(casOpsCessionAssignEntity.getDebtPhoneNr() != null || casOpsCessionAssignEntity.getDebtEmailAddr() != null)
 		{
 			debtorContactDetails2 = new ContactDetails2();
 
-			if(mdtAcOpsMandateTxnsEntity.getDebtPhoneNr() != null)
-				debtorContactDetails2.setPhneNb(mdtAcOpsMandateTxnsEntity.getDebtPhoneNr());
+			if(casOpsCessionAssignEntity.getDebtPhoneNr() != null)
+				debtorContactDetails2.setPhneNb(casOpsCessionAssignEntity.getDebtPhoneNr());
 
-			if(mdtAcOpsMandateTxnsEntity.getDebtEmailAddr() != null)
-				debtorContactDetails2.setEmailAdr(mdtAcOpsMandateTxnsEntity.getDebtEmailAddr());
+			if(casOpsCessionAssignEntity.getDebtEmailAddr() != null)
+				debtorContactDetails2.setEmailAdr(casOpsCessionAssignEntity.getDebtEmailAddr());
 
 			debtor.setCtctDtls(debtorContactDetails2);
 		}
@@ -666,19 +667,19 @@ public class AC_Pain010_Extract_ST {
 
 		//********POPULATE DEBTOR_ACCOUNT INFORMATION*************//
 		debtCashAccount24 = new CashAccount24();
-		if(mdtAcOpsMandateTxnsEntity.getDebtAccNum() != null)
+		if(casOpsCessionAssignEntity.getDebtAccNum() != null)
 		{
 			debtAccountIdentification4Choice = new AccountIdentification4Choice();
 			GenericAccountIdentification1 debtGenericAccountIdentification1 = new GenericAccountIdentification1();
-			debtGenericAccountIdentification1.setId(mdtAcOpsMandateTxnsEntity.getDebtAccNum());
+			debtGenericAccountIdentification1.setId(casOpsCessionAssignEntity.getDebtAccNum());
 			debtAccountIdentification4Choice.setOthr(debtGenericAccountIdentification1);
 			debtCashAccount24.setId(debtAccountIdentification4Choice);
 		}
 
-		if(mdtAcOpsMandateTxnsEntity.getDebtAccType() != null)
+		if(casOpsCessionAssignEntity.getDebtAccType() != null)
 		{
 			debtAccountType2Choice = new CashAccountType2Choice();
-			debtAccountType2Choice.setPrtry(mdtAcOpsMandateTxnsEntity.getDebtAccType());
+			debtAccountType2Choice.setPrtry(casOpsCessionAssignEntity.getDebtAccType());
 			debtCashAccount24.setTp(debtAccountType2Choice);
 		}
 
@@ -689,20 +690,20 @@ public class AC_Pain010_Extract_ST {
 		drAgtBr_FinId = new  BranchAndFinancialInstitutionIdentification5();
 		drAgtFiId = new FinancialInstitutionIdentification8();
 
-		if(mdtAcOpsMandateTxnsEntity.getDebtBranchNr() != null)
+		if(casOpsCessionAssignEntity.getDebtBranchNr() != null)
 		{
 			drAgtClearingSystemMemberIdentification2 = new ClearingSystemMemberIdentification2();
-			drAgtClearingSystemMemberIdentification2.setMmbId(mdtAcOpsMandateTxnsEntity.getDebtBranchNr());
+			drAgtClearingSystemMemberIdentification2.setMmbId(casOpsCessionAssignEntity.getDebtBranchNr());
 			drAgtFiId.setClrSysMmbId(drAgtClearingSystemMemberIdentification2);
 			drAgtBr_FinId.setFinInstnId(drAgtFiId);
 			mandate.setDbtrAgt(drAgtBr_FinId);
 		}
 
 		//********POPULATE ULTIMATE DEBTOR INFORMATION*************//
-		if(mdtAcOpsMandateTxnsEntity.getUltDebtName() != null)
+		if(casOpsCessionAssignEntity.getUltDebtName() != null)
 		{
 			ultDebtor = new PartyIdentification43();
-			ultDebtor.setNm(mdtAcOpsMandateTxnsEntity.getUltDebtName());
+			ultDebtor.setNm(casOpsCessionAssignEntity.getUltDebtName());
 			mandate.setUltmtDbtr(ultDebtor);
 		}
 		mandateAmendment.setMndt(mandate);
@@ -710,25 +711,25 @@ public class AC_Pain010_Extract_ST {
 		//********POPULATE ORGNL MANDATE INFORMATION************/
 		Mandate1 mandate1 = new Mandate1();
 
-		if(mdtAcOpsMandateTxnsEntity.getOrigMandateId() != null)
-			mandate1.setMndtId(mdtAcOpsMandateTxnsEntity.getOrigMandateId());
+		if(casOpsCessionAssignEntity.getOrigMandateId() != null)
+			mandate1.setMndtId(casOpsCessionAssignEntity.getOrigMandateId());
 
-		if(mdtAcOpsMandateTxnsEntity.getOrigContractRef() != null)
-			mandate1.setMndtReqId(mdtAcOpsMandateTxnsEntity.getOrigContractRef());
+		if(casOpsCessionAssignEntity.getOrigContractRef() != null)
+			mandate1.setMndtReqId(casOpsCessionAssignEntity.getOrigContractRef());
 
-		if(mdtAcOpsMandateTxnsEntity.getOrigCredName() != null || mdtAcOpsMandateTxnsEntity.getOrigMandReqTranId() != null)
+		if(casOpsCessionAssignEntity.getOrigCredName() != null || casOpsCessionAssignEntity.getOrigMandReqTranId() != null)
 		{
 			PartyIdentification43 partyIdentification43 = new PartyIdentification43();
 
-			if(mdtAcOpsMandateTxnsEntity.getOrigCredName() != null)
-				partyIdentification43.setNm(mdtAcOpsMandateTxnsEntity.getOrigCredName());
+			if(casOpsCessionAssignEntity.getOrigCredName() != null)
+				partyIdentification43.setNm(casOpsCessionAssignEntity.getOrigCredName());
 
-			if(mdtAcOpsMandateTxnsEntity.getOrigMandReqTranId() != null)
+			if(casOpsCessionAssignEntity.getOrigMandReqTranId() != null)
 			{
 				Party11Choice party11Choice= new Party11Choice();
 				OrganisationIdentification8 organisationIdentification8 = new OrganisationIdentification8();
 				GenericOrganisationIdentification1 genericOrganisationIdentification1 = new GenericOrganisationIdentification1();
-				genericOrganisationIdentification1.setId(mdtAcOpsMandateTxnsEntity.getOrigMandReqTranId());
+				genericOrganisationIdentification1.setId(casOpsCessionAssignEntity.getOrigMandReqTranId());
 				organisationIdentification8.getOthr().add(genericOrganisationIdentification1);
 				party11Choice.setOrgId(organisationIdentification8);
 				partyIdentification43.setId(party11Choice);
@@ -737,21 +738,21 @@ public class AC_Pain010_Extract_ST {
 			mandate1.setCdtr(partyIdentification43);
 		}
 
-		if(mdtAcOpsMandateTxnsEntity.getOrigDebtName() != null)
+		if(casOpsCessionAssignEntity.getOrigDebtName() != null)
 		{
 			PartyIdentification43 partyIdentification43 = new PartyIdentification43();
-			partyIdentification43.setNm(mdtAcOpsMandateTxnsEntity.getOrigDebtName());
+			partyIdentification43.setNm(casOpsCessionAssignEntity.getOrigDebtName());
 
 			mandate1.setDbtr(partyIdentification43);
 		}
 
-		if(mdtAcOpsMandateTxnsEntity.getOrigDebtBranch() != null)
+		if(casOpsCessionAssignEntity.getOrigDebtBranch() != null)
 		{
 			BranchAndFinancialInstitutionIdentification5 debtorBranch = new  BranchAndFinancialInstitutionIdentification5();
 			FinancialInstitutionIdentification8 financialInstitutionIdentification8 = new FinancialInstitutionIdentification8();
 			ClearingSystemMemberIdentification2 clearingSystemMemberIdentification2 = new ClearingSystemMemberIdentification2();
 
-			clearingSystemMemberIdentification2.setMmbId(mdtAcOpsMandateTxnsEntity.getOrigDebtBranch());
+			clearingSystemMemberIdentification2.setMmbId(casOpsCessionAssignEntity.getOrigDebtBranch());
 			financialInstitutionIdentification8.setClrSysMmbId(clearingSystemMemberIdentification2);
 			debtorBranch.setFinInstnId(financialInstitutionIdentification8);
 
@@ -764,30 +765,30 @@ public class AC_Pain010_Extract_ST {
 			mandateAmendment.setOrgnlMndt(originalMandate2Choice);
 
 		//********POPULATE SUPPL_DATA INFORMATION************/
-		if(mdtAcOpsMandateTxnsEntity.getAuthType() != null || mdtAcOpsMandateTxnsEntity.getCollectionDay() != null || mdtAcOpsMandateTxnsEntity.getDateAdjRuleInd() != null || mdtAcOpsMandateTxnsEntity.getAdjCategory() != null
-				|| mdtAcOpsMandateTxnsEntity.getAdjRate() != null || mdtAcOpsMandateTxnsEntity.getAdjAmountCurr() != null || mdtAcOpsMandateTxnsEntity.getAdjAmount() != null 
-				|| mdtAcOpsMandateTxnsEntity.getFirstCollAmt() != null || mdtAcOpsMandateTxnsEntity.getFirstCollAmtCurr() != null || mdtAcOpsMandateTxnsEntity.getDebitValueType() != null)
+		if(casOpsCessionAssignEntity.getAuthType() != null || casOpsCessionAssignEntity.getCollectionDay() != null || casOpsCessionAssignEntity.getDateAdjRuleInd() != null || casOpsCessionAssignEntity.getAdjCategory() != null
+				|| casOpsCessionAssignEntity.getAdjRate() != null || casOpsCessionAssignEntity.getAdjAmountCurr() != null || casOpsCessionAssignEntity.getAdjAmount() != null
+				|| casOpsCessionAssignEntity.getFirstCollAmt() != null || casOpsCessionAssignEntity.getFirstCollAmtCurr() != null || casOpsCessionAssignEntity.getDebitValueType() != null)
 		{
 			SupplementaryDataEnvelope1  supplementaryDataEnvelope1 = new SupplementaryDataEnvelope1();
 			Contents contents = new Contents();
 			ActiveCurrencyAndAmount  fstCollActiveCurrencyAndAmount;
 			ActiveCurrencyAndAmount1 adjustActiveCurrencyAndAmount;
 
-			if(mdtAcOpsMandateTxnsEntity.getAuthType() != null)
-				contents.setAthntctnTp(mdtAcOpsMandateTxnsEntity.getAuthType());
+			if(casOpsCessionAssignEntity.getAuthType() != null)
+				contents.setAthntctnTp(casOpsCessionAssignEntity.getAuthType());
 
-			if(mdtAcOpsMandateTxnsEntity.getCollectionDay() != null)
-				contents.setCllctnDy(mdtAcOpsMandateTxnsEntity.getCollectionDay());
+			if(casOpsCessionAssignEntity.getCollectionDay() != null)
+				contents.setCllctnDy(casOpsCessionAssignEntity.getCollectionDay());
 
-			if(mdtAcOpsMandateTxnsEntity.getDateAdjRuleInd() != null)
-				contents.setDtAdjRl(mdtAcOpsMandateTxnsEntity.getDateAdjRuleInd());
+			if(casOpsCessionAssignEntity.getDateAdjRuleInd() != null)
+				contents.setDtAdjRl(casOpsCessionAssignEntity.getDateAdjRuleInd());
 
-			if(mdtAcOpsMandateTxnsEntity.getAdjCategory() != null)
-				contents.setAdjstCtgy(mdtAcOpsMandateTxnsEntity.getAdjCategory());
+			if(casOpsCessionAssignEntity.getAdjCategory() != null)
+				contents.setAdjstCtgy(casOpsCessionAssignEntity.getAdjCategory());
 
-			if(mdtAcOpsMandateTxnsEntity.getAdjRate() != null)
+			if(casOpsCessionAssignEntity.getAdjRate() != null)
 			{
-				String value = df5Dec.format(mdtAcOpsMandateTxnsEntity.getAdjRate());
+				String value = df5Dec.format(casOpsCessionAssignEntity.getAdjRate());
 				double dValue = Double.valueOf(value);
 				BigDecimal bigdecimalValue = new BigDecimal(dValue);
 				bigdecimalValue = bigdecimalValue.setScale(5, RoundingMode.HALF_UP);
@@ -795,12 +796,12 @@ public class AC_Pain010_Extract_ST {
 			}
 
 			adjustActiveCurrencyAndAmount = new ActiveCurrencyAndAmount1();
-			if(mdtAcOpsMandateTxnsEntity.getAdjAmountCurr() != null )
-				adjustActiveCurrencyAndAmount.setCcy(mdtAcOpsMandateTxnsEntity.getAdjAmountCurr());
+			if(casOpsCessionAssignEntity.getAdjAmountCurr() != null )
+				adjustActiveCurrencyAndAmount.setCcy(casOpsCessionAssignEntity.getAdjAmountCurr());
 
-			if(mdtAcOpsMandateTxnsEntity.getAdjAmount() != null)
+			if(casOpsCessionAssignEntity.getAdjAmount() != null)
 			{
-				String value = df.format(mdtAcOpsMandateTxnsEntity.getAdjAmount());
+				String value = df.format(casOpsCessionAssignEntity.getAdjAmount());
 				double dValue = Double.valueOf(value);
 				BigDecimal bigdecimalValue = new BigDecimal(dValue);
 				bigdecimalValue = bigdecimalValue.setScale(2, RoundingMode.HALF_UP);
@@ -810,16 +811,16 @@ public class AC_Pain010_Extract_ST {
 			if(adjustActiveCurrencyAndAmount.getCcy() != null || adjustActiveCurrencyAndAmount.getValue() != null)
 				contents.setAdjstAmt(adjustActiveCurrencyAndAmount);
 
-			if(mdtAcOpsMandateTxnsEntity.getMandateRefNr() != null) 
-				contents.setMndtRfNbr(mdtAcOpsMandateTxnsEntity.getMandateRefNr());
+			if(casOpsCessionAssignEntity.getMandateRefNr() != null)
+				contents.setMndtRfNbr(casOpsCessionAssignEntity.getMandateRefNr());
 
 			fstCollActiveCurrencyAndAmount = new ActiveCurrencyAndAmount();
-			if(mdtAcOpsMandateTxnsEntity.getFirstCollAmtCurr() != null)
-				fstCollActiveCurrencyAndAmount.setCcy(mdtAcOpsMandateTxnsEntity.getFirstCollAmtCurr());
+			if(casOpsCessionAssignEntity.getFirstCollAmtCurr() != null)
+				fstCollActiveCurrencyAndAmount.setCcy(casOpsCessionAssignEntity.getFirstCollAmtCurr());
 
-			if(mdtAcOpsMandateTxnsEntity.getFirstCollAmt() != null)
+			if(casOpsCessionAssignEntity.getFirstCollAmt() != null)
 			{
-				String value = df.format(mdtAcOpsMandateTxnsEntity.getFirstCollAmt());
+				String value = df.format(casOpsCessionAssignEntity.getFirstCollAmt());
 				double dValue = Double.valueOf(value);
 				BigDecimal bigdecimalValue = new BigDecimal(dValue);
 				bigdecimalValue = bigdecimalValue.setScale(2, RoundingMode.HALF_UP);
@@ -829,8 +830,8 @@ public class AC_Pain010_Extract_ST {
 			if(fstCollActiveCurrencyAndAmount.getCcy() != null || fstCollActiveCurrencyAndAmount.getValue() != null)
 				contents.setFrstColltnAmt(fstCollActiveCurrencyAndAmount);
 
-			if(mdtAcOpsMandateTxnsEntity.getDebitValueType() != null)
-				contents.setDbVlTp(mdtAcOpsMandateTxnsEntity.getDebitValueType());
+			if(casOpsCessionAssignEntity.getDebitValueType() != null)
+				contents.setDbVlTp(casOpsCessionAssignEntity.getDebitValueType());
 
 			supplementaryDataEnvelope1.setCnts(contents);
 
@@ -935,20 +936,20 @@ public class AC_Pain010_Extract_ST {
 				achId = "021";
 			}
 
-			MdtOpsRefSeqNrEntity  mdtOpsRefSeqNrEntity = new MdtOpsRefSeqNrEntity();
-			mdtOpsRefSeqNrEntity = (MdtOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
+			CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = new CasOpsRefSeqNrEntity();
+			casOpsRefSeqNrEntity = (CasOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
 
-			if(mdtOpsRefSeqNrEntity != null)
+			if(casOpsRefSeqNrEntity != null)
 			{
-				lastSeqNoUsed = Integer.valueOf(mdtOpsRefSeqNrEntity.getLastSeqNr());
+				lastSeqNoUsed = Integer.valueOf(casOpsRefSeqNrEntity.getLastSeqNr());
 				lastSeqNoUsed = lastSeqNoUsed + 1;
 			}
 			else
 				lastSeqNoUsed = 1;
 
 			fileSeqNo = String.format("%06d",lastSeqNoUsed);
-			mdtOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
-			valBeanRemote.updateOpsRefSeqNr(mdtOpsRefSeqNrEntity);
+			casOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
+			valBeanRemote.updateOpsRefSeqNr(casOpsRefSeqNrEntity);
 
 			//TRS16 Processing Rules					    
 			if(casSysctrlSysParamEntity != null && casSysctrlSysParamEntity.getProcessDate() != null)
@@ -1045,35 +1046,35 @@ public class AC_Pain010_Extract_ST {
 		int nrOfFile =1;
 		//int nrOfMsgs = extractMandList.size();
 
-		MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = new MdtAcOpsMndtCountEntity();
-		MdtAcOpsMndtCountPK mdtOpsMndtCountPk = new MdtAcOpsMndtCountPK();
+		CasOpsMndtCountEntity casMndtCountEntity = new CasOpsMndtCountEntity();
+		CasOpsMndtCountPK casMndtCountPk = new CasOpsMndtCountPK();
 
 		if(doc!= null && doc.getMndtAmdmntReq()!=null && doc.getMndtAmdmntReq().getGrpHdr() != null && doc.getMndtAmdmntReq().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setMsgId(doc.getMndtAmdmntReq().getGrpHdr().getMsgId());
-		mdtOpsMndtCountPk.setServiceId(outgoingService);
+			casMndtCountPk.setMsgId(doc.getMndtAmdmntReq().getGrpHdr().getMsgId());
+		casMndtCountPk.setServiceId(outgoingService);
 		if(doc!= null && doc.getMndtAmdmntReq()!=null && doc.getMndtAmdmntReq().getGrpHdr() != null && doc.getMndtAmdmntReq().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setInstId(doc.getMndtAmdmntReq().getGrpHdr().getMsgId().toString().substring(12, 18));
-		mdtOpsMndtCountEntity.setNrOfMsgs(nrOfMsgs);
-		mdtOpsMndtCountEntity.setNrOfFiles(nrOfFile);
-		mdtOpsMndtCountEntity.setNrMsgsAccepted(0);
-		mdtOpsMndtCountEntity.setNrMsgsRejected(0);
-		mdtOpsMndtCountEntity.setNrMsgsExtracted(nrOfMsgs);
-		mdtOpsMndtCountEntity.setProcessDate(new Date());
-		mdtOpsMndtCountEntity.setMdtAcOpsMndtCountPK(mdtOpsMndtCountPk);
-		mdtOpsMndtCountEntity.setFileName(outFileName);
+			casMndtCountPk.setInstId(doc.getMndtAmdmntReq().getGrpHdr().getMsgId().toString().substring(12, 18));
+		casMndtCountEntity.setNrOfMsgs(nrOfMsgs);
+		casMndtCountEntity.setNrOfFiles(nrOfFile);
+		casMndtCountEntity.setNrMsgsAccepted(0);
+		casMndtCountEntity.setNrMsgsRejected(0);
+		casMndtCountEntity.setNrMsgsExtracted(nrOfMsgs);
+		casMndtCountEntity.setProcessDate(new Date());
+		casMndtCountEntity.setCasOpsMndtCountPK(casMndtCountPk);
+		casMndtCountEntity.setFileName(outFileName);
 		try {
-			mdtOpsMndtCountEntity.setIncoming(propertyUtil.getPropValue("NonActiveInd"));
-			mdtOpsMndtCountEntity.setOutgoing(propertyUtil.getPropValue("ActiveInd"));
+			casMndtCountEntity.setIncoming(propertyUtil.getPropValue("NonActiveInd"));
+			casMndtCountEntity.setOutgoing(propertyUtil.getPropValue("ActiveInd"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		saved = valBeanRemote.saveMdtOpsMndtCount(mdtOpsMndtCountEntity);
+		saved = valBeanRemote.saveOpsMndtCount(casMndtCountEntity);
 		if (saved) {
-			log.debug("MdtOpsCountTable has been updated");
+			log.debug("casCountTable has been updated");
 
 		} else {
-			log.debug("MdtOpsCountTable is not updated");
+			log.debug("casCountTable is not updated");
 		}
 	}
 

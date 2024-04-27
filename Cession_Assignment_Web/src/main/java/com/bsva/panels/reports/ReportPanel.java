@@ -453,14 +453,6 @@ public class ReportPanel extends Panel implements IAjaxIndicatorAware {
             //							MandateDailyTransDebtorReport:" + e.getMessage());
             //						}
 
-          } else if (choice.equalsIgnoreCase("PBMD03")) {
-            try {
-              controller.generatePerBankBatchMandateRejections();
-            } catch (Exception ex) {
-              log.error("Error on generating <PBMD03>Per Bank Batch Rejections Report:" +
-                  ex.getMessage());
-              ex.printStackTrace();
-            }
           } else if (choice.equalsIgnoreCase("MR020")) {
             Date mr020FromDate = new SimpleDateFormat("MMMM dd, yyyy").parse(fromDate.getValue());
             Date mr020ToDate = new SimpleDateFormat("MMMM dd, yyyy").parse(toDate.getValue());

@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author DimakatsoN
  */
 @Entity
-@Table(name = "CAS_SYSCTRL_FILE_SIZE_LIMIT", schema = "CASOWNER")
+@Table(name = "CAS_SYSCTRL_FILE_SIZE_LIMIT", schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasSysctrlFileSizeLimitEntity.findAll", query = "SELECT m FROM CasSysctrlFileSizeLimitEntity m"),

@@ -26,8 +26,8 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.transform.Transformers;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
 import com.bsva.hibernate.GenericDAOLocal;
 import com.bsva.hibernate.GenericDAORemote;
 import com.bsva.utils.DataAccessLayerException;
@@ -517,7 +517,7 @@ public class GenericDAO implements GenericDAORemote, GenericDAOLocal {
 
 		try{
 			startOperation();
-			List<GroupedTransactionsDTO> list =	session.createCriteria(MdtAcOpsFileSizeLimitEntity.class).setProjection(Projections.projectionList().add(Projections.groupProperty("fiName"), "collumn").add(Projections.rowCount(), "count"))  
+			List<GroupedTransactionsDTO> list =	session.createCriteria(CasOpsFileSizeLimitEntity.class).setProjection(Projections.projectionList().add(Projections.groupProperty("fiName"), "collumn").add(Projections.rowCount(), "count"))
 					.setResultTransformer(Transformers.aliasToBean(GroupedTransactionsDTO.class))  
 					.list();  
 
@@ -1123,7 +1123,7 @@ public class GenericDAO implements GenericDAORemote, GenericDAOLocal {
 
 		if(hdrSeqNo != null)
 		{
-			MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity=new MdtAcOpsStatusDetailsEntity();
+			CasOpsStatusDetailsEntity opsStatusDetailsEntity=new CasOpsStatusDetailsEntity();
 
 			opsStatusDetailsEntity.setSystemSeqNo(new BigDecimal(123));
 			opsStatusDetailsEntity.setStatusHdrSeqNo(hdrSeqNo);

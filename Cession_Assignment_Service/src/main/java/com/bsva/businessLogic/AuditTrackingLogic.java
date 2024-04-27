@@ -7,10 +7,8 @@ import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.AudSystemProcessModel;
 import com.bsva.commons.model.AuditTrackingModel;
-import com.bsva.commons.model.DebitValueTypeModel;
 import com.bsva.entities.AudSystemProcessEntity;
 import com.bsva.entities.AudTrackingEntity;
-import com.bsva.entities.MdtCnfgDebitValueTypeEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class AuditTrackingLogic {

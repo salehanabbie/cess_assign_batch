@@ -5,10 +5,10 @@ import com.bsva.authcoll.singletable.file.FileLoader_ST;
 import com.bsva.commons.model.OpsFileRegModel;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.ValidationBeanRemote;
 import com.bsva.utils.Util;
@@ -53,7 +53,7 @@ public class MonitorDirectory {
   private static AdminBeanRemote adminBeanRemote;
   public static ValidationBeanRemote valBeanRemote;
   private static String fileNr = null;
-  private static MdtOpsCustParamEntity mdtOpsCustParamEntity;
+  private static CasOpsCustParamEntity casOpsCustParamEntity;
   public static String pubErrorCode;
   private static String processName = "FILEWATCHER";
   public static CasSysctrlSysParamEntity casSysctrlSysParamEntity;
@@ -207,8 +207,8 @@ public class MonitorDirectory {
                   (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(
                       backEndProcess);
 
-              List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList =
-                  new ArrayList<MdtAcOpsStatusDetailsEntity>();
+              List<CasOpsStatusDetailsEntity> opsStatusDetailsList =
+                  new ArrayList<CasOpsStatusDetailsEntity>();
 
               String achId = fileName.substring(0, 3);
               String service = fileName.substring(3, 8);
@@ -231,8 +231,8 @@ public class MonitorDirectory {
 
               log.error("pubErrorCode" + pubErrorCode);
               BigDecimal hdrSystemSeqNo = BigDecimal.ZERO;
-              MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity =
-                  new MdtAcOpsStatusHdrsEntity();
+              CasOpsStatusHdrsEntity opsStatusHdrsEntity =
+                  new CasOpsStatusHdrsEntity();
               String statusReportService = "ST100";
               String msgName = null;
               if (service.equalsIgnoreCase("MANIN")) {
@@ -286,8 +286,8 @@ public class MonitorDirectory {
               hdrSystemSeqNo = valBeanRemote.saveOpsStatusHdrs(opsStatusHdrsEntity);
 
               //Generate the Status Details
-              MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity =
-                  new MdtAcOpsStatusDetailsEntity();
+              CasOpsStatusDetailsEntity opsStatusDetailsEntity =
+                  new CasOpsStatusDetailsEntity();
               opsStatusDetailsEntity.setSystemSeqNo(new BigDecimal(123));
               opsStatusDetailsEntity.setStatusHdrSeqNo(hdrSystemSeqNo);
               opsStatusDetailsEntity.setErrorCode("902205");
@@ -369,20 +369,20 @@ public class MonitorDirectory {
         achId = "021";
       }
 
-      MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity = new MdtOpsRefSeqNrEntity();
-      mdtOpsRefSeqNrEntity =
-          (MdtOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, destInstId);
+      CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = new CasOpsRefSeqNrEntity();
+      casOpsRefSeqNrEntity =
+          (CasOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, destInstId);
 
-      if (mdtOpsRefSeqNrEntity != null) {
-        lastSeqNoUsed = Integer.valueOf(mdtOpsRefSeqNrEntity.getLastSeqNr());
+      if (casOpsRefSeqNrEntity != null) {
+        lastSeqNoUsed = Integer.valueOf(casOpsRefSeqNrEntity.getLastSeqNr());
         lastSeqNoUsed++;
       } else {
         lastSeqNoUsed = 1;
       }
 
       fileSeqNo = String.format("%06d", lastSeqNoUsed);
-      mdtOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
-      valBeanRemote.updateOpsRefSeqNr(mdtOpsRefSeqNrEntity);
+      casOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
+      valBeanRemote.updateOpsRefSeqNr(casOpsRefSeqNrEntity);
 
 
       creationDate = sdfFileDate.format(new Date());

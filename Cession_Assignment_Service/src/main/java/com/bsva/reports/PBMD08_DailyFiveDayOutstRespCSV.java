@@ -16,13 +16,12 @@ import org.beanio.BeanWriter;
 import org.beanio.StreamFactory;
 
 import com.bsva.commons.model.CreditorBankModel;
-import com.bsva.commons.model.DebtorBankModel;
 import com.bsva.commons.model.MandateResponseOutstandingPerBankModel;
 import com.bsva.commons.model.MndtRespOutstandingPerBankCsvModel;
 import com.bsva.commons.model.SystemParameterModel;
 import com.bsva.entities.MandateResponseOutstandingPerBankEntityModel;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
-import com.bsva.entities.MdtOpsRepSeqNrEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
+import com.bsva.entities.CasOpsRepSeqNrEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.PropertyUtilRemote;
 import com.bsva.interfaces.ReportBeanRemote;
@@ -55,7 +54,7 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 	String pbmd08, mdtLoadType = null;
 	long startTime, endTime, duration;
 	
-	MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
+	CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
 	String activeIndicator = "Y";
 
 	public PBMD08_DailyFiveDayOutstRespCSV(TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>> outRespDataMap)
@@ -81,7 +80,7 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 		}
 
 		//Retrieve Report Name
-		reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbmd08);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbmd08);
 		if(reportNameEntity != null)
 		{
 			reportNr = reportNameEntity.getReportNr();
@@ -132,12 +131,12 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 		String strSeqNo; 
 		String bankId= memberId.substring(2, 6);
 
-		MdtOpsRepSeqNrEntity mdtOpsRepSeqNrEntity = new MdtOpsRepSeqNrEntity();
-		mdtOpsRepSeqNrEntity = (MdtOpsRepSeqNrEntity)adminBeanRemote.retrieveRepSeqNr(reportNr,memberId);
+		CasOpsRepSeqNrEntity casOpsRepSeqNrEntity = new CasOpsRepSeqNrEntity();
+		casOpsRepSeqNrEntity = (CasOpsRepSeqNrEntity)adminBeanRemote.retrieveRepSeqNr(reportNr,memberId);
 
-		if(mdtOpsRepSeqNrEntity != null)
+		if(casOpsRepSeqNrEntity != null)
 		{
-			lastSeqNoUsed = Integer.valueOf(mdtOpsRepSeqNrEntity.getLastSeqNo());
+			lastSeqNoUsed = Integer.valueOf(casOpsRepSeqNrEntity.getLastSeqNo());
 			lastSeqNoUsed = lastSeqNoUsed + 1;
 		}
 		else
@@ -145,13 +144,13 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 			lastSeqNoUsed = 1;
 		}
 		strSeqNo = String.format("%06d",lastSeqNoUsed);
-		mdtOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
-		adminBeanRemote.updateReportSeqNr(mdtOpsRepSeqNrEntity);
+		casOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
+		adminBeanRemote.updateReportSeqNr(casOpsRepSeqNrEntity);
 		String reportSeqNo = strSeqNo.substring(3,6);
 
 		strSeqNo = String.format("%06d",lastSeqNoUsed);
-		mdtOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
-		adminBeanRemote.updateReportSeqNr(mdtOpsRepSeqNrEntity);
+		casOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
+		adminBeanRemote.updateReportSeqNr(casOpsRepSeqNrEntity);
 
 		if(frontEnd) {
 			fileName =bankId+"AC"+reportNr+endDateFormat.format(frontEndDate).toString()+"."+reportSeqNo+".csv";

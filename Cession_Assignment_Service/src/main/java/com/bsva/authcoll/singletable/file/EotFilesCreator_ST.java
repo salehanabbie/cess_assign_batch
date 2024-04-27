@@ -13,9 +13,9 @@ import org.hibernate.ObjectNotFoundException;
 import com.bsva.FileWatcher;
 import com.bsva.PropertyUtil;
 import com.bsva.delivery.EndOfTransmissionExtract;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtOpsServicesEntity;
-import com.bsva.entities.MdtOpsSlaTimesEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsServicesEntity;
+import com.bsva.entities.CasOpsSlaTimesEntity;
 import com.bsva.entities.CasSysctrlServicesEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.SysCisBankEntity;
@@ -232,9 +232,9 @@ public class EotFilesCreator_ST {
 					Date endOfService = new Date();
 
 					try {
-						MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity = (MdtOpsSlaTimesEntity) adminBeanRemote.retrieveEndTime(outService);
-						log.debug("mdtOpsSlaTimesEntity------>" + mdtOpsSlaTimesEntity);
-						endOfService = parser.parse(mdtOpsSlaTimesEntity.getEndTime());
+						CasOpsSlaTimesEntity casOpsSlaTimesEntity = (CasOpsSlaTimesEntity) adminBeanRemote.retrieveEndTime(outService);
+						log.debug("mdtOpsSlaTimesEntity------>" + casOpsSlaTimesEntity);
+						endOfService = parser.parse(casOpsSlaTimesEntity.getEndTime());
 					} catch (ObjectNotFoundException onfe) {
 						log.error("No Object Exists on DB");
 					} catch (Exception e) {
@@ -246,9 +246,10 @@ public class EotFilesCreator_ST {
 					log.debug("userDate" + userDate);
 					log.debug("endOfService" + endOfService);
 					if (outService.equalsIgnoreCase(manotServ)) {
-						MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+						CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
 						
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusManin) {
 								if (maninToExtract) {
 									if ((userDate.after(endOfService))
@@ -269,9 +270,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(manomServ)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
 						
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusManam) {
 
 								if (manamToExtract) {
@@ -292,9 +294,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(mancoServ)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
 						
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusMancn) {
 
 								if (mancnToExtract) {
@@ -313,9 +316,10 @@ public class EotFilesCreator_ST {
 
 					// Output Creditor Services
 					if (outService.equalsIgnoreCase(manocServ)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusManac) {
 
 								if (manacToExtract) {
@@ -333,9 +337,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(spoutServ)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSpinp) {
 
 								if (spoutToExtract) {
@@ -353,9 +358,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(st100Serv)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSt100 && fileStatusManin && fileStatusManam && fileStatusMancn) {
 
 								if (st100ToExtract && maninToExtract && manamToExtract && mancnToExtract) {
@@ -374,9 +380,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(st102Serv)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSt102) {
 
 								if (st102ToExtract) {
@@ -394,9 +401,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(st104Serv)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSt104 && fileStatusManac) {
 
 								if (st104ToExtract && manacToExtract) {
@@ -414,9 +422,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(st007Serv)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSt007) {
 
 								if (st007ToExtract) {
@@ -435,9 +444,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(st008Serv)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSt008) {
 
 								if (st008ToExtract) {
@@ -455,9 +465,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(manrfServ)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusManrt) {
 
 								if (manrtToExtract) {
@@ -475,9 +486,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(st106Serv)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSt106 && fileStatusManrt) {
 
 								if (st106ToExtract && manrtToExtract) {
@@ -495,9 +507,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(manroServ)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusManri) {
 
 								if (manriToExtract) {
@@ -516,9 +529,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(st105Serv)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSt105 && fileStatusManri) {
 
 								if (st105ToExtract && manriToExtract) {
@@ -537,9 +551,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(st103Serv)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSt103) {
 
 								if (st103Extract) {
@@ -558,9 +573,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(sroutServ)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSrinp) {
 
 								if (sroutExtract) {
@@ -579,9 +595,10 @@ public class EotFilesCreator_ST {
 					}
 
 					if (outService.equalsIgnoreCase(mandcServ)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusMandc) {
 
 								if (mandcToExtract) {
@@ -598,9 +615,10 @@ public class EotFilesCreator_ST {
 					}
 					
 					if (outService.equalsIgnoreCase(st994Serv)) {
-                        MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
-						if(!mdtAcOpsSotEotCtrlEntity.equals(null) && (!mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
 							if (fileStatusSt994 && fileStatusMandc) {
 
 								if (st994ToExtract && mandcToExtract) {
@@ -634,17 +652,17 @@ public class EotFilesCreator_ST {
 		// acopsSotEotEntityList = (List<MdtAcOpsSotEotCtrlEntity>)
 		// adminBeanRemote.retrieveInactiveEOTIND();
 
-		MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = retrieveSotEot(instgAgt,service);
+		CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = retrieveSotEot(instgAgt,service);
 
-		if (mdtAcOpsSotEotCtrlEntity != null) {
-			if (mdtAcOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("N")
-					&& mdtAcOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase("Y")) {
+		if (casOpsSotEotCtrlEntity != null) {
+			if (casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("N")
+					&& casOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase("Y")) {
 				String fileType = null;
 				// Retrieve the msgType from the service Table
-				MdtOpsServicesEntity mdtOpsServicesEntity = (MdtOpsServicesEntity) adminBeanRemote.retrieveOpsService(service);
+				CasOpsServicesEntity casOpsServicesEntity = (CasOpsServicesEntity) adminBeanRemote.retrieveOpsService(service);
 
-				if (mdtOpsServicesEntity != null) {
-					fileType = mdtOpsServicesEntity.getMsgTypeId();
+				if (casOpsServicesEntity != null) {
+					fileType = casOpsServicesEntity.getMsgTypeId();
 				}
 				// Remove hardcoding --retrieve from database.
 				// if(service.equalsIgnoreCase("ST100") || service.equalsIgnoreCase("ST103"))
@@ -661,9 +679,9 @@ public class EotFilesCreator_ST {
 
 				EndOfTransmissionExtract endOfTransmission = new EndOfTransmissionExtract(instgAgt, service, fileType);
 				endOfTransmission.createEndOfTransmissionFile();
-				mdtAcOpsSotEotCtrlEntity.setEotOut("Y");
+				casOpsSotEotCtrlEntity.setEotOut("Y");
 
-				boolean updated = adminBeanRemote.updateACOpsEOTSOT(mdtAcOpsSotEotCtrlEntity);
+				boolean updated = adminBeanRemote.updateACOpsEOTSOT(casOpsSotEotCtrlEntity);
 
 				if (updated) {
 					log.debug("The End of transmission indicator has been updated ");
@@ -685,12 +703,12 @@ public class EotFilesCreator_ST {
 		eotCreated = false;
 	}
 	
-	public MdtAcOpsSotEotCtrlEntity retrieveSotEot(String instgAgt, String service) {
+	public CasOpsSotEotCtrlEntity retrieveSotEot(String instgAgt, String service) {
 
-		MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
-		mdtAcOpsSotEotCtrlEntity = (MdtAcOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(instgAgt, service);
+		CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
+		casOpsSotEotCtrlEntity = (CasOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(instgAgt, service);
 
-		return mdtAcOpsSotEotCtrlEntity;
+		return casOpsSotEotCtrlEntity;
 	}
 
 	public static void contextValidationBeanCheck() {

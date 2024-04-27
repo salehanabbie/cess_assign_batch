@@ -22,14 +22,14 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 import com.bsva.PropertyUtil;
 import com.bsva.authcoll.singletable.validation.AC_Pain012_Validation_ST;
-import com.bsva.entities.MdtAcOpsDailyBillingEntity;
-import com.bsva.entities.MdtAcOpsGrpHdrEntity;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntity;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntityPK;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
-import com.bsva.entities.MdtAcOpsMndtCountPK;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
+import com.bsva.entities.CasOpsDailyBillingEntity;
+import com.bsva.entities.CasOpsGrpHdrEntity;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsCessionAssignEntityPK;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsMndtCountPK;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.FileProcessBeanRemote;
@@ -58,8 +58,8 @@ public class AC_Pain012_Loader_ST implements Serializable {
 	@EJB
 	PropertyUtil propertyUtil;
 
-	private MdtAcOpsGrpHdrEntity mdtAcOpsGrphdrEntity;
-	private MdtAcOpsMandateTxnsEntity mdtAcOpsMandateTxnsEntity;
+	private CasOpsGrpHdrEntity casOpsGrphdrEntity;
+	private CasOpsCessionAssignEntity casOpsCessionAssignEntity;
 
 	private List<MandateAcceptance3> mandateAcceptance3List;
 	private List<Authorisation1Choice> authorisation1ChoiceList;
@@ -74,7 +74,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 	String xmlDateFormat = "yyyyMMdd";
 	private String pain012Schema = "/home/opsjava/Delivery/Mandates/Schema/pain.012.001.03.xsd";
 	private String mandateReqTranId = null, pain012Service,tt2TxnType, tt2Succ, tt2Unsucc,nonActInd, maninService, manamService, mancnService, messageId = null, rdyForExtStatus, loadStatus;
-	List<MdtAcOpsMandateTxnsEntity> mandatesList;
+	List<CasOpsCessionAssignEntity> mandatesList;
 
 	AC_Pain012_Validation_ST acPain012Validation_ST;
 
@@ -84,9 +84,9 @@ public class AC_Pain012_Loader_ST implements Serializable {
 	String fileName;
 	int mdtRejCnt =0;
 	long startTime, endTime, duration;
-	List<MdtAcOpsMandateTxnsEntity> acceptedMndtList =new ArrayList<MdtAcOpsMandateTxnsEntity>();
+	List<CasOpsCessionAssignEntity> acceptedMndtList =new ArrayList<CasOpsCessionAssignEntity>();
 //	List<MdtAcOpsMandateTxnsEntity> matchedMndtList =new ArrayList<MdtAcOpsMandateTxnsEntity>();
-	List<MdtAcOpsDailyBillingEntity> billableTxnList = new ArrayList<MdtAcOpsDailyBillingEntity>();
+	List<CasOpsDailyBillingEntity> billableTxnList = new ArrayList<CasOpsDailyBillingEntity>();
 	List<String> matchedMRTIList = null;
 	List<String> rejectedMRTIList = null;
 
@@ -136,25 +136,25 @@ public class AC_Pain012_Loader_ST implements Serializable {
 			ex.printStackTrace();
 		}
 
-		MdtOpsFileRegEntity mdtOpsFileRegEntity = (MdtOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
+		CasOpsFileRegEntity casOpsFileRegEntity = (CasOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
 		if(unmarshall)
 		{
-			if(mdtOpsFileRegEntity != null)
+			if(casOpsFileRegEntity != null)
 			{
-				mdtOpsFileRegEntity.setGrpHdrMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId());
+				casOpsFileRegEntity.setGrpHdrMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId());
 				try {
-					mdtOpsFileRegEntity.setStatus(propertyUtil.getPropValue("ProcStatus.Validating"));
+					casOpsFileRegEntity.setStatus(propertyUtil.getPropValue("ProcStatus.Validating"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+				valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 			}
 			else
 			{
-				if(mdtOpsFileRegEntity != null)
+				if(casOpsFileRegEntity != null)
 				{
-					mdtOpsFileRegEntity.setStatus("FS");
-					valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+					casOpsFileRegEntity.setStatus("FS");
+					valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 				}
 			}
 
@@ -162,7 +162,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 			todaysDate = new Date();
 
 			// _______________________Mandate Models_______________________
-			mdtAcOpsGrphdrEntity = new MdtAcOpsGrpHdrEntity();
+			casOpsGrphdrEntity = new CasOpsGrpHdrEntity();
 			matchedMRTIList = new ArrayList<String>();
 			rejectedMRTIList = new ArrayList<String>();
 
@@ -181,21 +181,21 @@ public class AC_Pain012_Loader_ST implements Serializable {
 			/*grpHdrSeverity = 1;*/
 			if(grpHdrSeverity == 0)
 			{
-				mdtAcOpsGrphdrEntity.setCreateDateTime(getCovertDateTime(document.getMndtAccptncRpt().getGrpHdr().getCreDtTm()));
+				casOpsGrphdrEntity.setCreateDateTime(getCovertDateTime(document.getMndtAccptncRpt().getGrpHdr().getCreDtTm()));
 
-				mdtAcOpsGrphdrEntity.setCreatedBy(systemName);
-				mdtAcOpsGrphdrEntity.setMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId().trim());
+				casOpsGrphdrEntity.setCreatedBy(systemName);
+				casOpsGrphdrEntity.setMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId().trim());
 
-				grpHdrCreated = beanRemote.createMdtAcOpsGrpHdrEntity(mdtAcOpsGrphdrEntity);
+				grpHdrCreated = beanRemote.createMdtAcOpsGrpHdrEntity(casOpsGrphdrEntity);
 			}
 			else
 			{
 				try {
-					mdtOpsFileRegEntity.setStatus(propertyUtil.getPropValue("ProcStatus.FailedGroupHeader"));
+					casOpsFileRegEntity.setStatus(propertyUtil.getPropValue("ProcStatus.FailedGroupHeader"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+				valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 			}
 			long ghValEndTime = System.nanoTime();
 			long ghValDur = (ghValEndTime - startTime) / 1000000;
@@ -269,20 +269,20 @@ public class AC_Pain012_Loader_ST implements Serializable {
 				if(rejCnt == 0)
 				{
 					try {
-						mdtOpsFileRegEntity.setStatus(propertyUtil.getPropValue("ProcStatus.LoadedSuccessfully"));
+						casOpsFileRegEntity.setStatus(propertyUtil.getPropValue("ProcStatus.LoadedSuccessfully"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+					valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 				}
 				else
 				{
 					try {
-						mdtOpsFileRegEntity.setStatus(propertyUtil.getPropValue("ProcStatus.LoadedErrors"));
+						casOpsFileRegEntity.setStatus(propertyUtil.getPropValue("ProcStatus.LoadedErrors"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+					valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 				}
 
 				//Generate the MndtCount and Update the Pacs.002 Group Status
@@ -341,24 +341,24 @@ public class AC_Pain012_Loader_ST implements Serializable {
 
 				//Update Status Hdrs
 				BigDecimal hdrSeqNo = acPain012Validation_ST.hdrSystemSeqNo;
-				MdtAcOpsStatusHdrsEntity mdtAcOpsStatusHdrsEntity = (MdtAcOpsStatusHdrsEntity) beanRemote.retrieveStatusHdrsBySeqNo(hdrSeqNo);
+				CasOpsStatusHdrsEntity casOpsStatusHdrsEntity = (CasOpsStatusHdrsEntity) beanRemote.retrieveStatusHdrsBySeqNo(hdrSeqNo);
 				log.debug("GROUP STATUS---> "+grpStatus);
-				mdtAcOpsStatusHdrsEntity.setGroupStatus(grpStatus);
+				casOpsStatusHdrsEntity.setGroupStatus(grpStatus);
 				try {
-					mdtAcOpsStatusHdrsEntity.setProcessStatus(propertyUtil.getPropValue("ProcStatus.ReportToBeProd"));
+					casOpsStatusHdrsEntity.setProcessStatus(propertyUtil.getPropValue("ProcStatus.ReportToBeProd"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
-				boolean updateStatusdHdrs = beanRemote.updateOpsStatusHdrs(mdtAcOpsStatusHdrsEntity);
+				boolean updateStatusdHdrs = beanRemote.updateOpsStatusHdrs(casOpsStatusHdrsEntity);
 				log.info("|"+fileName+" COMPLETED| TOT_TXNS "+nrOfMndtsInFile+" | ACCEPTED "+accptCnt+" | REJECTED "+rejCnt+" |");
 			}//END OF IF UNMARSHALL
 			else
 			{
-				if(mdtOpsFileRegEntity != null)
+				if(casOpsFileRegEntity != null)
 				{
-					mdtOpsFileRegEntity.setStatus("FG");
-					valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+					casOpsFileRegEntity.setStatus("FG");
+					valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 				}
 			}
 		}
@@ -368,7 +368,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 
 	}	
 
-	public void createMandate(Mandate1 mandate, AcceptanceResult6 acceptanceResult6, MdtAcOpsMandateTxnsEntity originalMandate, SupplementaryData1 supplementaryData1, String initParty)
+	public void createMandate(Mandate1 mandate, AcceptanceResult6 acceptanceResult6, CasOpsCessionAssignEntity originalMandate, SupplementaryData1 supplementaryData1, String initParty)
 	{
 		messageId = null;
 		String mndtRfNum = null;
@@ -391,200 +391,201 @@ public class AC_Pain012_Loader_ST implements Serializable {
 		if(mandate != null)
 		{
 
-			MdtAcOpsMandateTxnsEntityPK mdtAcOpsMandateTxnsEntityPK = new MdtAcOpsMandateTxnsEntityPK();
-			mdtAcOpsMandateTxnsEntity = new MdtAcOpsMandateTxnsEntity();
+			CasOpsCessionAssignEntityPK
+					casOpsCessionAssignEntityPK = new CasOpsCessionAssignEntityPK();
+			casOpsCessionAssignEntity = new CasOpsCessionAssignEntity();
 			//Set Primary Key
 			if(document.getMndtAccptncRpt() != null &&  document.getMndtAccptncRpt().getGrpHdr() != null &&  document.getMndtAccptncRpt().getGrpHdr().getMsgId() !=null)
 			{
-				mdtAcOpsMandateTxnsEntityPK.setMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId().trim());
+				casOpsCessionAssignEntityPK.setMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId().trim());
 				messageId = document.getMndtAccptncRpt().getGrpHdr().getMsgId().trim();
 			}
 
 			if(mandateReqTranId != null)
-				mdtAcOpsMandateTxnsEntityPK.setMandateReqTranId(mandateReqTranId);
+				casOpsCessionAssignEntityPK.setMandateReqTranId(mandateReqTranId);
 
-			mdtAcOpsMandateTxnsEntity.setMdtAcOpsMandateTxnsEntityPK(mdtAcOpsMandateTxnsEntityPK);
+			casOpsCessionAssignEntity.setCasOpsCessionAssignEntityPK(casOpsCessionAssignEntityPK);
 
 			//			=============SETTING PROCESSING INFORMATION============= //
 			if(document.getMndtAccptncRpt() != null&& document.getMndtAccptncRpt().getGrpHdr() != null&& document.getMndtAccptncRpt().getGrpHdr().getInstgAgt().getFinInstnId() != null && 
 					document.getMndtAccptncRpt().getGrpHdr().getInstgAgt().getFinInstnId().getClrSysMmbId() != null&& document.getMndtAccptncRpt().getGrpHdr().getInstgAgt().getFinInstnId().getClrSysMmbId().getMmbId() != null) 
-				mdtAcOpsMandateTxnsEntity.setDebtorBank(document.getMndtAccptncRpt().getGrpHdr().getInstgAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
+				casOpsCessionAssignEntity.setDebtorBank(document.getMndtAccptncRpt().getGrpHdr().getInstgAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
 
 			if(acPain012Validation_ST.creditorBank != null)
-				mdtAcOpsMandateTxnsEntity.setCreditorBank(acPain012Validation_ST.creditorBank);
+				casOpsCessionAssignEntity.setCreditorBank(acPain012Validation_ST.creditorBank);
 
-			mdtAcOpsMandateTxnsEntity.setServiceId(pain012Service);
-			mdtAcOpsMandateTxnsEntity.setInFileName(fileName.substring(0,37).trim());
-			mdtAcOpsMandateTxnsEntity.setInFileDate(getFileDate(fileName.substring(0,37).trim()));
-			mdtAcOpsMandateTxnsEntity.setProcessStatus(rdyForExtStatus);
+			casOpsCessionAssignEntity.setServiceId(pain012Service);
+			casOpsCessionAssignEntity.setInFileName(fileName.substring(0,37).trim());
+			casOpsCessionAssignEntity.setInFileDate(getFileDate(fileName.substring(0,37).trim()));
+			casOpsCessionAssignEntity.setProcessStatus(rdyForExtStatus);
 			if(initParty != null && !initParty.isEmpty())
-				mdtAcOpsMandateTxnsEntity.setInitParty(initParty);
+				casOpsCessionAssignEntity.setInitParty(initParty);
 
 			//			================ACCEPTANCE DETAILS======================//
 			if(acceptanceResult6 != null)
 			{
 				log.debug("acceptanceResult6.getAccptd().toString(): "+ acceptanceResult6.isAccptd());
 				String accepted = String.valueOf(acceptanceResult6.isAccptd());
-				mdtAcOpsMandateTxnsEntity.setAcceptedInd(accepted);
+				casOpsCessionAssignEntity.setAcceptedInd(accepted);
 			}
 
 			if(acceptanceResult6.getRjctRsn() != null && acceptanceResult6.getRjctRsn().getPrtry() != null)
-				mdtAcOpsMandateTxnsEntity.setRejectReasonCode(acceptanceResult6.getRjctRsn().getPrtry().toString());
+				casOpsCessionAssignEntity.setRejectReasonCode(acceptanceResult6.getRjctRsn().getPrtry().toString());
 
 			//			=============SETTING MANDATE DETAILS============= //
 			if (mandate.getMndtId() != null)
-				mdtAcOpsMandateTxnsEntity.setMandateId(mandate.getMndtId().trim());
+				casOpsCessionAssignEntity.setMandateId(mandate.getMndtId().trim());
 
 			if(mandate.getMndtReqId() != null)
-				mdtAcOpsMandateTxnsEntity.setContractRef(mandate.getMndtReqId().trim());
+				casOpsCessionAssignEntity.setContractRef(mandate.getMndtReqId().trim());
 
 			if(mandate.getTp() != null && mandate.getTp().getSvcLvl() != null && mandate.getTp().getSvcLvl().getPrtry() != null)
-				mdtAcOpsMandateTxnsEntity.setServiceLevel(mandate.getTp().getSvcLvl().getPrtry().trim());
+				casOpsCessionAssignEntity.setServiceLevel(mandate.getTp().getSvcLvl().getPrtry().trim());
 
 			if(mandate.getTp() != null && mandate.getTp().getLclInstrm() != null && mandate.getTp().getLclInstrm().getPrtry() != null)
-				mdtAcOpsMandateTxnsEntity.setLocalInstrCd(mandate.getTp().getLclInstrm().getPrtry().trim());
+				casOpsCessionAssignEntity.setLocalInstrCd(mandate.getTp().getLclInstrm().getPrtry().trim());
 
 			if(mandate.getOcrncs() != null&& mandate.getOcrncs().getSeqTp() != null)
-				mdtAcOpsMandateTxnsEntity.setSequenceType(mandate.getOcrncs().getSeqTp().toString().trim());
+				casOpsCessionAssignEntity.setSequenceType(mandate.getOcrncs().getSeqTp().toString().trim());
 
 			if(mandate.getOcrncs() != null&& mandate.getOcrncs().getFrqcy() != null && mandate.getOcrncs().getFrqcy() != null)
-				mdtAcOpsMandateTxnsEntity.setFrequency(mandate.getOcrncs().getFrqcy().toString());
+				casOpsCessionAssignEntity.setFrequency(mandate.getOcrncs().getFrqcy().toString());
 
 			if(mandate.getOcrncs() != null&& mandate.getOcrncs().getDrtn() != null&& mandate.getOcrncs().getDrtn().getFrDt() != null)
-				mdtAcOpsMandateTxnsEntity.setFromDate(getCovertDateTime(mandate.getOcrncs().getDrtn().getFrDt()));
+				casOpsCessionAssignEntity.setFromDate(getCovertDateTime(mandate.getOcrncs().getDrtn().getFrDt()));
 
 			if(mandate.getOcrncs() != null && mandate.getOcrncs().getFrstColltnDt() != null)
-				mdtAcOpsMandateTxnsEntity.setFirstCollDate(getCovertDateTime(mandate.getOcrncs().getFrstColltnDt()));
+				casOpsCessionAssignEntity.setFirstCollDate(getCovertDateTime(mandate.getOcrncs().getFrstColltnDt()));
 
 			if(mandate.getColltnAmt() != null && mandate.getColltnAmt().getCcy() != null)
-				mdtAcOpsMandateTxnsEntity.setCollAmountCurr(mandate.getColltnAmt().getCcy());
+				casOpsCessionAssignEntity.setCollAmountCurr(mandate.getColltnAmt().getCcy());
 
 			if(mandate.getColltnAmt() != null)
-				mdtAcOpsMandateTxnsEntity.setCollAmount(new BigDecimal(mandate.getColltnAmt().getValue().toString()));
+				casOpsCessionAssignEntity.setCollAmount(new BigDecimal(mandate.getColltnAmt().getValue().toString()));
 
 			if(mandate.getMaxAmt() != null&& mandate.getMaxAmt().getCcy() != null)
-				mdtAcOpsMandateTxnsEntity.setMaxAmountCurr(mandate.getMaxAmt().getCcy().trim());
+				casOpsCessionAssignEntity.setMaxAmountCurr(mandate.getMaxAmt().getCcy().trim());
 
 			if(mandate.getMaxAmt() != null)
-				mdtAcOpsMandateTxnsEntity.setMaxAmount(new BigDecimal(mandate.getMaxAmt().getValue().toString().trim()));
+				casOpsCessionAssignEntity.setMaxAmount(new BigDecimal(mandate.getMaxAmt().getValue().toString().trim()));
 
 			//			=============SETTING CREDITOR INFORMATION ============= //
 			if(mandate.getCdtrSchmeId() != null && mandate.getCdtrSchmeId().getId() != null && mandate.getCdtrSchmeId().getId().getOrgId() != null
 					&& mandate.getCdtrSchmeId().getId().getOrgId().getOthr() != null)
 			{
 				if(mandate.getCdtrSchmeId().getId().getOrgId().getOthr().get(0) != null && mandate.getCdtrSchmeId().getId().getOrgId().getOthr().get(0).getId() != null)
-					mdtAcOpsMandateTxnsEntity.setCredSchemeId(mandate.getCdtrSchmeId().getId().getOrgId().getOthr().get(0).getId().trim());
+					casOpsCessionAssignEntity.setCredSchemeId(mandate.getCdtrSchmeId().getId().getOrgId().getOthr().get(0).getId().trim());
 			}
 
 			if(mandate.getCdtr() != null && mandate.getCdtr().getNm() != null)
-				mdtAcOpsMandateTxnsEntity.setCreditorName(mandate.getCdtr().getNm().trim());
+				casOpsCessionAssignEntity.setCreditorName(mandate.getCdtr().getNm().trim());
 
 			if(mandate.getCdtr() != null&& mandate.getCdtr().getCtctDtls() != null&& mandate.getCdtr().getCtctDtls().getPhneNb() != null)
-				mdtAcOpsMandateTxnsEntity.setCredPhoneNr(mandate.getCdtr().getCtctDtls().getPhneNb().trim());
+				casOpsCessionAssignEntity.setCredPhoneNr(mandate.getCdtr().getCtctDtls().getPhneNb().trim());
 
 			if(mandate.getCdtr() != null&& mandate.getCdtr().getCtctDtls() != null&& mandate.getCdtr().getCtctDtls().getEmailAdr() != null)
-				mdtAcOpsMandateTxnsEntity.setCredEmailAddr(mandate.getCdtr().getCtctDtls().getEmailAdr());
+				casOpsCessionAssignEntity.setCredEmailAddr(mandate.getCdtr().getCtctDtls().getEmailAdr());
 
 			if(mandate.getCdtrAcct() != null&& mandate.getCdtrAcct().getId() != null&& mandate.getCdtrAcct().getId().getOthr() != null&& mandate.getCdtrAcct().getId().getOthr().getId() != null)
-				mdtAcOpsMandateTxnsEntity.setCredAccNum(mandate.getCdtrAcct().getId().getOthr().getId().trim());
+				casOpsCessionAssignEntity.setCredAccNum(mandate.getCdtrAcct().getId().getOthr().getId().trim());
 
 			if(mandate.getCdtrAgt() != null&& mandate.getCdtrAgt().getFinInstnId() != null&& mandate.getCdtrAgt().getFinInstnId().getClrSysMmbId() != null&& mandate.getCdtrAgt().getFinInstnId().getClrSysMmbId().getMmbId() != null)
-				mdtAcOpsMandateTxnsEntity.setCredBranchNr(mandate.getCdtrAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
+				casOpsCessionAssignEntity.setCredBranchNr(mandate.getCdtrAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
 
 			if(mandate.getUltmtCdtr() != null&& mandate.getUltmtCdtr().getNm() != null)
-				mdtAcOpsMandateTxnsEntity.setUltCredName(mandate.getUltmtCdtr().getNm());
+				casOpsCessionAssignEntity.setUltCredName(mandate.getUltmtCdtr().getNm());
 
 			if(mandate.getUltmtCdtr() != null && mandate.getUltmtCdtr().getId() != null && mandate.getUltmtCdtr().getId().getOrgId() != null && mandate.getUltmtCdtr().getId().getOrgId().getOthr() != null 
 					&&  mandate.getUltmtCdtr().getId().getOrgId().getOthr().size() > 0)
 			{
 				if(mandate.getUltmtCdtr().getId().getOrgId().getOthr().get(0) != null && mandate.getUltmtCdtr().getId().getOrgId().getOthr().get(0).getId() != null)
-					mdtAcOpsMandateTxnsEntity.setCredAbbShortName(mandate.getUltmtCdtr().getId().getOrgId().getOthr().get(0).getId().trim());
+					casOpsCessionAssignEntity.setCredAbbShortName(mandate.getUltmtCdtr().getId().getOrgId().getOthr().get(0).getId().trim());
 			}
 
 			//			=============SETTING DEBTOR INFORMATION ============= //
 			if(mandate.getDbtr() != null && mandate.getDbtr().getNm() != null)
-				mdtAcOpsMandateTxnsEntity.setDebtorName(mandate.getDbtr().getNm().trim());
+				casOpsCessionAssignEntity.setDebtorName(mandate.getDbtr().getNm().trim());
 
 			if(mandate.getDbtr() != null && mandate.getDbtr().getId() != null && mandate.getDbtr().getId().getPrvtId() != null && mandate.getDbtr().getId().getPrvtId().getOthr() != null)
 			{
 				if(mandate.getDbtr().getId().getPrvtId().getOthr().get(0) != null && mandate.getDbtr().getId().getPrvtId().getOthr().get(0).getId() != null)
-					mdtAcOpsMandateTxnsEntity.setDebtorId(mandate.getDbtr().getId().getPrvtId().getOthr().get(0).getId().trim());
+					casOpsCessionAssignEntity.setDebtorId(mandate.getDbtr().getId().getPrvtId().getOthr().get(0).getId().trim());
 			}
 
 			if(mandate.getDbtr() != null&& mandate.getDbtr().getCtctDtls() != null&& mandate.getDbtr().getCtctDtls().getPhneNb() != null)
-				mdtAcOpsMandateTxnsEntity.setDebtPhoneNr(mandate.getDbtr().getCtctDtls().getPhneNb());
+				casOpsCessionAssignEntity.setDebtPhoneNr(mandate.getDbtr().getCtctDtls().getPhneNb());
 
 			if(mandate.getDbtr() != null&& mandate.getDbtr().getCtctDtls() != null&& mandate.getDbtr().getCtctDtls().getEmailAdr() != null)
-				mdtAcOpsMandateTxnsEntity.setDebtEmailAddr(mandate.getDbtr().getCtctDtls().getEmailAdr());
+				casOpsCessionAssignEntity.setDebtEmailAddr(mandate.getDbtr().getCtctDtls().getEmailAdr());
 
 			if(mandate.getDbtrAcct() != null&& mandate.getDbtrAcct().getId() != null&& mandate.getDbtrAcct().getId().getOthr() != null&& mandate.getDbtrAcct().getId().getOthr().getId() != null)
-				mdtAcOpsMandateTxnsEntity.setDebtAccNum(mandate.getDbtrAcct().getId().getOthr().getId().trim());
+				casOpsCessionAssignEntity.setDebtAccNum(mandate.getDbtrAcct().getId().getOthr().getId().trim());
 
 			if(mandate.getDbtrAcct() != null&& mandate.getDbtrAcct().getTp() != null&& mandate.getDbtrAcct().getTp().getPrtry() != null)
-				mdtAcOpsMandateTxnsEntity.setDebtAccType(mandate.getDbtrAcct().getTp().getPrtry().trim());
+				casOpsCessionAssignEntity.setDebtAccType(mandate.getDbtrAcct().getTp().getPrtry().trim());
 
 			if(mandate.getDbtrAgt() != null && mandate.getDbtrAgt().getFinInstnId() != null && mandate.getDbtrAgt().getFinInstnId().getClrSysMmbId().getMmbId() != null) 
-				mdtAcOpsMandateTxnsEntity.setDebtBranchNr(mandate.getDbtrAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
+				casOpsCessionAssignEntity.setDebtBranchNr(mandate.getDbtrAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
 
 			if(mandate.getUltmtDbtr() != null&& mandate.getUltmtDbtr().getNm() != null)
-				mdtAcOpsMandateTxnsEntity.setUltDebtName(mandate.getUltmtDbtr().getNm());			
+				casOpsCessionAssignEntity.setUltDebtName(mandate.getUltmtDbtr().getNm());
 
 			//			=============SETTING REFERENCE DOC ============= //			
 			if(mandate.getRfrdDoc()!= null && mandate.getRfrdDoc().getTp()!= null && mandate.getRfrdDoc().getTp().getCdOrPrtry()!= null && mandate.getRfrdDoc().getTp().getCdOrPrtry().getPrtry()!= null)
-				mdtAcOpsMandateTxnsEntity.setAuthStatusInd(mandate.getRfrdDoc().getTp().getCdOrPrtry().getPrtry().trim());
+				casOpsCessionAssignEntity.setAuthStatusInd(mandate.getRfrdDoc().getTp().getCdOrPrtry().getPrtry().trim());
 			
 			if(mandate.getRfrdDoc()!= null && mandate.getRfrdDoc().getNb() != null)
-				mdtAcOpsMandateTxnsEntity.setMacCode(mandate.getRfrdDoc().getNb());	
+				casOpsCessionAssignEntity.setMacCode(mandate.getRfrdDoc().getNb());
 			
 
 			//			=============SETTING SUPPLEMENTARY DATA INFORMATION ============= //
 			if(supplementaryData1 != null&& supplementaryData1.getEnvlp() != null&& supplementaryData1.getEnvlp().getCnts() != null&& supplementaryData1.getEnvlp().getCnts().getAthntctnTp() != null)
-				mdtAcOpsMandateTxnsEntity.setAuthType(supplementaryData1.getEnvlp().getCnts().getAthntctnTp().toString().trim());
+				casOpsCessionAssignEntity.setAuthType(supplementaryData1.getEnvlp().getCnts().getAthntctnTp().toString().trim());
 
 			if(supplementaryData1 != null&& supplementaryData1.getEnvlp() != null&& supplementaryData1.getEnvlp().getCnts() != null&& supplementaryData1.getEnvlp().getCnts().getCllctnDy() != null)
-				mdtAcOpsMandateTxnsEntity.setCollectionDay(supplementaryData1.getEnvlp().getCnts().getCllctnDy().toString().trim());
+				casOpsCessionAssignEntity.setCollectionDay(supplementaryData1.getEnvlp().getCnts().getCllctnDy().toString().trim());
 
 			if(supplementaryData1 != null&& supplementaryData1.getEnvlp() != null&& supplementaryData1.getEnvlp().getCnts() != null&& supplementaryData1.getEnvlp().getCnts().getDtAdjRl() != null)
-				mdtAcOpsMandateTxnsEntity.setDateAdjRuleInd(supplementaryData1.getEnvlp().getCnts().getDtAdjRl().toString().trim());
+				casOpsCessionAssignEntity.setDateAdjRuleInd(supplementaryData1.getEnvlp().getCnts().getDtAdjRl().toString().trim());
 
 			if (supplementaryData1 != null&& supplementaryData1.getEnvlp() != null&& supplementaryData1.getEnvlp().getCnts() != null&& supplementaryData1.getEnvlp().getCnts().getAdjstCtgy() != null)
-				mdtAcOpsMandateTxnsEntity.setAdjCategory(supplementaryData1.getEnvlp().getCnts().getAdjstCtgy().toString().trim());
+				casOpsCessionAssignEntity.setAdjCategory(supplementaryData1.getEnvlp().getCnts().getAdjstCtgy().toString().trim());
 
 			if(supplementaryData1 != null && supplementaryData1.getEnvlp() != null && supplementaryData1.getEnvlp().getCnts() != null && supplementaryData1.getEnvlp().getCnts().getAdjstRt() != null)
-				mdtAcOpsMandateTxnsEntity.setAdjRate(supplementaryData1.getEnvlp().getCnts().getAdjstRt());
+				casOpsCessionAssignEntity.setAdjRate(supplementaryData1.getEnvlp().getCnts().getAdjstRt());
 
 			if(supplementaryData1 != null&& supplementaryData1.getEnvlp() != null&& supplementaryData1.getEnvlp().getCnts() != null&& supplementaryData1.getEnvlp().getCnts().getAdjstAmt() != null
 					&& supplementaryData1.getEnvlp().getCnts().getAdjstAmt().getCcy() != null)
-				mdtAcOpsMandateTxnsEntity.setAdjAmountCurr(supplementaryData1.getEnvlp().getCnts().getAdjstAmt().getCcy());
+				casOpsCessionAssignEntity.setAdjAmountCurr(supplementaryData1.getEnvlp().getCnts().getAdjstAmt().getCcy());
 
 			if(supplementaryData1 != null && supplementaryData1.getEnvlp() != null && supplementaryData1.getEnvlp().getCnts() != null&& supplementaryData1.getEnvlp().getCnts().getAdjstAmt() != null)
-				mdtAcOpsMandateTxnsEntity.setAdjAmount(supplementaryData1.getEnvlp().getCnts().getAdjstAmt().getValue());
+				casOpsCessionAssignEntity.setAdjAmount(supplementaryData1.getEnvlp().getCnts().getAdjstAmt().getValue());
 
 			if(supplementaryData1 != null && supplementaryData1.getEnvlp() != null && supplementaryData1.getEnvlp().getCnts() != null && supplementaryData1.getEnvlp().getCnts().getChnnl() != null)
-				mdtAcOpsMandateTxnsEntity.setAuthChannel(supplementaryData1.getEnvlp().getCnts().getChnnl().trim());
+				casOpsCessionAssignEntity.setAuthChannel(supplementaryData1.getEnvlp().getCnts().getChnnl().trim());
 
 			if(supplementaryData1 != null && supplementaryData1.getEnvlp() != null && supplementaryData1.getEnvlp().getCnts() != null && supplementaryData1.getEnvlp().getCnts().getMndtRfNbr() != null)
-				mdtAcOpsMandateTxnsEntity.setMandateRefNr(supplementaryData1.getEnvlp().getCnts().getMndtRfNbr().toString());
+				casOpsCessionAssignEntity.setMandateRefNr(supplementaryData1.getEnvlp().getCnts().getMndtRfNbr().toString());
 
 			if(supplementaryData1 != null&& supplementaryData1.getEnvlp() != null&& supplementaryData1.getEnvlp().getCnts() != null&& supplementaryData1.getEnvlp().getCnts().getFrstColltnAmt() != null
 					&& supplementaryData1.getEnvlp().getCnts().getFrstColltnAmt().getCcy() != null)
-				mdtAcOpsMandateTxnsEntity.setFirstCollAmtCurr(supplementaryData1.getEnvlp().getCnts().getFrstColltnAmt().getCcy());
+				casOpsCessionAssignEntity.setFirstCollAmtCurr(supplementaryData1.getEnvlp().getCnts().getFrstColltnAmt().getCcy());
 
 			if(supplementaryData1 != null&& supplementaryData1.getEnvlp() != null&& supplementaryData1.getEnvlp().getCnts() != null&& supplementaryData1.getEnvlp().getCnts().getFrstColltnAmt() != null)
-				mdtAcOpsMandateTxnsEntity.setFirstCollAmt(supplementaryData1.getEnvlp().getCnts().getFrstColltnAmt().getValue());
+				casOpsCessionAssignEntity.setFirstCollAmt(supplementaryData1.getEnvlp().getCnts().getFrstColltnAmt().getValue());
 
 			if(supplementaryData1 != null&& supplementaryData1.getEnvlp() != null&& supplementaryData1.getEnvlp().getCnts() != null&& supplementaryData1.getEnvlp().getCnts().getDbVlTp() != null)
-				mdtAcOpsMandateTxnsEntity.setDebitValueType(supplementaryData1.getEnvlp().getCnts().getDbVlTp().toString().trim());
+				casOpsCessionAssignEntity.setDebitValueType(supplementaryData1.getEnvlp().getCnts().getDbVlTp().toString().trim());
 
 			if(supplementaryData1!= null && supplementaryData1.getEnvlp()!= null && supplementaryData1.getEnvlp().getCnts()!= null && supplementaryData1.getEnvlp().getCnts().getMndtAthDt()!= null)
-				mdtAcOpsMandateTxnsEntity.setMandateAuthDate(getCovertDateTime(supplementaryData1.getEnvlp().getCnts().getMndtAthDt()));
+				casOpsCessionAssignEntity.setMandateAuthDate(getCovertDateTime(supplementaryData1.getEnvlp().getCnts().getMndtAthDt()));
 
-			mdtAcOpsMandateTxnsEntity.setCreatedBy(systemName);
-			mdtAcOpsMandateTxnsEntity.setCreatedDate(todaysDate);
-			mdtAcOpsMandateTxnsEntity.setModifiedBy(systemName);
-			mdtAcOpsMandateTxnsEntity.setModifiedDate(todaysDate);
+			casOpsCessionAssignEntity.setCreatedBy(systemName);
+			casOpsCessionAssignEntity.setCreatedDate(todaysDate);
+			casOpsCessionAssignEntity.setModifiedBy(systemName);
+			casOpsCessionAssignEntity.setModifiedDate(todaysDate);
 
-			acceptedMndtList.add(mdtAcOpsMandateTxnsEntity);
+			acceptedMndtList.add(casOpsCessionAssignEntity);
 			
 			if(originalMandate.getProcessStatus().equalsIgnoreCase("4") || originalMandate.getProcessStatus().equalsIgnoreCase("9"))
 			{
@@ -593,13 +594,13 @@ public class AC_Pain012_Loader_ST implements Serializable {
 				{
 					if(acceptanceResult6.isAccptd())
 					{
-						matchedMRTIList.add("'"+originalMandate.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()+"'");
+						matchedMRTIList.add("'"+originalMandate.getCasOpsCessionAssignEntityPK().getMandateReqTranId()+"'");
 //						originalMandate.setProcessStatus("M");
 					}
 					else
 					{
 //						originalMandate.setProcessStatus("R");
-						rejectedMRTIList.add("'"+originalMandate.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()+"'");
+						rejectedMRTIList.add("'"+originalMandate.getCasOpsCessionAssignEntityPK().getMandateReqTranId()+"'");
 					}
 //					originalMandate.setModifiedDate(todaysDate);
 					//					result = fileProcessBeanRemote.updateMdtOpsMandateTxns(originalMandate);
@@ -629,33 +630,33 @@ public class AC_Pain012_Loader_ST implements Serializable {
 //			}
 
 			//			==========BILLABLE TRANSACTIONS====================//
-			MdtAcOpsDailyBillingEntity mdtAcOpsDailyBillingEntity = new MdtAcOpsDailyBillingEntity();
-			mdtAcOpsDailyBillingEntity.setSystemSeqNo(new BigDecimal(123));
-			mdtAcOpsDailyBillingEntity.setCreditorBank(acPain012Validation_ST.creditorBank);
-			mdtAcOpsDailyBillingEntity.setDebtorBank(document.getMndtAccptncRpt().getGrpHdr().getInstgAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
-			mdtAcOpsDailyBillingEntity.setSubService(origBillService);
-			mdtAcOpsDailyBillingEntity.setTxnType(tt2TxnType);
+			CasOpsDailyBillingEntity casOpsDailyBillingEntity = new CasOpsDailyBillingEntity();
+			casOpsDailyBillingEntity.setSystemSeqNo(new BigDecimal(123));
+			casOpsDailyBillingEntity.setCreditorBank(acPain012Validation_ST.creditorBank);
+			casOpsDailyBillingEntity.setDebtorBank(document.getMndtAccptncRpt().getGrpHdr().getInstgAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
+			casOpsDailyBillingEntity.setSubService(origBillService);
+			casOpsDailyBillingEntity.setTxnType(tt2TxnType);
 			if(acceptanceResult6 != null) {
 				if(acceptanceResult6.isAccptd() == true)
 				{
-					mdtAcOpsDailyBillingEntity.setTxnStatus(tt2Succ);
+					casOpsDailyBillingEntity.setTxnStatus(tt2Succ);
 				}
 				else
 				{
-					mdtAcOpsDailyBillingEntity.setTxnStatus(tt2Unsucc);
+					casOpsDailyBillingEntity.setTxnStatus(tt2Unsucc);
 				}
 			}
 
-			mdtAcOpsDailyBillingEntity.setCreatedBy(systemName);
-			mdtAcOpsDailyBillingEntity.setCreatedDate(todaysDate);
-			mdtAcOpsDailyBillingEntity.setBillExpStatus(nonActInd);
-			mdtAcOpsDailyBillingEntity.setActionDate(originalMandate.getCreatedDate());
+			casOpsDailyBillingEntity.setCreatedBy(systemName);
+			casOpsDailyBillingEntity.setCreatedDate(todaysDate);
+			casOpsDailyBillingEntity.setBillExpStatus(nonActInd);
+			casOpsDailyBillingEntity.setActionDate(originalMandate.getCreatedDate());
 
 			if(origBillService.equalsIgnoreCase(manamService))
 			{
 				if(originalMandate != null && originalMandate.getLocalInstrCd() != null)
 				{
-					mdtAcOpsDailyBillingEntity.setAuthCode(originalMandate.getLocalInstrCd());
+					casOpsDailyBillingEntity.setAuthCode(originalMandate.getLocalInstrCd());
 				}
 			}
 
@@ -668,30 +669,30 @@ public class AC_Pain012_Loader_ST implements Serializable {
 					{ 
 						if (localInstrCd.trim().equalsIgnoreCase("0999") || localInstrCd.trim().equalsIgnoreCase("0998") || localInstrCd.trim().equalsIgnoreCase("0997")) 
 						{
-							mdtAcOpsDailyBillingEntity.setAuthCode(originalMandate.getLocalInstrCd());
+							casOpsDailyBillingEntity.setAuthCode(originalMandate.getLocalInstrCd());
 						}
 					}
 				}
 			}
 
-			mdtAcOpsDailyBillingEntity.setTxnId(mandateReqTranId);
+			casOpsDailyBillingEntity.setTxnId(mandateReqTranId);
 			if(supplementaryData1!= null && supplementaryData1.getEnvlp()!= null && supplementaryData1.getEnvlp().getCnts()!= null && supplementaryData1.getEnvlp().getCnts().getMndtRfNbr()!= null) {
-				mdtAcOpsDailyBillingEntity.setMndtRefNum(supplementaryData1.getEnvlp().getCnts().getMndtRfNbr().toString());
+				casOpsDailyBillingEntity.setMndtRefNum(supplementaryData1.getEnvlp().getCnts().getMndtRfNbr().toString());
 			}
-			mdtAcOpsDailyBillingEntity.setExtMsgId(originalMandate.getExtractMsgId());
+			casOpsDailyBillingEntity.setExtMsgId(originalMandate.getExtractMsgId());
 			if(casSysctrlSysParamEntity != null)
 			{
-				mdtAcOpsDailyBillingEntity.setRespDate(casSysctrlSysParamEntity.getProcessDate());
+				casOpsDailyBillingEntity.setRespDate(casSysctrlSysParamEntity.getProcessDate());
 			}
 			else
 			{
-				mdtAcOpsDailyBillingEntity.setRespDate(todaysDate);
+				casOpsDailyBillingEntity.setRespDate(todaysDate);
 			}
 
 			//Save Billing
-			log.debug("THIS IS THE OPS DAILY BILLING ENTITY==> "+mdtAcOpsDailyBillingEntity);
+			log.debug("THIS IS THE OPS DAILY BILLING ENTITY==> "+ casOpsDailyBillingEntity);
 			//beanRemote.saveOpsDailyBilling(mdtAcOpsDailyBillingEntity);
-			billableTxnList.add(mdtAcOpsDailyBillingEntity);
+			billableTxnList.add(casOpsDailyBillingEntity);
 		}
 
 		//		isLoaded = false;
@@ -827,8 +828,8 @@ public class AC_Pain012_Loader_ST implements Serializable {
 		boolean saved = false;
 		int nrOfFile =1;
 		int nrOfMsgsInFile = mandateAcceptance3List.size();
-		MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = new MdtAcOpsMndtCountEntity();
-		MdtAcOpsMndtCountPK mdtOpsMndtCountPk = new MdtAcOpsMndtCountPK();
+		CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
+		CasOpsMndtCountPK mdtOpsMndtCountPk = new CasOpsMndtCountPK();
 
 		if(document!= null && document.getMndtAccptncRpt()!=null && document.getMndtAccptncRpt().getGrpHdr() != null && document.getMndtAccptncRpt().getGrpHdr().getMsgId()!=null)
 			mdtOpsMndtCountPk.setMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId());
@@ -840,13 +841,13 @@ public class AC_Pain012_Loader_ST implements Serializable {
 		mdtOpsMndtCountEntity.setIncoming("Y");
 		mdtOpsMndtCountEntity.setProcessDate(todaysDate);
 		mdtOpsMndtCountEntity.setOutgoing("N");
-		mdtOpsMndtCountEntity.setMdtAcOpsMndtCountPK(mdtOpsMndtCountPk);
+		mdtOpsMndtCountEntity.setCasOpsMndtCountPK(mdtOpsMndtCountPk);
 		mdtOpsMndtCountEntity.setNrMsgsAccepted(acceptCount);
 		mdtOpsMndtCountEntity.setNrMsgsRejected(rejectedCount);
 		mdtOpsMndtCountEntity.setNrMsgsExtracted(0);
 		mdtOpsMndtCountEntity.setFileName(fileName);
 
-		saved = valBeanRemote.saveMdtOpsMndtCount(mdtOpsMndtCountEntity);
+		saved = valBeanRemote.saveOpsMndtCount(mdtOpsMndtCountEntity);
 		if (saved) {
 			log.debug("MdtOpsCountTable has been updated");
 		} else {

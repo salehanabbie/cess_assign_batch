@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ElelwaniR
  */
 @Entity
-@Table(name = "AUD_CTRL_COMP_PARAM",schema = "MANOWNER")
+@Table(name = "AUD_CTRL_COMP_PARAM",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AudCtrlCompParamEntity.findAll", query = "SELECT a FROM AudCtrlCompParamEntity a"),

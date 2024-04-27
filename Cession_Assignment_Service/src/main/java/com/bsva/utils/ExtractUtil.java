@@ -7,8 +7,7 @@ import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.Predicate;
 import org.apache.log4j.Logger;
 
-import com.bsva.authcoll.singletable.validation.Validation_ST;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.FileProcessBeanRemote;
@@ -29,7 +28,7 @@ public class ExtractUtil {
 	public static ServiceBeanRemote beanRemote;
 	public static FileProcessBeanRemote fileProcBeanRemote;
 	List<SysCisBankEntity> sysCisBankList = new ArrayList<SysCisBankEntity>();
-	List<MdtAcOpsFileSizeLimitEntity>  opsFileSizeLimitList = new ArrayList<MdtAcOpsFileSizeLimitEntity>();
+	List<CasOpsFileSizeLimitEntity>  opsFileSizeLimitList = new ArrayList<CasOpsFileSizeLimitEntity>();
 	
 	
 	public ExtractUtil() {
@@ -48,7 +47,7 @@ public class ExtractUtil {
 		try {
 	
 			sysCisBankList = (List<SysCisBankEntity>) valBeanRemote.findAllCisBanks();
-			opsFileSizeLimitList = (List<MdtAcOpsFileSizeLimitEntity>) valBeanRemote.findAllFileSizeLimit();
+			opsFileSizeLimitList = (List<CasOpsFileSizeLimitEntity>) valBeanRemote.findAllFileSizeLimit();
 	
 	
 		}
@@ -100,43 +99,45 @@ public class ExtractUtil {
 		}
 		
 		
-		public MdtAcOpsFileSizeLimitEntity  findOutgoingService(final String serviceId)
+		public CasOpsFileSizeLimitEntity findOutgoingService(final String serviceId)
 		{
 			if(serviceId == null || opsFileSizeLimitList == null || opsFileSizeLimitList.isEmpty())
 			{
 				return null;
 			}
 			
-			MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity = IterableUtils.find(opsFileSizeLimitList, new Predicate<MdtAcOpsFileSizeLimitEntity>()
+			CasOpsFileSizeLimitEntity
+                casOpsFileSizeLimitEntity = IterableUtils.find(opsFileSizeLimitList, new Predicate<CasOpsFileSizeLimitEntity>()
 					{
 				@Override
-				public boolean evaluate(MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity) {
+				public boolean evaluate(CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity) {
 					
 					return 
-							((serviceId.equalsIgnoreCase(mdtAcOpsFileSizeLimitEntity.getMdtAcOpsFileSizeLimitPK().getSubService())) && mdtAcOpsFileSizeLimitEntity.getActiveId().equalsIgnoreCase("Y") &&
-									mdtAcOpsFileSizeLimitEntity.getDirection().equalsIgnoreCase("O"));
+							((serviceId.equalsIgnoreCase(casOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getSubService())) && casOpsFileSizeLimitEntity.getActiveId().equalsIgnoreCase("Y") &&
+									casOpsFileSizeLimitEntity.getDirection().equalsIgnoreCase("O"));
 				}
 					});
-			return mdtAcOpsFileSizeLimitEntity;
+			return casOpsFileSizeLimitEntity;
 		}
 		
-		public MdtAcOpsFileSizeLimitEntity  findLimit(final String limit)
+		public CasOpsFileSizeLimitEntity findLimit(final String limit)
 		{
 			if(limit == null || opsFileSizeLimitList == null || opsFileSizeLimitList.isEmpty())
 			{
 				return null;
 			}
 			
-			MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity = IterableUtils.find(opsFileSizeLimitList, new Predicate<MdtAcOpsFileSizeLimitEntity>()
+			CasOpsFileSizeLimitEntity
+                casOpsFileSizeLimitEntity = IterableUtils.find(opsFileSizeLimitList, new Predicate<CasOpsFileSizeLimitEntity>()
 					{
 				@Override
-				public boolean evaluate(MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity) {
+				public boolean evaluate(CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity) {
 					
 					return 
-							((limit.equalsIgnoreCase(mdtAcOpsFileSizeLimitEntity.getLimit()) && mdtAcOpsFileSizeLimitEntity.getActiveId().equalsIgnoreCase("Y")));
+							((limit.equalsIgnoreCase(casOpsFileSizeLimitEntity.getLimit()) && casOpsFileSizeLimitEntity.getActiveId().equalsIgnoreCase("Y")));
 				}
 					});
-			return mdtAcOpsFileSizeLimitEntity;
+			return casOpsFileSizeLimitEntity;
 		}
 		
 		

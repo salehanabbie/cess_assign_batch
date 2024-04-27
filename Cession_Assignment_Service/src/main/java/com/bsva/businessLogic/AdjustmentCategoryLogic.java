@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.AdjustmentCategoryModel;
-import com.bsva.entities.MdtCnfgAdjustmentCatEntity;
+import com.bsva.entities.CasCnfgAdjustmentCatEntity;
 import com.bsva.translator.AdminTranslator;
 
 /**
@@ -24,7 +24,8 @@ public static Logger log = Logger.getLogger(AdjustmentCategoryLogic.class);
 		
 	}
 
-	public static AdjustmentCategoryModel retreiveAdjustmentCategory(MdtCnfgAdjustmentCatEntity localEntity) {
+	public static AdjustmentCategoryModel retreiveAdjustmentCategory(
+        CasCnfgAdjustmentCatEntity localEntity) {
 		
 		AdjustmentCategoryModel adjustmentCategoryModel = new AdjustmentCategoryModel();
 		adjustmentCategoryModel = new AdminTranslator().translateMdtCnfgAdjustmentCatEntityToCommonsModel(localEntity);
@@ -33,15 +34,16 @@ public static Logger log = Logger.getLogger(AdjustmentCategoryLogic.class);
 		         return adjustmentCategoryModel;
 	   }
 		
-    public List<AdjustmentCategoryModel> retreiveAllAdjustmentCategory(List<MdtCnfgAdjustmentCatEntity> allMdtCnfgAdjustmentCatEntityList) {
+    public List<AdjustmentCategoryModel> retreiveAllAdjustmentCategory(List<CasCnfgAdjustmentCatEntity> allCasCnfgAdjustmentCatEntityList) {
 		
 		List<AdjustmentCategoryModel> adjustmentCategoryEntityList = new ArrayList<AdjustmentCategoryModel>();
 		
 		log.debug("check if it goes inside the logic method");
-		for (MdtCnfgAdjustmentCatEntity mdtCnfgAdjustmentCatEntity : allMdtCnfgAdjustmentCatEntityList)
+		for (CasCnfgAdjustmentCatEntity casCnfgAdjustmentCatEntity : allCasCnfgAdjustmentCatEntityList)
 		{
 			AdjustmentCategoryModel adjustmentCategoryModel = new AdjustmentCategoryModel();
-			adjustmentCategoryModel = new AdminTranslator().translateMdtCnfgAdjustmentCatEntityToCommonsModel(mdtCnfgAdjustmentCatEntity);
+			adjustmentCategoryModel = new AdminTranslator().translateMdtCnfgAdjustmentCatEntityToCommonsModel(
+                casCnfgAdjustmentCatEntity);
 			adjustmentCategoryEntityList.add(adjustmentCategoryModel);
 			log.debug("======================adjustmentCategoryModel================="+adjustmentCategoryModel);
 		}
@@ -53,15 +55,15 @@ public static Logger log = Logger.getLogger(AdjustmentCategoryLogic.class);
 	}
 
 
-	public MdtCnfgAdjustmentCatEntity addAdjustmentCategory(AdjustmentCategoryModel adjustmentCategoryModel) {
+	public CasCnfgAdjustmentCatEntity addAdjustmentCategory(AdjustmentCategoryModel adjustmentCategoryModel) {
 		
-		MdtCnfgAdjustmentCatEntity mdtCnfgAdjustmentCatEntity = new MdtCnfgAdjustmentCatEntity();
-		mdtCnfgAdjustmentCatEntity = new AdminTranslator().translateCommnsAdjustmentCategoryModelToEntity(adjustmentCategoryModel);
+		CasCnfgAdjustmentCatEntity casCnfgAdjustmentCatEntity = new CasCnfgAdjustmentCatEntity();
+		casCnfgAdjustmentCatEntity = new AdminTranslator().translateCommnsAdjustmentCategoryModelToEntity(adjustmentCategoryModel);
 		
 		
 		log.debug("adjustmentCategoryModel================="+adjustmentCategoryModel);
 		
-		return  mdtCnfgAdjustmentCatEntity; 
+		return casCnfgAdjustmentCatEntity;
 	}
 
 	

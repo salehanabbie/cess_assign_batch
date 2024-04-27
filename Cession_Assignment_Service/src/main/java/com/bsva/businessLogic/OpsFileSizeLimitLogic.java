@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bsva.commons.model.FileSizeLimitModel;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
 import com.bsva.translator.AdminTranslator;
 /***
  * 
@@ -14,7 +14,7 @@ import com.bsva.translator.AdminTranslator;
 
 public class OpsFileSizeLimitLogic {
 	
-	public List<FileSizeLimitModel> retrieveAllOpsFileSizeLimit(List<MdtAcOpsFileSizeLimitEntity> mdtAcOpsFileSizeLimitEntityList)
+	public List<FileSizeLimitModel> retrieveAllOpsFileSizeLimit(List<CasOpsFileSizeLimitEntity> casOpsFileSizeLimitEntityList)
 	{
 
 		
@@ -22,11 +22,12 @@ public class OpsFileSizeLimitLogic {
 			FileSizeLimitModel fileSizeLimitModel;
 
 		
-			for (MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity : mdtAcOpsFileSizeLimitEntityList) 
+			for (CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity : casOpsFileSizeLimitEntityList)
 			{
 		
 				fileSizeLimitModel = new FileSizeLimitModel();
-				fileSizeLimitModel = new AdminTranslator().translateMdtAcOpsFileSizeLimitEntityToCommonsModel(mdtAcOpsFileSizeLimitEntity);
+				fileSizeLimitModel = new AdminTranslator().translateMdtAcOpsFileSizeLimitEntityToCommonsModel(
+                    casOpsFileSizeLimitEntity);
 				fileSizeLimitModelList.add(fileSizeLimitModel);
 			}
 		
@@ -34,17 +35,19 @@ public class OpsFileSizeLimitLogic {
 }
 	
 	
-	public MdtAcOpsFileSizeLimitEntity addOpsFileSizeLimit(FileSizeLimitModel fileSizeLimitModel) 
+	public CasOpsFileSizeLimitEntity addOpsFileSizeLimit(FileSizeLimitModel fileSizeLimitModel)
 	{
-		MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity = new AdminTranslator().translateOpsFileSizeLimitCommonsModelToEntity(fileSizeLimitModel);
+		CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity = new AdminTranslator().translateOpsFileSizeLimitCommonsModelToEntity(fileSizeLimitModel);
 	
-	return mdtAcOpsFileSizeLimitEntity;
+	return casOpsFileSizeLimitEntity;
 	}
 	
-	public FileSizeLimitModel retrieveOpsFileSizeLimit(MdtAcOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity)
+	public FileSizeLimitModel retrieveOpsFileSizeLimit(
+        CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity)
 	{
 		FileSizeLimitModel localModel = new FileSizeLimitModel();
-		localModel = new AdminTranslator().translateMdtAcOpsFileSizeLimitEntityToCommonsModel(mdtAcOpsFileSizeLimitEntity);
+		localModel = new AdminTranslator().translateMdtAcOpsFileSizeLimitEntityToCommonsModel(
+            casOpsFileSizeLimitEntity);
 		
 		return localModel;
 	}

@@ -16,7 +16,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.ejb.EJB;
 import javax.xml.XMLConstants;
@@ -35,16 +34,13 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 import com.bsva.PropertyUtil;
 import com.bsva.commons.model.OpsFileRegModel;
-import com.bsva.delivery.StartOfTransmissionExtract;
-import com.bsva.entities.MdtAcOpsConfHdrsEntity;
-import com.bsva.entities.MdtAcOpsFileSizeLimitEntity;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntity;
-import com.bsva.entities.MdtAcOpsConfDetailsEntity;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
-import com.bsva.entities.MdtAcOpsMndtCountPK;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsConfDetailsEntity;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsMndtCountPK;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.SysCisBankEntity;
@@ -95,17 +91,17 @@ public class AC_Pacs002_001_04_Extract {
 	public Date todaysDate;
 	CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
 	CasSysctrlSysParamEntity casSysctrlSysParamEntity;
-	MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity = null;
+	CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = null;
 	String serviceId, mdtReqId, instdIdFileName, instIdMsgId;
-	List<MdtAcOpsConfDetailsEntity> transErrorList, statusDetailsList;
-	List<MdtOpsCustParamEntity> custParamsList = null;
+	List<CasOpsConfDetailsEntity> transErrorList, statusDetailsList;
+	List<CasOpsCustParamEntity> custParamsList = null;
 	List<SysCisBankEntity> sysCisBankList = null;
 
 	String pacs002ServiceName = null, outputFileBic = null;
 	int lastSeqNoUsed;
 	String groupStatus = null;
 	boolean populateOpi = false, populateOad = false;
-	MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity;
+	CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity;
 
 	private String pacs002Schema = "/home/opsjava/Delivery/Mandates/Schema/pacs.002.001.04.xsd";
 	private String urn = "urn:iso:std:iso:20022:tech:xsd:pacs.002.001.04";
@@ -119,7 +115,7 @@ public class AC_Pacs002_001_04_Extract {
 	int accpTxns = 0, rejTxns = 0;
 	String nonrefErrorCode = "NONREF", rjctErrorCode="902203";
 	List<String> txnIdList = null;
-	List<MdtAcOpsConfDetailsEntity> orgnConfDetailTxnList = null;
+	List<CasOpsConfDetailsEntity> orgnConfDetailTxnList = null;
 	List<String>extOrigMRTIList=  null;
 
 	List<String> extractServiceList = new ArrayList<String>();
@@ -168,12 +164,12 @@ public class AC_Pacs002_001_04_Extract {
 
 
 
-		custParamsList = new ArrayList<MdtOpsCustParamEntity>();
-		custParamsList = (List<MdtOpsCustParamEntity>) beanRemote.retrieveActiveCustomerParameters();
+		custParamsList = new ArrayList<CasOpsCustParamEntity>();
+		custParamsList = (List<CasOpsCustParamEntity>) beanRemote.retrieveActiveCustomerParameters();
 
 		if(custParamsList.size() > 0)
 		{
-			for (MdtOpsCustParamEntity custParamEntity : custParamsList) 
+			for (CasOpsCustParamEntity custParamEntity : custParamsList)
 			{
 				destInstId = custParamEntity.getInstId();
 
@@ -194,17 +190,18 @@ public class AC_Pacs002_001_04_Extract {
 						if(txnIdList != null && txnIdList.size() > 0)
 						{
 
-							MdtAcOpsFileSizeLimitEntity mappedFileSizeLimit = (MdtAcOpsFileSizeLimitEntity) fileProcessBeanRemote.retriveOutgoingService(outgoingService,destInstId);
+							CasOpsFileSizeLimitEntity
+									mappedFileSizeLimit = (CasOpsFileSizeLimitEntity) fileProcessBeanRemote.retriveOutgoingService(outgoingService,destInstId);
 							
-							if(mappedFileSizeLimit != null && destInstId.equalsIgnoreCase(mappedFileSizeLimit.getMdtAcOpsFileSizeLimitPK().getMemberId()))
+							if(mappedFileSizeLimit != null && destInstId.equalsIgnoreCase(mappedFileSizeLimit.getCasOpsFileSizeLimitPK().getMemberId()))
 							{
-								destInstId =mappedFileSizeLimit.getMdtAcOpsFileSizeLimitPK().getMemberId();
+								destInstId =mappedFileSizeLimit.getCasOpsFileSizeLimitPK().getMemberId();
 								String limit =mappedFileSizeLimit.getLimit();
 								log.debug("limit---->"+limit+"");
 								int fileLimit = Integer.valueOf(limit);
 
 								List<ArrayList<String>> chunckedList = getChunks(txnIdList,fileLimit);
-								orgnConfDetailTxnList =  new ArrayList<MdtAcOpsConfDetailsEntity>();
+								orgnConfDetailTxnList =  new ArrayList<CasOpsConfDetailsEntity>();
 								log.debug("fileLimit---->"+fileLimit+"");
 
 
@@ -234,10 +231,10 @@ public class AC_Pacs002_001_04_Extract {
 
 										//Retrieve Ops_Status_Hdrs Entity
 										//Retrieve the Hdr Record
-										statusDetailsList = new ArrayList<MdtAcOpsConfDetailsEntity>();
-										statusDetailsList = (List<MdtAcOpsConfDetailsEntity>) beanRemote.retrieveConfDetails(transId, outgoingService, extractService);
+										statusDetailsList = new ArrayList<CasOpsConfDetailsEntity>();
+										statusDetailsList = (List<CasOpsConfDetailsEntity>) beanRemote.retrieveConfDetails(transId, outgoingService, extractService);
 										//								log.info("statusDetailsList: "+statusDetailsList);
-										MdtAcOpsConfDetailsEntity confDetailsEntity = statusDetailsList.get(0);
+										CasOpsConfDetailsEntity confDetailsEntity = statusDetailsList.get(0);
 
 										OriginalGroupHeader1 originalGrpHdrStsInf = new OriginalGroupHeader1(); 
 										originalGrpHdrStsInf = populateOriginalGrpHdrInfAndSts(confDetailsEntity.getConfHdrSeqNo(), confDetailsEntity.getOrgnlMsgType()); 
@@ -408,20 +405,20 @@ public class AC_Pacs002_001_04_Extract {
 				achId = "021";
 			}
 
-			MdtOpsRefSeqNrEntity  mdtOpsRefSeqNrEntity = new MdtOpsRefSeqNrEntity();
-			mdtOpsRefSeqNrEntity = (MdtOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
+			CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = new CasOpsRefSeqNrEntity();
+			casOpsRefSeqNrEntity = (CasOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
 
-			if(mdtOpsRefSeqNrEntity != null)
+			if(casOpsRefSeqNrEntity != null)
 			{
-				lastSeqNoUsed = Integer.valueOf(mdtOpsRefSeqNrEntity.getLastSeqNr());
+				lastSeqNoUsed = Integer.valueOf(casOpsRefSeqNrEntity.getLastSeqNr());
 				lastSeqNoUsed = lastSeqNoUsed + 1;
 			}
 			else
 				lastSeqNoUsed = 1;
 
 			fileSeqNo = String.format("%06d",lastSeqNoUsed);
-			mdtOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
-			valBeanRemote.updateOpsRefSeqNr(mdtOpsRefSeqNrEntity);
+			casOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
+			valBeanRemote.updateOpsRefSeqNr(casOpsRefSeqNrEntity);
 
 
 			//			    creationDate = sdfFileDate.format(new Date());
@@ -634,7 +631,7 @@ public class AC_Pacs002_001_04_Extract {
 		if(txnId != null)
 			transInfo.setOrgnlTxId(txnId);
 
-		transErrorList = (List<MdtAcOpsConfDetailsEntity>) beanRemote.retrieveConfDetails(txnId, outgoingService, orgnlMsgType);
+		transErrorList = (List<CasOpsConfDetailsEntity>) beanRemote.retrieveConfDetails(txnId, outgoingService, orgnlMsgType);
 
 		if(transErrorList != null && transErrorList.size() > 0)
 		{	
@@ -649,7 +646,7 @@ public class AC_Pacs002_001_04_Extract {
 			}
 
 
-			for (MdtAcOpsConfDetailsEntity txnErrorEntity : transErrorList) 
+			for (CasOpsConfDetailsEntity txnErrorEntity : transErrorList)
 			{
 
 				if(txnErrorEntity.getTxnStatus().equalsIgnoreCase("ACCP"))
@@ -773,8 +770,8 @@ public class AC_Pacs002_001_04_Extract {
 
 		log.debug("# of mandates submitted ******--->" + nrOfMsgs);
 
-		MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = new MdtAcOpsMndtCountEntity();
-		MdtAcOpsMndtCountPK mdtOpsMndtCountPk = new MdtAcOpsMndtCountPK();
+		CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
+		CasOpsMndtCountPK mdtOpsMndtCountPk = new CasOpsMndtCountPK();
 
 		if(pacsDocument!= null && pacsDocument.getFIToFIPmtStsRpt()!=null && pacsDocument.getFIToFIPmtStsRpt().getGrpHdr() != null && pacsDocument.getFIToFIPmtStsRpt().getGrpHdr().getMsgId()!=null)
 			mdtOpsMndtCountPk.setMsgId(pacsDocument.getFIToFIPmtStsRpt().getGrpHdr().getMsgId());
@@ -789,10 +786,10 @@ public class AC_Pacs002_001_04_Extract {
 		mdtOpsMndtCountEntity.setIncoming("N");
 		mdtOpsMndtCountEntity.setProcessDate(todaysDate);
 		mdtOpsMndtCountEntity.setOutgoing("Y");
-		mdtOpsMndtCountEntity.setMdtAcOpsMndtCountPK(mdtOpsMndtCountPk);
+		mdtOpsMndtCountEntity.setCasOpsMndtCountPK(mdtOpsMndtCountPk);
 		mdtOpsMndtCountEntity.setFileName(outFileName);
 
-		saved = valBeanRemote.saveMdtOpsMndtCount(mdtOpsMndtCountEntity);
+		saved = valBeanRemote.saveOpsMndtCount(mdtOpsMndtCountEntity);
 
 		log.debug("WRITING mdtOpsMndtCountEntity IN THE AC_Pacs002FileExtract"+mdtOpsMndtCountEntity);
 

@@ -3,11 +3,11 @@
 package com.bsva.billing;
 
 import com.bsva.PropertyUtil;
+import com.bsva.entities.CasOpsBillingCtrlsEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.InterchgBillingDataModel;
-import com.bsva.entities.MdtAcOpsBillingCtrlsEntity;
-import com.bsva.entities.MdtAcOpsDailyBillingEntity;
-import com.bsva.entities.MdtAcOpsTxnsBillingEntity;
+import com.bsva.entities.CasOpsDailyBillingEntity;
+import com.bsva.entities.CasOpsTxnsBillingEntity;
 import com.bsva.entities.ObsBillingStagingEntity;
 import com.bsva.entities.ObsTxnsBillStagingEntity;
 import com.bsva.interfaces.AdminBeanRemote;
@@ -48,11 +48,11 @@ public class BillingExport implements Serializable {
   CasSysctrlSysParamEntity systemParamsEntity;
 
   List<ObsBillingStagingEntity> obsBillingStagingList;
-  List<MdtAcOpsDailyBillingEntity> dailyBillingListToExport;
+  List<CasOpsDailyBillingEntity> dailyBillingListToExport;
 
   List<ObsTxnsBillStagingEntity> obsTxnsBillStagingList;
-  List<MdtAcOpsTxnsBillingEntity> txnsBillingList;
-  List<MdtAcOpsTxnsBillingEntity> orgnTxnsBillingList = null;
+  List<CasOpsTxnsBillingEntity> txnsBillingList;
+  List<CasOpsTxnsBillingEntity> orgnTxnsBillingList = null;
 
   List<String> serviceList = new ArrayList<String>();
 
@@ -102,19 +102,19 @@ public class BillingExport implements Serializable {
     //		BigDecimal lastBillSeqNo = beanRemote.retrieveDailyBillingInterCngInfo();
     //		log.info("lastBillSeqNo DATA ==> "+lastBillSeqNo);
 
-    dailyBillingListToExport = new ArrayList<MdtAcOpsDailyBillingEntity>();
+    dailyBillingListToExport = new ArrayList<CasOpsDailyBillingEntity>();
     dailyBillingListToExport =
-        (List<MdtAcOpsDailyBillingEntity>) beanRemote.retrieveDailyBillingInterCngInfo();
+        (List<CasOpsDailyBillingEntity>) beanRemote.retrieveDailyBillingInterCngInfo();
 
     if (dailyBillingListToExport != null && dailyBillingListToExport.size() > 0) {
-      MdtAcOpsDailyBillingEntity acOpsDailyBillingEntity =
+      CasOpsDailyBillingEntity acOpsDailyBillingEntity =
           dailyBillingListToExport.get(dailyBillingListToExport.size() - 1);
       lastBillSeqNo = acOpsDailyBillingEntity.getSystemSeqNo();
     }
 
     //New Entity Info
-    MdtAcOpsBillingCtrlsEntity billCntrlEntity = new MdtAcOpsBillingCtrlsEntity();
-    billCntrlEntity = (MdtAcOpsBillingCtrlsEntity) beanRemote.retrieveBillingCtrls("BILLING");
+    CasOpsBillingCtrlsEntity billCntrlEntity = new CasOpsBillingCtrlsEntity();
+    billCntrlEntity = (CasOpsBillingCtrlsEntity) beanRemote.retrieveBillingCtrls("BILLING");
 
     //Retrieve Interchange Billing Data
     List<InterchgBillingDataModel> intChgBillingList = new ArrayList<InterchgBillingDataModel>();
@@ -158,7 +158,7 @@ public class BillingExport implements Serializable {
         //Update Billing Entries once pushed
         log.info("======UPDATING OPS DAILY BILLING INDICATOR=======");
         List<BigDecimal> dailyBillSeqNoList = new ArrayList<BigDecimal>();
-        for (MdtAcOpsDailyBillingEntity dailyBillEntity : dailyBillingListToExport) {
+        for (CasOpsDailyBillingEntity dailyBillEntity : dailyBillingListToExport) {
           dailyBillSeqNoList.add(dailyBillEntity.getSystemSeqNo());
         }
 
@@ -205,20 +205,20 @@ public class BillingExport implements Serializable {
 
 
   public void exportTxnBilling() {
-    txnsBillingList = new ArrayList<MdtAcOpsTxnsBillingEntity>();
+    txnsBillingList = new ArrayList<CasOpsTxnsBillingEntity>();
     txnsBillingList =
-        (List<MdtAcOpsTxnsBillingEntity>) beanRemote.retrievetxnsBilingToExport(nonActInd);
+        (List<CasOpsTxnsBillingEntity>) beanRemote.retrievetxnsBilingToExport(nonActInd);
     //log.info("txnsBillingList DATA.SIZE ==> "+txnsBillingList.size());
-    orgnTxnsBillingList = new ArrayList<MdtAcOpsTxnsBillingEntity>();
+    orgnTxnsBillingList = new ArrayList<CasOpsTxnsBillingEntity>();
 
     if (txnsBillingList != null && txnsBillingList.size() > 0) {
       obsTxnsBillStagingList = new ArrayList<ObsTxnsBillStagingEntity>();
 
-      for (MdtAcOpsTxnsBillingEntity mdtAcOpsTxnsBillingEntity : txnsBillingList) {
+      for (CasOpsTxnsBillingEntity casOpsTxnsBillingEntity : txnsBillingList) {
 
         ObsTxnsBillStagingEntity obsTxnsBillStagingEntity =
             new ServiceTranslator().translateOpsTxnsBillingModelToObsTxnsBillingStaging(
-                mdtAcOpsTxnsBillingEntity);
+                casOpsTxnsBillingEntity);
         obsTxnsBillStagingList.add(obsTxnsBillStagingEntity);
 
         //log.info("obsTxnsBillStagingList DATA.SIZE ==> "+obsTxnsBillStagingList.size());
@@ -237,9 +237,9 @@ public class BillingExport implements Serializable {
         //Update Billing Entries once pushed
         log.info("======UPDATING OPS DAILY TXNS BILL INDICATOR=======");
         List<BigDecimal> dlyTxnsBillSeqNoList = new ArrayList<BigDecimal>();
-        for (MdtAcOpsTxnsBillingEntity acOpsTxnsBillingEntity : txnsBillingList) {
+        for (CasOpsTxnsBillingEntity txnsBillingEntity : txnsBillingList) {
           dlyTxnsBillSeqNoList.add(
-              acOpsTxnsBillingEntity.getMdtAcOpsTxnsBillingPK().getSystemSeqNo());
+              txnsBillingEntity.getCasOpsTxnsBillingPK().getSystemSeqNo());
         }
 
         int targetSize = 1000;

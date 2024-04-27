@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.ConfgSeverityCodesModel;
-import com.bsva.entities.MdtCnfgSeverityCodesEntity;
+import com.bsva.entities.CasCnfgSeverityCodesEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class SeverityCodesLogic  {
@@ -17,11 +17,11 @@ public class SeverityCodesLogic  {
 
 	}
 
-	public List<ConfgSeverityCodesModel> retrieveAllSeverityCodes(List<MdtCnfgSeverityCodesEntity> mdtSeverityCodesList) {
+	public List<ConfgSeverityCodesModel> retrieveAllSeverityCodes(List<CasCnfgSeverityCodesEntity> mdtSeverityCodesList) {
 		List<ConfgSeverityCodesModel> severityCodesList = new ArrayList<ConfgSeverityCodesModel>();
 		ConfgSeverityCodesModel severityModel;
 
-		for (MdtCnfgSeverityCodesEntity severityEntity : mdtSeverityCodesList) 
+		for (CasCnfgSeverityCodesEntity severityEntity : mdtSeverityCodesList)
 		{
 			log.debug(severityEntity);
 
@@ -34,14 +34,15 @@ public class SeverityCodesLogic  {
 	}
 
 
-	public MdtCnfgSeverityCodesEntity addSeverityCode(ConfgSeverityCodesModel severityCodesModel) {
-		MdtCnfgSeverityCodesEntity mdtSeverityCodesEntity = new AdminTranslator().translateCommonsConfgSeverityCodesModelToEntity(severityCodesModel);
+	public CasCnfgSeverityCodesEntity addSeverityCode(ConfgSeverityCodesModel severityCodesModel) {
+		CasCnfgSeverityCodesEntity mdtSeverityCodesEntity = new AdminTranslator().translateCommonsConfgSeverityCodesModelToEntity(severityCodesModel);
 
 		return mdtSeverityCodesEntity;
 	}
 
 
-	public ConfgSeverityCodesModel retrievesSeverityCodeModel(MdtCnfgSeverityCodesEntity mdtSeverityCodesEntity)
+	public ConfgSeverityCodesModel retrievesSeverityCodeModel(
+        CasCnfgSeverityCodesEntity mdtSeverityCodesEntity)
 	{
 		ConfgSeverityCodesModel localModel = new ConfgSeverityCodesModel();
 		localModel = new AdminTranslator().translateCnfgSeverityCodesEntityToWebModel(mdtSeverityCodesEntity);

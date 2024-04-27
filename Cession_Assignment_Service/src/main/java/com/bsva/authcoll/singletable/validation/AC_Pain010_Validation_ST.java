@@ -2,13 +2,13 @@ package com.bsva.authcoll.singletable.validation;
 
 import com.bsva.PropertyUtil;
 import com.bsva.entities.CasSysctrlCompParamEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtAcOpsTxnsBillReportEntity;
-import com.bsva.entities.MdtCnfgErrorCodesEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsTxnsBillReportEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import com.bsva.entities.SysCisBranchEntity;
 import iso.std.iso._20022.tech.xsd.pain_010_001.GroupHeader47;
 import iso.std.iso._20022.tech.xsd.pain_010_001.Mandate1;
@@ -54,15 +54,15 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
   int grpHdrSeverity = 0;
   int mandateSeverity = 0;
 
-  List<MdtAcOpsStatusHdrsEntity> opsStatusHdrsList = null;
-  List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList = null;
+  List<CasOpsStatusHdrsEntity> opsStatusHdrsList = null;
+  List<CasOpsStatusDetailsEntity> opsStatusDetailsList = null;
 
   //Ac ops Txn Report List
-  List<MdtAcOpsTxnsBillReportEntity> opsTxnsBillReportList = null;
+  List<CasOpsTxnsBillReportEntity> opsTxnsBillReportList = null;
 
   //Ac Entities declaration
-  MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity = null;
-  MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity = null;
+  CasOpsStatusHdrsEntity opsStatusHdrsEntity = null;
+  CasOpsStatusDetailsEntity opsStatusDetailsEntity = null;
   public BigDecimal hdrSystemSeqNo = BigDecimal.ZERO;
   CasSysctrlCompParamEntity mdtSysctrlCompParamEntity;
 
@@ -109,9 +109,9 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
       fileSizeLimit = 50000;
     }
 
-    opsStatusHdrsList = new ArrayList<MdtAcOpsStatusHdrsEntity>();
-    opsStatusDetailsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
-    opsTxnsBillReportList = new ArrayList<MdtAcOpsTxnsBillReportEntity>();
+    opsStatusHdrsList = new ArrayList<CasOpsStatusHdrsEntity>();
+    opsStatusDetailsList = new ArrayList<CasOpsStatusDetailsEntity>();
+    opsTxnsBillReportList = new ArrayList<CasOpsTxnsBillReportEntity>();
 
     hdrSystemSeqNo = BigDecimal.ZERO;
     bicCodeValid = false;
@@ -387,12 +387,12 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
       opsStatusDetailsList.clear();
     }
 
-    MdtOpsFileRegEntity mdtOpsFileRegEntity =
-        (MdtOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
-    if (mdtOpsFileRegEntity != null) {
-      mdtOpsFileRegEntity.setGrpHdrMsgId(msgId);
-      mdtOpsFileRegEntity.setExtractMsgId(outMsgId);
-      valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+    CasOpsFileRegEntity casOpsFileRegEntity =
+        (CasOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
+    if (casOpsFileRegEntity != null) {
+      casOpsFileRegEntity.setGrpHdrMsgId(msgId);
+      casOpsFileRegEntity.setExtractMsgId(outMsgId);
+      valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
     }
 
     return grpHdrSeverity;
@@ -2185,8 +2185,8 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
     String achId, creationDate, fileSeqNo, msgId = null;
     String outgoingService = "ST100";
 
-    MdtOpsCustParamEntity mdtOpsCustParamEntity =
-        (MdtOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(instId, backEndProcess);
+    CasOpsCustParamEntity casOpsCustParamEntity =
+        (CasOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(instId, backEndProcess);
 
     try {
       if (mdtSysctrlCompParamEntity != null) {
@@ -2195,12 +2195,12 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
         achId = "021";
       }
 
-      MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity = new MdtOpsRefSeqNrEntity();
-      mdtOpsRefSeqNrEntity =
-          (MdtOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
+      CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = new CasOpsRefSeqNrEntity();
+      casOpsRefSeqNrEntity =
+          (CasOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
 
-		if (mdtOpsRefSeqNrEntity != null) {
-			lastSeqNoUsed = Integer.valueOf(mdtOpsRefSeqNrEntity.getLastSeqNr());
+		if (casOpsRefSeqNrEntity != null) {
+			lastSeqNoUsed = Integer.valueOf(casOpsRefSeqNrEntity.getLastSeqNr());
 			lastSeqNoUsed++;
 		} else {
 			lastSeqNoUsed = 1;
@@ -2209,8 +2209,8 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
       log.debug("lastSeqNoUsed---->: " + lastSeqNoUsed);
       fileSeqNo = String.format("%06d", lastSeqNoUsed);
       log.debug("fileSeqNo---->: " + fileSeqNo);
-      mdtOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
-      valBeanRemote.updateOpsRefSeqNr(mdtOpsRefSeqNrEntity);
+      casOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
+      valBeanRemote.updateOpsRefSeqNr(casOpsRefSeqNrEntity);
 
       //			creationDate = sdfFileDate.format(new Date());
       //TRS16 Processing Rules
@@ -2231,12 +2231,12 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
     return msgId;
   }
 
-  public MdtCnfgErrorCodesEntity retrieveErrorCode(String errCode) {
+  public CasCnfgErrorCodesEntity retrieveErrorCode(String errCode) {
     /*log.debug("valBeanRemote: "+ valBeanRemote);*/
-    MdtCnfgErrorCodesEntity mdtCnfgErrorCodesEntity =
-        (MdtCnfgErrorCodesEntity) valBeanRemote.retrieveErrorCode(errCode);
-    log.debug("mdtCnfgErrorCodesEntity: " + mdtCnfgErrorCodesEntity);
-    return mdtCnfgErrorCodesEntity;
+    CasCnfgErrorCodesEntity casCnfgErrorCodesEntity =
+        (CasCnfgErrorCodesEntity) valBeanRemote.retrieveErrorCode(errCode);
+    log.debug("mdtCnfgErrorCodesEntity: " + casCnfgErrorCodesEntity);
+    return casCnfgErrorCodesEntity;
   }
 
   public Date getCovertDateTime(XMLGregorianCalendar xmlGregorianCalendar) {
@@ -2247,7 +2247,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
   }
 
   public void generateStatusErrorDetailsList(String errorCode, String txnId, String errorType) {
-    opsStatusDetailsEntity = new MdtAcOpsStatusDetailsEntity();
+    opsStatusDetailsEntity = new CasOpsStatusDetailsEntity();
 
     opsStatusDetailsEntity.setSystemSeqNo(new BigDecimal(123));
     opsStatusDetailsEntity.setErrorCode(errorCode);
@@ -2264,8 +2264,8 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
     opsStatusDetailsList.add(opsStatusDetailsEntity);
 
     //Populate Txn Bill Report Data
-    MdtAcOpsTxnsBillReportEntity opsTxnsBillReportEntity =
-        (MdtAcOpsTxnsBillReportEntity) generateTxnsReportData(creditorBank, txnId, manamService,
+    CasOpsTxnsBillReportEntity opsTxnsBillReportEntity =
+        (CasOpsTxnsBillReportEntity) generateTxnsReportData(creditorBank, txnId, manamService,
             fileName);
     if (opsTxnsBillReportEntity != null) {
       opsTxnsBillReportList.add(opsTxnsBillReportEntity);
@@ -2278,7 +2278,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
     boolean generated = false;
 
     if (opsStatusDetailsList.size() > 0) {
-      for (MdtAcOpsStatusDetailsEntity localEntity : opsStatusDetailsList) {
+      for (CasOpsStatusDetailsEntity localEntity : opsStatusDetailsList) {
         localEntity.setStatusHdrSeqNo(hdrSystemSeqNo);
       }
 
@@ -2307,7 +2307,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
 
   public BigDecimal generateStatusReportGrpHdr(GroupHeader47 groupHeader, String groupStatus,
                                                String instgAgt) {
-    opsStatusHdrsEntity = new MdtAcOpsStatusHdrsEntity();
+    opsStatusHdrsEntity = new CasOpsStatusHdrsEntity();
     opsStatusHdrsEntity.setSystemSeqNo(new BigDecimal(999999));
     opsStatusHdrsEntity.setHdrMsgId(outMsgId);
     opsStatusHdrsEntity.setCreateDateTime(getCovertDateTime(groupHeader.getCreDtTm()));

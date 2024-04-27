@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.AccountTypeModel;
-import com.bsva.entities.MdtCnfgAccountTypeEntity;
+import com.bsva.entities.CasCnfgAccountTypeEntity;
 import com.bsva.translator.AdminTranslator;
 
 /**
@@ -23,19 +23,19 @@ public static Logger log = Logger.getLogger(AccountTypeLogic.class);
 		
 	}
 
-	public MdtCnfgAccountTypeEntity addAccountType(AccountTypeModel accountTypeModel)
+	public CasCnfgAccountTypeEntity addAccountType(AccountTypeModel accountTypeModel)
 	{
 		
-		MdtCnfgAccountTypeEntity mdtCnfgAccountTypeEntity = new MdtCnfgAccountTypeEntity();
-		mdtCnfgAccountTypeEntity = new AdminTranslator().translateCommnsAccountTypeModelToEntity(accountTypeModel);
+		CasCnfgAccountTypeEntity casCnfgAccountTypeEntity = new CasCnfgAccountTypeEntity();
+		casCnfgAccountTypeEntity = new AdminTranslator().translateCommnsAccountTypeModelToEntity(accountTypeModel);
 		
-		return  mdtCnfgAccountTypeEntity; 
+		return casCnfgAccountTypeEntity;
 		
 		
 	}
 
 
-	public AccountTypeModel retreiveAccountType(MdtCnfgAccountTypeEntity localEntity)
+	public AccountTypeModel retreiveAccountType(CasCnfgAccountTypeEntity localEntity)
 	{
 		
 		AccountTypeModel accountTypeModel = new AccountTypeModel();
@@ -46,16 +46,17 @@ public static Logger log = Logger.getLogger(AccountTypeLogic.class);
 
 	
 	
-	public List<AccountTypeModel> retreiveAllAccountType(List<MdtCnfgAccountTypeEntity> allMdtCnfgAccountTypeEntityList)
+	public List<AccountTypeModel> retreiveAllAccountType(List<CasCnfgAccountTypeEntity> allCasCnfgAccountTypeEntityList)
 	{
 		
        List<AccountTypeModel> accountTypeEntityList = new ArrayList<AccountTypeModel>();
        
        log.debug("check if it goes inside the logic method");
-		for (MdtCnfgAccountTypeEntity mdtCnfgAccountTypeEntity : allMdtCnfgAccountTypeEntityList)
+		for (CasCnfgAccountTypeEntity casCnfgAccountTypeEntity : allCasCnfgAccountTypeEntityList)
 		{
 			AccountTypeModel accountTypeModel = new AccountTypeModel();
-			accountTypeModel = new AdminTranslator().translateMdtCnfgAccountTypeEntityToCommonsModel(mdtCnfgAccountTypeEntity);
+			accountTypeModel = new AdminTranslator().translateMdtCnfgAccountTypeEntityToCommonsModel(
+                casCnfgAccountTypeEntity);
 			accountTypeEntityList.add(accountTypeModel);
 			log.debug("======================accountTypeModel================="+accountTypeModel);
 		}

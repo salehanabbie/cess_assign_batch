@@ -17,8 +17,8 @@ import com.bsva.commons.model.*;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 
-import com.bsva.entities.MdtCnfgReportNamesEntity;
-import com.bsva.entities.MdtOpsRepSeqNrEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
+import com.bsva.entities.CasOpsRepSeqNrEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.PropertyUtilRemote;
 import com.bsva.interfaces.ReportBeanRemote;
@@ -104,8 +104,8 @@ public class PasaBatchAmendmentReport
 		}
 
 		//Retrieve Report Name
-		MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
-		reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(psmd06);
+		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(psmd06);
 
 		if(reportNameEntity != null)
 		{
@@ -163,13 +163,13 @@ public class PasaBatchAmendmentReport
 		fileSeqNo =fileSeqNo + 1;
 		String strSeqNo ;
 		int lastSeqNoUsed;
-		MdtOpsRepSeqNrEntity mdtOpsRepSeqNrEntity = new MdtOpsRepSeqNrEntity();
-		mdtOpsRepSeqNrEntity = (MdtOpsRepSeqNrEntity)adminBeanRemote.retrieveRepSeqNr(reportNr,memberId);
-		log.info("retrieve seq number : "  + mdtOpsRepSeqNrEntity );
+		CasOpsRepSeqNrEntity casOpsRepSeqNrEntity = new CasOpsRepSeqNrEntity();
+		casOpsRepSeqNrEntity = (CasOpsRepSeqNrEntity)adminBeanRemote.retrieveRepSeqNr(reportNr,memberId);
+		log.info("retrieve seq number : "  + casOpsRepSeqNrEntity);
 		
-		if(mdtOpsRepSeqNrEntity != null)
+		if(casOpsRepSeqNrEntity != null)
 		{
-			lastSeqNoUsed = Integer.valueOf(mdtOpsRepSeqNrEntity.getLastSeqNo());
+			lastSeqNoUsed = Integer.valueOf(casOpsRepSeqNrEntity.getLastSeqNo());
 			lastSeqNoUsed = lastSeqNoUsed + 1;
 		}
 		else
@@ -177,8 +177,8 @@ public class PasaBatchAmendmentReport
 			lastSeqNoUsed = 1;
 		}
 		 strSeqNo = String.format("%06d",lastSeqNoUsed);
-		 mdtOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
-		adminBeanRemote.updateReportSeqNr(mdtOpsRepSeqNrEntity);
+		 casOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
+		adminBeanRemote.updateReportSeqNr(casOpsRepSeqNrEntity);
 		String reportSeqNo = strSeqNo.substring(3,6);
 		
 		String files;

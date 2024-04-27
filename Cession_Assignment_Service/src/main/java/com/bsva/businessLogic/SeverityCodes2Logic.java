@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bsva.commons.model.SeverityCodesModel;
-import com.bsva.entities.MdtCnfgSeverityCodesEntity;
+import com.bsva.entities.CasCnfgSeverityCodesEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class SeverityCodes2Logic 
@@ -16,7 +16,7 @@ public class SeverityCodes2Logic
 	}
 
 
-	public SeverityCodesModel retreiveSeverityCodes(MdtCnfgSeverityCodesEntity localEntity)
+	public SeverityCodesModel retreiveSeverityCodes(CasCnfgSeverityCodesEntity localEntity)
 	{
 		
 		SeverityCodesModel severityCodesModel = new SeverityCodesModel();
@@ -25,12 +25,12 @@ public class SeverityCodes2Logic
 		return severityCodesModel;
 	}
 
-	public List<SeverityCodesModel> retreiveAllSeverityCode(List<MdtCnfgSeverityCodesEntity> allMdtCnfgSeverityCodesEntityList)
+	public List<SeverityCodesModel> retreiveAllSeverityCode(List<CasCnfgSeverityCodesEntity> allCasCnfgSeverityCodesEntityList)
 	{
 
 		List<SeverityCodesModel> addTypeList = new ArrayList<SeverityCodesModel>();
 		
-		for (MdtCnfgSeverityCodesEntity localEntity : allMdtCnfgSeverityCodesEntityList)
+		for (CasCnfgSeverityCodesEntity localEntity : allCasCnfgSeverityCodesEntityList)
 		{
 			SeverityCodesModel localModel = new SeverityCodesModel();
 			localModel = new AdminTranslator().translateMdtCnfgSeverityCodesEntityTocommonsModel(localEntity);
@@ -41,12 +41,12 @@ public class SeverityCodes2Logic
 	}
 
 
-	public MdtCnfgSeverityCodesEntity addSeverityCodes(SeverityCodesModel severityCodesModel) 
+	public CasCnfgSeverityCodesEntity addSeverityCodes(SeverityCodesModel severityCodesModel)
 	{
-		MdtCnfgSeverityCodesEntity mdtCnfgSeverityCodesEntity = new MdtCnfgSeverityCodesEntity();
-		mdtCnfgSeverityCodesEntity = new AdminTranslator().translateCommnsSeverityCodesModelToEntity(severityCodesModel);
+		CasCnfgSeverityCodesEntity casCnfgSeverityCodesEntity = new CasCnfgSeverityCodesEntity();
+		casCnfgSeverityCodesEntity = new AdminTranslator().translateCommnsSeverityCodesModelToEntity(severityCodesModel);
 	 
-		return mdtCnfgSeverityCodesEntity;
+		return casCnfgSeverityCodesEntity;
 	}
 
 }

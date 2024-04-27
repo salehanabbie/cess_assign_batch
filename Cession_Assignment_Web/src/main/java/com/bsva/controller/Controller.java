@@ -5,7 +5,6 @@ import com.bsva.commons.model.AdjustmentCategoryModel;
 import com.bsva.commons.model.AmendmentCodesModel;
 import com.bsva.commons.model.IamSessionModel;
 import com.bsva.commons.model.SeverityCodesModel;
-import com.bsva.commons.model.StatusReasonCodesModel;
 import com.bsva.commons.model.SystemParameterModel;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.FileWatcherRemote;
@@ -390,18 +389,6 @@ public class Controller implements Serializable {
     }
   }
 
-  public static List<?> viewAllOpsProcessControl() {
-    contextAdminBeanCheck();
-    List<?> list = null;
-    try {
-      list = adminBeanRemote.viewAllOpsProcessControl();
-    } catch (Exception e) {
-      log.error("Error viewAllOpsProcessControl: " + e.getMessage());
-      e.printStackTrace();
-    }
-    return list;
-  }
-
   public static List<?> viewAllOpsRefSeqNumber() {
     contextAdminBeanCheck();
     List<?> list = null;
@@ -436,18 +423,6 @@ public class Controller implements Serializable {
       e.printStackTrace();
     }
     return list;
-  }
-
-  public Integer retrieveSeqNo() {
-    int seqNoFromDb = 0;
-    contextCheck();
-    try {
-      seqNoFromDb = beanRemote.retrieveSeqNo();
-    } catch (Exception e) {
-      log.error("Error on  retrieveSeqNo: " + e.getMessage());
-      e.printStackTrace();
-    }
-    return seqNoFromDb;
   }
 
   public static List<?> viewLocalInstrumentCodesByCriteria(String localInsCode) {
@@ -593,6 +568,7 @@ public class Controller implements Serializable {
     }
     return list;
   }
+
   public List<?> retrieveOpsFileRegByCriteria(String namedQuery, String property, String value) {
     List<?> list = null;
     contextCheck();
@@ -772,30 +748,6 @@ public class Controller implements Serializable {
     return list;
   }
 
-  public static List<?> viewAllRejectReasonCodes() {
-    contextAdminBeanCheck();
-    List<?> list = null;
-    try {
-      list = adminBeanRemote.viewAllRejectReasonCodes();
-    } catch (Exception e) {
-      log.error("Error viewAllRejectReasonCodes: " + e.getMessage());
-      e.printStackTrace();
-    }
-    return list;
-  }
-
-  public static List<?> viewRejectReasonByCriteria(String rejectReasonCode) {
-    contextAdminBeanCheck();
-    List<?> list = null;
-    try {
-      list = adminBeanRemote.viewRejectReasonCodesByCriteria(rejectReasonCode);
-    } catch (Exception e) {
-      log.error("Error viewRejectReasonCodesByCriteria: " + e.getMessage());
-      log.debug("in the controller");
-    }
-    return list;
-  }
-
   public static List<?> viewAuditTrackingCriteria(String tableName) {
     contextAdminBeanCheck();
     List<?> list = null;
@@ -827,18 +779,6 @@ public class Controller implements Serializable {
       return true;
     } catch (Exception e) {
       log.error("Error retrievingReportNames: " + e.getMessage());
-      e.printStackTrace();
-      return false;
-    }
-  }
-
-  public boolean createRejectReasonCode(Object obj) {
-    contextAdminBeanCheck();
-    try {
-      adminBeanRemote.createRejectReasonCodes(obj);
-      return true;
-    } catch (Exception e) {
-      log.error("Error creatingRejectReasonCodes: " + e.getMessage());
       e.printStackTrace();
       return false;
     }
@@ -1643,6 +1583,7 @@ public class Controller implements Serializable {
     }
     return reschPain010;
   }
+
   public boolean reschedulePain012(String rescheduleCron, String cronTime) {
     contextQuartzSchedulerBeanCheck();
     boolean reschPain012 = false;
@@ -1801,42 +1742,6 @@ public class Controller implements Serializable {
       e.printStackTrace();
     }
     return list;
-  }
-
-  public List<?> viewAllStatusReasonCodes() {
-    contextAdminBeanCheck();
-    List<?> list = null;
-    try {
-      list = adminBeanRemote.viewAllStatusReasonCodes();
-    } catch (Exception e) {
-      log.error("Error retrievingStatusReasonCodes: " + e.getMessage());
-      e.printStackTrace();
-    }
-    return list;
-  }
-
-  public List<?> viewStatusReasonCodesByCriteria(String statusReasonCode) {
-    contextAdminBeanCheck();
-    List<?> list = null;
-    try {
-      list = adminBeanRemote.viewStatusReasonCodesByCriteria(statusReasonCode);
-    } catch (Exception e) {
-      log.error("Error viewStatusReasonCodesByCriteria:" + e.getMessage());
-      e.printStackTrace();
-    }
-    return list;
-  }
-
-  public boolean createStatusReasonCodes(StatusReasonCodesModel statusReasonCodesModel) {
-    contextAdminBeanCheck();
-    try {
-      adminBeanRemote.createStatusReasonCodes(statusReasonCodesModel);
-      return true;
-    } catch (Exception e) {
-      log.error("Error createStatusReasonCodes: " + e.getMessage());
-      e.printStackTrace();
-      return false;
-    }
   }
 
   public List<?> retrieveAllSysCisBank() {
@@ -2944,18 +2849,6 @@ public class Controller implements Serializable {
     return list;
   }
 
-  public static List<?> retrieveAllReportRejections() {
-    contextAdminBeanCheck();
-    List<?> list = null;
-    try {
-      list = adminBeanRemote.retrieveRejectionCodesForRejectionsReport();
-    } catch (Exception e) {
-      log.error("Error retrieveAllReportRejections: " + e.getMessage());
-      e.printStackTrace();
-    }
-    return list;
-  }
-
   public static Object retrieveRealTimeAmendmentData(String amendReason, String memberId,
                                                      String firstDate, String lastDate) {
     contextAdminBeanCheck();
@@ -3267,17 +3160,6 @@ public class Controller implements Serializable {
       adminBeanRemote.generatePasaBatchAmendmentsReport(frontFromDate, frontToDate);
     } catch (Exception e) {
       log.error("Error generatePasaBatchAmendmentsReport: " + e.getMessage());
-      e.printStackTrace();
-    }
-  }
-
-  //PBMD03
-  public void generatePerBankBatchMandateRejections() {
-    contextAdminBeanCheck();
-    try {
-      adminBeanRemote.generatePerBankBatchMandateRejections();
-    } catch (Exception e) {
-      log.error("Error generatePerBankBatchMandateRejections: " + e.getMessage());
       e.printStackTrace();
     }
   }
@@ -3708,7 +3590,7 @@ public class Controller implements Serializable {
 //    return obj;
 //  }
   // ############################DO NOT CODE BELOW THIS SECTION
-	// ######################################//
+  // ######################################//
 
   private static void contextCheck() {
     if (beanRemote == null) {
@@ -3760,5 +3642,5 @@ public class Controller implements Serializable {
 
 
   // ############################DO NOT CODE BELOW THIS SECTION//
-	// ######################################//
+  // ######################################//
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,18 +35,15 @@ import bsva.std.tech.xsd.eot_001_001.SenderReceiverId;
 import bsva.std.tech.xsd.eot_001_001.TestLiveIndicator;
 
 import com.bsva.PropertyUtil;
-import com.bsva.commons.model.MandatesCountCommonsModel;
 import com.bsva.commons.model.OpsFileRegModel;
 import com.bsva.entities.MandatesCountCommonsModelEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.StatusReportEotModelEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.ServiceBeanRemote;
 import com.bsva.interfaces.ValidationBeanRemote;
-import com.bsva.utils.DateUtil;
 import com.bsva.utils.Util;
 
 public class EndOfTransmissionExtract 
@@ -66,7 +62,7 @@ public class EndOfTransmissionExtract
 	CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
 	CasSysctrlSysParamEntity casSysctrlSysParamEntity;
     Document document ;
-	List<MdtAcOpsSotEotCtrlEntity>sotEotCtrlList;
+	List<CasOpsSotEotCtrlEntity>sotEotCtrlList;
 	
 	String xmlDateFormat = "yyyy-MM-dd'T'HH:mm:ss"; 
 	String msgRef = "EOT";
@@ -164,8 +160,8 @@ public class EndOfTransmissionExtract
 					BigDecimal nrOfFiles = BigDecimal.ZERO, nrOfMsgs = BigDecimal.ZERO;
 					
 
-					sotEotCtrlList = new ArrayList<MdtAcOpsSotEotCtrlEntity>();
-					sotEotCtrlList = (List<MdtAcOpsSotEotCtrlEntity>)adminBeanRemote.retrieveAcitiveSot(destMemberId,serviceName,"Y");
+					sotEotCtrlList = new ArrayList<CasOpsSotEotCtrlEntity>();
+					sotEotCtrlList = (List<CasOpsSotEotCtrlEntity>)adminBeanRemote.retrieveAcitiveSot(destMemberId,serviceName,"Y");
 					if(sotEotCtrlList != null &&  sotEotCtrlList.size() >0)
 					{
 						log.debug("sotEotCtrlList---------->"+sotEotCtrlList);
@@ -335,8 +331,8 @@ public class EndOfTransmissionExtract
 					BigDecimal nrOfFiles = BigDecimal.ZERO, nrOfMsgs = BigDecimal.ZERO;
 					
 
-					sotEotCtrlList = new ArrayList<MdtAcOpsSotEotCtrlEntity>();
-					sotEotCtrlList = (List<MdtAcOpsSotEotCtrlEntity>)adminBeanRemote.retrieveAcitiveSot(destMemberId,serviceName,"Y");
+					sotEotCtrlList = new ArrayList<CasOpsSotEotCtrlEntity>();
+					sotEotCtrlList = (List<CasOpsSotEotCtrlEntity>)adminBeanRemote.retrieveAcitiveSot(destMemberId,serviceName,"Y");
 					
 					if(sotEotCtrlList != null &&  sotEotCtrlList.size() >0)
 					{

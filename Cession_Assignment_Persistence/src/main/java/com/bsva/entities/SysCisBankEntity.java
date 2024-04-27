@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author DimakatsoN
  */
 @Entity
-@Table(name = "SYS_CIS_BANK",schema = "MANOWNER")
+@Table(name = "SYS_CIS_BANK",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SysCisBankEntity.findAll", query = "SELECT s FROM SysCisBankEntity s"),

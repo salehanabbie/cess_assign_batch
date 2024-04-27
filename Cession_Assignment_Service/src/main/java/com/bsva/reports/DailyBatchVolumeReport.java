@@ -35,7 +35,7 @@ import com.bsva.commons.model.DebtorBankModel;
 import com.bsva.commons.model.ServicesModel;
 import com.bsva.commons.model.SysctrlCompParamModel;
 import com.bsva.commons.model.SystemParameterModel;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
 import com.bsva.entities.MonthlyVolumeCountEntityModel;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.PropertyUtilRemote;
@@ -173,8 +173,8 @@ public class DailyBatchVolumeReport
 		}
 
 		//Retrieve Report Name
-		MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
-		reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(mr022);
+		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(mr022);
 
 		if(reportNameEntity != null)
 		{

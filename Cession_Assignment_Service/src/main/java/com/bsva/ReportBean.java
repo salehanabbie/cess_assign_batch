@@ -17,13 +17,13 @@ import com.bsva.entities.BatchOustandingResponseEntityModel;
 import com.bsva.entities.BatchOustandingResponseEntityReportModel;
 import com.bsva.entities.BatchRejectedTransactionEntityModel;
 import com.bsva.entities.BatchTxnBillReportEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.ExceptionReportEntityModel;
 import com.bsva.entities.MandateAmendEntityModel;
 import com.bsva.entities.MandateRejectionEntityModel;
 import com.bsva.entities.MandateResponseOutstandingPerBankEntityModel;
 import com.bsva.entities.MdtAcArcMandateTxnsEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
 import com.bsva.entities.MonthlyVolumeCountEntityModel;
 import com.bsva.entities.OutstandingRespSummaryCountEntityModel;
 import com.bsva.entities.PasaMandateReportEntityModel;
@@ -1049,13 +1049,13 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     scalarList.add("processDate");
     scalarList.add("status");
 
-    List<MdtOpsFileRegEntity> markoffFilesEntityList =
-        genericDAO.findBySql(sqlQuery, scalarList, MdtOpsFileRegEntity.class);
+    List<CasOpsFileRegEntity> markoffFilesEntityList =
+        genericDAO.findBySql(sqlQuery, scalarList, CasOpsFileRegEntity.class);
 
     if (markoffFilesEntityList != null && markoffFilesEntityList.size() > 0) {
       OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
 
-      for (MdtOpsFileRegEntity localEntity : markoffFilesEntityList) {
+      for (CasOpsFileRegEntity localEntity : markoffFilesEntityList) {
         OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
         opsFileRegModel = opsFileRegLogic.retrieveDelDelivery(localEntity);
 

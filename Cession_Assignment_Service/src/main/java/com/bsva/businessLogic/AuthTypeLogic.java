@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bsva.commons.model.CnfgAuthTypeModel;
-import com.bsva.entities.MdtCnfgAuthTypeEntity;
+import com.bsva.entities.CasCnfgAuthTypeEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class AuthTypeLogic implements Serializable  {
@@ -16,7 +16,7 @@ public class AuthTypeLogic implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	
 
-	public List<CnfgAuthTypeModel> retrieveAllAuthTypes(List<MdtCnfgAuthTypeEntity> mdtAuthtypeList)
+	public List<CnfgAuthTypeModel> retrieveAllAuthTypes(List<CasCnfgAuthTypeEntity> mdtAuthtypeList)
 	{
 
 	
@@ -24,10 +24,11 @@ public class AuthTypeLogic implements Serializable  {
 		CnfgAuthTypeModel authytpeModel;
 	
 
-		for (MdtCnfgAuthTypeEntity mdtCnfgAuthTypeEntity : mdtAuthtypeList) {
+		for (CasCnfgAuthTypeEntity casCnfgAuthTypeEntity : mdtAuthtypeList) {
 	
 			authytpeModel = new CnfgAuthTypeModel();
-			authytpeModel = new AdminTranslator().translateCnfgAuthTypeEntityToCommonsModel(mdtCnfgAuthTypeEntity);
+			authytpeModel = new AdminTranslator().translateCnfgAuthTypeEntityToCommonsModel(
+                casCnfgAuthTypeEntity);
 			authtypeModelList.add(authytpeModel);
 		}
 
@@ -37,20 +38,21 @@ public class AuthTypeLogic implements Serializable  {
 
 
 	
-	public MdtCnfgAuthTypeEntity  addAuthType(CnfgAuthTypeModel authytpeModel) {
+	public CasCnfgAuthTypeEntity addAuthType(CnfgAuthTypeModel authytpeModel) {
 
-	MdtCnfgAuthTypeEntity mdtCnfgAuthTypeEntity = new AdminTranslator().translateCommnsAuthtypeModelToEntity(authytpeModel);
+	CasCnfgAuthTypeEntity casCnfgAuthTypeEntity = new AdminTranslator().translateCommnsAuthtypeModelToEntity(authytpeModel);
 
-	return mdtCnfgAuthTypeEntity;
+	return casCnfgAuthTypeEntity;
 	}
 
 
 
-	public CnfgAuthTypeModel retrieveAuthType(MdtCnfgAuthTypeEntity mdtCnfgAuthTypeEntity)
+	public CnfgAuthTypeModel retrieveAuthType(CasCnfgAuthTypeEntity casCnfgAuthTypeEntity)
 
 	{
 		CnfgAuthTypeModel localModel = new CnfgAuthTypeModel();
-		localModel = new AdminTranslator().translateCnfgAuthTypeEntityToCommonsModel(mdtCnfgAuthTypeEntity);
+		localModel = new AdminTranslator().translateCnfgAuthTypeEntityToCommonsModel(
+            casCnfgAuthTypeEntity);
 		
 		return localModel;
 	}

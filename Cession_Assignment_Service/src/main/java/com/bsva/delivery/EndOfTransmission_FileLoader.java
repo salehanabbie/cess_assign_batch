@@ -2,7 +2,6 @@ package com.bsva.delivery;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,9 +19,8 @@ import bsva.std.tech.xsd.eot_001_001.Document;
 
 import com.bsva.PropertyUtil;
 import com.bsva.commons.model.OpsFileRegModel;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtAcOpsTransCtrlMsgEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsTransCtrlMsgEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.interfaces.AdminBeanRemote;
@@ -47,8 +45,8 @@ public class EndOfTransmission_FileLoader implements Serializable {
 	public static ServiceBeanRemote beanRemote;
 	public static ValidationBeanRemote valBeanRemote;
 	private CasSysctrlSysParamEntity casSysctrlSysParamEntity = null;
-	private MdtAcOpsTransCtrlMsgEntity mdtAcOpsTransCtrlMsgEntity;
-	private MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity;
+	private CasOpsTransCtrlMsgEntity casOpsTransCtrlMsgEntity;
+	private CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity;
 	boolean update = false ;
 	
 	ControlMessage controlMessage;
@@ -82,7 +80,7 @@ public class EndOfTransmission_FileLoader implements Serializable {
 		
 		this.fileName = fileName;
 		casSysctrlSysParamEntity = new CasSysctrlSysParamEntity();
-		mdtAcOpsTransCtrlMsgEntity = new MdtAcOpsTransCtrlMsgEntity();
+		casOpsTransCtrlMsgEntity = new CasOpsTransCtrlMsgEntity();
 		casSysctrlSysParamEntity = (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
 		
 
@@ -125,26 +123,26 @@ public class EndOfTransmission_FileLoader implements Serializable {
 		
 		if(controlMessage!= null)
 		{
-			mdtAcOpsTransCtrlMsgEntity.setCtrlMsgId(new BigDecimal(123));
+			casOpsTransCtrlMsgEntity.setCtrlMsgId(new BigDecimal(123));
 			if( controlMessage.getPrcDte()!= null)
-				mdtAcOpsTransCtrlMsgEntity.setProcessDate(getGregorianDateWithoutTime(controlMessage.getPrcDte()));
+				casOpsTransCtrlMsgEntity.setProcessDate(getGregorianDateWithoutTime(controlMessage.getPrcDte()));
 			if(controlMessage.getFrom()!= null && controlMessage.getFrom().getMbrId()!= null)
-				mdtAcOpsTransCtrlMsgEntity.setMemberIdFm(controlMessage.getFrom().getMbrId());
+				casOpsTransCtrlMsgEntity.setMemberIdFm(controlMessage.getFrom().getMbrId());
 			if(controlMessage.getTo()!= null && controlMessage.getTo().getMbrId()!= null)
-				mdtAcOpsTransCtrlMsgEntity.setMemberIdTo(controlMessage.getTo().getMbrId());
+				casOpsTransCtrlMsgEntity.setMemberIdTo(controlMessage.getTo().getMbrId());
 			if(controlMessage.getSvcName()!=null)
-				mdtAcOpsTransCtrlMsgEntity.setServiceId(controlMessage.getSvcName());
+				casOpsTransCtrlMsgEntity.setServiceId(controlMessage.getSvcName());
 			if(controlMessage.getMsgTp() !=null)
-				mdtAcOpsTransCtrlMsgEntity.setMsgType(controlMessage.getMsgTp().toString());
+				casOpsTransCtrlMsgEntity.setMsgType(controlMessage.getMsgTp().toString());
 			if(controlMessage.getTestLive()!=null);
 			if(controlMessage.getNmbrFls()!=null)	
-				mdtAcOpsTransCtrlMsgEntity.setNrOfFiles(Integer.valueOf((controlMessage.getNmbrFls())));
+				casOpsTransCtrlMsgEntity.setNrOfFiles(Integer.valueOf((controlMessage.getNmbrFls())));
 			if(controlMessage.getNmbrRcds()!=null)
-				mdtAcOpsTransCtrlMsgEntity.setNrOfRecords(Integer.valueOf((controlMessage.getNmbrRcds())));
+				casOpsTransCtrlMsgEntity.setNrOfRecords(Integer.valueOf((controlMessage.getNmbrRcds())));
 			if(controlMessage.getValRcds()!= null && controlMessage.getValRcds().getCcy()!= null)
-				mdtAcOpsTransCtrlMsgEntity.setValueOfRecordsCurr(controlMessage.getValRcds().getCcy());
-			mdtAcOpsTransCtrlMsgEntity.setActiveInd("Y");
-			result = beanRemote.createLoadEOTandSOT(mdtAcOpsTransCtrlMsgEntity);
+				casOpsTransCtrlMsgEntity.setValueOfRecordsCurr(controlMessage.getValRcds().getCcy());
+			casOpsTransCtrlMsgEntity.setActiveInd("Y");
+			result = beanRemote.createLoadEOTandSOT(casOpsTransCtrlMsgEntity);
 			if(result == true)
 			{
 				log.debug("mdtAcOpsTransCtrlMsgEntity EOT loaded");
@@ -226,24 +224,24 @@ public class EndOfTransmission_FileLoader implements Serializable {
 public void updateSOTIN(String instgAgt, String service)
 {
 	
-	mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
-	mdtAcOpsSotEotCtrlEntity =  (MdtAcOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(instgAgt, service);
-	log.debug("mdtAcOpsSotEotCtrlEntity: "+mdtAcOpsSotEotCtrlEntity);
+	casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
+	casOpsSotEotCtrlEntity =  (CasOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(instgAgt, service);
+	log.debug("mdtAcOpsSotEotCtrlEntity: "+ casOpsSotEotCtrlEntity);
 	
-	if(mdtAcOpsSotEotCtrlEntity != null)
+	if(casOpsSotEotCtrlEntity != null)
 	{
-		if(mdtAcOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase("N"))
+		if(casOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase("N"))
 		{
 
 		
-				mdtAcOpsSotEotCtrlEntity.setSotOut("Y");
+				casOpsSotEotCtrlEntity.setSotOut("Y");
 			
-				result = beanRemote.createLoadEOTandSOT(mdtAcOpsTransCtrlMsgEntity);
+				result = beanRemote.createLoadEOTandSOT(casOpsTransCtrlMsgEntity);
 
 			StartOfTransmissionExtract startOfTransmissionExtract = new StartOfTransmissionExtract(instgAgt, service, "S");
 			startOfTransmissionExtract.createStartOfTransmissionFile();
 			
-			mdtAcOpsSotEotCtrlEntity.setSotOut("Y");
+			casOpsSotEotCtrlEntity.setSotOut("Y");
 			
 			
 

@@ -1,8 +1,8 @@
 package com.bsva.authcoll.file;
 
 import com.bsva.PropertyUtil;
-import com.bsva.entities.MdtOpsLastExtractTimesEntity;
-import com.bsva.entities.MdtOpsServicesEntity;
+import com.bsva.entities.CasOpsLastExtractTimesEntity;
+import com.bsva.entities.CasOpsServicesEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.ServiceBeanRemote;
@@ -20,7 +20,7 @@ public class ExtractTimesHelper {
   @EJB
   PropertyUtil propertyUtil;
   private Logger log = Logger.getLogger(ExtractTimesHelper.class);
-  private MdtOpsLastExtractTimesEntity opsLastExtractTimesEntity;
+  private CasOpsLastExtractTimesEntity opsLastExtractTimesEntity;
   public static ServiceBeanRemote beanRemote;
   private static AdminBeanRemote adminBeanRemote;
   public static ValidationBeanRemote valBeanRemote;
@@ -31,7 +31,7 @@ public class ExtractTimesHelper {
   public static final String EXTRACT_SELECTIVE = "SELECTIVE";
   public static final String EXTRACT_NONE = "NONE";
   private CasSysctrlSysParamEntity casSysctrlSysParamEntity = null;
-  private MdtOpsServicesEntity opsServiceEntity;
+  private CasOpsServicesEntity opsServiceEntity;
 
 
   public ExtractTimesHelper() {
@@ -39,20 +39,20 @@ public class ExtractTimesHelper {
     casSysctrlSysParamEntity = new CasSysctrlSysParamEntity();
     casSysctrlSysParamEntity =
         (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
-    opsLastExtractTimesEntity = new MdtOpsLastExtractTimesEntity();
-    opsServiceEntity = new MdtOpsServicesEntity();
+    opsLastExtractTimesEntity = new CasOpsLastExtractTimesEntity();
+    opsServiceEntity = new CasOpsServicesEntity();
 
 
   }
 
 
-  private boolean isExtractTime(MdtOpsServicesEntity opsServiceEntity, int nrOfRecordsFileLimit) {
+  private boolean isExtractTime(CasOpsServicesEntity opsServiceEntity, int nrOfRecordsFileLimit) {
     return hasReachedExtractTime(opsServiceEntity.getServiceIdOut()) ||
         hasReachedMaxExtractVolume(opsServiceEntity, nrOfRecordsFileLimit);
   }
 
 
-  private boolean hasReachedMaxExtractVolume(MdtOpsServicesEntity opsServiceEntity,
+  private boolean hasReachedMaxExtractVolume(CasOpsServicesEntity opsServiceEntity,
                                              int nrOfRecordsFileLimit) {
     if (opsServiceEntity == null) {
       extractType = EXTRACT_NONE;

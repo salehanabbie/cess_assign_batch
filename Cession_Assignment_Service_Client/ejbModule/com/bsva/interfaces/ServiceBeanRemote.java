@@ -8,7 +8,6 @@ import javax.ejb.Remote;
 @Remote
 public interface ServiceBeanRemote {
 	public void startFileListener();
-	public Integer retrieveSeqNo();
 	public List<?> retrieveOutGoingNrOfFiles ();
 	public List<?> retrieveIncomingNrOfFiles ();
 	public List<?> retrieveAllMandatesCount();

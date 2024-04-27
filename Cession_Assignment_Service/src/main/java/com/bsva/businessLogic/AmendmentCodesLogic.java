@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.AmendmentCodesModel;
-import com.bsva.entities.MdtCnfgAmendmentCodesEntity;
+import com.bsva.entities.CasCnfgAmendmentCodesEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class AmendmentCodesLogic {
@@ -18,19 +18,19 @@ public static Logger log = Logger.getLogger(AmendmentCodesLogic.class);
 		
 	}
 
-	public MdtCnfgAmendmentCodesEntity addAmendmentCodes(AmendmentCodesModel amendmentCodesModel)
+	public CasCnfgAmendmentCodesEntity addAmendmentCodes(AmendmentCodesModel amendmentCodesModel)
 	{
 		
-		MdtCnfgAmendmentCodesEntity mdtCnfgAmendmentCodesEntity = new MdtCnfgAmendmentCodesEntity();
-		mdtCnfgAmendmentCodesEntity = new AdminTranslator().translateCommonsAmendmentCodesModelToEntity(amendmentCodesModel);
+		CasCnfgAmendmentCodesEntity casCnfgAmendmentCodesEntity = new CasCnfgAmendmentCodesEntity();
+		casCnfgAmendmentCodesEntity = new AdminTranslator().translateCommonsAmendmentCodesModelToEntity(amendmentCodesModel);
 		
-		return  mdtCnfgAmendmentCodesEntity; 
+		return casCnfgAmendmentCodesEntity;
 		
 		
 	}
 
 
-	public AmendmentCodesModel retreiveAmendmentCodes(MdtCnfgAmendmentCodesEntity localEntity)
+	public AmendmentCodesModel retreiveAmendmentCodes(CasCnfgAmendmentCodesEntity localEntity)
 	{
 		
 		AmendmentCodesModel amendmentCodesModel = new AmendmentCodesModel();
@@ -41,16 +41,17 @@ public static Logger log = Logger.getLogger(AmendmentCodesLogic.class);
 
 	
 	
-	public List<AmendmentCodesModel> retreiveAllAmendmentCodes(List<MdtCnfgAmendmentCodesEntity> allMdtCnfgAmendmentCodesEntityList)
+	public List<AmendmentCodesModel> retreiveAllAmendmentCodes(List<CasCnfgAmendmentCodesEntity> allCasCnfgAmendmentCodesEntityList)
 	{
 		
        List<AmendmentCodesModel> amendmentCodesEntityList = new ArrayList<AmendmentCodesModel>();
        
        log.debug("check if it goes inside the logic method");
-		for (MdtCnfgAmendmentCodesEntity mdtCnfgAmendmentCodesEntity : allMdtCnfgAmendmentCodesEntityList)
+		for (CasCnfgAmendmentCodesEntity casCnfgAmendmentCodesEntity : allCasCnfgAmendmentCodesEntityList)
 		{
 			AmendmentCodesModel amendmentCodesModel = new AmendmentCodesModel();
-			amendmentCodesModel = new AdminTranslator().translateMdtCnfgAmendmentCodesEntityToCommonsModel(mdtCnfgAmendmentCodesEntity);
+			amendmentCodesModel = new AdminTranslator().translateMdtCnfgAmendmentCodesEntityToCommonsModel(
+                casCnfgAmendmentCodesEntity);
 			amendmentCodesEntityList.add(amendmentCodesModel);
 			log.debug("======================amendmentCodesModel================="+amendmentCodesModel);
 		}

@@ -27,7 +27,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.bsva.commons.model.SystemParameterModel;
 import com.bsva.entities.BatchFileStatsReportEntityModel;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.PropertyUtilRemote;
 import com.bsva.interfaces.ReportBeanRemote;
@@ -94,8 +94,8 @@ public class BatchFileStatsReport {
 		}
 
 		//Retrieve Report Name
-		MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
-		reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(psmd08);
+		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(psmd08);
 
 		if (reportNameEntity != null) {
 			if (reportNameEntity.getActiveInd().equalsIgnoreCase("Y")) {

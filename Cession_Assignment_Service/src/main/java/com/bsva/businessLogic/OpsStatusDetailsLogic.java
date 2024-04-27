@@ -7,9 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.OpsStatusDetailsModel;
-import com.bsva.commons.model.OpsStatusHdrsModel;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
 import com.bsva.translator.AdminTranslator;
 
 /***
@@ -32,11 +30,11 @@ public class OpsStatusDetailsLogic implements Serializable {
 		
 	}
 	
-	public List<OpsStatusDetailsModel> retrieveAllOpsStatusDetails(List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsEntityList)
+	public List<OpsStatusDetailsModel> retrieveAllOpsStatusDetails(List<CasOpsStatusDetailsEntity> opsStatusDetailsEntityList)
 	{
 		List<OpsStatusDetailsModel> opsStatusDetailsModelList = new ArrayList<OpsStatusDetailsModel>();
 		
-		for (MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity : opsStatusDetailsEntityList) 
+		for (CasOpsStatusDetailsEntity opsStatusDetailsEntity : opsStatusDetailsEntityList)
 		{
 			OpsStatusDetailsModel opsStatusDetailsModel = new OpsStatusDetailsModel();
 			opsStatusDetailsModel = new AdminTranslator().translateOpsStatusDetailsEntityToCommonsModel(opsStatusDetailsEntity);
@@ -48,15 +46,16 @@ public class OpsStatusDetailsLogic implements Serializable {
 	}
 	
 	
-	public MdtAcOpsStatusDetailsEntity addOpsStatusDetails(OpsStatusDetailsModel opsStatusDetailsModel) {
+	public CasOpsStatusDetailsEntity addOpsStatusDetails(OpsStatusDetailsModel opsStatusDetailsModel) {
 		
-		MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity = new AdminTranslator().translateCommonsOpsStatusDetailsModelToEntity(opsStatusDetailsModel);
+		CasOpsStatusDetailsEntity opsStatusDetailsEntity = new AdminTranslator().translateCommonsOpsStatusDetailsModelToEntity(opsStatusDetailsModel);
 			
 			return  opsStatusDetailsEntity; 
 		
 	}
 	
-public OpsStatusDetailsModel retrieveOpsStatusDetails(MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity) {
+public OpsStatusDetailsModel retrieveOpsStatusDetails(
+    CasOpsStatusDetailsEntity opsStatusDetailsEntity) {
 		
 	OpsStatusDetailsModel opsStatusDetailsModel= new OpsStatusDetailsModel();
 	opsStatusDetailsModel = new  AdminTranslator().translateOpsStatusDetailsEntityToCommonsModel(opsStatusDetailsEntity);

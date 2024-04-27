@@ -3,7 +3,7 @@ package com.bsva.businessLogic;
 import java.util.ArrayList;
 import java.util.List;
 import com.bsva.commons.model.DebitValueTypeModel;
-import com.bsva.entities.MdtCnfgDebitValueTypeEntity;
+import com.bsva.entities.CasCnfgDebitValueTypeEntity;
 import com.bsva.translator.AdminTranslator;
 
 /**
@@ -16,14 +16,14 @@ public class DebitValueTypeLogic {
 
 	}
 
-	public List<DebitValueTypeModel> retrieveAllDebitValueType(List<MdtCnfgDebitValueTypeEntity> mdtDebitValueTypeEntityList) {
+	public List<DebitValueTypeModel> retrieveAllDebitValueType(List<CasCnfgDebitValueTypeEntity> mdtDebitValueTypeEntityList) {
 
 		
 		List<DebitValueTypeModel> debitValueTypeEntityList = new ArrayList<DebitValueTypeModel>();
 		DebitValueTypeModel localModel;
 		
 
-		for (MdtCnfgDebitValueTypeEntity localEntity:mdtDebitValueTypeEntityList) 
+		for (CasCnfgDebitValueTypeEntity localEntity:mdtDebitValueTypeEntityList)
 		{
 		
 
@@ -35,15 +35,16 @@ public class DebitValueTypeLogic {
 		return debitValueTypeEntityList;
 	}
 
-	public MdtCnfgDebitValueTypeEntity adddebValueTypeCode(
+	public CasCnfgDebitValueTypeEntity adddebValueTypeCode(
 			DebitValueTypeModel debitValueTypeModel) {
-		MdtCnfgDebitValueTypeEntity mdtDebitValueTypeEntity = new AdminTranslator().translateCommonsDebitValueModelToEntity(debitValueTypeModel);
+		CasCnfgDebitValueTypeEntity mdtDebitValueTypeEntity = new AdminTranslator().translateCommonsDebitValueModelToEntity(debitValueTypeModel);
 			
 
 		return mdtDebitValueTypeEntity;
 	}
 	
-	public DebitValueTypeModel retrievedebValueTypeCode(MdtCnfgDebitValueTypeEntity mdtDebitValueTypeEntity)
+	public DebitValueTypeModel retrievedebValueTypeCode(
+        CasCnfgDebitValueTypeEntity mdtDebitValueTypeEntity)
 	{
 		DebitValueTypeModel localModel = new DebitValueTypeModel();
 		localModel = new AdminTranslator().translateDebitValueTypeEntityToCommonsModel(mdtDebitValueTypeEntity);

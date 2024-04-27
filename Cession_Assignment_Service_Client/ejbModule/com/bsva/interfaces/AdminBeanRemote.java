@@ -22,8 +22,6 @@ public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel> {
 
   public List<?> viewAllMessages();
 
-  public List<?> viewAllOpsProcessControl();
-
   public List<?> viewAllOpsRefSeqNumber();
 
   public List<?> viewAllOpsCustomerParameters();
@@ -200,12 +198,6 @@ public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel> {
 
   public boolean createAuthtype(Object obj);
 
-  public List<?> viewAllRejectReasonCodes();
-
-  public List<?> viewRejectReasonCodesByCriteria(String rejectReasonCode);
-
-  public boolean createRejectReasonCodes(Object obj);
-
   public List<?> viewProcessStatusByCriteria(String status);
 
   public boolean createProcessStatus(Object obj);
@@ -270,12 +262,6 @@ public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel> {
   public List<?> viewSeverityCodesByCriteria(String severityCode);
 
   public List<?> viewAllSeverityCode();
-
-  public List<?> viewAllStatusReasonCodes();
-
-  public List<?> viewStatusReasonCodesByCriteria(String statusReasonCode);
-
-  public boolean createStatusReasonCodes(Object obj);
 
   public List<?> retrieveSysCisBankMembers();
 
@@ -451,8 +437,6 @@ public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel> {
 
   public List<?> retrieveRealTimeMndtBillingTxnsByCreditorArcandOps(String instId, Date date);
 
-  public List<?> retrieveRejectionCodesForRejectionsReport();
-
   public Object retrieveRealTimeNrOfAmendment(String amendReason, String memberId, String firstDate,
                                               String lastDate);
 
@@ -516,8 +500,6 @@ public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel> {
   public void generatePasaBatchRejections(Date frontDate);
 
   public void generatePasaBatchAmendmentsReport(Date frontFromDate, Date frontToDate);
-
-  public void generatePerBankBatchMandateRejections();
 
   public void generatePasaBatchOutstandingResponses(Date frontDate);
 

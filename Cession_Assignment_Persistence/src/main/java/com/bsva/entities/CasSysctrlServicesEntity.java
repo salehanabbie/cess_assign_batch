@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 * @author ElelwaniR
 */
 @Entity
-@Table(name = "CAS_SYSCTRL_SERVICES",schema = "CASOWNER")
+@Table(name = "CAS_SYSCTRL_SERVICES",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasSysctrlServicesEntity.findAll", query = "SELECT m FROM CasSysctrlServicesEntity m"),

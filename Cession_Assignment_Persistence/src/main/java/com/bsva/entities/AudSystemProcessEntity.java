@@ -26,7 +26,7 @@ import org.hibernate.annotations.Parameter;
  * @author SalehaR
  */
 @Entity
-@Table(name = "AUD_SYSTEM_PROCESS", schema="MANOWNER")
+@Table(name = "AUD_SYSTEM_PROCESS", schema="CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AudSystemProcessEntity.findAll", query = "SELECT a FROM AudSystemProcessEntity a"),

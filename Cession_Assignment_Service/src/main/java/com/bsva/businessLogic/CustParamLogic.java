@@ -8,11 +8,8 @@ import org.apache.log4j.Logger;
 import com.bsva.commons.model.CisMemberModel;
 import com.bsva.commons.model.CustomerParametersModel;
 import com.bsva.commons.model.OpsCustParamModel;
-import com.bsva.commons.model.StatusReasonCodesModel;
-import com.bsva.commons.model.SysCisBankModel;
 import com.bsva.entities.CisMemberEntity;
-import com.bsva.entities.MdtCnfgStatusReasonCodesEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
 import com.bsva.entities.CasSysctrlCustParamEntity;
 import com.bsva.translator.AdminTranslator;
 
@@ -62,30 +59,32 @@ public class CustParamLogic
 		return custModel;
 	}
 
-	public OpsCustParamModel retrieveOpsCustomerParameter(MdtOpsCustParamEntity mdtOpsCustParamEntity)
+	public OpsCustParamModel retrieveOpsCustomerParameter(
+        CasOpsCustParamEntity casOpsCustParamEntity)
 	{
 		OpsCustParamModel custModel = new OpsCustParamModel();
-		custModel = new AdminTranslator().translateMdtOpsCustParamEntityToCommonsModel(mdtOpsCustParamEntity);
+		custModel = new AdminTranslator().translateMdtOpsCustParamEntityToCommonsModel(
+            casOpsCustParamEntity);
 		
 		return custModel;
 	}
 
-	public MdtOpsCustParamEntity retrieveMdtOpsCustomerParamatersEntity(OpsCustParamModel opsCustParamModel)
+	public CasOpsCustParamEntity retrieveOpsCustomerParamatersEntity(OpsCustParamModel opsCustParamModel)
 	{
-		MdtOpsCustParamEntity mdtOpsCustParamEntity = new MdtOpsCustParamEntity();
-		mdtOpsCustParamEntity = new AdminTranslator().translateOpsCustParamToEntity(opsCustParamModel);
+		CasOpsCustParamEntity casOpsCustParamEntity = new CasOpsCustParamEntity();
+		casOpsCustParamEntity = new AdminTranslator().translateOpsCustParamToEntity(opsCustParamModel);
 		
-		return mdtOpsCustParamEntity;
+		return casOpsCustParamEntity;
 	}
 	
 	
-	public List<CustomerParametersModel> translateOpsCustParametersEntityToCommonsModel(List<MdtOpsCustParamEntity> mdtOpsCustParamList) {
+	public List<CustomerParametersModel> translateOpsCustParametersEntityToCommonsModel(List<CasOpsCustParamEntity> mdtOpsCustParamList) {
 
 
 		List<CustomerParametersModel> custParamsList = new ArrayList<CustomerParametersModel>();
 		CustomerParametersModel custParamModel;
 	
-		for (MdtOpsCustParamEntity opsCustParametersEntity : mdtOpsCustParamList) {
+		for (CasOpsCustParamEntity opsCustParametersEntity : mdtOpsCustParamList) {
 			
 
 			 custParamModel = new CustomerParametersModel();

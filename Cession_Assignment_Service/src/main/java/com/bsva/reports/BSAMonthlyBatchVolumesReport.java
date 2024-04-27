@@ -8,10 +8,8 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -26,11 +24,9 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import com.bsva.commons.model.CreditorBankModel;
-import com.bsva.commons.model.DebtorBankModel;
 import com.bsva.commons.model.SysctrlCompParamModel;
 import com.bsva.commons.model.SystemParameterModel;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
 import com.bsva.entities.MonthlyVolumeCountEntityModel;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.PropertyUtilRemote;
@@ -103,8 +99,8 @@ public class BSAMonthlyBatchVolumesReport
 		}
 
 		//Retrieve Report Name
-		MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
-		reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(mr020);
+		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(mr020);
 
 		if(reportNameEntity != null)
 		{

@@ -28,7 +28,7 @@ import org.hibernate.annotations.Parameter;
  * @author ElelwaniR
  */
 @Entity
-@Table(name = "AUD_TRACKING",schema = "MANOWNER")
+@Table(name = "AUD_TRACKING",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AudTrackingEntity.findAll", query = "SELECT a FROM AudTrackingEntity a"),

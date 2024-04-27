@@ -14,7 +14,7 @@ import org.beanio.BeanWriter;
 import org.beanio.StreamFactory;
 import com.bsva.commons.model.CreditorBankModel;
 import com.bsva.commons.model.MandateDailyTransModel;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.PropertyUtilRemote;
 import com.bsva.interfaces.ServiceBeanRemote;
@@ -42,7 +42,7 @@ public class DailyBatchBillableTxnReport
 	private final static String XML = "MR018CSV.xml";
 	private String fileName;
 
-	MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
+	CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
 	List<MandateDailyTransModel>mdtDailyTransList = new ArrayList<MandateDailyTransModel>();
 	List<CreditorBankModel> creditorBankModelList;
 	CreditorBankModel creditorBankModel;
@@ -177,7 +177,7 @@ public class DailyBatchBillableTxnReport
 
 
 		//Retrieve Report Name
-		reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(mr018);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(mr018);
 
 		if(reportNameEntity != null)
 		{

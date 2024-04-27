@@ -2,9 +2,9 @@ package com.bsva.utils;
 
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.ValidationBeanRemote;
 import java.io.File;
@@ -112,8 +112,8 @@ public class PainUnmarshaller {
         log.debug("transmissionInd : " + transmissionInd);
 
         if (transmissionInd.equalsIgnoreCase("D")) {
-          List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList =
-              new ArrayList<MdtAcOpsStatusDetailsEntity>();
+          List<CasOpsStatusDetailsEntity> opsStatusDetailsList =
+              new ArrayList<CasOpsStatusDetailsEntity>();
 
           String achId = fileName.substring(0, 3);
           String service = fileName.substring(3, 8);
@@ -136,7 +136,7 @@ public class PainUnmarshaller {
 
           log.error("pubErrorCode" + pubErrorCode);
           BigDecimal hdrSystemSeqNo = BigDecimal.ZERO;
-          MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity = new MdtAcOpsStatusHdrsEntity();
+          CasOpsStatusHdrsEntity opsStatusHdrsEntity = new CasOpsStatusHdrsEntity();
 
           String msgName = null;
           String statusReportService = "ST200";
@@ -170,7 +170,7 @@ public class PainUnmarshaller {
 
           //Generate the Status Details
 
-          MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity = new MdtAcOpsStatusDetailsEntity();
+          CasOpsStatusDetailsEntity opsStatusDetailsEntity = new CasOpsStatusDetailsEntity();
           opsStatusDetailsEntity.setSystemSeqNo(new BigDecimal(123));
           opsStatusDetailsEntity.setStatusHdrSeqNo(hdrSystemSeqNo);
           opsStatusDetailsEntity.setErrorCode("902121");
@@ -216,20 +216,20 @@ public class PainUnmarshaller {
       }
 
 
-      MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity = new MdtOpsRefSeqNrEntity();
-      mdtOpsRefSeqNrEntity =
-          (MdtOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, destInstId);
+      CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = new CasOpsRefSeqNrEntity();
+      casOpsRefSeqNrEntity =
+          (CasOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, destInstId);
 
-		if (mdtOpsRefSeqNrEntity != null) {
-			lastSeqNoUsed = Integer.valueOf(mdtOpsRefSeqNrEntity.getLastSeqNr());
+		if (casOpsRefSeqNrEntity != null) {
+			lastSeqNoUsed = Integer.valueOf(casOpsRefSeqNrEntity.getLastSeqNr());
 			lastSeqNoUsed++;
 		} else {
 			lastSeqNoUsed = 1;
 		}
 
       fileSeqNo = String.format("%06d", lastSeqNoUsed);
-      mdtOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
-      valBeanRemote.updateOpsRefSeqNr(mdtOpsRefSeqNrEntity);
+      casOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
+      valBeanRemote.updateOpsRefSeqNr(casOpsRefSeqNrEntity);
 
 
       creationDate = sdfFileDate.format(new Date());

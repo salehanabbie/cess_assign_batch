@@ -15,13 +15,13 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
 import com.bsva.PropertyUtil;
 import com.bsva.authcoll.singletable.validation.AC_Pacs002_Validation_ST;
-import com.bsva.entities.MdtAcOpsConfDetailsEntity;
-import com.bsva.entities.MdtAcOpsConfHdrsEntity;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntity;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
-import com.bsva.entities.MdtAcOpsMndtCountPK;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
+import com.bsva.entities.CasOpsConfDetailsEntity;
+import com.bsva.entities.CasOpsConfHdrsEntity;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsMndtCountPK;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.interfaces.AdminBeanRemote;
@@ -60,12 +60,12 @@ public class AC_Pacs002_Loader_ST implements Serializable
 
 	private CasSysctrlSysParamEntity casSysctrlSysParamEntity = null;
 	private CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
-	private MdtAcOpsConfHdrsEntity confHdrEntity = null;
-	private MdtAcOpsConfDetailsEntity confDetEntity = null;
+	private CasOpsConfHdrsEntity confHdrEntity = null;
+	private CasOpsConfDetailsEntity confDetEntity = null;
 
 	List<PaymentTransaction33> transactionList = null;
 	List<StatusReasonInformation9> grpHdrErrorList, transErrorList = null;
-	List<MdtAcOpsConfDetailsEntity> confDetailsList=null;
+	List<CasOpsConfDetailsEntity> confDetailsList=null;
 //	List<MdtAcOpsMandateTxnsEntity> origTxnsList = null;
 	List<String> accpMRTIList = null;
 	List<String> rjctMRTIList = null;
@@ -80,7 +80,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 	private String backEndProcess = "BACKEND";
 	long startTime, endTime, duration;
 
-	List<MdtAcOpsConfDetailsEntity> acceptConfDtlsList =new ArrayList<MdtAcOpsConfDetailsEntity>();
+	List<CasOpsConfDetailsEntity> acceptConfDtlsList =new ArrayList<CasOpsConfDetailsEntity>();
 
 	public  AC_Pacs002_Loader_ST(String filepath, String fileName) 
 	{
@@ -92,7 +92,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 		contextFileProcBeanCheck();
 
 		this.fileName = fileName;
-		confDetailsList = new ArrayList<MdtAcOpsConfDetailsEntity>();
+		confDetailsList = new ArrayList<CasOpsConfDetailsEntity>();
 //		origTxnsList = new ArrayList<MdtAcOpsMandateTxnsEntity>();
 		accpMRTIList = new ArrayList<String>();
 		rjctMRTIList = new ArrayList<String>();
@@ -125,21 +125,21 @@ public class AC_Pacs002_Loader_ST implements Serializable
 			ex.printStackTrace();
 		}
 
-		MdtOpsFileRegEntity mdtOpsFileRegEntity = (MdtOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
+		CasOpsFileRegEntity casOpsFileRegEntity = (CasOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
 		if(unmarshall)
 		{
-			if(mdtOpsFileRegEntity != null)
+			if(casOpsFileRegEntity != null)
 			{
-				mdtOpsFileRegEntity.setGrpHdrMsgId(document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId());
-				mdtOpsFileRegEntity.setStatus("V");
-				valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+				casOpsFileRegEntity.setGrpHdrMsgId(document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId());
+				casOpsFileRegEntity.setStatus("V");
+				valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 			}
 			else
 			{
-				if(mdtOpsFileRegEntity != null)
+				if(casOpsFileRegEntity != null)
 				{
-					mdtOpsFileRegEntity.setStatus("FS");
-					valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+					casOpsFileRegEntity.setStatus("FS");
+					valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 				}
 			}
 
@@ -148,8 +148,8 @@ public class AC_Pacs002_Loader_ST implements Serializable
 
 			// _______________________Entities_______________________
 
-			confHdrEntity = new MdtAcOpsConfHdrsEntity();
-			confDetEntity = new MdtAcOpsConfDetailsEntity();
+			confHdrEntity = new CasOpsConfHdrsEntity();
+			confDetEntity = new CasOpsConfDetailsEntity();
 
 			//_______________XSD LIST__________________________
 			transactionList = new ArrayList<PaymentTransaction33>();
@@ -159,7 +159,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 			grpHdrErrorList = document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getStsRsnInf();
 
 			transErrorList = new ArrayList<StatusReasonInformation9>();
-			acceptConfDtlsList = new ArrayList<MdtAcOpsConfDetailsEntity>();
+			acceptConfDtlsList = new ArrayList<CasOpsConfDetailsEntity>();
 
 			// _______________________Mandate grpHdr Unmarshall_______________________
 			long ghvalStartTime = System.nanoTime();
@@ -246,7 +246,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 					{
 						try {
 							grpStatus =  propertyUtil.getPropValue("Pacs002Status.ACCP");
-							mdtOpsFileRegEntity.setStatus("LS");
+							casOpsFileRegEntity.setStatus("LS");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -257,7 +257,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 						{
 							try {
 								grpStatus =  propertyUtil.getPropValue("Pacs002Status.RJCT");
-								mdtOpsFileRegEntity.setStatus("LE");
+								casOpsFileRegEntity.setStatus("LE");
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
@@ -268,26 +268,27 @@ public class AC_Pacs002_Loader_ST implements Serializable
 							{
 								try {
 									grpStatus =  propertyUtil.getPropValue("Pacs002Status.PART");
-									mdtOpsFileRegEntity.setStatus("LE");
+									casOpsFileRegEntity.setStatus("LE");
 								} catch (IOException e) {
 									e.printStackTrace();
 								}
 							}
 						}
 					}
-					valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+					valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 
 					//Update Conf Hdrs
 					BigDecimal hdrSeqNo = ac_Pacs002_Validation_ST.hdrSystemSeqNo;
-					MdtAcOpsStatusHdrsEntity mdtAcOpsStatusHdrsEntity = (MdtAcOpsStatusHdrsEntity) beanRemote.retrieveStatusHdrsBySeqNo(hdrSeqNo);
-					mdtAcOpsStatusHdrsEntity.setGroupStatus(grpStatus);
+					CasOpsStatusHdrsEntity casOpsStatusHdrsEntity = (CasOpsStatusHdrsEntity) beanRemote.retrieveStatusHdrsBySeqNo(hdrSeqNo);
+					casOpsStatusHdrsEntity.setGroupStatus(grpStatus);
 					try {
-						mdtAcOpsStatusHdrsEntity.setProcessStatus( propertyUtil.getPropValue("ProcStatus.ReportToBeProd"));
+						casOpsStatusHdrsEntity.setProcessStatus( propertyUtil.getPropValue("ProcStatus.ReportToBeProd"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 
-					boolean updateStatusdHdrs = beanRemote.updateOpsStatusHdrs(mdtAcOpsStatusHdrsEntity);
+					boolean updateStatusdHdrs = beanRemote.updateOpsStatusHdrs(
+                        casOpsStatusHdrsEntity);
 					log.info("|"+fileName+" COMPLETED| TOT_TXNS "+nrOfMndtsInFile+" | ACCEPTED "+accptCnt+" | REJECTED "+rejCnt+"|");
 
 				} //if transactionsList is null
@@ -296,20 +297,21 @@ public class AC_Pacs002_Loader_ST implements Serializable
 					//					loadPacs002(null, null);
 					//Update Conf Hdrs
 					BigDecimal hdrSeqNo = ac_Pacs002_Validation_ST.hdrSystemSeqNo;
-					MdtAcOpsStatusHdrsEntity mdtAcOpsStatusHdrsEntity = (MdtAcOpsStatusHdrsEntity) beanRemote.retrieveStatusHdrsBySeqNo(hdrSeqNo);
+					CasOpsStatusHdrsEntity casOpsStatusHdrsEntity = (CasOpsStatusHdrsEntity) beanRemote.retrieveStatusHdrsBySeqNo(hdrSeqNo);
 					try {
-						mdtAcOpsStatusHdrsEntity.setProcessStatus( propertyUtil.getPropValue("ProcStatus.ReportToBeProd"));
+						casOpsStatusHdrsEntity.setProcessStatus( propertyUtil.getPropValue("ProcStatus.ReportToBeProd"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 
-					boolean updateStatusdHdrs = beanRemote.updateOpsStatusHdrs(mdtAcOpsStatusHdrsEntity);
+					boolean updateStatusdHdrs = beanRemote.updateOpsStatusHdrs(
+                        casOpsStatusHdrsEntity);
 				}
 			}
 			else
 			{
-				mdtOpsFileRegEntity.setStatus("FG");
-				valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+				casOpsFileRegEntity.setStatus("FG");
+				valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 			}
 
 			//Reset for next file process
@@ -319,10 +321,10 @@ public class AC_Pacs002_Loader_ST implements Serializable
 		}//END OF IF UNMARSHALL
 		else
 		{
-			if(mdtOpsFileRegEntity != null)
+			if(casOpsFileRegEntity != null)
 			{
-				mdtOpsFileRegEntity.setStatus("FG");
-				valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+				casOpsFileRegEntity.setStatus("FG");
+				valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
 			}
 		}
 		endTime = System.nanoTime();
@@ -465,10 +467,10 @@ public class AC_Pacs002_Loader_ST implements Serializable
 		}
 	}
 
-	public void mapConfDetails(PaymentTransaction33 transaction, MdtAcOpsMandateTxnsEntity originalMandate){
+	public void mapConfDetails(PaymentTransaction33 transaction, CasOpsCessionAssignEntity originalMandate){
 		if(transaction != null)
 		{
-			confDetEntity=new MdtAcOpsConfDetailsEntity();
+			confDetEntity=new CasOpsConfDetailsEntity();
 
 			confDetEntity.setSystemSeqNo(new BigDecimal(123));
 			confDetEntity.setConfHdrSeqNo(hdrSystemSeqNo);
@@ -493,12 +495,12 @@ public class AC_Pacs002_Loader_ST implements Serializable
 
 				if(transaction.getTxSts().value().equalsIgnoreCase("ACCP"))
 				{
-					accpMRTIList.add("'"+originalMandate.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()+"'");
+					accpMRTIList.add("'"+originalMandate.getCasOpsCessionAssignEntityPK().getMandateReqTranId()+"'");
 					//					origMandate.setTxnId("'"+originalMandate.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()+"'");
 				}
 				else
 				{
-					rjctMRTIList.add("'"+originalMandate.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()+"'");
+					rjctMRTIList.add("'"+originalMandate.getCasOpsCessionAssignEntityPK().getMandateReqTranId()+"'");
 					//					origMandate.setTxnId("'"+originalMandate.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()+"'");
 				}
 			}
@@ -544,15 +546,15 @@ public class AC_Pacs002_Loader_ST implements Serializable
 		log.debug("rejectedCount******--->" + rejectedCount);
 
 
-		MdtAcOpsMndtCountEntity mdtOpsMndtCountEntity = new MdtAcOpsMndtCountEntity();
-		MdtAcOpsMndtCountPK mdtOpsMndtCountPk = new MdtAcOpsMndtCountPK();
+		CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
+		CasOpsMndtCountPK mdtOpsMndtCountPk = new CasOpsMndtCountPK();
 
 		if(document!= null && document.getFIToFIPmtStsRpt()!=null && document.getFIToFIPmtStsRpt().getGrpHdr() != null && document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId()!=null)
 			mdtOpsMndtCountPk.setMsgId(document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId());
 		mdtOpsMndtCountPk.setServiceId("ST101");
 		if(document!= null && document.getFIToFIPmtStsRpt()!=null && document.getFIToFIPmtStsRpt().getGrpHdr() != null && document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId()!=null)
 			mdtOpsMndtCountPk.setInstId(document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId().toString().substring(12, 18));
-		mdtOpsMndtCountEntity.setMdtAcOpsMndtCountPK(mdtOpsMndtCountPk);
+		mdtOpsMndtCountEntity.setCasOpsMndtCountPK(mdtOpsMndtCountPk);
 		mdtOpsMndtCountEntity.setNrOfMsgs(nrOfMsgsInFile);
 		mdtOpsMndtCountEntity.setNrOfFiles(nrOfFile);
 		mdtOpsMndtCountEntity.setIncoming("Y");
@@ -563,7 +565,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 		mdtOpsMndtCountEntity.setNrMsgsExtracted(0);
 		mdtOpsMndtCountEntity.setFileName(fileName.substring(0,37).trim());
 
-		saved = valBeanRemote.saveMdtOpsMndtCount(mdtOpsMndtCountEntity);
+		saved = valBeanRemote.saveOpsMndtCount(mdtOpsMndtCountEntity);
 
 		log.debug("WRITING mdtOpsMndtCountEntity IN THE AC_Pacs002 FileLoader"+mdtOpsMndtCountEntity);
 
@@ -579,9 +581,9 @@ public class AC_Pacs002_Loader_ST implements Serializable
 
 	}
 
-	public void generateConfErrorDetails(PaymentTransaction33 paymentTransaction33, String errorCode, MdtAcOpsMandateTxnsEntity originalMandate)
+	public void generateConfErrorDetails(PaymentTransaction33 paymentTransaction33, String errorCode, CasOpsCessionAssignEntity originalMandate)
 	{
-		confDetEntity=new MdtAcOpsConfDetailsEntity();
+		confDetEntity=new CasOpsConfDetailsEntity();
 
 		confDetEntity.setSystemSeqNo(new BigDecimal(123));
 		confDetEntity.setConfHdrSeqNo(hdrSystemSeqNo);
@@ -636,7 +638,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 
 		if(confDetailsList.size() > 0)
 		{
-			for (MdtAcOpsConfDetailsEntity localEntity : confDetailsList) {
+			for (CasOpsConfDetailsEntity localEntity : confDetailsList) {
 				localEntity.setConfHdrSeqNo(hdrSystemSeqNo);
 			}
 			generated=valBeanRemote.saveConfDetails(confDetailsList);

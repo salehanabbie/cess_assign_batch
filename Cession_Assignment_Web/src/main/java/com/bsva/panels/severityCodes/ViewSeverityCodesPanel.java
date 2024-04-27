@@ -1,5 +1,4 @@
 package com.bsva.panels.severityCodes;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,10 +24,8 @@ import com.bsva.controller.Controller;
 import com.bsva.models.ClientSessionModel;
 import com.bsva.models.WebSeverityCodesModel;
 import com.bsva.panels.CheckBoxColumn;
-import com.bsva.provider.RejectReasonProvider;
 import com.bsva.provider.SeverityCodesProvider;
 import com.bsva.validators.FieldNumberTextFieldValidator;
-import com.bsva.validators.TextFieldValidator;
 
 /**
  * 

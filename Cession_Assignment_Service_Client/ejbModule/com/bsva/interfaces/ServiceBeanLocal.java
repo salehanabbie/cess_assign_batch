@@ -9,8 +9,6 @@ import javax.ejb.Local;
 public interface ServiceBeanLocal {
   public void startFileListener();
 
-  public Integer retrieveSeqNo();
-
   public List<?> retrieveOutGoingNrOfFiles();
 
   public List<?> retrieveIncomingNrOfFiles();

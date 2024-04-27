@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.OpsRefSeqNumberCommonsModel;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class OpsRefSeqNumberLogic {
@@ -23,7 +23,7 @@ public class OpsRefSeqNumberLogic {
 	public static Logger log = Logger.getLogger(OpsRefSeqNumberLogic.class);
 	
 
-	public List<OpsRefSeqNumberCommonsModel> retrieveAllOpsRefSeqNumber(List<MdtOpsRefSeqNrEntity> mdtOpsRefSeqNrEntityList)
+	public List<OpsRefSeqNumberCommonsModel> retrieveAllOpsRefSeqNumber(List<CasOpsRefSeqNrEntity> casOpsRefSeqNrEntityList)
 	{
 
 		
@@ -31,11 +31,12 @@ public class OpsRefSeqNumberLogic {
 			OpsRefSeqNumberCommonsModel opsRefSeqNumberCommonsModel;
 
 		
-			for (MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity : mdtOpsRefSeqNrEntityList) 
+			for (CasOpsRefSeqNrEntity casOpsRefSeqNrEntity : casOpsRefSeqNrEntityList)
 			{
 			
 				opsRefSeqNumberCommonsModel = new OpsRefSeqNumberCommonsModel();
-				opsRefSeqNumberCommonsModel = new AdminTranslator().translateOpsRefSeqNumberCommonsModelToEntity(mdtOpsRefSeqNrEntity);
+				opsRefSeqNumberCommonsModel = new AdminTranslator().translateOpsRefSeqNumberCommonsModelToEntity(
+                    casOpsRefSeqNrEntity);
 				opsRefSeqNumberCommonsModelList.add(opsRefSeqNumberCommonsModel);
 			}
 		
@@ -43,17 +44,19 @@ public class OpsRefSeqNumberLogic {
 }
 	
 	
-	public MdtOpsRefSeqNrEntity addMdtOpsRefSeqNrEntity(OpsRefSeqNumberCommonsModel opsRefSeqNumberCommonsModel) 
+	public CasOpsRefSeqNrEntity addMdtOpsRefSeqNrEntity(OpsRefSeqNumberCommonsModel opsRefSeqNumberCommonsModel)
 	{
-		MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity = new AdminTranslator().translateMdtOpsRefSeqNrEntityToComonsModel(opsRefSeqNumberCommonsModel);
+		CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = new AdminTranslator().translateMdtOpsRefSeqNrEntityToComonsModel(opsRefSeqNumberCommonsModel);
 	
-	return mdtOpsRefSeqNrEntity;
+	return casOpsRefSeqNrEntity;
 	}
 	
-	public OpsRefSeqNumberCommonsModel retrieveMdtOpsRefSeqNrEntity(MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity)
+	public OpsRefSeqNumberCommonsModel retrieveMdtOpsRefSeqNrEntity(
+        CasOpsRefSeqNrEntity casOpsRefSeqNrEntity)
 	{
 		OpsRefSeqNumberCommonsModel localModel = new OpsRefSeqNumberCommonsModel();
-		localModel = new AdminTranslator().translateOpsRefSeqNumberCommonsModelToEntity(mdtOpsRefSeqNrEntity);
+		localModel = new AdminTranslator().translateOpsRefSeqNumberCommonsModelToEntity(
+            casOpsRefSeqNrEntity);
 		
 		return localModel;
 	}

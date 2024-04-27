@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bsva.commons.model.FrequencyCodesModel;
-import com.bsva.entities.MdtCnfgFrequencyCodesEntity;
+import com.bsva.entities.CasCnfgFrequencyCodesEntity;
 import com.bsva.translator.AdminTranslator;
 
 /**
@@ -22,7 +22,7 @@ public FrequencyCodesLogic(){
 		
 	}
 	
-	public List<FrequencyCodesModel> retreiveAllFrequencyCodes(List<MdtCnfgFrequencyCodesEntity> mdtFrequencyCodesList)
+	public List<FrequencyCodesModel> retreiveAllFrequencyCodes(List<CasCnfgFrequencyCodesEntity> mdtFrequencyCodesList)
 	{
 		
 		
@@ -30,7 +30,7 @@ public FrequencyCodesLogic(){
 		
 		
 		
-		for (MdtCnfgFrequencyCodesEntity frequencyEntity : mdtFrequencyCodesList) 
+		for (CasCnfgFrequencyCodesEntity frequencyEntity : mdtFrequencyCodesList)
 		{
 			
 			FrequencyCodesModel	frequencyModel = new FrequencyCodesModel();
@@ -43,14 +43,14 @@ public FrequencyCodesLogic(){
 
 
 
-public MdtCnfgFrequencyCodesEntity addFrequencyCodes(FrequencyCodesModel frequencyCodesModel)
+public CasCnfgFrequencyCodesEntity addFrequencyCodes(FrequencyCodesModel frequencyCodesModel)
 {
-	MdtCnfgFrequencyCodesEntity mdtFrequencyCodesEntity = new AdminTranslator().translateCommnsFrequencyCodeModelToEntity(frequencyCodesModel);
+	CasCnfgFrequencyCodesEntity mdtFrequencyCodesEntity = new AdminTranslator().translateCommnsFrequencyCodeModelToEntity(frequencyCodesModel);
 	
 	return  mdtFrequencyCodesEntity; 
 }
 
-public FrequencyCodesModel retrieveFrequencyCode(MdtCnfgFrequencyCodesEntity mdtFrequencyCodesEntity)
+public FrequencyCodesModel retrieveFrequencyCode(CasCnfgFrequencyCodesEntity mdtFrequencyCodesEntity)
 {
 	FrequencyCodesModel localModel = new FrequencyCodesModel();
 	localModel = new AdminTranslator().translateFrequencyCodesEntityToCommonsModel(mdtFrequencyCodesEntity);

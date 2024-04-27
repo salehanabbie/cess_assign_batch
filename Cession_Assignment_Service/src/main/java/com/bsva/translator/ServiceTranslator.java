@@ -36,6 +36,7 @@ import com.bsva.entities.BatchAmendmentEntityModel;
 import com.bsva.entities.BatchOustandingResponseEntityModel;
 import com.bsva.entities.BatchOustandingResponseEntityReportModel;
 import com.bsva.entities.BatchRejectedTransactionEntityModel;
+import com.bsva.entities.CasOpsFileRegEntity;
 import com.bsva.entities.CasOpsSotEotEntityModel;
 import com.bsva.entities.CasSysctrlProcessStatusEntity;
 import com.bsva.entities.CisMemberEntity;
@@ -54,10 +55,9 @@ import com.bsva.entities.MandatesRejectedReportEntityModel;
 import com.bsva.entities.MandatesReportsEntityModel;
 import com.bsva.entities.MandatesSearchEntityModel;
 import com.bsva.entities.MandatesSummaryReportModel;
-import com.bsva.entities.MdtAcOpsSotEotCtrlEntity;
-import com.bsva.entities.MdtAcOpsSotEotCtrlPK;
-import com.bsva.entities.MdtAcOpsTxnsBillingEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsSotEotCtrlPK;
+import com.bsva.entities.CasOpsTxnsBillingEntity;
 import com.bsva.entities.MndtSummaryTotalsEntityModel;
 import com.bsva.entities.ObsBillingStagingEntity;
 import com.bsva.entities.ObsTxnsBillStagingEntity;
@@ -83,7 +83,7 @@ public class ServiceTranslator {
   public static Logger log = Logger.getLogger(ServiceTranslator.class);
 
   public OpsFileRegModel translateOpsFileRegEntityToCommonsModel(
-      MdtOpsFileRegEntity opsFileRegEntity) {
+      CasOpsFileRegEntity opsFileRegEntity) {
 
     OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
 
@@ -332,22 +332,22 @@ public class ServiceTranslator {
 
   }
 
-  public MdtAcOpsSotEotCtrlEntity translateAcOpsSotEotCntrlModelToEntity(
+  public CasOpsSotEotCtrlEntity translateAcOpsSotEotCntrlModelToEntity(
       AcOpsSotEotCntrlModel acOpsSotEotCntrlModel) {
-    MdtAcOpsSotEotCtrlEntity mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
+    CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
 
-    MdtAcOpsSotEotCtrlPK mdtAcOpsSotEotCtrlPK = new MdtAcOpsSotEotCtrlPK();
-    mdtAcOpsSotEotCtrlPK.setInstId(acOpsSotEotCntrlModel.getInstId());
-    mdtAcOpsSotEotCtrlPK.setServiceId(acOpsSotEotCntrlModel.getServiceId());
+    CasOpsSotEotCtrlPK casOpsSotEotCtrlPK = new CasOpsSotEotCtrlPK();
+    casOpsSotEotCtrlPK.setInstId(acOpsSotEotCntrlModel.getInstId());
+    casOpsSotEotCtrlPK.setServiceId(acOpsSotEotCntrlModel.getServiceId());
 
-    mdtAcOpsSotEotCtrlEntity.setMdtAcOpsSotEotCtrlPK(mdtAcOpsSotEotCtrlPK);
-    mdtAcOpsSotEotCtrlEntity.setEotIn(acOpsSotEotCntrlModel.getEotIn());
-    mdtAcOpsSotEotCtrlEntity.setEotOut(acOpsSotEotCntrlModel.getEotOut());
-    mdtAcOpsSotEotCtrlEntity.setSotIn(acOpsSotEotCntrlModel.getSotIn());
-    mdtAcOpsSotEotCtrlEntity.setSotOut(acOpsSotEotCntrlModel.getSotOut());
+    casOpsSotEotCtrlEntity.setCasOpsSotEotCtrlPK(casOpsSotEotCtrlPK);
+    casOpsSotEotCtrlEntity.setEotIn(acOpsSotEotCntrlModel.getEotIn());
+    casOpsSotEotCtrlEntity.setEotOut(acOpsSotEotCntrlModel.getEotOut());
+    casOpsSotEotCtrlEntity.setSotIn(acOpsSotEotCntrlModel.getSotIn());
+    casOpsSotEotCtrlEntity.setSotOut(acOpsSotEotCntrlModel.getSotOut());
 
 
-    return mdtAcOpsSotEotCtrlEntity;
+    return casOpsSotEotCtrlEntity;
 
   }
 
@@ -664,21 +664,21 @@ public class ServiceTranslator {
   }
 
   public ObsTxnsBillStagingEntity translateOpsTxnsBillingModelToObsTxnsBillingStaging(
-      MdtAcOpsTxnsBillingEntity mdtAcOpsTxnsBillingEntity) {
+      CasOpsTxnsBillingEntity casOpsTxnsBillingEntity) {
     ObsTxnsBillStagingEntity obsTxnsBillStagingEntity = new ObsTxnsBillStagingEntity();
 
     obsTxnsBillStagingEntity.setRecordId(new BigDecimal(123));
-    obsTxnsBillStagingEntity.setActionDate(mdtAcOpsTxnsBillingEntity.getRespDate());
-    obsTxnsBillStagingEntity.setService(mdtAcOpsTxnsBillingEntity.getService());
-    obsTxnsBillStagingEntity.setSubService(mdtAcOpsTxnsBillingEntity.getSubService());
-    obsTxnsBillStagingEntity.setSystemName(mdtAcOpsTxnsBillingEntity.getSystemName());
-    obsTxnsBillStagingEntity.setOriginator(new Integer(mdtAcOpsTxnsBillingEntity.getOriginator()));
-    obsTxnsBillStagingEntity.setStatus(mdtAcOpsTxnsBillingEntity.getStatus());
-    obsTxnsBillStagingEntity.setTrxnStatus(mdtAcOpsTxnsBillingEntity.getTxnStatus());
-    obsTxnsBillStagingEntity.setTrxnType(mdtAcOpsTxnsBillingEntity.getTxnType());
-    obsTxnsBillStagingEntity.setVolume(mdtAcOpsTxnsBillingEntity.getVolume());
+    obsTxnsBillStagingEntity.setActionDate(casOpsTxnsBillingEntity.getRespDate());
+    obsTxnsBillStagingEntity.setService(casOpsTxnsBillingEntity.getService());
+    obsTxnsBillStagingEntity.setSubService(casOpsTxnsBillingEntity.getSubService());
+    obsTxnsBillStagingEntity.setSystemName(casOpsTxnsBillingEntity.getSystemName());
+    obsTxnsBillStagingEntity.setOriginator(new Integer(casOpsTxnsBillingEntity.getOriginator()));
+    obsTxnsBillStagingEntity.setStatus(casOpsTxnsBillingEntity.getStatus());
+    obsTxnsBillStagingEntity.setTrxnStatus(casOpsTxnsBillingEntity.getTxnStatus());
+    obsTxnsBillStagingEntity.setTrxnType(casOpsTxnsBillingEntity.getTxnType());
+    obsTxnsBillStagingEntity.setVolume(casOpsTxnsBillingEntity.getVolume());
     obsTxnsBillStagingEntity.setFilename(
-        mdtAcOpsTxnsBillingEntity.getMdtAcOpsTxnsBillingPK().getFileName());
+        casOpsTxnsBillingEntity.getCasOpsTxnsBillingPK().getFileName());
     obsTxnsBillStagingEntity.setCreatedBy("MANOWNER");
     obsTxnsBillStagingEntity.setCreatedDate(new Date());
     obsTxnsBillStagingEntity.setModifiedBy("MANOWNER");

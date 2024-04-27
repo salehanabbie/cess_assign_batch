@@ -2,14 +2,14 @@
 package com.bsva.authcoll.singletable.validation;
 
 import com.bsva.PropertyUtil;
+import com.bsva.entities.CasOpsFileRegEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
-import com.bsva.entities.MdtAcOpsMandateTxnsEntity;
-import com.bsva.entities.MdtAcOpsStatusDetailsEntity;
-import com.bsva.entities.MdtAcOpsStatusHdrsEntity;
-import com.bsva.entities.MdtCnfgErrorCodesEntity;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
-import com.bsva.entities.MdtOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import iso.std.iso._20022.tech.xsd.pacs_002_001.FIToFIPaymentStatusReportV04;
 import iso.std.iso._20022.tech.xsd.pacs_002_001.GroupHeader53;
 import iso.std.iso._20022.tech.xsd.pacs_002_001.OriginalGroupHeader1;
@@ -51,12 +51,12 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
 
   public static String systemName = "MANOWNER";
   //Ac ops Status Lists
-  List<MdtAcOpsStatusHdrsEntity> opsStatusHdrsList = null;
-  List<MdtAcOpsStatusDetailsEntity> opsStatusDetailsList = null;
+  List<CasOpsStatusHdrsEntity> opsStatusHdrsList = null;
+  List<CasOpsStatusDetailsEntity> opsStatusDetailsList = null;
 
   //Ac Entities declaration
-  MdtAcOpsStatusHdrsEntity opsStatusHdrsEntity = null;
-  MdtAcOpsStatusDetailsEntity opsStatusDetailsEntity = null;
+  CasOpsStatusHdrsEntity opsStatusHdrsEntity = null;
+  CasOpsStatusDetailsEntity opsStatusDetailsEntity = null;
 
   boolean bicCodeValid = false;
   String msgId, msgCreateDate, incInstid, fileName, outMsgId, mandateReqId, bicfi, orgnlMsgId,
@@ -103,8 +103,8 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       fileSizeLimit = 50000;
     }
 
-    opsStatusHdrsList = new ArrayList<MdtAcOpsStatusHdrsEntity>();
-    opsStatusDetailsList = new ArrayList<MdtAcOpsStatusDetailsEntity>();
+    opsStatusHdrsList = new ArrayList<CasOpsStatusHdrsEntity>();
+    opsStatusDetailsList = new ArrayList<CasOpsStatusDetailsEntity>();
 
     bicCodeValid = false;
     contextValidationBeanCheck();
@@ -556,11 +556,11 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       opsStatusDetailsList.clear();
     }
 
-    MdtOpsFileRegEntity mdtOpsFileRegEntity =
-        (MdtOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
-    if (mdtOpsFileRegEntity != null) {
-      mdtOpsFileRegEntity.setGrpHdrMsgId(outMsgId);
-      valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+    CasOpsFileRegEntity casOpsFileRegEntity =
+        (CasOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
+    if (casOpsFileRegEntity != null) {
+      casOpsFileRegEntity.setGrpHdrMsgId(outMsgId);
+      valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
     }
 
     return grpHdrSeverity;
@@ -623,7 +623,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     //____________________________Validate Mandate Request Transaction Identifier
 	  // .015_____________________________________//
     if (orgnlTxnId != null) {
-      MdtAcOpsMandateTxnsEntity matchedMandate = matchPacs002ToOrigMandate(orgnlTxnId, messageType);
+      CasOpsCessionAssignEntity matchedMandate = matchPacs002ToOrigMandate(orgnlTxnId, messageType);
       if (matchedMandate != null) {
         String processStatus = matchedMandate.getProcessStatus();
         log.debug("PROCESS STATUS =====>>>> " + processStatus);
@@ -769,7 +769,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
                                                String groupStatus, String stsHdrInstgAgt) {
     log.debug("********************generating ops_status_hdrs record**********************");
 
-    opsStatusHdrsEntity = new MdtAcOpsStatusHdrsEntity();
+    opsStatusHdrsEntity = new CasOpsStatusHdrsEntity();
     opsStatusHdrsEntity.setSystemSeqNo(new BigDecimal(999999));
     opsStatusHdrsEntity.setHdrMsgId(outMsgId);
     opsStatusHdrsEntity.setCreateDateTime(getCovertDateTime(groupHeader53.getCreDtTm()));
@@ -797,7 +797,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
   public void generateStatusErrorDetailsList(String errorCode, String txnId, String errorType) {
     log.debug("************* Generating Status Details Entry *****");
 
-    opsStatusDetailsEntity = new MdtAcOpsStatusDetailsEntity();
+    opsStatusDetailsEntity = new CasOpsStatusDetailsEntity();
 
     opsStatusDetailsEntity.setSystemSeqNo(new BigDecimal(123));
     opsStatusDetailsEntity.setErrorCode(errorCode);
@@ -816,7 +816,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
 
     if (opsStatusDetailsList.size() > 0) {
       log.debug("Status Error List Size --> " + opsStatusDetailsList.size());
-      for (MdtAcOpsStatusDetailsEntity localEntity : opsStatusDetailsList) {
+      for (CasOpsStatusDetailsEntity localEntity : opsStatusDetailsList) {
         localEntity.setStatusHdrSeqNo(hdrSystemSeqNo);
       }
       log.debug("Status Error details: " + opsStatusDetailsList.toString());
@@ -837,8 +837,8 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     String achId, creationDate, fileSeqNo, msgId = null;
     String outgoingService = "ST102";
 
-    MdtOpsCustParamEntity mdtOpsCustParamEntity =
-        (MdtOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(instId, backEndProcess);
+    CasOpsCustParamEntity casOpsCustParamEntity =
+        (CasOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(instId, backEndProcess);
 
     try {
       if (mdtSysctrlCompParamEntity != null) {
@@ -847,12 +847,12 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
         achId = "021";
       }
 
-      MdtOpsRefSeqNrEntity mdtOpsRefSeqNrEntity = new MdtOpsRefSeqNrEntity();
-      mdtOpsRefSeqNrEntity =
-          (MdtOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
+      CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = new CasOpsRefSeqNrEntity();
+      casOpsRefSeqNrEntity =
+          (CasOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
 
-		if (mdtOpsRefSeqNrEntity != null) {
-			lastSeqNoUsed = Integer.valueOf(mdtOpsRefSeqNrEntity.getLastSeqNr());
+		if (casOpsRefSeqNrEntity != null) {
+			lastSeqNoUsed = Integer.valueOf(casOpsRefSeqNrEntity.getLastSeqNr());
 			lastSeqNoUsed++;
 		} else {
 			lastSeqNoUsed = 1;
@@ -861,8 +861,8 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       log.debug("lastSeqNoUsed---->: " + lastSeqNoUsed);
       fileSeqNo = String.format("%06d", lastSeqNoUsed);
       log.debug("fileSeqNo---->: " + fileSeqNo);
-      mdtOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
-      valBeanRemote.updateOpsRefSeqNr(mdtOpsRefSeqNrEntity);
+      casOpsRefSeqNrEntity.setLastSeqNr(fileSeqNo);
+      valBeanRemote.updateOpsRefSeqNr(casOpsRefSeqNrEntity);
 
       //TRS16 Processing Rules
       if (casSysctrlSysParamEntity != null && casSysctrlSysParamEntity.getProcessDate() != null) {
@@ -882,11 +882,11 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     return msgId;
   }
 
-  public MdtCnfgErrorCodesEntity retrieveErrorCode(String errCode) {
-    MdtCnfgErrorCodesEntity mdtCnfgErrorCodesEntity =
-        (MdtCnfgErrorCodesEntity) valBeanRemote.retrieveErrorCode(errCode);
-    log.debug("mdtCnfgErrorCodesEntity: " + mdtCnfgErrorCodesEntity);
-    return mdtCnfgErrorCodesEntity;
+  public CasCnfgErrorCodesEntity retrieveErrorCode(String errCode) {
+    CasCnfgErrorCodesEntity casCnfgErrorCodesEntity =
+        (CasCnfgErrorCodesEntity) valBeanRemote.retrieveErrorCode(errCode);
+    log.debug("mdtCnfgErrorCodesEntity: " + casCnfgErrorCodesEntity);
+    return casCnfgErrorCodesEntity;
   }
 
   public Date getCovertDateTime(XMLGregorianCalendar xmlGregorianCalendar) {

@@ -1,7 +1,6 @@
 package com.bsva.reports;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,15 +12,13 @@ import java.util.TreeMap;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 import org.beanio.BeanWriter;
 import org.beanio.StreamFactory;
 import com.bsva.commons.model.CreditorBankModel;
 import com.bsva.commons.model.SystemParameterModel;
 import com.bsva.entities.BatchTxnBillReportEntity;
-import com.bsva.entities.MdtCnfgReportNamesEntity;
-import com.bsva.entities.MdtOpsRepSeqNrEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
+import com.bsva.entities.CasOpsRepSeqNrEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.PropertyUtilRemote;
 import com.bsva.interfaces.ReportBeanRemote;
@@ -29,7 +26,6 @@ import com.bsva.interfaces.ServiceBeanRemote;
 import com.bsva.utils.DateUtil;
 import com.bsva.utils.Util;
 import com.google.common.io.Files;
-import com.itextpdf.text.DocumentException;
 
 /**
  * @author SalehaR
@@ -104,8 +100,8 @@ public class PBBIL05_CSV_BatchMandatesTxnsBillReport {
 		}
 
 		//Retrieve Report Name
-		MdtCnfgReportNamesEntity reportNameEntity = new MdtCnfgReportNamesEntity();
-		reportNameEntity = (MdtCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbbil05);
+		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbbil05);
 
 		if (reportNameEntity != null) {
 			if (reportNameEntity.getActiveInd().equalsIgnoreCase("Y")) {
@@ -202,20 +198,20 @@ public class PBBIL05_CSV_BatchMandatesTxnsBillReport {
 		SimpleDateFormat rptNameFormat = new SimpleDateFormat("ddMMyyyy");
 		String currentDate = rptNameFormat.format(systemParameterModel.getProcessDate());
 
-		MdtOpsRepSeqNrEntity mdtOpsRepSeqNrEntity = new MdtOpsRepSeqNrEntity();
-		mdtOpsRepSeqNrEntity = (MdtOpsRepSeqNrEntity)adminBeanRemote.retrieveRepSeqNr(reportNr,crBankNo);
+		CasOpsRepSeqNrEntity casOpsRepSeqNrEntity = new CasOpsRepSeqNrEntity();
+		casOpsRepSeqNrEntity = (CasOpsRepSeqNrEntity)adminBeanRemote.retrieveRepSeqNr(reportNr,crBankNo);
 
-		if(mdtOpsRepSeqNrEntity != null)
+		if(casOpsRepSeqNrEntity != null)
 		{
-			lastSeqNoUsed = Integer.valueOf(mdtOpsRepSeqNrEntity.getLastSeqNo());
+			lastSeqNoUsed = Integer.valueOf(casOpsRepSeqNrEntity.getLastSeqNo());
 			lastSeqNoUsed = lastSeqNoUsed + 1;
 		}
 		else
 			lastSeqNoUsed = 1;
 
 		strSeqNo = String.format("%06d",lastSeqNoUsed);
-		mdtOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
-		adminBeanRemote.updateReportSeqNr(mdtOpsRepSeqNrEntity);
+		casOpsRepSeqNrEntity.setLastSeqNo(strSeqNo);
+		adminBeanRemote.updateReportSeqNr(casOpsRepSeqNrEntity);
 		String reportSeqNo = strSeqNo.substring(3,6);
 
 		fileName = bankId+"AC"+reportNr+currentDate+"."+reportSeqNo+".csv";

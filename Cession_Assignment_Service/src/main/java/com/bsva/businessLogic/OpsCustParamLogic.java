@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bsva.commons.model.OpsCustParamModel;
-import com.bsva.entities.MdtOpsCustParamEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class OpsCustParamLogic {
 
 	public List<OpsCustParamModel> retrieveAllOpsCustParam(
-			List<MdtOpsCustParamEntity> mdtOpsCustParamEntityList) {
+			List<CasOpsCustParamEntity> casOpsCustParamEntityList) {
 
 		List<OpsCustParamModel> opsSysctrlCumParaModelList = new ArrayList<OpsCustParamModel>();
 		
-		for (MdtOpsCustParamEntity localEntity : mdtOpsCustParamEntityList) 
+		for (CasOpsCustParamEntity localEntity : casOpsCustParamEntityList)
 		{
 			OpsCustParamModel localModel = new OpsCustParamModel();
 			localModel = new  AdminTranslator().translateMdtOpsCustParamEntityToCommonsModel(localEntity);
@@ -25,15 +25,15 @@ public class OpsCustParamLogic {
 		
 	}
 
-	public MdtOpsCustParamEntity translateMdtOpsCustParam(
+	public CasOpsCustParamEntity translateMdtOpsCustParam(
 			OpsCustParamModel opsSysctrlCumParaModel) {
 		
-		MdtOpsCustParamEntity mdtOpsCustParamEntity = new MdtOpsCustParamEntity();
+		CasOpsCustParamEntity casOpsCustParamEntity = new CasOpsCustParamEntity();
 		
 		
-		mdtOpsCustParamEntity = new  AdminTranslator().translateOpsCustParamToEntity(opsSysctrlCumParaModel);
+		casOpsCustParamEntity = new  AdminTranslator().translateOpsCustParamToEntity(opsSysctrlCumParaModel);
 
-		return mdtOpsCustParamEntity;
+		return casOpsCustParamEntity;
 	}
 
 }

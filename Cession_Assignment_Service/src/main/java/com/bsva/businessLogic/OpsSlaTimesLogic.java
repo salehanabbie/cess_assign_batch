@@ -2,9 +2,8 @@ package com.bsva.businessLogic;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.Logger;
 import com.bsva.commons.model.OpsSlaTimesCommonsModel;
-import com.bsva.entities.MdtOpsSlaTimesEntity;
+import com.bsva.entities.CasOpsSlaTimesEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class OpsSlaTimesLogic {
@@ -21,7 +20,7 @@ public class OpsSlaTimesLogic {
 	}
 	
 	
-	public List<OpsSlaTimesCommonsModel> retrieveAllOpsSlaTimes(List<MdtOpsSlaTimesEntity> mdtOpsSlaTimesEntityList)
+	public List<OpsSlaTimesCommonsModel> retrieveAllOpsSlaTimes(List<CasOpsSlaTimesEntity> casOpsSlaTimesEntityList)
 	{
 
 		
@@ -29,11 +28,12 @@ public class OpsSlaTimesLogic {
 			OpsSlaTimesCommonsModel opsSlaTimesCommonsModel;
 
 		
-			for (MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity : mdtOpsSlaTimesEntityList) 
+			for (CasOpsSlaTimesEntity casOpsSlaTimesEntity : casOpsSlaTimesEntityList)
 			{
 		
 				opsSlaTimesCommonsModel = new OpsSlaTimesCommonsModel();
-				opsSlaTimesCommonsModel = new AdminTranslator().translateMdtOpsSlaTimesEntityToCommonsModel(mdtOpsSlaTimesEntity);
+				opsSlaTimesCommonsModel = new AdminTranslator().translateMdtOpsSlaTimesEntityToCommonsModel(
+                    casOpsSlaTimesEntity);
 				opsSlaTimesCommonsModelList.add(opsSlaTimesCommonsModel);
 			}
 		
@@ -41,17 +41,18 @@ public class OpsSlaTimesLogic {
 }
 	
 	
-	public MdtOpsSlaTimesEntity addOpsSlaTimes(OpsSlaTimesCommonsModel opsSlaTimesCommonsModel) 
+	public CasOpsSlaTimesEntity addOpsSlaTimes(OpsSlaTimesCommonsModel opsSlaTimesCommonsModel)
 	{
-		MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity = new AdminTranslator().translateOpsSlaTimesCommonsModelToEntity(opsSlaTimesCommonsModel);
+		CasOpsSlaTimesEntity casOpsSlaTimesEntity = new AdminTranslator().translateOpsSlaTimesCommonsModelToEntity(opsSlaTimesCommonsModel);
 	
-	return mdtOpsSlaTimesEntity;
+	return casOpsSlaTimesEntity;
 	}
 	
-	public OpsSlaTimesCommonsModel retrieveOpsSlaTimes(MdtOpsSlaTimesEntity mdtOpsSlaTimesEntity)
+	public OpsSlaTimesCommonsModel retrieveOpsSlaTimes(CasOpsSlaTimesEntity casOpsSlaTimesEntity)
 	{
 		OpsSlaTimesCommonsModel localModel = new OpsSlaTimesCommonsModel();
-		localModel = new AdminTranslator().translateMdtOpsSlaTimesEntityToCommonsModel(mdtOpsSlaTimesEntity);
+		localModel = new AdminTranslator().translateMdtOpsSlaTimesEntityToCommonsModel(
+            casOpsSlaTimesEntity);
 		
 		return localModel;
 	}

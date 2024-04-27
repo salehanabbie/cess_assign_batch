@@ -4,9 +4,9 @@ import com.bsva.PropertyUtil;
 import com.bsva.commons.model.OpsFileRegModel;
 import com.bsva.delivery.EndOfTransmission_FileLoader;
 import com.bsva.delivery.StartOfTransmission_FileLoader;
-import com.bsva.entities.MdtOpsCustParamEntity;
-import com.bsva.entities.MdtOpsFileRegEntity;
-import com.bsva.entities.MdtOpsServicesEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
+import com.bsva.entities.CasOpsServicesEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.ServiceBeanRemote;
@@ -37,7 +37,7 @@ public class FileLoader_ST implements Serializable {
   private static AdminBeanRemote adminBeanRemote;
   public static ValidationBeanRemote valBeanRemote;
   public static ServiceBeanRemote BeanRemote;
-  private static MdtOpsCustParamEntity mdtOpsCustParamEntity;
+  private static CasOpsCustParamEntity casOpsCustParamEntity;
   private static String fileNr = null;
   private static String fileName = null;
   private static String trimmedFileName = null;
@@ -80,31 +80,31 @@ public class FileLoader_ST implements Serializable {
     fileNr = (fileName.substring(25, 31)).trim();
     transmissionInd = fileName.substring(32, 33);
     log.debug("transmissionInd : " + transmissionInd);
-    MdtOpsServicesEntity mdtOpsServicesEntity =
-        (MdtOpsServicesEntity) valBeanRemote.retrieveOpsServiceIn(serviceId);
-    mdtOpsCustParamEntity =
-        (MdtOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(incomingBicCode,
+    CasOpsServicesEntity casOpsServicesEntity =
+        (CasOpsServicesEntity) valBeanRemote.retrieveOpsServiceIn(serviceId);
+    casOpsCustParamEntity =
+        (CasOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(incomingBicCode,
             backEndProcess);
 
     casSysctrlSysParamEntity =
         (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
 
-    MdtOpsFileRegEntity mdtOpsFileRegEntity =
-        (MdtOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
+    CasOpsFileRegEntity casOpsFileRegEntity =
+        (CasOpsFileRegEntity) valBeanRemote.retrieveOpsFileReg(fileName);
 
     if (casSysctrlSysParamEntity != null) {
-      if (mdtOpsServicesEntity != null) {
-        if (mdtOpsServicesEntity.getActiveInd().equalsIgnoreCase("Y")) {
+      if (casOpsServicesEntity != null) {
+        if (casOpsServicesEntity.getActiveInd().equalsIgnoreCase("Y")) {
           if (serviceId.equalsIgnoreCase("MANAM") &&
               transmissionInd.equalsIgnoreCase(dataTransInd)) {
             log.debug("FILE TYPE IS MANAM");
             String namespace = null;
-            if (mdtOpsCustParamEntity != null) {
-              namespace = mdtOpsCustParamEntity.getManAmdXsdNs();
+            if (casOpsCustParamEntity != null) {
+              namespace = casOpsCustParamEntity.getManAmdXsdNs();
             } else {
               namespace = "iso.std.iso._20022.tech.xsd.pain_010_001";
             }
-            boolean result = updateFileOpsReg(namespace, mdtOpsFileRegEntity);
+            boolean result = updateFileOpsReg(namespace, casOpsFileRegEntity);
 
             if (result == true) {
               log.info("*************Loading & Validating File " + fileName +
@@ -120,13 +120,13 @@ public class FileLoader_ST implements Serializable {
               transmissionInd.equalsIgnoreCase(dataTransInd)) {
             log.debug("FILE TYPE IS ST101");
             String namespace = null;
-            if (mdtOpsCustParamEntity != null) {
-              namespace = mdtOpsCustParamEntity.getManStatusRepXsdNs();
+            if (casOpsCustParamEntity != null) {
+              namespace = casOpsCustParamEntity.getManStatusRepXsdNs();
             } else {
               namespace = "iso:std:iso:20022:tech:xsd:pacs.002.001";
             }
 
-            boolean result = updateFileOpsReg(namespace, mdtOpsFileRegEntity);
+            boolean result = updateFileOpsReg(namespace, casOpsFileRegEntity);
 
             if (result == true) {
               log.info("*************Loading & Validating File " + fileName +
@@ -144,12 +144,12 @@ public class FileLoader_ST implements Serializable {
               transmissionInd.equalsIgnoreCase(dataTransInd)) {
             log.debug("FILE TYPE IS MANAC");
             String namespace = null;
-            if (mdtOpsCustParamEntity != null) {
-              namespace = mdtOpsCustParamEntity.getManAccpXsdNs();
+            if (casOpsCustParamEntity != null) {
+              namespace = casOpsCustParamEntity.getManAccpXsdNs();
             } else {
               namespace = "iso.std.iso._20022.tech.xsd.pain_012_001";
             }
-            boolean result = updateFileOpsReg(namespace, mdtOpsFileRegEntity);
+            boolean result = updateFileOpsReg(namespace, casOpsFileRegEntity);
 
             if (result == true) {
               log.info("*************Loading & Validating File " + fileName +
@@ -194,12 +194,12 @@ public class FileLoader_ST implements Serializable {
     }
   }
 
-  private boolean updateFileOpsReg(String namespace, MdtOpsFileRegEntity mdtOpsFileRegEntity) {
+  private boolean updateFileOpsReg(String namespace, CasOpsFileRegEntity casOpsFileRegEntity) {
     boolean result = false;
-    if (mdtOpsFileRegEntity != null) {
-      mdtOpsFileRegEntity.setStatus(received);
-      mdtOpsFileRegEntity.setNameSpace(namespace);
-      result = valBeanRemote.updateOpsFileReg(mdtOpsFileRegEntity);
+    if (casOpsFileRegEntity != null) {
+      casOpsFileRegEntity.setStatus(received);
+      casOpsFileRegEntity.setNameSpace(namespace);
+      result = valBeanRemote.updateOpsFileReg(casOpsFileRegEntity);
     }
 
     return result;

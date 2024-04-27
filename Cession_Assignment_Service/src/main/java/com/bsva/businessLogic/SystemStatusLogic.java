@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import com.bsva.commons.model.MandatesCountCommonsModel;
-import com.bsva.entities.MdtAcOpsMndtCountEntity;
+import com.bsva.entities.CasOpsMndtCountEntity;
 import com.bsva.translator.AdminTranslator;
 
 public class SystemStatusLogic implements Serializable
@@ -17,10 +17,10 @@ public class SystemStatusLogic implements Serializable
 		
 	}
 	
-	public List<MandatesCountCommonsModel> retrieveAllSystemStatus(List<MdtAcOpsMndtCountEntity> countEntity)
+	public List<MandatesCountCommonsModel> retrieveAllSystemStatus(List<CasOpsMndtCountEntity> countEntity)
 	{
 			List<MandatesCountCommonsModel> commonsModelList = new ArrayList<MandatesCountCommonsModel >();
-			for(MdtAcOpsMndtCountEntity systemStatusEntity : countEntity)
+			for(CasOpsMndtCountEntity systemStatusEntity : countEntity)
 			{
 				MandatesCountCommonsModel countCommonsModel = new MandatesCountCommonsModel();
 				countCommonsModel = new AdminTranslator().translateCommonsToSystemStatusEntity(systemStatusEntity);
@@ -30,13 +30,14 @@ public class SystemStatusLogic implements Serializable
 			return commonsModelList;
 	}
 	
-	public MdtAcOpsMndtCountEntity addSystemStatus (MandatesCountCommonsModel commonsModel)
+	public CasOpsMndtCountEntity addSystemStatus (MandatesCountCommonsModel commonsModel)
 	{
-		MdtAcOpsMndtCountEntity entitySystemStatus = new AdminTranslator().translateCommonstoEntitySystemStatus(commonsModel);
+		CasOpsMndtCountEntity entitySystemStatus = new AdminTranslator().translateCommonstoEntitySystemStatus(commonsModel);
 		return entitySystemStatus;
 	}
 	
-	public MandatesCountCommonsModel retrieveSystemStatusFile (MdtAcOpsMndtCountEntity systemStatusEntity)
+	public MandatesCountCommonsModel retrieveSystemStatusFile (
+        CasOpsMndtCountEntity systemStatusEntity)
 	{
 		MandatesCountCommonsModel commModel = new MandatesCountCommonsModel();
 		commModel = new AdminTranslator().translateCommonsToSystemStatusEntity(systemStatusEntity);

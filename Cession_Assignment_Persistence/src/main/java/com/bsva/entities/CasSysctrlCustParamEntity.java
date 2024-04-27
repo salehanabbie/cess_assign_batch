@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ElelwaniR
  */
 @Entity
-@Table(name = "CAS_SYSCTRL_CUST_PARAM",schema = "CASOWNER")
+@Table(name = "CAS_SYSCTRL_CUST_PARAM",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasSysctrlCustParamEntity.findAll", query = "SELECT m FROM CasSysctrlCustParamEntity m"),
