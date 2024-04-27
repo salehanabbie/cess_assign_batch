@@ -337,7 +337,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				"SELECT SUM(a.COLL_AMOUNT) AS valofMandates, b.FI_NAME AS finInstName, COUNT(b.FI_NAME) AS NrofMandates ");
-		sb.append("FROM MANOWNER.MDT_OPS_MANDATE_REGISTER a, MANOWNER.MDT_OPS_FIN_INST b ");
+		sb.append("FROM CAMOWNER.MDT_OPS_MANDATE_REGISTER a, CAMOWNER.MDT_OPS_FIN_INST b ");
 		sb.append(
 				"WHERE a.MANDATE_REQ_ID = b.MANDATE_REQ_ID AND a.ACTIVE_IND = 'Y' AND (b.FIN_INST_TYPE_ID = 'FI03') ");
 		sb.append("GROUP BY b.FI_NAME, b.FIN_INST_TYPE_ID ");
@@ -371,7 +371,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				"SELECT a.MANDATE_ID AS mandateId, a.MANDATE_REQ_ID AS mandateReqId, a.FROM_DATE AS fromDate, a.TO_DATE AS toDate, A.COLL_AMOUNT AS collAmount,  b.FI_NAME AS finInstName");
-		sb.append("FROM MANOWNER.MDT_OPS_MANDATE_REGISTER a, MDT_OPS_FIN_INST b ");
+		sb.append("FROM CAMOWNER.MDT_OPS_MANDATE_REGISTER a, MDT_OPS_FIN_INST b ");
 		sb.append(
 				"WHERE a.MANDATE_REQ_ID = b.MANDATE_REQ_ID AND a.ACTIVE_IND = 'Y' AND b.FIN_INST_TYPE_ID = 'FI04' AND b.BICFI = 'NEDSZAJJ'");
 		// sb.append("WHERE a.MANDATE_REQ_ID = b.MANDATE_REQ_ID AND a.ACTIVE_IND
@@ -413,8 +413,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT COUNT(*) AS balanceBrghtForward ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG ");
-		sb.append("WHERE (SERVICE_ID ='MANIN' OR SERVICE_ID='MANCN' OR SERVICE_ID='MANAM')");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG ");
+		sb.append("WHERE (SERVICE_ID ='MANIN' OR SERVICE_ID='MANCN' OR SERVICE_ID='CARIN')");
 
 		String sqlQuery = sb.toString();
 
@@ -441,8 +441,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT COUNT(*) AS balanceCarriedForward  ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG ");
-		sb.append("WHERE (SERVICE_ID ='MANIN' OR SERVICE_ID='MANCN' OR SERVICE_ID='MANAM') AND PROCESS_STATUS='3'");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG ");
+		sb.append("WHERE (SERVICE_ID ='MANIN' OR SERVICE_ID='MANCN' OR SERVICE_ID='CARIN') AND PROCESS_STATUS='3'");
 
 		String sqlQuery = sb.toString();
 
@@ -467,9 +467,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT SUM(NR_OF_MSGS)as Outgoing  ");
-		sb.append("FROM MANOWNER.MDT_OPS_MNDT_COUNT ");
+		sb.append("FROM CAMOWNER.MDT_OPS_MNDT_COUNT ");
 		sb.append(
-				"WHERE OUTGOING ='Y' AND (SERVICE_ID ='MANOT' OR SERVICE_ID='MANOC' OR SERVICE_ID='MANCO'OR SERVICE_ID='MANRO' OR SERVICE_ID='MANRF' OR SERVICE_ID='ST100' OR SERVICE_ID='ST103')");
+				"WHERE OUTGOING ='Y' AND (SERVICE_ID ='MANOT' OR SERVICE_ID='MANOC' OR SERVICE_ID='MANCO'OR SERVICE_ID='MANRO' OR SERVICE_ID='MANRF' OR SERVICE_ID='ST200' OR SERVICE_ID='ST203')");
 
 		String sqlQuery = sb.toString();
 
@@ -495,9 +495,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT SUM(NR_OF_MSGS) as Incoming ");
-		sb.append("FROM MANOWNER.MDT_OPS_MNDT_COUNT ");
+		sb.append("FROM CAMOWNER.MDT_OPS_MNDT_COUNT ");
 		sb.append(
-				"WHERE INCOMING ='Y' AND (SERVICE_ID ='MANIN' OR SERVICE_ID='MANCN' OR SERVICE_ID='MANAM' OR SERVICE_ID ='MANAC' OR SERVICE_ID='MANRI' OR SERVICE_ID='MANRT'  OR SERVICE_ID='ST102' OR SERVICE_ID='ST101')");
+				"WHERE INCOMING ='Y' AND (SERVICE_ID ='MANIN' OR SERVICE_ID='MANCN' OR SERVICE_ID='CARIN' OR SERVICE_ID ='RCAIN' OR SERVICE_ID='MANRI' OR SERVICE_ID='MANRT'  OR SERVICE_ID='ST202' OR SERVICE_ID='ST201')");
 
 		String sqlQuery = sb.toString();
 
@@ -524,7 +524,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				"SELECT SUM(a.COLL_AMOUNT) AS valofMandates, b.FI_NAME AS finInstName, COUNT(b.FI_NAME) AS NrofMandates ");
-		sb.append("FROM MANOWNER.MDT_OPS_MANDATE_REGISTER a, MANOWNER.MDT_OPS_FIN_INST b ");
+		sb.append("FROM CAMOWNER.MDT_OPS_MANDATE_REGISTER a, CAMOWNER.MDT_OPS_FIN_INST b ");
 		sb.append(
 				"WHERE a.MANDATE_REQ_ID = b.MANDATE_REQ_ID AND a.ACTIVE_IND = 'Y' AND (b.FIN_INST_TYPE_ID = 'FI04') ");
 		sb.append("GROUP BY b.FI_NAME, b.FIN_INST_TYPE_ID ");
@@ -592,7 +592,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SERVICE_ID as serviceId,SUM(NR_MSGS_ACCEPTED) as nrMsgsAccepted ");
-		sb.append("FROM  MANOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
 		sb.append("WHERE INCOMING ='Y' AND  NR_MSGS_ACCEPTED > 0");
 		sb.append("GROUP BY SERVICE_ID ");
 		String sqlQuery = sb.toString();
@@ -629,7 +629,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SERVICE_ID as serviceId, SUM(NR_OF_MSGS) as nrMsgsExtracted ");
-		sb.append("FROM  MANOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
 		sb.append("WHERE OUTGOING ='Y' AND NR_MSGS_EXTRACTED > 0 ");
 		sb.append("GROUP BY SERVICE_ID ");
 
@@ -667,7 +667,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				"SELECT LOCAL_INSTRUMENT_CODE AS localInstrumentCode, LOCAL_INSTRUMENT_DESCRIPTION AS localInstrumentDescription, ACTIVE_IND AS activeInd ");
-		sb.append("FROM MANOWNER.MDT_CNFG_LOCAL_INSTR_CODES ");
+		sb.append("FROM CAMOWNER.MDT_CNFG_LOCAL_INSTR_CODES ");
 		sb.append("WHERE LOCAL_INSTRUMENT_CODE = '0227' OR LOCAL_INSTRUMENT_CODE = '0228' ");
 
 		String sqlQuery = sb.toString();
@@ -721,7 +721,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				"SELECT LOCAL_INSTRUMENT_CODE AS localInstrumentCode, LOCAL_INSTRUMENT_DESCRIPTION AS localInstrumentDescription, ACTIVE_IND AS activeInd ");
-		sb.append("FROM MANOWNER.MDT_CNFG_LOCAL_INSTR_CODES ");
+		sb.append("FROM CAMOWNER.MDT_CNFG_LOCAL_INSTR_CODES ");
 		sb.append("WHERE LOCAL_INSTRUMENT_CODE = '0227' OR LOCAL_INSTRUMENT_CODE = '0228' ");
 
 		String sqlQuery = sb.toString();
@@ -811,9 +811,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sb.append(
 				"SELECT r.MANDATE_ID AS mandateId,p.NAME AS name , p.PARTY_IDENT_TYPE_ID AS partyId, f.FI_NAME AS fiName, f.FIN_INST_TYPE_ID AS finId");
-		sb.append(" FROM MANOWNER.MDT_OPS_MANDATE_REGISTER r INNER JOIN MANOWNER.MDT_OPS_FIN_INST f");
+		sb.append(" FROM CAMOWNER.MDT_OPS_MANDATE_REGISTER r INNER JOIN CAMOWNER.MDT_OPS_FIN_INST f");
 		sb.append(" ON r.MANDATE_REQ_ID = f.MANDATE_REQ_ID");
-		sb.append(" LEFT JOIN MANOWNER.MDT_OPS_PARTY_IDENT p ON r.MANDATE_REQ_ID = p.MANDATE_REQ_ID");
+		sb.append(" LEFT JOIN CAMOWNER.MDT_OPS_PARTY_IDENT p ON r.MANDATE_REQ_ID = p.MANDATE_REQ_ID");
 
 		str.append("SELECT ");
 		if (mandateModel.getMandateId() != null && !(mandateModel.getMandateId().isEmpty())) {
@@ -1311,7 +1311,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
 		try {
 			mdtOpsMndtCountEntity = (CasOpsMndtCountEntity) genericDAO
-					.findByNamedQuery("MdtAcOpsMndtCountEntity.findByMsgId", "msgId", messageId);
+					.findByNamedQuery("CasOpsMndtCountEntity.findByMsgId", "msgId", messageId);
 		} catch (ObjectNotFoundException onfe) {
 			log.error("No Object Exists on DB");
 		} catch (Exception e) {
@@ -1470,8 +1470,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("SELECT a.MEMBER_NO ,a.MEMBER_NAME , a.MAX_NR_RECORDS, a.NR_OF_DAYS_PROC, ");
 		sb.append("sum(case when nvl(b.AC_DEBTOR,'N') = 'Y' then 1 else 0 end) as AC_DEBTOR, ");
 		sb.append("sum(case when nvl(b.AC_CREDITOR,'N') = 'Y' then 1 else 0 end) as AC_CREDITOR ");
-		sb.append("FROM MANOWNER.sys_cis_bank a ");
-		sb.append("LEFT OUTER  JOIN MANOWNER.sys_cis_branch b ");
+		sb.append("FROM CAMOWNER.sys_cis_bank a ");
+		sb.append("LEFT OUTER  JOIN CAMOWNER.sys_cis_branch b ");
 		sb.append("ON a.member_no = b.member_no ");
 		sb.append("group by a.MEMBER_NO,a.MEMBER_NAME , a.MAX_NR_RECORDS,a.NR_OF_DAYS_PROC) ");
 		sb.append("order by MEMBER_NO ");
@@ -1511,7 +1511,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		List<MandatesCountCommonsModel> mandatesCountIncomingList = new ArrayList<MandatesCountCommonsModel>();
 		try {
 			List<CasOpsMndtCountEntity> mdtOpsMndtCountEntityList = genericDAO
-					.findAllByNamedQuery("MdtAcOpsMndtCountEntity.findByIncoming", "incoming", "Y");
+					.findAllByNamedQuery("CasOpsMndtCountEntity.findByIncoming", "incoming", "Y");
 			if (mdtOpsMndtCountEntityList.size() > 0) {
 				mandatesCountIncomingList.clear();
 				MandatesCountLogic mandatesCountLogic = new MandatesCountLogic();
@@ -1534,7 +1534,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		List<MandatesCountCommonsModel> mandatesCountCommonsModelList = new ArrayList<MandatesCountCommonsModel>();
 		try {
 			List<CasOpsMndtCountEntity> mdtOpsMndtCountEntityList = genericDAO
-					.findAllByNamedQuery("MdtAcOpsMndtCountEntity.findByOutgoing", "outgoing", "Y");
+					.findAllByNamedQuery("CasOpsMndtCountEntity.findByOutgoing", "outgoing", "Y");
 			if (mdtOpsMndtCountEntityList.size() > 0) {
 				mandatesCountCommonsModelList.clear();
 				MandatesCountLogic mandatesCountLogic = new MandatesCountLogic();
@@ -1561,7 +1561,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SERVICE_ID as serviceId,SUM(NR_MSGS_REJECTED) as nrMsgsRejected ");
-		sb.append("FROM  MANOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
 		sb.append("WHERE  INCOMING ='Y' AND NR_MSGS_REJECTED > 0 ");
 		sb.append("GROUP BY SERVICE_ID");
 
@@ -1637,7 +1637,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SUM(NR_OF_MSGS) as nrMsgsAccepted ");
-		sb.append("FROM  MANOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
 		sb.append("WHERE INCOMING ='Y' ");
 
 		String sqlQuery = sb.toString();
@@ -1682,7 +1682,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SUM(NR_MSGS_REJECTED) as nrMsgsRejected ");
-		sb.append("FROM  MANOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
 		//sb.append("WHERE INCOMING ='Y' AND NR_MSGS_REJECTED > 0");
 
 		String sqlQuery = sb.toString();
@@ -1727,7 +1727,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SUM(NR_MSGS_EXTRACTED) as nrMsgsExtracted ");
-		sb.append("FROM  MANOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
 		//sb.append("WHERE OUTGOING ='Y' AND NR_MSGS_EXTRACTED > ");
 
 		String sqlQuery = sb.toString();
@@ -1771,8 +1771,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sb.append(
 				"SELECT a.FILE_NAME as fileName, a.INST_ID as instId, a.SERVICE_ID as serviceId, a.NR_OF_MSGS as nrOfMsgs, b.STATUS as status ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_COUNT a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.MDT_OPS_FILE_REG b ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_OPS_FILE_REG b ");
 		sb.append("ON a.FILE_NAME = b.FILE_NAME ");
 
 		String sqlQuery = sb.toString();
@@ -1929,7 +1929,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 				return true;
 			} else {
-				log.error("Unable to convert type to MdtAcOpsConfDetailsEntity.");
+				log.error("Unable to convert type to CasOpsConfDetailsEntity.");
 				return false;
 			}
 		} catch (Exception e) {
@@ -1951,7 +1951,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 				return true;
 			} else {
-				log.error("Unable to convert type to MdtAcOpsConfHdrsEntity.");
+				log.error("Unable to convert type to CasOpsConfHdrsEntity.");
 				return false;
 			}
 		} catch (Exception e) {
@@ -1975,7 +1975,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try 
 		{	
-			mdtAcOpsConfDetailsList = genericDAO.findAllByNamedQuery("MdtAcOpsConfDetailsEntity.findByProcessStatus", "processStatus", extractedStatus);
+			mdtAcOpsConfDetailsList = genericDAO.findAllByNamedQuery("CasOpsConfDetailsEntity.findByProcessStatus", "processStatus", extractedStatus);
 
 		} catch (NullPointerException npe) {
 			log.error("NullPointer exception :" + npe.getMessage());
@@ -2435,7 +2435,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT CREDITOR_BANK as creditorBank, DEBTOR_BANK as debtorBank,SUB_SERVICE as subService,TXN_TYPE as txnType,TXN_STATUS as txnStatus, COUNT(*) AS volume,  ACTION_DATE as actionDate, AUTH_CODE as authCode, RESP_DATE as respDate ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
 		sb.append("WHERE BILL_EXP_STATUS = 'N' AND (SYSTEM_SEQ_NO > "+currentSeqNo+" AND SYSTEM_SEQ_NO <= "+lastSeqNo+") ");
 		sb.append("GROUP BY CREDITOR_BANK, SUB_SERVICE,TXN_TYPE, DEBTOR_BANK, TXN_STATUS, ACTION_DATE, AUTH_CODE, RESP_DATE ");
 
@@ -2500,10 +2500,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT b.MEMBER_NAME ,SUBSTR(a.msg_id,13,6), a.AMEND_REASON_CODE,COUNT(*) AS amendReasonCodeCount "); 
-		sb.append("FROM  MANOWNER.MDT_AC_ARC_MNDT_MSG a  ");
-		sb.append("LEFT JOIN MANOWNER.SYS_CIS_BANK b ON SUBSTR(a.msg_id,13,6)= b.MEMBER_NO ");
+		sb.append("FROM  CAMOWNER.MDT_AC_ARC_MNDT_MSG a  ");
+		sb.append("LEFT JOIN CAMOWNER.SYS_CIS_BANK b ON SUBSTR(a.msg_id,13,6)= b.MEMBER_NO ");
 		sb.append("WHERE SUBSTR(a.msg_id,13,6) = '"+memberNo+"' AND a.AMEND_REASON_CODE = '"+amendmetReasonCode+"'  ");
-		sb.append("AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('"+firstDate+"','DDMMYYYY') AND TO_DATE('"+lastDate+"','DDMMYYYY') AND a.SERVICE_ID ='MANAM' ");
+		sb.append("AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('"+firstDate+"','DDMMYYYY') AND TO_DATE('"+lastDate+"','DDMMYYYY') AND a.SERVICE_ID ='CARIN' ");
 		sb.append("GROUP BY AMEND_REASON_CODE, SUBSTR(a.msg_id,13,6), MEMBER_NAME ");
 
 
@@ -2545,10 +2545,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sb.append("SELECT SUM(amendReasonCodeCount) AS amendReasonCodeCount FROM ");
 		sb.append("(SELECT b.MEMBER_NAME ,SUBSTR(a.msg_id,13,6), a.AMEND_REASON_CODE,COUNT(*) AS amendReasonCodeCount "); 
-		sb.append("FROM  MANOWNER.MDT_AC_ARC_MNDT_MSG a  ");
-		sb.append("LEFT JOIN MANOWNER.SYS_CIS_BANK b ON SUBSTR(a.msg_id,13,6)= b.MEMBER_NO ");
+		sb.append("FROM  CAMOWNER.MDT_AC_ARC_MNDT_MSG a  ");
+		sb.append("LEFT JOIN CAMOWNER.SYS_CIS_BANK b ON SUBSTR(a.msg_id,13,6)= b.MEMBER_NO ");
 		sb.append("WHERE a.AMEND_REASON_CODE = '"+amendmetReasonCode+"'  ");
-		sb.append("AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('"+firstDate+"','DDMMYYYY') AND TO_DATE('"+lastDate+"','DDMMYYYY') AND a.SERVICE_ID ='MANAM' ");
+		sb.append("AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('"+firstDate+"','DDMMYYYY') AND TO_DATE('"+lastDate+"','DDMMYYYY') AND a.SERVICE_ID ='CARIN' ");
 		sb.append("GROUP BY AMEND_REASON_CODE, SUBSTR(a.msg_id,13,6), MEMBER_NAME) ");
 
 
@@ -2613,7 +2613,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		GROUP BY DR_BANK_MEMBER_ID,REJECT_REASON*/
 
 		sb.append("SELECT CR_BANK_MEMBER_ID, REJECT_REASON, COUNT(*) AS rejectReasonCodeCount ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MDTE_RESP ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MDTE_RESP ");
 		sb.append("WHERE CR_BANK_MEMBER_ID = '"+memberNo+"' AND REJECT_REASON = '"+rejectReasonCode+"' AND ");
 		sb.append("TRUNC(CREATE_DATE_TIME) BETWEEN TO_DATE('"+firstDateOfMonth+"','ddMMYYYY') AND TO_DATE('"+stringDate+"','ddMMYYYY') ");
 		sb.append("GROUP BY CR_BANK_MEMBER_ID , REJECT_REASON ");
@@ -2658,8 +2658,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 
 		sb.append("SELECT b.ASSIGNER, a.REASON_CODE, COUNT(*)AS rejectReasonCodeCount ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_SUSP_MSG a ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID = b.ASSIGNMENT_ID ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_SUSP_MSG a ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID = b.ASSIGNMENT_ID ");
 		sb.append("WHERE ASSIGNER = '"+memberNo+"' AND REASON_CODE = '"+suspensionCode+"' ");
 		sb.append("GROUP BY ASSIGNER,REASON_CODE ");
 
@@ -2721,14 +2721,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		/*  SELECT b.MEMBER_ID,a.REJECT_REASON_CODE, COUNT(*) AS COUNT
 	    FROM MDT_AC_ARC_MNDT_MSG a
 	    LEFT JOIN MDT_AC_ARC_FIN_INST b  ON a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID
-	    WHERE FIN_INST_TYPE_ID = 'FI04' AND  MEMBER_ID = '210003' AND REJECT_REASON_CODE ='AC01'AND SERVICE_ID ='MANAC' 
+	    WHERE FIN_INST_TYPE_ID = 'FI04' AND  MEMBER_ID = '210003' AND REJECT_REASON_CODE ='AC01'AND SERVICE_ID ='RCAIN' 
 	    GROUP BY MEMBER_ID, REJECT_REASON_CODE*/
 
 
 		sb.append("SELECT b.MEMBER_ID, a.REJECT_REASON_CODE,COUNT(*) AS rejectReasonCodeCount ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
-		sb.append("WHERE FIN_INST_TYPE_ID = 'FI03' AND SERVICE_ID = 'MANAC' AND MEMBER_ID ='"+memberNo+"' AND REJECT_REASON_CODE = '"+reasonCode+"' ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
+		sb.append("WHERE FIN_INST_TYPE_ID = 'FI03' AND SERVICE_ID = 'RCAIN' AND MEMBER_ID ='"+memberNo+"' AND REJECT_REASON_CODE = '"+reasonCode+"' ");
 		sb.append("AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('"+firstDateOfMonth+"','ddMMYYYY') AND TO_DATE('"+stringDate+"','ddMMYYYY') ");
 		sb.append("GROUP BY MEMBER_ID, REJECT_REASON_CODE");
 
@@ -2769,7 +2769,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		GROUP BY REJECT_REASON,DR_BANK_MEMBER_ID*/
 
 		sb.append("SELECT DR_BANK_MEMBER_ID,REJECT_REASON, COUNT(*) AS rejectReasonCodeCount ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MDTE_RESP ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MDTE_RESP ");
 		sb.append("WHERE DR_BANK_MEMBER_ID ='"+memberNo+"' AND REJECT_REASON is not null ");
 		sb.append("GROUP BY REJECT_REASON,DR_BANK_MEMBER_ID ");
 
@@ -2811,8 +2811,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			GROUP BY ASSIGNER,REASON_CODE*/
 
 		sb.append("SELECT b.ASSIGNER, a.REASON_CODE, COUNT(*) AS rejectReasonCodeCount ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_SUSP_MSG a ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_OPS_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID =b.ASSIGNMENT_ID ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_SUSP_MSG a ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_OPS_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID =b.ASSIGNMENT_ID ");
 		sb.append("WHERE ASSIGNER ='"+memberNo+"' AND REASON_CODE is not null ");
 		sb.append(" GROUP BY ASSIGNER,REASON_CODE");
 
@@ -2850,14 +2850,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		/*SELECT b.MEMBER_ID,a.REJECT_REASON_CODE, COUNT(*) AS COUNT
 	    FROM MDT_AC_ARC_MNDT_MSG a
 	    LEFT JOIN MDT_AC_ARC_FIN_INST b  ON a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID
-	    WHERE FIN_INST_TYPE_ID = 'FI04' AND  MEMBER_ID = '210003' AND REJECT_REASON_CODE is not null AND SERVICE_ID ='MANAC' 
+	    WHERE FIN_INST_TYPE_ID = 'FI04' AND  MEMBER_ID = '210003' AND REJECT_REASON_CODE is not null AND SERVICE_ID ='RCAIN' 
 	    GROUP BY MEMBER_ID, REJECT_REASON_CODE*/
 
 
 		sb.append("SELECT b.MEMBER_ID,a.REJECT_REASON_CODE, COUNT(*) AS rejectReasonCodeCount ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b  ON a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
-		sb.append("WHERE FIN_INST_TYPE_ID = 'FI04' AND MEMBER_ID ='"+memberNo+"'AND REJECT_REASON_CODE is not null AND SERVICE_ID ='MANAC' ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b  ON a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
+		sb.append("WHERE FIN_INST_TYPE_ID = 'FI04' AND MEMBER_ID ='"+memberNo+"'AND REJECT_REASON_CODE is not null AND SERVICE_ID ='RCAIN' ");
 		sb.append(" GROUP BY MEMBER_ID, REJECT_REASON_CODE ");
 
 
@@ -2926,9 +2926,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 
 		sb.append("SELECT SUBSTR(a.EXTRACT_MSG_ID,13,6) AS debtorBank,c.MEMBER_NAME  as debtorName,SUBSTR(a.MSG_ID,13,6) AS creditorBank,b.MEMBER_NAME AS creditorName,a.SERVICE_ID as serviceId, COUNT(*) AS nrOfTxns ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_STATUS IN ('4','9') AND SUBSTR(a.EXTRACT_MSG_ID,13,6) = '"+debtorMember+"' AND a.SERVICE_ID = '"+serviceId+"' ");
 		sb.append("AND SUBSTR(a.MSG_ID,13,6)= '"+creditorMember+"' AND TO_CHAR(a.CREATED_DATE, 'ddMMYYYY') ='"+stringDate+"' ");
 		sb.append("GROUP BY SUBSTR(a.MSG_ID,13,6) ,SUBSTR(a.EXTRACT_MSG_ID,13,6),b.MEMBER_NAME ,a.SERVICE_ID,c.MEMBER_NAME ");
@@ -2992,19 +2992,19 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 
-		/*		//sb.append("LEFT JOIN MANOWNER.SYS_CIS_BANK d ON c.MEMBER_ID = d.MEMBER_NO ");
+		/*		//sb.append("LEFT JOIN CAMOWNER.SYS_CIS_BANK d ON c.MEMBER_ID = d.MEMBER_NO ");
 		sb.append("SELECT b.MEMBER_ID As creditorBank,c.MEMBER_ID  AS debtorBank, COUNT(*) AS nrOfDays ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID AND b.FIN_INST_TYPE_ID = 'FI03' ");
-		sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_FIN_INST C ON a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID AND b.FIN_INST_TYPE_ID = 'FI04' ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID AND b.FIN_INST_TYPE_ID = 'FI03' ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_FIN_INST C ON a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID AND b.FIN_INST_TYPE_ID = 'FI04' ");
 		sb.append("WHERE  a.PROCESS_STATUS ='9' AND b.MEMBER_ID = '"+creditorMember+"' AND a.SERVICE_ID = '"+serviceId+"' ");
 		sb.append("AND  TO_CHAR(a.CREATED_DATE,'ddMMYYYY') = '"+stringDate+"' ");
 		sb.append("GROUP BY b.MEMBER_ID,c.MEMBER_ID ");*/
 
 		sb.append("SELECT SUBSTR(a.EXTRACT_MSG_ID,13,6) AS debtorBank,c.MEMBER_NAME  as debtorName,SUBSTR(a.MSG_ID,13,6) AS creditorBank,b.MEMBER_NAME AS creditorName,a.SERVICE_ID as serviceId, COUNT(*) AS nrOfTxns ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_STATUS IN('4','9') AND SUBSTR(a.EXTRACT_MSG_ID,13,6) = '"+debtorMember+"' AND a.SERVICE_ID = '"+serviceId+"' ");
 		sb.append("AND SUBSTR(a.MSG_ID,13,6)= '"+creditorMember+"' AND  TO_CHAR(a.CREATED_DATE, 'ddMMYYYY') = '"+stringDate+"' ");
 		sb.append("GROUP BY SUBSTR(a.MSG_ID,13,6) ,SUBSTR(a.EXTRACT_MSG_ID,13,6),b.MEMBER_NAME ,a.SERVICE_ID,c.MEMBER_NAME ");
@@ -3150,7 +3150,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 
 		//		sb.append("SELECT SERVICE_ID AS serviceId, SUM(NR_OF_MSGS) AS totalNrOfMsgs, SUM(NR_MSGS_ACCEPTED) AS nrMsgsAccepted, SUM(NR_MSGS_REJECTED) AS nrMsgsRejected ");
-		//		sb.append("FROM  MANOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		//		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
 		//		sb.append(" WHERE INCOMING = 'Y' ");
 		//		sb.append("GROUP BY SERVICE_ID ");
 		//		sb.append("ORDER BY SERVICE_ID ASC ");
@@ -3159,12 +3159,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("Q2.SERVICE_OUT as extServiceId, NVL(Q2.TOTALEXT,0) as nrMsgsExtracted , NVL(Q1.TOTALACCP - NVL(Q2.TOTALEXT,0), 0) as difference ");
 		sb.append("FROM (SELECT a.SERVICE_ID AS SERVICE_IN, SUM(NVL(a.NR_OF_MSGS, 0)) AS TOTALMSGS, SUM(NVL(a.NR_MSGS_ACCEPTED, 0)) AS TOTALACCP ");
 		sb.append(",SUM(NVL(a.NR_MSGS_REJECTED, 0)) AS TOTALREJ, c.SERVICE_ID_OUT AS OPS_SERVICE_OUT ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_COUNT a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.MDT_OPS_SERVICES c ON c.SERVICE_ID_IN = a.SERVICE_ID WHERE a.INCOMING = 'Y' ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_OPS_SERVICES c ON c.SERVICE_ID_IN = a.SERVICE_ID WHERE a.INCOMING = 'Y' ");
 		sb.append("GROUP BY a.SERVICE_ID,c.SERVICE_ID_OUT) Q1 ");
 		sb.append("LEFT JOIN ");
 		sb.append("(SELECT b.SERVICE_ID AS SERVICE_OUT, SUM(NVL(b.NR_MSGS_EXTRACTED, 0)) AS TOTALEXT ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_COUNT b WHERE b.OUTGOING = 'Y' ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT b WHERE b.OUTGOING = 'Y' ");
 		sb.append("GROUP BY b.SERVICE_ID) Q2 ");
 		sb.append("ON Q1.OPS_SERVICE_OUT = Q2.SERVICE_OUT ");
 		sb.append("GROUP BY Q1.SERVICE_IN, Q1.OPS_SERVICE_OUT, Q2.SERVICE_OUT, Q1.TOTALMSGS, Q1.TOTALACCP, Q1.TOTALREJ, Q2.TOTALEXT ");
@@ -3286,7 +3286,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sb.append("SELECT SUM(rejectReasonCodeCount) AS rejectReasonCodeCount FROM ");
 		sb.append("(SELECT DR_BANK_MEMBER_ID,CR_BANK_MEMBER_ID, REJECT_REASON, COUNT(*) AS rejectReasonCodeCount ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MDTE_RESP ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MDTE_RESP ");
 		sb.append("WHERE DR_BANK_MEMBER_ID ='"+memberNo+"' AND CR_BANK_MEMBER_ID = '"+memberId+"' ");
 		sb.append("AND REJECT_REASON is not null AND TRUNC(CREATE_DATE_TIME) BETWEEN TO_DATE('"+firstDateOfMonth+"','ddMMYYYY') AND TO_DATE('"+stringDate+"','ddMMYYYY') ");
 		sb.append("GROUP BY REJECT_REASON,DR_BANK_MEMBER_ID,CR_BANK_MEMBER_ID) ");
@@ -3346,18 +3346,18 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		/*SELECT b.MEMBER_ID,c.MEMBER_ID, a.REJECT_REASON_CODE, COUNT(*) AS COUNT
 		FROM MDT_AC_ARC_MNDT_MSG a
-		LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID 
-		LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID 
-		WHERE b.FIN_INST_TYPE_ID = 'FI03' AND  c.FIN_INST_TYPE_ID = 'FI04'AND  b.MEMBER_ID = '210003' AND  c.MEMBER_ID = '210044' AND  a.REJECT_REASON_CODE is not null AND a.SERVICE_ID ='MANAC' 
+		LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID 
+		LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID 
+		WHERE b.FIN_INST_TYPE_ID = 'FI03' AND  c.FIN_INST_TYPE_ID = 'FI04'AND  b.MEMBER_ID = '210003' AND  c.MEMBER_ID = '210044' AND  a.REJECT_REASON_CODE is not null AND a.SERVICE_ID ='RCAIN' 
 		 GROUP BY  b.MEMBER_ID,  c.MEMBER_ID,a.REJECT_REASON_CODE*/
 
 		sb.append("SELECT SUM(rejectReasonCodeCount) AS rejectReasonCodeCount FROM ");
 		sb.append("(SELECT b.MEMBER_ID,c.MEMBER_ID, a.REJECT_REASON_CODE, COUNT(*) AS rejectReasonCodeCount ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID  ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID  ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID  ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID  ");
 		sb.append("WHERE b.FIN_INST_TYPE_ID = 'FI03' AND  c.FIN_INST_TYPE_ID = 'FI04'AND  b.MEMBER_ID ='"+memberId+"'  AND  c.MEMBER_ID ='"+memberNo+"' ");
-		sb.append("AND  a.REJECT_REASON_CODE is not null AND a.SERVICE_ID ='MANAC'AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('"+firstDateOfMonth+"','ddMMYYYY') AND TO_DATE('"+stringDate+"','ddMMYYYY')  ");
+		sb.append("AND  a.REJECT_REASON_CODE is not null AND a.SERVICE_ID ='RCAIN'AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('"+firstDateOfMonth+"','ddMMYYYY') AND TO_DATE('"+stringDate+"','ddMMYYYY')  ");
 		sb.append("GROUP BY b.MEMBER_ID,  c.MEMBER_ID,a.REJECT_REASON_CODE) ");
 
 
@@ -3438,9 +3438,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sb.append("SELECT SUM(nrOfDays) AS nrOfDays FROM ");
 		sb.append("(SELECT SUBSTR(a.EXTRACT_MSG_ID,13,6) AS debtorBank,c.MEMBER_NAME  as debtorName,SUBSTR(a.MSG_ID,13,6) AS creditorBank,b.MEMBER_NAME AS creditorName,a.SERVICE_ID as serviceId, COUNT(*) AS nrOfDays ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_STATUS ='9' AND a.SERVICE_ID = '"+serviceId+"' ");
 		sb.append("AND TO_CHAR(a.CREATED_DATE,'ddMMYYYY')= '"+stringDate+"' ");
 		sb.append("GROUP BY SUBSTR(a.MSG_ID,13,6) ,SUBSTR(a.EXTRACT_MSG_ID,13,6),b.MEMBER_NAME ,a.SERVICE_ID,c.MEMBER_NAME) ");
@@ -3498,9 +3498,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sb.append("SELECT SUM(nrOfTxns) AS nrOfTxns FROM ");
 		sb.append("(SELECT SUBSTR(a.EXTRACT_MSG_ID,13,6) AS debtorBank,c.MEMBER_NAME  as debtorName,SUBSTR(a.MSG_ID,13,6) AS creditorBank,b.MEMBER_NAME AS creditorName,a.SERVICE_ID as serviceId, COUNT(*) AS nrOfTxns ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_STATUS ='9' AND a.SERVICE_ID = '"+serviceId+"' ");
 		sb.append("AND TO_CHAR(a.CREATED_DATE,'ddMMYYYY') ='"+stringDate+"' ");
 		sb.append("GROUP BY SUBSTR(a.MSG_ID,13,6) ,SUBSTR(a.EXTRACT_MSG_ID,13,6),b.MEMBER_NAME ,a.SERVICE_ID,c.MEMBER_NAME) ");
@@ -3546,12 +3546,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("group by aa.member_name, bb.member_name, a.INSTRUCTEDAGENTAMS, a.INSTRUCTINGAGENTAMS, a.SERVICEIDAMS ");
 		sb.append("minus ");
 		sb.append("SELECT aa.member_name as debtorName ,a.INSTRUCTEDAGENTAMS as debtorBank,bb.member_name as creditorName,a.INSTRUCTINGAGENTAMS as creditorBank,count(*) as nrOfDays,b.SERVICEIDAMS as ServiceId ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
 		sb.append("left join manowner.SYS_CIS_BANK aa ");
 		sb.append("on a.INSTRUCTEDAGENTAMS = aa.member_no ");
 		sb.append("left join manowner.sys_cis_bank bb " );
 		sb.append("on a.INSTRUCTINGAGENTAMS = bb.member_no ");
-		sb.append("INNER JOIN MANOWNER.JNL_ACQ b ");
+		sb.append("INNER JOIN CAMOWNER.JNL_ACQ b ");
 		sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS "); 
 		sb.append("WHERE a.SERVICEIDAMS = 'ST012' AND a.MTI = 5506 AND a.RESULTCODE = 0 AND b.MTI = 5501 AND b.RESULTCODE = 0 AND a.REASONCODEAMS = '900000' AND b.REASONCODEAMS = '900000' and ");
 		sb.append("TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8), 'YYYYMMDD') = TRUNC(current_date) -1 ");
@@ -3563,8 +3563,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("(SELECT DISTINCT a.INSTRUCTINGAGENTAMS  AS  debtorBank, a.INSTRUCTINGAGENTAMS AS creditorBank,'TT1 Delayed Response' AS TransactionType, ");
 		sb.append("CASE WHEN TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8), 'YYYYMMDD') = TRUNC(current_date) -1 THEN COUNT(*) else to_number('0',9) END AS nrOfDays, ");
 		sb.append("a.SERVICEIDAMS AS service_Id,COUNT(*) AS volume,NVL(b.MSGTYPEAMS,'NOT') AS mes ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
 		sb.append("ON a.TRANSACTIONIDENTIFIERAMS =b.TRANSACTIONIDENTIFIERAMS AND b.MSGTYPEAMS = 'pain.012' AND a.MSGTYPEAMS ='pain.009' ");
 		sb.append("WHERE a.MSGTYPEAMS ='pain.009' AND a.SERVICEIDAMS <> 'MANIR' AND a.RESULTCODE ='0' ");
 		sb.append("GROUP BY a.INSTRUCTEDAGENTAMS,a.INSTRUCTINGAGENTAMS,a.SERVICEIDAMS,b.MSGTYPEAMS,TO_DATE(SUBSTR(a.TRANSDATETIME,1,8),'YYYYMMDD')) ");
@@ -3574,8 +3574,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("SELECT SUM(nrOfTxns) AS nrOfDays FROM ");
 		sb.append("(SELECT DISTINCT a.INSTRUCTEDAGENTAMS AS debtorBank,a.INSTRUCTINGAGENTAMS AS creditorBank,a.MSGTYPEAMS  AS msgType,a.PAYMENTSTATUSGROUPCODEAMS AS statusCode,TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8),'YYYYMMDD')  AS processDate, ");
 		sb.append("nvl(b.TRANSACTIONIDENTIFIERAMS,'not found') AS transactionId,COUNT(*) AS nrOfTxns  ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
 		sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
 		sb.append("AND a.MSGTYPEAMS = 'pain.009' AND b.msgtypeams = 'pain.012' ");
 		sb.append("WHERE a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' AND a.msgtypeams = 'pain.009' AND TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8),'YYYYMMDD') = TRUNC(current_date) -1 ");
@@ -3627,12 +3627,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("group by aa.member_name, bb.member_name, a.INSTRUCTEDAGENTAMS, a.INSTRUCTINGAGENTAMS, a.SERVICEIDAMS ");
 		sb.append("minus ");
 		sb.append("SELECT aa.member_name as debtorName ,b.INSTRUCTEDAGENTAMS as debtorBank,bb.member_name as creditorName,b.INSTRUCTINGAGENTAMS as creditorBank,count(*) as nrOfDays,b.SERVICEIDAMS as ServiceId ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
 		sb.append("left join manowner.SYS_CIS_BANK aa ");
 		sb.append("on a.INSTRUCTEDAGENTAMS = aa.member_no ");
 		sb.append("left join manowner.sys_cis_bank bb ");
 		sb.append("on a.INSTRUCTINGAGENTAMS = bb.member_no ");
-		sb.append("INNER JOIN MANOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
+		sb.append("INNER JOIN CAMOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
 		sb.append("WHERE a.SERVICEIDAMS = 'ST012' AND a.MTI = 5506 AND a.RESULTCODE = 0  ");
 		sb.append("AND b.MTI = 5503 AND b.RESULTCODE = 0 AND a.REASONCODEAMS = '900000' AND b.REASONCODEAMS = '900000' ");
 		sb.append("AND TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8), 'YYYYMMDD') = TRUNC(current_date) -1 ");
@@ -3642,8 +3642,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("SELECT SUM(nrOfTxns) AS nrOfDays FROM ");
 		sb.append("(SELECT DISTINCT a.INSTRUCTEDAGENTAMS AS debtorBank,a.INSTRUCTINGAGENTAMS AS creditorBank,a.MSGTYPEAMS  AS msgType,a.PAYMENTSTATUSGROUPCODEAMS AS statusCode,TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8),'YYYYMMDD')  AS processDate, ");
 		sb.append("nvl(b.TRANSACTIONIDENTIFIERAMS,'not found') AS transactionId,COUNT(*) AS nrOfTxns  ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
 		sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
 		sb.append("AND a.MSGTYPEAMS = 'pain.010' AND b.msgtypeams = 'pain.012' ");
 		sb.append("WHERE a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' AND a.msgtypeams = 'pain.010' AND TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8),'YYYYMMDD') = TRUNC(current_date) -1 ");
@@ -3698,12 +3698,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("minus ");
 		sb.append("SELECT aa.member_name as debtorName ,b.INSTRUCTEDAGENTAMS as debtorBank,bb.member_name as creditorName,b.INSTRUCTINGAGENTAMS as creditorBank, ");
 		sb.append("a.SERVICEIDAMS as ServiceId ,count(*) as nrOfDays ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
 		sb.append("left join manowner.SYS_CIS_BANK aa ");
 		sb.append("on a.INSTRUCTEDAGENTAMS = aa.member_no ");
 		sb.append("left join manowner.sys_cis_bank bb ");
 		sb.append("on a.INSTRUCTINGAGENTAMS = bb.member_no ");
-		sb.append("INNER JOIN MANOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
+		sb.append("INNER JOIN CAMOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
 		sb.append("WHERE a.SERVICEIDAMS = 'MANIR' AND a.MTI = 5506 AND a.RESULTCODE = 0 ");
 		sb.append("AND b.MTI = 5505 AND b.RESULTCODE = 0 AND a.REASONCODEAMS = '900000' AND b.REASONCODEAMS = '900000' ");
 		sb.append("AND TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8), 'YYYYMMDD') = TRUNC(current_date) -1 ");
@@ -3713,8 +3713,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("SELECT SUM(nrOfTxns) AS nrOfDays FROM ");
 		sb.append("(SELECT DISTINCT a.INSTRUCTEDAGENTAMS AS debtorBank,a.INSTRUCTINGAGENTAMS AS creditorBank,a.MSGTYPEAMS  AS msgType,a.PAYMENTSTATUSGROUPCODEAMS AS statusCode,TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8),'YYYYMMDD')  AS processDate, ");
 		sb.append("nvl(b.TRANSACTIONIDENTIFIERAMS,'not found') AS transactionId,COUNT(*) AS nrOfTxns  ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
 		sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
 		sb.append("AND a.MSGTYPEAMS = 'pain.011' AND b.msgtypeams = 'pain.012' ");
 		sb.append("WHERE a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' AND a.msgtypeams = 'pain.011' AND TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8),'YYYYMMDD') = TRUNC(current_date) -1 ");
@@ -3808,7 +3808,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sb.append("c.AUTH_TYPE AS authType, a.LOCAL_INSTR_CD AS dbtrAuthReq, a.SEQUENCE_TYPE AS instOcc, b.ID as cdtrAbbShtNm, a.PROCESS_STATUS as processStatus,'ACH' AS dataSource ");
 
-		if(service.equalsIgnoreCase("MANAM"))
+		if(service.equalsIgnoreCase("CARIN"))
 		{
 			sb.append(",a.AMEND_REASON_CODE as reason, e.MANDATE_REQ_ID AS contRefNum ");
 		}
@@ -3822,14 +3822,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			sb.append(", a.REJECT_REASON_CODE as reason ");
 		}
 
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
-		//		sb.append("JOIN MANOWNER.MDT_AC_ARC_GRP_HDR d on a.MSG_ID = d.MSG_ID ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_PARTY_IDENT b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_SUPPL_DATA c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
+		//		sb.append("JOIN CAMOWNER.MDT_AC_ARC_GRP_HDR d on a.MSG_ID = d.MSG_ID ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_PARTY_IDENT b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_SUPPL_DATA c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID ");
 
-		if(service.equalsIgnoreCase("MANAM"))
+		if(service.equalsIgnoreCase("CARIN"))
 		{
-			sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_ORGNL_MNDT e ON a.MSG_ID = e.MSG_ID AND a.MANDATE_REQ_TRAN_ID = e.MANDATE_REQ_TRAN_ID "); 
+			sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_ORGNL_MNDT e ON a.MSG_ID = e.MSG_ID AND a.MANDATE_REQ_TRAN_ID = e.MANDATE_REQ_TRAN_ID "); 
 		}
 
 		if(expiredTxns)
@@ -3859,7 +3859,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		scalarList.add("cdtrAbbShtNm");
 		scalarList.add("processStatus");
 		scalarList.add("dataSource");
-		if(service.equalsIgnoreCase("MANAM") || service.equalsIgnoreCase("MANCN"))
+		if(service.equalsIgnoreCase("CARIN") || service.equalsIgnoreCase("MANCN"))
 			scalarList.add("reason");	
 		log.debug("scalarList: " + scalarList);
 
@@ -3876,7 +3876,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sb.append("SELECT a.MANDATE_REQ_TRAN_ID AS mrti, a.MSG_ID AS msgId, SUBSTR(a.MSG_ID,13,6) AS creditorBank, SUBSTR(a.EXTRACT_MSG_ID,13,6) AS debtorBank, TO_CHAR(a.CREATED_DATE, 'YYYY-MM-DD') AS creationDate, ");
 		sb.append("c.AUTH_TYPE AS authType, a.MANDATE_REQ_ID AS contRefNum,a.LOCAL_INSTR_CD AS dbtrAuthReq, a.SEQUENCE_TYPE AS instOcc, b.ID as cdtrAbbShtNm, a.PROCESS_STATUS as processStatus,'ACH' AS dataSource  ");
-		if(service.equalsIgnoreCase("MANAM"))
+		if(service.equalsIgnoreCase("CARIN"))
 		{
 			sb.append(", a.AMEND_REASON_CODE as reason ");
 		}
@@ -3886,9 +3886,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			sb.append(", a.REJECT_REASON_CODE as reason ");
 		}
 
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_OPS_PARTY_IDENT b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
-		sb.append("LEFT JOIN MANOWNER.MDT_AC_OPS_SUPPL_DATA c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_OPS_PARTY_IDENT b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
+		sb.append("LEFT JOIN CAMOWNER.MDT_AC_OPS_SUPPL_DATA c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID ");
 		sb.append("WHERE a.PROCESS_STATUS IN ('4','9')  AND a.SERVICE_ID = '"+service+"' AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('"+fromDate+"', 'YYYY-MM-DD') AND TO_DATE('"+toDate+"', 'YYYY-MM-DD') and b.PARTY_IDENT_TYPE_ID = 'PI03' ");
 		sb.append("ORDER BY creationDate, mrti, creditorBank, debtorBank, authType, contRefNum, dbtrAuthReq, instOcc, cdtrAbbShtNm ");
 
@@ -3908,7 +3908,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		scalarList.add("cdtrAbbShtNm");
 		scalarList.add("processStatus");
 		scalarList.add("dataSource");
-		if(service.equalsIgnoreCase("MANAM") || service.equalsIgnoreCase("MANCN"))
+		if(service.equalsIgnoreCase("CARIN") || service.equalsIgnoreCase("MANCN"))
 			scalarList.add("reason");	
 
 		log.debug("scalarList: " + scalarList);
@@ -3936,8 +3936,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		}
 
 		sb.append("a.CR_ABB_SHORT_NAME as cdtrAbbShtNm, 'VALIDATION_FAILURE' AS status, a.ERROR_CODE AS errorCode, 'ACH' AS dataSource ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
-		sb.append("JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS b ON a.STATUS_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
+		sb.append("JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS b ON a.STATUS_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
 		sb.append("WHERE TRUNC(a.ARCHIVE_DATE) BETWEEN TO_DATE('"+fromDate+"', 'YYYY-MM-DD') AND TO_DATE('"+toDate+"', 'YYYY-MM-DD') AND ");
 		if(serviceNmId.equalsIgnoreCase("camt.055"))
 		{
@@ -3986,21 +3986,21 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		//		sb.append("SELECT a.INST_ID as creditorBank, b.INSTG_AGT as debtorBank, TO_CHAR(b.ARCHIVE_DATE, 'YYYY-MM-DD') AS creationDate,'BATCH' as authType, 'N/A' as contRefNum, 'N/A' as dbtrAuthReq, 'N/A' as instOcc, "); 
 		//		sb.append("'N/A' as cdtrAbbShtNm, 'VALIDATION FAILURE' AS status, a.ERROR_CODE AS errorCode, 'ACH' AS dataSource ");  
-		//		sb.append("FROM MANOWNER.MDT_AC_ARC_CONF_DETAILS a "); 
-		//		sb.append("JOIN MANOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
+		//		sb.append("FROM CAMOWNER.MDT_AC_ARC_CONF_DETAILS a "); 
+		//		sb.append("JOIN CAMOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
 		//		sb.append("WHERE TRUNC(a.ARCHIVE_DATE) BETWEEN TO_DATE('"+fromDate+"', 'YYYY-MM-DD') AND TO_DATE('"+toDate+"', 'YYYY-MM-DD') AND a.ORGNL_MSG_TYPE = '"+serviceNmId+"' AND a.ERROR_TYPE = 'TXN'AND a.TXN_STATUS = 'RJCT' ");
 		//		sb.append("ORDER BY creationDate, creditorBank, debtorBank, authType, contRefNum, dbtrAuthReq, instOcc, cdtrAbbShtNm,errorCode ");
 
-		if(service.equalsIgnoreCase("MANAM"))
+		if(service.equalsIgnoreCase("CARIN"))
 		{
 			sb.append("SELECT a.TXN_ID AS mrti, a.INST_ID as creditorBank, b.INSTG_AGT as debtorBank, TO_CHAR(a.ARCHIVE_DATE, 'YYYY-MM-DD') AS creationDate,e.AUTH_TYPE AS authType, ");
 			sb.append("'VALIDATION_FAILURE' AS status, a.ERROR_CODE AS errorCode, 'ACH' AS dataSource,f.MANDATE_REQ_ID AS contRefNum,c.LOCAL_INSTR_CD AS dbtrAuthReq, c.SEQUENCE_TYPE AS instOcc, d.ID as cdtrAbbShtNm ");
-			sb.append("FROM MANOWNER.MDT_AC_ARC_CONF_DETAILS a ");
-			sb.append("JOIN MANOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
-			sb.append("JOIN MANOWNER.MDT_AC_ARC_MNDT_MSG c ON c.MANDATE_REQ_TRAN_ID = a.TXN_ID ");
-			sb.append("JOIN MANOWNER.MDT_AC_ARC_PARTY_IDENT d ON c.MSG_ID = d.MSG_ID AND c.MANDATE_REQ_TRAN_ID = d.MANDATE_REQ_TRAN_ID ");
-			sb.append("JOIN MANOWNER.MDT_AC_ARC_SUPPL_DATA e ON c.MSG_ID = e.MSG_ID AND c.MANDATE_REQ_TRAN_ID = e.MANDATE_REQ_TRAN_ID ");
-			sb.append("JOIN MANOWNER.MDT_AC_ARC_ORGNL_MNDT f ON c.MSG_ID = f.MSG_ID AND c.MANDATE_REQ_TRAN_ID = f.MANDATE_REQ_TRAN_ID ");  
+			sb.append("FROM CAMOWNER.MDT_AC_ARC_CONF_DETAILS a ");
+			sb.append("JOIN CAMOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
+			sb.append("JOIN CAMOWNER.MDT_AC_ARC_MNDT_MSG c ON c.MANDATE_REQ_TRAN_ID = a.TXN_ID ");
+			sb.append("JOIN CAMOWNER.MDT_AC_ARC_PARTY_IDENT d ON c.MSG_ID = d.MSG_ID AND c.MANDATE_REQ_TRAN_ID = d.MANDATE_REQ_TRAN_ID ");
+			sb.append("JOIN CAMOWNER.MDT_AC_ARC_SUPPL_DATA e ON c.MSG_ID = e.MSG_ID AND c.MANDATE_REQ_TRAN_ID = e.MANDATE_REQ_TRAN_ID ");
+			sb.append("JOIN CAMOWNER.MDT_AC_ARC_ORGNL_MNDT f ON c.MSG_ID = f.MSG_ID AND c.MANDATE_REQ_TRAN_ID = f.MANDATE_REQ_TRAN_ID ");  
 			sb.append("WHERE TRUNC(a.ARCHIVE_DATE) BETWEEN TO_DATE('"+fromDate+"', 'YYYY-MM-DD') AND TO_DATE('"+toDate+"', 'YYYY-MM-DD') AND a.ORGNL_MSG_TYPE = '"+serviceNmId+"' AND a.ERROR_TYPE = 'TXN'AND a.TXN_STATUS = 'RJCT' ");
 			sb.append("and c.SERVICE_ID = '"+service+"' and d.PARTY_IDENT_TYPE_ID = 'PI03' ");
 			sb.append("ORDER BY creationDate, mrti, creditorBank, debtorBank, authType, contRefNum, dbtrAuthReq, instOcc, cdtrAbbShtNm,errorCode ");
@@ -4009,11 +4009,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		{
 			sb.append("SELECT a.TXN_ID AS mrti, a.INST_ID as creditorBank, b.INSTG_AGT as debtorBank, TO_CHAR(a.ARCHIVE_DATE, 'YYYY-MM-DD') AS creationDate,e.AUTH_TYPE AS authType, ");
 			sb.append("'VALIDATION_FAILURE' AS status, a.ERROR_CODE AS errorCode, 'ACH' AS dataSource,c.MANDATE_REQ_ID AS contRefNum,c.LOCAL_INSTR_CD AS dbtrAuthReq, c.SEQUENCE_TYPE AS instOcc, d.ID as cdtrAbbShtNm ");
-			sb.append("FROM MANOWNER.MDT_AC_ARC_CONF_DETAILS a ");
-			sb.append("JOIN MANOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
-			sb.append("JOIN MANOWNER.MDT_AC_ARC_MNDT_MSG c ON c.MANDATE_REQ_TRAN_ID = a.TXN_ID ");
-			sb.append("JOIN MANOWNER.MDT_AC_ARC_PARTY_IDENT d ON c.MSG_ID = d.MSG_ID AND c.MANDATE_REQ_TRAN_ID = d.MANDATE_REQ_TRAN_ID ");
-			sb.append("JOIN MANOWNER.MDT_AC_ARC_SUPPL_DATA e ON c.MSG_ID = e.MSG_ID AND c.MANDATE_REQ_TRAN_ID = e.MANDATE_REQ_TRAN_ID ");
+			sb.append("FROM CAMOWNER.MDT_AC_ARC_CONF_DETAILS a ");
+			sb.append("JOIN CAMOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
+			sb.append("JOIN CAMOWNER.MDT_AC_ARC_MNDT_MSG c ON c.MANDATE_REQ_TRAN_ID = a.TXN_ID ");
+			sb.append("JOIN CAMOWNER.MDT_AC_ARC_PARTY_IDENT d ON c.MSG_ID = d.MSG_ID AND c.MANDATE_REQ_TRAN_ID = d.MANDATE_REQ_TRAN_ID ");
+			sb.append("JOIN CAMOWNER.MDT_AC_ARC_SUPPL_DATA e ON c.MSG_ID = e.MSG_ID AND c.MANDATE_REQ_TRAN_ID = e.MANDATE_REQ_TRAN_ID ");
 			sb.append("WHERE TRUNC(a.ARCHIVE_DATE) BETWEEN TO_DATE('"+fromDate+"', 'YYYY-MM-DD') AND TO_DATE('"+toDate+"', 'YYYY-MM-DD') AND a.ORGNL_MSG_TYPE = '"+serviceNmId+"' AND a.ERROR_TYPE = 'TXN'AND a.TXN_STATUS = 'RJCT' ");
 			sb.append("and c.SERVICE_ID = '"+service+"' and d.PARTY_IDENT_TYPE_ID = 'PI03' ");
 			sb.append("ORDER BY creationDate, mrti, creditorBank, debtorBank, authType, contRefNum, dbtrAuthReq, instOcc, cdtrAbbShtNm,errorCode ");
@@ -4050,7 +4050,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 
-		if(service.equalsIgnoreCase("MANAM"))
+		if(service.equalsIgnoreCase("CARIN"))
 		{
 			sb.append("SELECT a.REJECT_REASON_CODE as reason,a.LOCAL_INSTR_CD as authType,b.CODE as authStatus, TO_CHAR(a.CREATED_DATE, 'YYYY-MM-DD') as creationDate "); 
 		}
@@ -4058,9 +4058,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		{
 			sb.append("SELECT a.REJECT_REASON_CODE as reason, b.CODE as authStatus, TO_CHAR(a.CREATED_DATE, 'YYYY-MM-DD') as creationDate "); 
 		}
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
-		sb.append("JOIN MANOWNER.MDT_AC_ARC_REF_DOC b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
-		sb.append("WHERE a.MANDATE_REQ_TRAN_ID = '"+mrti+"' AND a.SERVICE_ID = 'MANAC' ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
+		sb.append("JOIN CAMOWNER.MDT_AC_ARC_REF_DOC b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
+		sb.append("WHERE a.MANDATE_REQ_TRAN_ID = '"+mrti+"' AND a.SERVICE_ID = 'RCAIN' ");
 
 		String sqlQuery = sb.toString();
 		log.debug("sqlQuery: " + sqlQuery);
@@ -4069,7 +4069,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		scalarList.add("reason");
 		scalarList.add("authStatus");
 		scalarList.add("creationDate");
-		if(service.equalsIgnoreCase("MANAM"))
+		if(service.equalsIgnoreCase("CARIN"))
 			scalarList.add("authType");
 
 
@@ -4095,8 +4095,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			sb.append("SELECT b.MANDATE_SUSP_ID as mrti, a.ASSIGNER as debtorBank, b.CREDITOR_BANK as creditorBank, TO_CHAR(TRUNC(b.CREATED_DATE), 'YYYY-MM-DD') AS creationDate, b.REASON_CODE as reason, 'ACH' AS dataSource, b.PROCESS_STATUS AS processStatus ");
 		}
 
-		sb.append("FROM MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR a ");
-		sb.append("JOIN MANOWNER.MDT_AC_ARC_SUSP_MSG b ON a.ASSIGNMENT_ID = b.ASSIGNMENT_ID ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_SUSP_GRP_HDR a ");
+		sb.append("JOIN CAMOWNER.MDT_AC_ARC_SUSP_MSG b ON a.ASSIGNMENT_ID = b.ASSIGNMENT_ID ");
 
 		if(expiredTxns)
 		{
@@ -4105,8 +4105,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		else
 		{
 			//SalehaR - 2019-02-20 - No longer require information from CONF tables
-			//			sb.append("JOIN MANOWNER.MDT_AC_ARC_CONF_DETAILS c ON b.MANDATE_SUSP_ID = c.TXN_ID ");
-			//			sb.append("JOIN MANOWNER.MDT_AC_ARC_CONF_HDRS d ON c.CONF_HDR_SEQ_NO = d.SYSTEM_SEQ_NO ");
+			//			sb.append("JOIN CAMOWNER.MDT_AC_ARC_CONF_DETAILS c ON b.MANDATE_SUSP_ID = c.TXN_ID ");
+			//			sb.append("JOIN CAMOWNER.MDT_AC_ARC_CONF_HDRS d ON c.CONF_HDR_SEQ_NO = d.SYSTEM_SEQ_NO ");
 			sb.append("WHERE TRUNC(b.CREATED_DATE) BETWEEN TO_DATE('"+fromDate+"', 'YYYY-MM-DD') AND TO_DATE('"+toDate+"', 'YYYY-MM-DD') ");
 		}
 		sb.append("ORDER BY creationDate, debtorBank, creditorBank, reason ");
@@ -4162,8 +4162,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT b.MANDATE_SUSP_ID as mrti, a.ASSIGNER as debtorBank, b.CREDITOR_BANK as creditorBank, TO_CHAR(TRUNC(a.CREATE_DATE_TIME), 'YYYY-MM-DD') AS creationDate, b.REASON_CODE as reason, 'ACH' AS dataSource, b.PROCESS_STATUS AS processStatus ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_SUSP_GRP_HDR a ");
-		sb.append("JOIN MANOWNER.MDT_AC_OPS_SUSP_MSG b ON a.ASSIGNMENT_ID = b.ASSIGNMENT_ID ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_SUSP_GRP_HDR a ");
+		sb.append("JOIN CAMOWNER.MDT_AC_OPS_SUSP_MSG b ON a.ASSIGNMENT_ID = b.ASSIGNMENT_ID ");
 		sb.append("WHERE TRUNC(b.CREATED_DATE) BETWEEN TO_DATE('"+fromDate+"', 'YYYY-MM-DD') AND TO_DATE('"+toDate+"', 'YYYY-MM-DD') AND PROCESS_STATUS = '4' ");
 		sb.append("ORDER BY creationDate, debtorBank, creditorBank, reason ");
 
@@ -4218,8 +4218,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 //		sb.append("WHEN a.PAYMENTSTATUSGROUPCODEAMS = 'RJCT' THEN a.REASONCODEAMS ");
 //		sb.append("END AS ERROR_CODE ");
 //		sb.append(",a.PAYMENTSTATUSGROUPCODEAMS AS sts ,TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYY/MM/DD') AS dte ");
-//		sb.append("FROM MANOWNER.JNL_ACQ a ");
-//		sb.append("LEFT JOIN MANOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
+//		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+//		sb.append("LEFT JOIN CAMOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
 //		sb.append("AND a. MSGTYPEAMS = 'pain.009' AND b.MSGTYPEAMS = 'pain.012' AND  a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' ");
 //		sb.append("WHERE a.MSGTYPEAMS = 'pain.009' AND TO_CHAR(TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYYMMDD'), 'YYYY-MM-DD') between '"+fromDate+"' and '"+toDate+"') ");
 //
@@ -4343,8 +4343,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 //		sb.append("CASE WHEN a.PAYMENTSTATUSGROUPCODEAMS = 'RJCT' THEN a.reasoncodeams ");
 //		sb.append("end AS ERROR_CODE ");
 //		sb.append(",a.PAYMENTSTATUSGROUPCODEAMS AS sts ,TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYY/MM/DD') AS dte ");
-//		sb.append("FROM MANOWNER.JNL_ACQ a ");
-//		sb.append("LEFT JOIN MANOWNER.JNL_ACQ b on a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
+//		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+//		sb.append("LEFT JOIN CAMOWNER.JNL_ACQ b on a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
 //		sb.append("AND a. MSGTYPEAMS = 'pain.010' AND b.MSGTYPEAMS = 'pain.012' AND  a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' ");
 //		sb.append("where a.MSGTYPEAMS = 'pain.010' AND TO_CHAR(TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYYMMDD'), 'YYYY-MM-DD') between '"+fromDate+"' and '"+toDate+"') ");
 //		sb.append("SELECT TXNID AS mrti, DEBTOR_BANK AS debtorBank ,CREDITOR_BANK AS creditorBank ,CREATION_DATE AS creationDate, AMENDMENT_REASON AS reason ");
@@ -4468,8 +4468,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 //		sb.append("END AS ERROR_CODE ");
 //		sb.append(",a.PAYMENTSTATUSGROUPCODEAMS AS sts ");
 //		sb.append(",TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYY/MM/DD') AS dte "); 
-//		sb.append("FROM MANOWNER.JNL_ACQ a ");
-//		sb.append("left join MANOWNER.JNL_ACQ b on a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS "); 
+//		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+//		sb.append("left join CAMOWNER.JNL_ACQ b on a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS "); 
 //		sb.append("AND a. MSGTYPEAMS = 'pain.011' AND b.MSGTYPEAMS = 'pain.012' AND a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' "); 
 //		sb.append("where a.MSGTYPEAMS = 'pain.011' AND TO_CHAR(TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYYMMDD'), 'YYYY-MM-DD') BETWEEN '"+fromDate+"' and '"+toDate+"') ");
 //		sb.append("SELECT TXNID AS mrti, DEBTOR_BANK AS debtorBank ,CREDITOR_BANK AS creditorBank ,CREATION_DATE AS creationDate ,SUBSTR(AthTp,INSTR(AthTp,'<AthntctnTp>') + 12) AS authType  ");
@@ -4564,22 +4564,22 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		//      sb.append("SELECT INST_ID AS instId, SUM(NR_OF_MSGS) as nrOfMsgs, SUM(NR_MSGS_ACCEPTED) as nrOfAccpMsgs, SUM(NR_MSGS_REJECTED) as nrOfRjctMsgs ");
-		//      sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_COUNT ");
+		//      sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_COUNT ");
 		//      sb.append("WHERE PROCESS_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') AND SERVICE_ID = '"+serviceId+"' ");
 		//      sb.append("GROUP BY INST_ID ");
 		//      sb.append("ORDER BY INST_ID ");
 
 		sb.append("SELECT a.INST_ID AS instId, SUM(NVL(a.NR_OF_MSGS, 0)) as nrOfMsgs, SUM(NVL(a.NR_MSGS_ACCEPTED,0)) as nrOfAccpMsgs, SUM(NVL(a.NR_MSGS_REJECTED,0)) as nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_COUNT a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON a.INST_ID = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_COUNT a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON a.INST_ID = b.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') AND a.SERVICE_ID = '"+serviceId+"' ");
 		sb.append("AND b.AC_CREDITOR = 'Y' ");
 		sb.append("GROUP BY INST_ID ");
 		sb.append("UNION ");
 		sb.append("SELECT b.MEMBER_NO AS instId, 0 as nrOfMsgs, 0 as nrOfAccpMsgs, 0 as nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.SYS_CIS_BANK b ");
-		sb.append("WHERE b.MEMBER_NO NOT IN (SELECT a.INST_ID AS instId FROM MANOWNER.MDT_AC_ARC_MNDT_COUNT a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON a.INST_ID = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.SYS_CIS_BANK b ");
+		sb.append("WHERE b.MEMBER_NO NOT IN (SELECT a.INST_ID AS instId FROM CAMOWNER.MDT_AC_ARC_MNDT_COUNT a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON a.INST_ID = b.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') AND a.SERVICE_ID = '"+serviceId+"' AND b.AC_CREDITOR = 'Y' ");
 		sb.append("GROUP BY INST_ID) AND b.AC_CREDITOR = 'Y' ");
 		sb.append("ORDER BY instId ");
@@ -4609,16 +4609,16 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT a.INST_ID AS instId, SUM(NVL(a.NR_OF_MSGS, 0)) as nrOfMsgs, SUM(NVL(a.NR_MSGS_ACCEPTED,0)) as nrOfAccpMsgs, SUM(NVL(a.NR_MSGS_REJECTED,0)) as nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_COUNT a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON a.INST_ID = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_COUNT a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON a.INST_ID = b.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') AND a.SERVICE_ID = '"+serviceId+"' ");
 		sb.append("AND b.AC_DEBTOR = 'Y' ");
 		sb.append("GROUP BY INST_ID ");
 		sb.append("UNION ");
 		sb.append("SELECT b.MEMBER_NO AS instId, 0 as nrOfMsgs, 0 as nrOfAccpMsgs, 0 as nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.SYS_CIS_BANK b ");
-		sb.append("WHERE b.MEMBER_NO NOT IN (SELECT a.INST_ID AS instId FROM MANOWNER.MDT_AC_ARC_MNDT_COUNT a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON a.INST_ID = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.SYS_CIS_BANK b ");
+		sb.append("WHERE b.MEMBER_NO NOT IN (SELECT a.INST_ID AS instId FROM CAMOWNER.MDT_AC_ARC_MNDT_COUNT a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON a.INST_ID = b.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') AND a.SERVICE_ID = '"+serviceId+"' AND b.AC_DEBTOR = 'Y' ");
 		sb.append("GROUP BY INST_ID) AND b.AC_DEBTOR = 'Y' ");
 		sb.append("ORDER BY instId ");
@@ -4648,20 +4648,20 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("WITH TMPTBL AS ");
 		sb.append("(SELECT a.INSTRUCTINGAGENTAMS AS instId,COUNT(*) as nrOfMsgs,CASE WHEN a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' THEN COUNT(*) END as nrOfAccpMsgs, ");
 		sb.append("CASE WHEN a.PAYMENTSTATUSGROUPCODEAMS IS NULL OR a.PAYMENTSTATUSGROUPCODEAMS = 'RJCT' THEN COUNT(*) END as nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
 		sb.append("WHERE a.MSGTYPEAMS = '"+serviceId+"' ");
 		sb.append("AND TO_CHAR(TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYYMMDD'), 'YYYY-MM-DD') BETWEEN '"+strFromDate+"'  AND '"+strToDate+"' ");
 		sb.append("GROUP BY a.INSTRUCTINGAGENTAMS, a.PAYMENTSTATUSGROUPCODEAMS, a.RESULTCODE ");
 		sb.append("UNION ALL ");
 		sb.append("SELECT b.MEMBER_NO AS instId, 0 as nrOfMsg, 0 as nrOfAccpMsgs, 0 as nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.SYS_CIS_BANK b ");
+		sb.append("FROM CAMOWNER.SYS_CIS_BANK b ");
 		sb.append("WHERE b.MEMBER_NO NOT IN (SELECT a.INSTRUCTINGAGENTAMS as instId ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ");
 		sb.append("ON a.INSTRUCTINGAGENTAMS = b.MEMBER_NO ");
 		sb.append("WHERE a.MSGTYPEAMS ='"+serviceId+"' AND b.AC_CREDITOR ='Y')) ");
 		sb.append("SELECT instId, sum(nvl(nrOfMsgs,0)) AS nrOfMsgs, sum(nvl(nrOfAccpMsgs,0)) as nrOfAccpMsgs, sum(nvl(nrOfRjctMsgs,0)) as nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.TMPTBL ");
+		sb.append("FROM CAMOWNER.TMPTBL ");
 		sb.append("GROUP BY instId ");
 		sb.append("ORDER BY instId ");	
 
@@ -4692,20 +4692,20 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("WITH TMPTBL AS ");
 		sb.append("(SELECT a.INSTRUCTINGAGENTAMS AS instId,COUNT(*) as nrOfMsgs,CASE WHEN a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' THEN COUNT(*) END as nrOfAccpMsgs, ");
 		sb.append("CASE WHEN a.PAYMENTSTATUSGROUPCODEAMS IS NULL OR a.PAYMENTSTATUSGROUPCODEAMS = 'RJCT' THEN COUNT(*) END as nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
 		sb.append("WHERE a.SERVICEIDAMS = '"+serviceId+"' ");
 		sb.append("AND TO_CHAR(TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYYMMDD'), 'YYYY-MM-DD') BETWEEN '"+strFromDate+"'  AND '"+strToDate+"' ");
 		sb.append("GROUP BY a.INSTRUCTINGAGENTAMS, a.RESULTCODE, a.PAYMENTSTATUSGROUPCODEAMS ");
 		sb.append("UNION ");
 		sb.append("SELECT b.MEMBER_NO AS instId, 0 AS nrOfMsgs, 0 AS nrOfAccpMsgs, 0 AS nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.SYS_CIS_BANK b ");
+		sb.append("FROM CAMOWNER.SYS_CIS_BANK b ");
 		sb.append("WHERE b.MEMBER_NO NOT IN (SELECT a.INSTRUCTINGAGENTAMS AS instId ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ");
 		sb.append("ON a.INSTRUCTINGAGENTAMS = b. MEMBER_NO ");
 		sb.append("WHERE a.SERVICEIDAMS ='"+serviceId+"' AND b.AC_DEBTOR = 'Y' AND  TO_CHAR(TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYYMMDD'), 'YYYY-MM-DD') BETWEEN '"+strFromDate+"'  AND '"+strToDate+"')) ");
 		sb.append("SELECT instId, SUM(NVL(nrOfMsgs,0)) AS nrOfMsgs, SUM(NVL(nrOfAccpMsgs,0)) AS nrOfAccpMsgs, SUM(NVL(nrOfRjctMsgs,0)) AS nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.TMPTBL ");
+		sb.append("FROM CAMOWNER.TMPTBL ");
 		sb.append("GROUP BY instId ");
 		sb.append("ORDER BY instId ");
 
@@ -4738,21 +4738,21 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("WITH TMPTBL AS ");
 		sb.append("(SELECT a.INSTRUCTINGAGENTAMS AS instId,COUNT(*) AS nrOfMsgs,CASE WHEN a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' THEN ");
 		sb.append("COUNT(*) END AS nrOfAccpMsgs,CASE WHEN a.PAYMENTSTATUSGROUPCODEAMS IS NULL OR a.PAYMENTSTATUSGROUPCODEAMS = 'RJCT' THEN COUNT(*) END as nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
 		sb.append("WHERE a.SERVICEIDAMS ='"+serviceId+"' AND ");
 		sb.append("TO_CHAR(TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYYMMDD'),'YYYY-MM-DD') BETWEEN '"+strFromDate+"'  AND '"+strToDate+"' ");
 		sb.append("GROUP BY a.INSTRUCTINGAGENTAMS, a.RESULTCODE, a.PAYMENTSTATUSGROUPCODEAMS ");
 		sb.append("UNION ");
 		sb.append("SELECT b.MEMBER_NO AS instId, 0 AS nrOfMsgs, 0 AS nrOfAccpMsgs, 0 AS nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.SYS_CIS_BANK b ");
+		sb.append("FROM CAMOWNER.SYS_CIS_BANK b ");
 		sb.append("WHERE b.MEMBER_NO NOT IN (SELECT a.INSTRUCTINGAGENTAMS AS instId ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ");
 		sb.append("ON a.INSTRUCTINGAGENTAMS = b.MEMBER_NO ");
 		sb.append("WHERE a.SERVICEIDAMS ='"+serviceId+"' AND b.AC_CREDITOR ='Y' AND ");
 		sb.append("TO_CHAR(TO_DATE(SUBSTR(a.TRANSDATETIME,1,8), 'YYYYMMDD'), 'YYYY-MM-DD') BETWEEN '"+strFromDate+"'  AND '"+strToDate+"')) ");
 		sb.append("SELECT instId, SUM(NVL(nrOfMsgs,0)) AS nrOfMsgs, SUM(NVL(nrOfAccpMsgs,0)) AS nrOfAccpMsgs, SUM(NVL(nrOfRjctMsgs,0)) AS nrOfRjctMsgs ");
-		sb.append("FROM MANOWNER.TMPTBL ");
+		sb.append("FROM CAMOWNER.TMPTBL ");
 		sb.append("GROUP BY instId ");
 		sb.append("ORDER BY instId ");
 
@@ -4806,8 +4806,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("SELECT a.MEMBER_NO AS cr_memno "); 
 		sb.append(",a.MEMBER_NAME AS cr_memname  ");
 		sb.append(",c.SERVICE_ID_OUT AS outService ");
-		sb.append("FROM  MANOWNER.SYS_CIS_BANK a "); 
-		sb.append(",MANOWNER.MDT_SYSCTRL_SERVICES c ");
+		sb.append("FROM  CAMOWNER.SYS_CIS_BANK a "); 
+		sb.append(",CAMOWNER.MDT_SYSCTRL_SERVICES c ");
 		//2020-04-07-SalehaR: Remove Debtor Ind from Reoprt
 //		sb.append("WHERE a.AC_CREDITOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NULL) ");
 		sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NULL) ");
@@ -4815,16 +4815,16 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("COUNT(bb.SERVICE) AS nrOfMsgs ");
 		sb.append("FROM TEMPTBL aa ");
 		if(reportNr.equalsIgnoreCase("MR022")) {
-			sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
+			sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
 		}
 		else
 		{
-			sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
+			sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
 			sb.append("AND bb.ARCHIVE_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");  
 		}
 		sb.append("AND aa.outService = bb.SERVICE ");
 		//		sb.append("AND bb.ARCHIVE_DATE BETWEEN TO_DATE('2018-06-01','YYYY-MM-DD') AND TO_DATE('2018-06-30','YYYY-MM-DD') ");  
-		sb.append("WHERE aa.outService IN ('ST100', 'ST105', 'ST007') ");
+		sb.append("WHERE aa.outService IN ('ST200', 'ST105', 'ST007') ");
 		sb.append("GROUP BY aa.outService, aa.cr_memno ");
 		sb.append("ORDER BY aa.outService, aa.cr_memno ");
 
@@ -4854,8 +4854,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("SELECT a.MEMBER_NO AS dr_memno "); 
 		sb.append(",a.MEMBER_NAME AS dr_memname  ");
 		sb.append(",c.SERVICE_ID_OUT AS outService ");
-		sb.append("FROM  MANOWNER.SYS_CIS_BANK a "); 
-		sb.append(",MANOWNER.MDT_SYSCTRL_SERVICES c "); 
+		sb.append("FROM  CAMOWNER.SYS_CIS_BANK a "); 
+		sb.append(",CAMOWNER.MDT_SYSCTRL_SERVICES c "); 
 		//2020-04-07-SalehaR: Remove Debtor Ind from Reoprt
 //		sb.append("WHERE a.AC_DEBTOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NULL) ");
 		sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NULL) ");
@@ -4863,17 +4863,17 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("COUNT(bb.SERVICE) AS nrOfMsgs ");
 		sb.append("FROM TEMPTBL aa ");
 		if(reportNr.equalsIgnoreCase("MR022")) {
-			sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
+			sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
 		}
 		else
 		{
-			sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
+			sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
 			//			sb.append("AND bb.ARCHIVE_DATE BETWEEN TO_DATE('2018-06-01','YYYY-MM-DD') AND TO_DATE('2018-06-30','YYYY-MM-DD') ");
 			sb.append("AND bb.ARCHIVE_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");
 		}
 		sb.append("AND aa.outService = bb.SERVICE ");
 
-		sb.append("WHERE aa.outService IN ('ST102', 'ST104', 'ST106', 'ST008') ");
+		sb.append("WHERE aa.outService IN ('ST202', 'ST204', 'ST106', 'ST008') ");
 		sb.append("GROUP BY aa.outService, aa.dr_memno ");
 		sb.append("ORDER BY aa.outService, aa.dr_memno ");
 
@@ -4899,12 +4899,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTINGAGENTAMS ,COUNT(1) AS NOM ");
 		sb.append(",CASE WHEN RESULTCODE = '0' THEN COUNT(1) END AS NOMA ");
 		sb.append(",CASE WHEN RESULTCODE <> '0' OR SERVICEIDAMS = 'STMVF' THEN COUNT(1) END AS NOMR ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE MSGTYPEAMS = 'pain.009' "); 
 		sb.append("AND SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(MANDATEBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE(MANDATEBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), '<LclInstrm><Prtry>',1,1)+18,4) <> '0227' ");
 
@@ -4947,10 +4947,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTEDAGENTAMS ,COUNT(1) AS VOL ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE RESULTCODE = '0' AND MSGTYPEAMS = 'pain.009' "); 
 		sb.append("AND SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(MANDATEBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE(MANDATEBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), '<LclInstrm><Prtry>',1,1)+18,4) <> '0227' "); 
 
@@ -4990,12 +4990,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTINGAGENTAMS ,COUNT(1) AS NOM ");
 		sb.append(",CASE WHEN RESULTCODE = '0' THEN COUNT(1) END AS NOMA ");
 		sb.append(",CASE WHEN RESULTCODE <> '0' OR SERVICEIDAMS = 'STMVF' THEN COUNT(1) END AS NOMR ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(MANDATEBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE(MANDATEBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), '<LclInstrm><Prtry>',1,1)+18,4) = '0227' ");
 
 		if(reportNr.equalsIgnoreCase("MR021"))
@@ -5037,10 +5037,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTEDAGENTAMS ,COUNT(1) AS VOL ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE RESULTCODE = '0' AND MSGTYPEAMS = 'pain.009' "); 
 		sb.append("AND SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(MANDATEBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE(MANDATEBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), '<LclInstrm><Prtry>',1,1)+18,4) = '0227' "); 
 
@@ -5079,12 +5079,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTINGAGENTAMS ,COUNT(1) AS NOM ");
 		sb.append(",CASE WHEN RESULTCODE = '0' THEN COUNT(1) END AS NOMA ");
 		sb.append(",CASE WHEN RESULTCODE <> '0' OR SERVICEIDAMS = 'STMVF' THEN COUNT(1) END AS NOMR ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE MSGTYPEAMS = 'pain.010' ");
 
 		if(reportNr.equalsIgnoreCase("MR021"))
@@ -5126,10 +5126,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTEDAGENTAMS ,COUNT(1) AS VOL ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE RESULTCODE = '0' AND MSGTYPEAMS = 'pain.010' ");  
 
 		if(reportNr.equalsIgnoreCase("MR021"))
@@ -5168,12 +5168,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTINGAGENTAMS ,COUNT(1) AS NOM ");
 		sb.append(",CASE WHEN RESULTCODE = '0' THEN COUNT(1) END AS NOMA ");
 		sb.append(",CASE WHEN RESULTCODE <> '0' OR SERVICEIDAMS = 'STMVF' THEN COUNT(1) END AS NOMR ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE MSGTYPEAMS = 'pain.011' ");
 
 		if(reportNr.equalsIgnoreCase("MR021"))
@@ -5215,10 +5215,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTEDAGENTAMS ,COUNT(1) AS VOL ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE RESULTCODE = '0' AND MSGTYPEAMS = 'pain.011' ");  
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5255,12 +5255,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTINGAGENTAMS ,COUNT(1) AS NOM ");
 		sb.append(",CASE WHEN RESULTCODE = '0' THEN COUNT(1) END AS NOMA ");
 		sb.append(",CASE WHEN RESULTCODE <> '0' THEN COUNT(1) END AS NOMR ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE SERVICEIDAMS = 'ST012' ");
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5300,12 +5300,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTEDAGENTAMS ,COUNT(1) AS NOM ");
 		sb.append(",CASE WHEN RESULTCODE = '0' THEN COUNT(1) END AS NOMA ");
 		sb.append(",CASE WHEN RESULTCODE <> '0'THEN COUNT(1) END AS NOMR ");
-		sb.append("FROM MANOWNER.JNL_ACQ WHERE SERVICEIDAMS = 'MANIR' ");
+		sb.append("FROM CAMOWNER.JNL_ACQ WHERE SERVICEIDAMS = 'MANIR' ");
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
 			sb.append("AND SUBSTR(TRANSDATETIME, 1, 8) BETWEEN '"+fromDate+"' AND '"+toDate+"' ");
@@ -5344,10 +5344,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTINGAGENTAMS ,COUNT(1) AS VOL ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE RESULTCODE = '0' AND SERVICEIDAMS = 'MANIR' ");  
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5384,12 +5384,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTEDAGENTAMS ,COUNT(1) AS NOM ");
 		sb.append(",CASE WHEN RESULTCODE = '0' THEN COUNT(1) END AS NOMA ");
 		sb.append(",CASE WHEN RESULTCODE <> '0'THEN COUNT(1) END AS NOMR ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE SERVICEIDAMS = 'STMAN' ");
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5429,10 +5429,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTINGAGENTAMS ,COUNT(1) AS VOL ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE RESULTCODE = '0' AND SERVICEIDAMS = 'STMAN' ");  
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5469,12 +5469,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTEDAGENTAMS ,COUNT(1) AS NOM ");
 		sb.append(",CASE WHEN RESULTCODE = '0' THEN COUNT(1) END AS NOMA ");
 		sb.append(",CASE WHEN RESULTCODE <> '0'THEN COUNT(1) END AS NOMR ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE SERVICEIDAMS = 'STMDF' ");
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5514,10 +5514,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTINGAGENTAMS ,COUNT(1) AS VOL ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE RESULTCODE = '0' AND SERVICEIDAMS = 'STMDF' ");  
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5554,12 +5554,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTEDAGENTAMS ,COUNT(1) AS NOM ");
 		sb.append(",CASE WHEN RESULTCODE = '0' THEN COUNT(1) END AS NOMA ");
 		sb.append(",CASE WHEN RESULTCODE <> '0' OR SERVICEIDAMS = 'STAVF' THEN COUNT(1) END AS NOMR ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE MSGTYPEAMS = 'pain.012' ");
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5599,10 +5599,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTINGAGENTAMS ,COUNT(1) AS VOL ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE RESULTCODE = '0' AND MSGTYPEAMS = 'pain.012' ");  
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5639,10 +5639,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("WITH TMPTBL1 AS ");
-		sb.append("(SELECT MEMBER_NO FROM MANOWNER.SYS_CIS_BANK) ");
+		sb.append("(SELECT MEMBER_NO FROM CAMOWNER.SYS_CIS_BANK) ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT INSTRUCTEDAGENTAMS ,COUNT(1) AS VOL ");
-		sb.append("FROM MANOWNER.JNL_ACQ ");
+		sb.append("FROM CAMOWNER.JNL_ACQ ");
 		sb.append("WHERE RESULTCODE = '0' AND SERVICEIDAMS = 'ST012' ");
 		if(reportNr.equalsIgnoreCase("MR021"))
 		{
@@ -5684,12 +5684,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("(SELECT a.MEMBER_NO AS cr_memno  ");
 		sb.append(",a.MEMBER_NAME AS cr_memname ");
 		sb.append(",c.SERVICE_ID_IN AS inService ");
-		sb.append("FROM  MANOWNER.SYS_CIS_BANK a ");
-		sb.append(",MANOWNER.MDT_SYSCTRL_SERVICES c ");
+		sb.append("FROM  CAMOWNER.SYS_CIS_BANK a ");
+		sb.append(",CAMOWNER.MDT_SYSCTRL_SERVICES c ");
 		sb.append("WHERE a.AC_CREDITOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN ='MANIN') ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT SUBSTR(MSG_ID,13,6) AS instId,SERVICE_ID as service,COUNT(*) AS nrOfMsgs,COUNT(*) AS nrOfAccpMsgs ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS ");   
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS ");   
 		sb.append("WHERE LOCAL_INSTR_CD IN('0999','0998')AND SERVICE_ID = 'MANIN' AND ARCHIVE_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");
 		sb.append("GROUP BY SUBSTR(MSG_ID,13,6) ,SERVICE_ID ");
 		sb.append("ORDER BY SUBSTR(MSG_ID,13,6) ,SERVICE_ID) ");
@@ -5726,13 +5726,13 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("(SELECT a.MEMBER_NO AS cr_memno "); 
 		sb.append(",a.MEMBER_NAME AS cr_memname ");
 		sb.append(",c.SERVICE_ID_OUT AS inService ");
-		sb.append("FROM  MANOWNER.SYS_CIS_BANK a ");
-		sb.append(",MANOWNER.MDT_SYSCTRL_SERVICES c ");
+		sb.append("FROM  CAMOWNER.SYS_CIS_BANK a ");
+		sb.append(",CAMOWNER.MDT_SYSCTRL_SERVICES c ");
 		sb.append("WHERE a.AC_DEBTOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_OUT ='MANOT') ");
 		sb.append(",TEMPTBL2 AS ");
 		sb.append("(SELECT SUBSTR( a.EXTRACT_MSG_ID,13,6) AS instId,SUBSTR(a.EXTRACT_MSG_ID,05,05) as service,COUNT(*) AS nrOfExtMsgs ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON  SUBSTR(a.EXTRACT_MSG_ID,13,6) = b.MEMBER_NO "); 
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON  SUBSTR(a.EXTRACT_MSG_ID,13,6) = b.MEMBER_NO "); 
 		//sb.append("WHERE a.LOCAL_INSTR_CD IN('0999','0998')AND  SUBSTR(a.EXTRACT_MSG_ID,05,05) = 'MANOT' AND b.AC_DEBTOR = 'Y' AND a.ARCHIVE_DATE BETWEEN TO_DATE('2019-06-01','YYYY-MM-DD') AND TO_DATE('2019-06-30','YYYY-MM-DD') ");
 		sb.append("WHERE a.LOCAL_INSTR_CD IN('0999','0998')AND  SUBSTR(a.EXTRACT_MSG_ID,05,05) = 'MANOT' AND b.AC_DEBTOR = 'Y' AND a.ARCHIVE_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");
 		sb.append("GROUP BY SUBSTR(a.EXTRACT_MSG_ID,13,6),SUBSTR(a.EXTRACT_MSG_ID,05,05) ");
@@ -5771,19 +5771,19 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("(SELECT a.MEMBER_NO AS cr_memno "); 
 		sb.append(",a.MEMBER_NAME AS cr_memname ");
 		sb.append(",c.SERVICE_ID_IN AS inService "); 
-		sb.append("FROM  MANOWNER.SYS_CIS_BANK a ");
-		sb.append(",MANOWNER.MDT_SYSCTRL_SERVICES c ");
-		sb.append("WHERE a.AC_DEBTOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN ='ST101'), ");
+		sb.append("FROM  CAMOWNER.SYS_CIS_BANK a ");
+		sb.append(",CAMOWNER.MDT_SYSCTRL_SERVICES c ");
+		sb.append("WHERE a.AC_DEBTOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN ='ST201'), ");
 		sb.append("TEMPTBL2 AS (SELECT aa.INSTG_AGT as instId , aa.SERVICE as service ,COUNT(*) AS nrOfMsgs,COUNT(*) AS nrOfAccpMsgs ");
 		sb.append("FROM ");         
-		sb.append("MANOWNER.MDT_AC_ARC_CONF_HDRS aa , ");
-		sb.append("MANOWNER.MDT_AC_ARC_CONF_DETAILS bb, ");
-		sb.append("MANOWNER.SYS_CIS_BANK cc  ");
+		sb.append("CAMOWNER.MDT_AC_ARC_CONF_HDRS aa , ");
+		sb.append("CAMOWNER.MDT_AC_ARC_CONF_DETAILS bb, ");
+		sb.append("CAMOWNER.SYS_CIS_BANK cc  ");
 		sb.append("WHERE  aa.SYSTEM_SEQ_NO = bb.CONF_HDR_SEQ_NO ");
 		sb.append("AND aa.ARCHIVE_DATE = bb.ARCHIVE_DATE ");
 		sb.append("AND aa.INSTG_AGT = cc.MEMBER_NO ");
-		//sb.append("AND bb.LOCAL_INSTR_CD IN ('0999','0998') and aa.SERVICE = 'ST101' AND  cc.AC_DEBTOR = 'Y' AND bb.ARCHIVE_DATE BETWEEN TO_DATE('2019-06-01','YYYY-MM-DD') AND TO_DATE('2019-06-30','YYYY-MM-DD') ");
-		sb.append("AND bb.LOCAL_INSTR_CD IN ('0999','0998') and aa.SERVICE = 'ST101' AND  cc.AC_DEBTOR = 'Y' AND bb.ARCHIVE_DATE  BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");  
+		//sb.append("AND bb.LOCAL_INSTR_CD IN ('0999','0998') and aa.SERVICE = 'ST201' AND  cc.AC_DEBTOR = 'Y' AND bb.ARCHIVE_DATE BETWEEN TO_DATE('2019-06-01','YYYY-MM-DD') AND TO_DATE('2019-06-30','YYYY-MM-DD') ");
+		sb.append("AND bb.LOCAL_INSTR_CD IN ('0999','0998') and aa.SERVICE = 'ST201' AND  cc.AC_DEBTOR = 'Y' AND bb.ARCHIVE_DATE  BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");  
 		sb.append("GROUP BY aa.INSTG_AGT, aa.SERVICE ");
 		sb.append("ORDER BY aa.INSTG_AGT, aa.SERVICE) ");
 		sb.append("SELECT d.cr_memno AS instId,d.inService as service,SUM(NVL(nrOfMsgs,0)) AS nrOfMsgs,SUM(NVL(nrOfAccpMsgs,0)) AS nrOfAccpMsgs ");
@@ -5819,14 +5819,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("(SELECT a.MEMBER_NO AS cr_memno "); 
 		sb.append(",a.MEMBER_NAME AS cr_memname ");
 		sb.append(",c.SERVICE_ID_IN AS inService "); 
-		sb.append("FROM  MANOWNER.SYS_CIS_BANK a ");
-		sb.append(",MANOWNER.MDT_SYSCTRL_SERVICES c ");
-		sb.append("WHERE a.AC_DEBTOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN ='MANAC'), ");
+		sb.append("FROM  CAMOWNER.SYS_CIS_BANK a ");
+		sb.append(",CAMOWNER.MDT_SYSCTRL_SERVICES c ");
+		sb.append("WHERE a.AC_DEBTOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN ='RCAIN'), ");
 		sb.append("TEMPTBL2 AS (SELECT SUBSTR(a.MSG_ID,13,6) AS instId,a.SERVICE_ID as service,COUNT(*) AS nrOfMsgs,COUNT(*) AS nrOfAccpMsgs ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
-		//sb.append("WHERE a.LOCAL_INSTR_CD IN('0999','0998') AND a.SERVICE_ID = 'MANAC' AND b.AC_DEBTOR = 'Y' AND a.ARCHIVE_DATE BETWEEN TO_DATE('2019-06-01','YYYY-MM-DD') AND TO_DATE('2019-06-30','YYYY-MM-DD') ");
-		sb.append("WHERE a.LOCAL_INSTR_CD IN('0999','0998') AND a.SERVICE_ID = 'MANAC' AND b.AC_DEBTOR = 'Y' AND a.ARCHIVE_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
+		//sb.append("WHERE a.LOCAL_INSTR_CD IN('0999','0998') AND a.SERVICE_ID = 'RCAIN' AND b.AC_DEBTOR = 'Y' AND a.ARCHIVE_DATE BETWEEN TO_DATE('2019-06-01','YYYY-MM-DD') AND TO_DATE('2019-06-30','YYYY-MM-DD') ");
+		sb.append("WHERE a.LOCAL_INSTR_CD IN('0999','0998') AND a.SERVICE_ID = 'RCAIN' AND b.AC_DEBTOR = 'Y' AND a.ARCHIVE_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");
 		sb.append("GROUP BY SUBSTR(a.MSG_ID,13,6) ,a.SERVICE_ID ");
 		sb.append("ORDER BY SUBSTR(a.MSG_ID,13,6) ,a.SERVICE_ID) ");
 		sb.append("SELECT d.cr_memno AS instId,d.inService as service,SUM(NVL(nrOfMsgs,0)) AS nrOfMsgs,SUM(NVL(nrOfAccpMsgs,0)) AS nrOfAccpMsgs ");
@@ -5861,16 +5861,16 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("(SELECT a.MEMBER_NO AS cr_memno ");  
 		sb.append(",a.MEMBER_NAME AS cr_memname ");
 		sb.append(",c.SERVICE_ID_OUT AS inService ");
-		sb.append("FROM  MANOWNER.SYS_CIS_BANK a  ");
-		sb.append(",MANOWNER.MDT_SYSCTRL_SERVICES c ");
-		sb.append("WHERE a.AC_CREDITOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_OUT ='ST103'), ");
+		sb.append("FROM  CAMOWNER.SYS_CIS_BANK a  ");
+		sb.append(",CAMOWNER.MDT_SYSCTRL_SERVICES c ");
+		sb.append("WHERE a.AC_CREDITOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_OUT ='ST203'), ");
 		sb.append("TEMPTBL2 AS (SELECT aa.INST_ID as instId , aa.EXTRACT_SERVICE as service ,COUNT(*) as nrOfExtMsgs "); 
 		sb.append("FROM "); 
-		sb.append("MANOWNER.MDT_AC_ARC_CONF_DETAILS aa, ");
-		sb.append("MANOWNER.SYS_CIS_BANK bb ");
+		sb.append("CAMOWNER.MDT_AC_ARC_CONF_DETAILS aa, ");
+		sb.append("CAMOWNER.SYS_CIS_BANK bb ");
 		sb.append("WHERE  aa.INST_ID = bb.MEMBER_NO ");
-		//sb.append("AND aa.LOCAL_INSTR_CD IN ('0999','0998') and aa.EXTRACT_SERVICE = 'ST103' AND bb.AC_CREDITOR = 'Y'AND aa.ARCHIVE_DATE BETWEEN TO_DATE('2019-06-01','YYYY-MM-DD') AND TO_DATE('2019-06-30','YYYY-MM-DD') ");
-		sb.append("AND aa.LOCAL_INSTR_CD IN ('0999','0998') and aa.EXTRACT_SERVICE = 'ST103' AND bb.AC_CREDITOR = 'Y'AND aa.ARCHIVE_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");
+		//sb.append("AND aa.LOCAL_INSTR_CD IN ('0999','0998') and aa.EXTRACT_SERVICE = 'ST203' AND bb.AC_CREDITOR = 'Y'AND aa.ARCHIVE_DATE BETWEEN TO_DATE('2019-06-01','YYYY-MM-DD') AND TO_DATE('2019-06-30','YYYY-MM-DD') ");
+		sb.append("AND aa.LOCAL_INSTR_CD IN ('0999','0998') and aa.EXTRACT_SERVICE = 'ST203' AND bb.AC_CREDITOR = 'Y'AND aa.ARCHIVE_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD') ");
 		sb.append("GROUP BY aa.INST_ID , aa.EXTRACT_SERVICE "); 
 		sb.append("ORDER BY aa.INST_ID , aa.EXTRACT_SERVICE) ");
 		sb.append("SELECT d.cr_memno AS instId,d.inService as service,SUM(NVL(nrOfExtMsgs,0)) as nrOfExtMsgs ");
@@ -5906,12 +5906,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("(SELECT a.MEMBER_NO AS cr_memno ");  
 		sb.append(",a.MEMBER_NAME AS cr_memname ");
 		sb.append(",c.SERVICE_ID_OUT AS inService ");
-		sb.append("FROM  MANOWNER.SYS_CIS_BANK a  ");
-		sb.append(",MANOWNER.MDT_SYSCTRL_SERVICES c ");
+		sb.append("FROM  CAMOWNER.SYS_CIS_BANK a  ");
+		sb.append(",CAMOWNER.MDT_SYSCTRL_SERVICES c ");
 		sb.append("WHERE a.AC_CREDITOR = 'Y' AND c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_OUT ='MANOC'), ");
 		sb.append("TEMPTBL2 AS (SELECT SUBSTR( a.EXTRACT_MSG_ID,13,6) AS instId,SUBSTR(a.EXTRACT_MSG_ID,05,05) as service,COUNT(*) AS nrOfExtMsgs ");
-		sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
-		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON  SUBSTR(a.EXTRACT_MSG_ID,13,6) = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON  SUBSTR(a.EXTRACT_MSG_ID,13,6) = b.MEMBER_NO ");
 		//sb.append("WHERE a.LOCAL_INSTR_CD IN('0999','0998')AND  SUBSTR(a.EXTRACT_MSG_ID,05,05) = 'MANOC' AND b.AC_CREDITOR = 'Y' AND a.ARCHIVE_DATE BETWEEN TO_DATE('2019-06-01','YYYY-MM-DD') AND TO_DATE('2019-06-30','YYYY-MM-DD') "); 
 		sb.append("WHERE a.LOCAL_INSTR_CD IN('0999','0998')AND  SUBSTR(a.EXTRACT_MSG_ID,05,05) = 'MANOC' AND b.AC_CREDITOR = 'Y' AND a.ARCHIVE_DATE BETWEEN TO_DATE('"+fromDate+"','YYYY-MM-DD') AND TO_DATE('"+toDate+"','YYYY-MM-DD')"); 
 		sb.append("GROUP BY SUBSTR(a.EXTRACT_MSG_ID,13,6),SUBSTR(a.EXTRACT_MSG_ID,05,05) ");
@@ -5946,17 +5946,17 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING "+archiveType+" GROUP HEADER===============");
 		StringBuffer sbGrpHdr = new StringBuffer();
 		//GROUP HEADER
-		sbGrpHdr.append("INSERT INTO MANOWNER.MDT_AC_ARC_GRP_HDR ");
+		sbGrpHdr.append("INSERT INTO CAMOWNER.MDT_AC_ARC_GRP_HDR ");
 		sbGrpHdr.append("(MSG_ID ,CREATE_DATE_TIME ,AUTH_CODE ,CREATED_BY ,ARCHIVE_DATE) ");
 		sbGrpHdr.append("SELECT distinct nvl(b.MSG_ID,'NF') as msgid ,b.CREATE_DATE_TIME ,b.AUTH_CODE ,b.CREATED_BY ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbGrpHdr.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sbGrpHdr.append("left join MANOWNER.MDT_AC_OPS_GRP_HDR b on a.msg_id = b.msg_id ");
+		sbGrpHdr.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbGrpHdr.append("left join CAMOWNER.MDT_AC_OPS_GRP_HDR b on a.msg_id = b.msg_id ");
 
 		switch(archiveType)
 		{
 		case "MATCH":  sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF' ");
 		break;
-		case "ACCEPT": sbGrpHdr.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC' ");	
+		case "ACCEPT": sbGrpHdr.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN' ");	
 		break;
 		case "EXPIRE": sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') "); 
 		break;
@@ -5980,18 +5980,18 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING "+archiveType+" CASH ACCOUNT===============");
 		StringBuffer sbCashAcc = new StringBuffer();
 
-		sbCashAcc.append("INSERT INTO MANOWNER.MDT_AC_ARC_CASH_ACCOUNT ");
+		sbCashAcc.append("INSERT INTO CAMOWNER.MDT_AC_ARC_CASH_ACCOUNT ");
 		sbCashAcc.append("(ACCOUNT_NAME ,ACCOUNT_NUMBER ,ACCOUNT_TYPE ,CREATED_BY ,CREATED_DATE ,CURRENCY ,MODIFIED_BY ,MODIFIED_DATE ,PARTY_IDENT_TYPE_ID ,MSG_ID ,MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 		sbCashAcc.append("SELECT b.ACCOUNT_NAME ,b.ACCOUNT_NUMBER ,b.ACCOUNT_TYPE ,b.CREATED_BY ,b.CREATED_DATE ,b.CURRENCY ,b.MODIFIED_BY ,b.MODIFIED_DATE ,NVL(b.PARTY_IDENT_TYPE_ID,'NF') ,b.MSG_ID ");
 		sbCashAcc.append(" ,b.MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbCashAcc.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sbCashAcc.append("left join MANOWNER.MDT_AC_OPS_CASH_ACCOUNT b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
+		sbCashAcc.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbCashAcc.append("left join CAMOWNER.MDT_AC_OPS_CASH_ACCOUNT b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
 
 		switch(archiveType)
 		{
 		case "MATCH"	: sbCashAcc.append("WHERE a.PROCESS_STATUS IN ('M','R') AND NVL(b.PARTY_IDENT_TYPE_ID,'NF')  <> 'NF' ");  
 		break;
-		case "ACCEPT"	: sbCashAcc.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC' ");	  
+		case "ACCEPT"	: sbCashAcc.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN' ");	  
 		break;
 		case "EXPIRE"	: sbCashAcc.append("WHERE a.PROCESS_STATUS IN ('4','9') AND NVL(b.PARTY_IDENT_TYPE_ID,'NF')  <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");  
 		break;
@@ -6015,21 +6015,21 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING "+archiveType+" FIN INST===============");
 		StringBuffer sbFinInst = new StringBuffer();								
 
-		sbFinInst.append("INSERT INTO MANOWNER.MDT_AC_ARC_FIN_INST ");
+		sbFinInst.append("INSERT INTO CAMOWNER.MDT_AC_ARC_FIN_INST ");
 		sbFinInst.append("(INST_ID ,BR_ADDR_LINE ,BR_ADDR_TYPE ,BR_BUILD_NUMBER ,BR_COUNTRY ,BR_COUNTRY_SUB_DIV ,BR_DEPT ,BR_POST_CODE ,BR_STREET_NAME ,BR_SUB_DEPT ,BR_TOWN_NAME ,BRANCH_ID ,BRANCH_NAME "); 
 		sbFinInst.append(",CREATED_BY ,CREATED_DATE ,FI_ADDR_LINE ,FI_ADDR_TYPE ,FI_BUILD_NUMBER ,FI_COUNTRY ,FI_COUNTRY_SUB_DIV ,FI_DEPT ,FI_ID ,FI_NAME ,FI_POST_CODE ,FI_STREET_NAME ,FI_SUB_DEPT ");
 		sbFinInst.append(",FI_TOWN_NAME ,FIN_INST_TYPE_ID ,ISSUER ,MEMBER_ID ,MODIFIED_BY ,MODIFIED_DATE ,MSG_ID ,MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 		sbFinInst.append("SELECT b.INST_ID ,b.BR_ADDR_LINE ,b.BR_ADDR_TYPE ,b.BR_BUILD_NUMBER ,b.BR_COUNTRY ,b.BR_COUNTRY_SUB_DIV ,b.BR_DEPT ,b.BR_POST_CODE ,b.BR_STREET_NAME ,b.BR_SUB_DEPT ,b.BR_TOWN_NAME "); 
 		sbFinInst.append(",b.BRANCH_ID ,b.BRANCH_NAME ,b.CREATED_BY ,b.CREATED_DATE ,b.FI_ADDR_LINE ,b.FI_ADDR_TYPE ,b.FI_BUILD_NUMBER ,b.FI_COUNTRY ,b.FI_COUNTRY_SUB_DIV ,b.FI_DEPT ,b.FI_ID ,b.FI_NAME ");
 		sbFinInst.append(",b.FI_POST_CODE ,b.FI_STREET_NAME ,b.FI_SUB_DEPT ,b.FI_TOWN_NAME ,NVL(b.FIN_INST_TYPE_ID,'NF') ,b.ISSUER ,b.MEMBER_ID ,b.MODIFIED_BY ,b.MODIFIED_DATE ,b.MSG_ID ,b.MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbFinInst.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sbFinInst.append("left join MANOWNER.MDT_AC_OPS_FIN_INST b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
+		sbFinInst.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbFinInst.append("left join CAMOWNER.MDT_AC_OPS_FIN_INST b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
 
 		switch(archiveType)
 		{
 		case "MATCH"	: sbFinInst.append("WHERE a.PROCESS_STATUS IN ('M','R') AND NVL(b.FIN_INST_TYPE_ID,'NF')  <> 'NF' ");   
 		break;
-		case "ACCEPT"	: sbFinInst.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC' AND NVL(b.FIN_INST_TYPE_ID,'NF')  <> 'NF' ");	  
+		case "ACCEPT"	: sbFinInst.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN' AND NVL(b.FIN_INST_TYPE_ID,'NF')  <> 'NF' ");	  
 		break;
 		case "EXPIRE"	: sbFinInst.append("WHERE a.PROCESS_STATUS IN ('4','9') AND NVL(b.FIN_INST_TYPE_ID,'NF')  <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");  
 		break;
@@ -6053,21 +6053,21 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING "+archiveType+" PARTY IDENT===============");
 		StringBuffer sbPartyIdent = new StringBuffer();
 
-		sbPartyIdent.append("INSERT INTO MANOWNER.MDT_AC_ARC_PARTY_IDENT ");
+		sbPartyIdent.append("INSERT INTO CAMOWNER.MDT_AC_ARC_PARTY_IDENT ");
 		sbPartyIdent.append("(ADDR_LINE ,ADDR_TYPE ,BUILD_NUMBER ,CITY_OF_BIRTH ,CONTACT_NAME ,COUNTRY ,COUNTRY_SUB_DIV ,CREATED_BY ,CREATED_DATE ,CTRY_OF_BIRTH ,CTRY_OF_RESIDENCE ,DATE_OF_BIRTH ,DEPT ,EMAIL ,FAX_NR "); 
 		sbPartyIdent.append(",ID ,MOB_NR ,MODIFIED_BY ,MODIFIED_DATE ,NAME ,NAME_PREFIX ,PARTY_IDENT_TYPE_ID ,PHONE_NR ,POST_CODE ,PROVINCE_OF_BIRTH ,STREET_NAME ,SUB_DEPT ,TOWN_NAME ,MSG_ID ,ENTRY_CLASS ");
 		sbPartyIdent.append(",MANDATE_REQ_TRAN_ID, ARCHIVE_DATE) ");
 		sbPartyIdent.append("SELECT b.ADDR_LINE ,b.ADDR_TYPE ,b.BUILD_NUMBER ,b.CITY_OF_BIRTH ,b.CONTACT_NAME ,b.COUNTRY ,b.COUNTRY_SUB_DIV ,b.CREATED_BY ,b.CREATED_DATE ,b.CTRY_OF_BIRTH ,b.CTRY_OF_RESIDENCE "); 
 		sbPartyIdent.append(",b.DATE_OF_BIRTH ,b.DEPT ,b.EMAIL ,b.FAX_NR ,b.ID ,b.MOB_NR ,b.MODIFIED_BY ,b.MODIFIED_DATE ,b.NAME ,b.NAME_PREFIX ,NVL(b.PARTY_IDENT_TYPE_ID,'NF'),b.PHONE_NR ,b.POST_CODE ,b.PROVINCE_OF_BIRTH "); 
 		sbPartyIdent.append(",b.STREET_NAME ,b.SUB_DEPT ,b.TOWN_NAME ,b.MSG_ID ,b.ENTRY_CLASS ,b.MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbPartyIdent.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sbPartyIdent.append("left join MANOWNER.MDT_AC_OPS_PARTY_IDENT b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
+		sbPartyIdent.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbPartyIdent.append("left join CAMOWNER.MDT_AC_OPS_PARTY_IDENT b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
 
 		switch(archiveType)
 		{
 		case "MATCH"	: sbPartyIdent.append("WHERE a.PROCESS_STATUS IN ('M','R') AND NVL(b.PARTY_IDENT_TYPE_ID,'NF')  <> 'NF' ");  
 		break;
-		case "ACCEPT"	: sbPartyIdent.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC' ");	  
+		case "ACCEPT"	: sbPartyIdent.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN' ");	  
 		break;
 		case "EXPIRE"	: sbPartyIdent.append("WHERE a.PROCESS_STATUS IN ('4','9') AND NVL(b.PARTY_IDENT_TYPE_ID,'NF')  <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");  
 		break;
@@ -6091,17 +6091,17 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING "+archiveType+" REF DOC===============");
 		StringBuffer sbRefDoc = new StringBuffer();
 
-		sbRefDoc.append("INSERT INTO MANOWNER.MDT_AC_ARC_REF_DOC ");
+		sbRefDoc.append("INSERT INTO CAMOWNER.MDT_AC_ARC_REF_DOC ");
 		sbRefDoc.append("(CODE ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,REF_DOC_NUMBER ,RELATED_DATE ,MSG_ID ,MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 		sbRefDoc.append("SELECT b.CODE ,b.CREATED_BY ,b.CREATED_DATE ,b.MODIFIED_BY ,b.MODIFIED_DATE ,b.REF_DOC_NUMBER ,b.RELATED_DATE ,nvl(b.MSG_ID,'NF') as msgid ,b.MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbRefDoc.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sbRefDoc.append("left join MANOWNER.MDT_AC_OPS_REF_DOC b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
+		sbRefDoc.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbRefDoc.append("left join CAMOWNER.MDT_AC_OPS_REF_DOC b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
 
 		switch(archiveType)
 		{
 		case "MATCH"	: sbRefDoc.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF' ");
 		break;
-		case "ACCEPT"	: sbRefDoc.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC' ");
+		case "ACCEPT"	: sbRefDoc.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN' ");
 		break;
 		case "EXPIRE"	: sbRefDoc.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 		break;
@@ -6124,19 +6124,19 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		//SUPPLEMENTARY DATA
 		log.info("===============ARCHIVING "+archiveType+" SUPPL DATA===============");
 		StringBuffer sbSupplData = new StringBuffer();
-		sbSupplData.append("INSERT INTO MANOWNER.MDT_AC_ARC_SUPPL_DATA ");
+		sbSupplData.append("INSERT INTO CAMOWNER.MDT_AC_ARC_SUPPL_DATA ");
 		sbSupplData.append("(ADJUST_AMT ,ADJUST_AMT_CURR ,ADJUST_CAT ,ADJUST_RATE ,DEBIT_VALUE_TYPE ,DTE_ADJUST_RULE_IND ,FIRST_COLL_AMT ,FIRST_COLL_AMT_CURR ,PLACE_AND_NAME "); 
 		sbSupplData.append(",CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,MANDATE_REF_NR ,AUTH_CHANNEL ,AUTH_TYPE ,COLL_DAY ,MSG_ID ,MANDATE_AUTH_DATE ,MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 		sbSupplData.append("SELECT b.ADJUST_AMT ,b.ADJUST_AMT_CURR ,b.ADJUST_CAT ,b.ADJUST_RATE ,b.DEBIT_VALUE_TYPE ,b.DTE_ADJUST_RULE_IND ,b.FIRST_COLL_AMT ,b.FIRST_COLL_AMT_CURR ,b.PLACE_AND_NAME ,b.CREATED_BY ");
 		sbSupplData.append(" ,b.CREATED_DATE ,b.MODIFIED_BY ,b.MODIFIED_DATE ,b.MANDATE_REF_NR ,b.AUTH_CHANNEL ,b.AUTH_TYPE ,b.COLL_DAY ,b.MSG_ID ,b.MANDATE_AUTH_DATE ,b.MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbSupplData.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sbSupplData.append("left join MANOWNER.MDT_AC_OPS_SUPPL_DATA b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
+		sbSupplData.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbSupplData.append("left join CAMOWNER.MDT_AC_OPS_SUPPL_DATA b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
 
 		switch(archiveType)
 		{
 		case "MATCH"	: sbSupplData.append("WHERE a.PROCESS_STATUS IN ('M','R') ");
 		break;
-		case "ACCEPT"	: sbSupplData.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC' ");	
+		case "ACCEPT"	: sbSupplData.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN' ");	
 		break;
 		case "EXPIRE"	: sbSupplData.append("WHERE a.PROCESS_STATUS IN ('4','9') AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 		break;
@@ -6161,12 +6161,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			//ORIGINAL MANDATE
 			log.info("===============ARCHIVING "+archiveType+" ORGNL MANDATE===============");
 			StringBuffer sbOrigMndt = new StringBuffer();
-			sbOrigMndt.append("INSERT INTO MANOWNER.MDT_AC_ARC_ORGNL_MNDT ");
+			sbOrigMndt.append("INSERT INTO CAMOWNER.MDT_AC_ARC_ORGNL_MNDT ");
 			sbOrigMndt.append("(MANDATE_ID ,MANDATE_REQ_TRAN_ID ,MSG_ID ,MANDATE_REQ_ID ,CREDITOR_NAME ,DEBTOR_NAME ,DEBTOR_BRANCH_NO ,ORGNL_MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 			sbOrigMndt.append("SELECT b.MANDATE_ID ,nvl(b.MANDATE_REQ_TRAN_ID,'NF') as mrti ,b.MSG_ID ,b.MANDATE_REQ_ID ,b.CREDITOR_NAME ,b.DEBTOR_NAME ,b.DEBTOR_BRANCH_NO ");
 			sbOrigMndt.append(",b.ORGNL_MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-			sbOrigMndt.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-			sbOrigMndt.append("left join MANOWNER.MDT_AC_OPS_ORGNL_MNDT b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
+			sbOrigMndt.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+			sbOrigMndt.append("left join CAMOWNER.MDT_AC_OPS_ORGNL_MNDT b on a.msg_id = b.msg_id and A.MANDATE_REQ_TRAN_ID = B.MANDATE_REQ_TRAN_ID ");
 
 			switch(archiveType)
 			{
@@ -6191,13 +6191,13 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			}
 		}
 		else {
-			orgMntBool = true;//NO ORGMNDT for MANAC. To pass check below
+			orgMntBool = true;//NO ORGMNDT for RCAIN. To pass check below
 		}
 
 		//MANDATE MESSAGE
 		log.info("===============ARCHIVING "+archiveType+" MANDATE===============");
 		StringBuffer sbMandate = new StringBuffer();
-		sbMandate.append("INSERT INTO MANOWNER.MDT_AC_ARC_MNDT_MSG ");
+		sbMandate.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MNDT_MSG ");
 		sbMandate.append("(MSG_ID ,MANDATE_ID ,MANDATE_REQ_ID ,SEQUENCE_TYPE ,FREQUENCY ,FROM_DATE ,TO_DATE ,FIRST_COLL_DATE ,FINAL_COLL_DATE ,COLL_CURRENCY ,COLL_AMOUNT ,MAX_AMOUNT_CURR ,MAX_AMOUNT ,LOCAL_INSTR_CD "); 
 		sbMandate.append(",SERVICE_LEVEL ,STATUS ,ACTIVE_IND ,ACTIVE_IND_CHANGE_DATE ,FILE_NAME ,FILE_DATE ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,PROCESS_STATUS ,MOD_REASON ,ORGNL_MSG_ID ,ORGNL_MSG_NAME_ID "); 
 		sbMandate.append(",ORGNL_MSG_CREATE_DATE_TIME ,AMEND_REASON_CODE ,AMEND_REASON_DESC ,ORGNL_MDT_REQ_ID ,TRACKING_IND ,ACCEPTED ,REJECT_REASON_CODE ,ADD_REJECT_RSN_INF ,ORIG_MANDATE_ID ,PROCESS_IND ,CONTENTS ");                 
@@ -6215,14 +6215,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sbMandate.append(",ORGNL_MSG_NAME_ID ,ORGNL_MSG_CREATE_DATE_TIME ,AMEND_REASON_CODE ,AMEND_REASON_DESC ,ORGNL_MDT_REQ_ID ,TRACKING_IND ,ACCEPTED ,REJECT_REASON_CODE ,ADD_REJECT_RSN_INF ,ORIG_MANDATE_ID,PROCESS_IND ");              
 		sbMandate.append(",CONTENTS ,SYS_GEN_SEQ_NR ,MDT_INF_REQ_ID ,RECORD_TYPE ,EXTRACT_MSG_ID ,SERVICE_ID ,ONLINE_IND ,MANDATE_REQ_TRAN_ID ,MANDATE_REF_NR ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbMandate.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbMandate.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
 
 
 		switch(archiveType)
 		{
 		case "MATCH"	: sbMandate.append("WHERE a.PROCESS_STATUS IN ('M','R') ");
 		break;
-		case "ACCEPT"	: sbMandate.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC' ");
+		case "ACCEPT"	: sbMandate.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN' ");
 		break;
 		case "EXPIRE"	: sbMandate.append("WHERE a.PROCESS_STATUS IN ('4','9') AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 		break;
@@ -6254,14 +6254,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============DELETING "+archiveType+" MANDATE TRANSACTIONS===============");
 		StringBuffer sbGrpHdr = new StringBuffer();
-		sbGrpHdr.append("delete from MANOWNER.MDT_AC_OPS_GRP_HDR b "); 
+		sbGrpHdr.append("delete from CAMOWNER.MDT_AC_OPS_GRP_HDR b "); 
 		sbGrpHdr.append("where (b.msg_id) IN ");
-		sbGrpHdr.append("(select a.msg_id from MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbGrpHdr.append("(select a.msg_id from CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");
 		break;
-		case "ACCEPT": sbGrpHdr.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC') ");	
+		case "ACCEPT": sbGrpHdr.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN') ");	
 		break;
 		case "EXPIRE": sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD')) "); 
 		break;
@@ -6282,14 +6282,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		}
 
 		StringBuffer sbCashAcc = new StringBuffer();
-		sbCashAcc.append("delete from MANOWNER.MDT_AC_OPS_CASH_ACCOUNT b "); 
+		sbCashAcc.append("delete from CAMOWNER.MDT_AC_OPS_CASH_ACCOUNT b "); 
 		sbCashAcc.append("where (b.msg_id, b.MANDATE_REQ_TRAN_ID) IN ");
-		sbCashAcc.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbCashAcc.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbCashAcc.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");
 		break;
-		case "ACCEPT": sbCashAcc.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC') ");	
+		case "ACCEPT": sbCashAcc.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN') ");	
 		break;
 		case "EXPIRE": sbCashAcc.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD')) "); 
 		break;
@@ -6310,14 +6310,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		}
 
 		StringBuffer sbFinInst = new StringBuffer();
-		sbFinInst.append("delete from MANOWNER.MDT_AC_OPS_FIN_INST b "); 
+		sbFinInst.append("delete from CAMOWNER.MDT_AC_OPS_FIN_INST b "); 
 		sbFinInst.append("where (b.msg_id, b.MANDATE_REQ_TRAN_ID) IN ");
-		sbFinInst.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbFinInst.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbFinInst.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");
 		break;
-		case "ACCEPT": sbFinInst.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC') ");	
+		case "ACCEPT": sbFinInst.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN') ");	
 		break;
 		case "EXPIRE": sbFinInst.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD')) "); 
 		break;
@@ -6338,14 +6338,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		}
 
 		StringBuffer sbPartyId = new StringBuffer();
-		sbPartyId.append("delete from MANOWNER.MDT_AC_OPS_PARTY_IDENT b "); 
+		sbPartyId.append("delete from CAMOWNER.MDT_AC_OPS_PARTY_IDENT b "); 
 		sbPartyId.append("where (b.msg_id, b.MANDATE_REQ_TRAN_ID) IN ");
-		sbPartyId.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbPartyId.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbPartyId.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");
 		break;
-		case "ACCEPT": sbPartyId.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC') ");	
+		case "ACCEPT": sbPartyId.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN') ");	
 		break;
 		case "EXPIRE": sbPartyId.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD')) "); 
 		break;
@@ -6365,14 +6365,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		}
 
 		StringBuffer sbRefDoc = new StringBuffer();
-		sbRefDoc.append("delete from MANOWNER.MDT_AC_OPS_REF_DOC b "); 
+		sbRefDoc.append("delete from CAMOWNER.MDT_AC_OPS_REF_DOC b "); 
 		sbRefDoc.append("where (b.msg_id, b.MANDATE_REQ_TRAN_ID) IN ");
-		sbRefDoc.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbRefDoc.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbRefDoc.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");
 		break;
-		case "ACCEPT": sbRefDoc.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC') ");	
+		case "ACCEPT": sbRefDoc.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN') ");	
 		break;
 		case "EXPIRE": sbRefDoc.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD')) "); 
 		break;
@@ -6393,14 +6393,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		}
 
 		StringBuffer sbSuppData = new StringBuffer();
-		sbSuppData.append("delete from MANOWNER.MDT_AC_OPS_SUPPL_DATA b "); 
+		sbSuppData.append("delete from CAMOWNER.MDT_AC_OPS_SUPPL_DATA b "); 
 		sbSuppData.append("where (b.msg_id, b.MANDATE_REQ_TRAN_ID) IN ");
-		sbSuppData.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbSuppData.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbSuppData.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");
 		break;
-		case "ACCEPT": sbSuppData.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC') ");	
+		case "ACCEPT": sbSuppData.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN') ");	
 		break;
 		case "EXPIRE": sbSuppData.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD')) "); 
 		break;
@@ -6423,9 +6423,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		if(!archiveType.equals("ACCEPT"))
 		{
 			StringBuffer sbOrgMndt = new StringBuffer();
-			sbOrgMndt.append("delete from MANOWNER.MDT_AC_OPS_ORGNL_MNDT b "); 
+			sbOrgMndt.append("delete from CAMOWNER.MDT_AC_OPS_ORGNL_MNDT b "); 
 			sbOrgMndt.append("where (b.msg_id, b.MANDATE_REQ_TRAN_ID) IN ");
-			sbOrgMndt.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+			sbOrgMndt.append("(select a.msg_id,a.MANDATE_REQ_TRAN_ID from CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
 			switch(archiveType)
 			{
 			case "MATCH":  sbOrgMndt.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");
@@ -6451,17 +6451,17 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		}
 		else
 		{
-			orgMntBool = true;//No OrgnMndt for MANAC. To pass check at bottom
+			orgMntBool = true;//No OrgnMndt for RCAIN. To pass check at bottom
 		}
 
 
 		StringBuffer sbMndMsg = new StringBuffer();
-		sbMndMsg.append("delete from MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sbMndMsg.append("delete from CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbMndMsg.append("WHERE a.PROCESS_STATUS IN ('M','R') ");
 		break;
-		case "ACCEPT": sbMndMsg.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC' ");	
+		case "ACCEPT": sbMndMsg.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN' ");	
 		break;
 		case "EXPIRE": sbMndMsg.append("WHERE a.PROCESS_STATUS IN ('4','9') AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') "); 
 		break;
@@ -6492,12 +6492,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbDlyBill = new StringBuffer();
 
-		sbDlyBill.append("INSERT INTO MANOWNER.MDT_AC_ARC_DAILY_BILLING ");
+		sbDlyBill.append("INSERT INTO CAMOWNER.MDT_AC_ARC_DAILY_BILLING ");
 		sbDlyBill.append("(SYSTEM_SEQ_NO ,CREDITOR_BANK ,DEBTOR_BANK ,SUB_SERVICE ,TXN_TYPE ,TXN_STATUS ,CREATED_BY ,CREATED_DATE ,BILL_EXP_STATUS ,ACTION_DATE ");
 		sbDlyBill.append(",AUTH_CODE ,TXN_ID ,MNDT_REF_NUM ,EXT_MSG_ID ,RESP_DATE ,ARCHIVE_DATE) ");
 		sbDlyBill.append("SELECT SYSTEM_SEQ_NO ,CREDITOR_BANK ,DEBTOR_BANK ,SUB_SERVICE ,TXN_TYPE ,TXN_STATUS ,CREATED_BY ,CREATED_DATE ,BILL_EXP_STATUS ,ACTION_DATE ");
 		sbDlyBill.append(",AUTH_CODE ,TXN_ID ,MNDT_REF_NUM ,EXT_MSG_ID ,RESP_DATE ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbDlyBill.append("FROM MANOWNER.MDT_AC_OPS_DAILY_BILLING WHERE BILL_EXP_STATUS = 'Y' ");
+		sbDlyBill.append("FROM CAMOWNER.MDT_AC_OPS_DAILY_BILLING WHERE BILL_EXP_STATUS = 'Y' ");
 
 		try
 		{
@@ -6521,7 +6521,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String dlyBillDel = "DELETE FROM MANOWNER.MDT_AC_OPS_DAILY_BILLING WHERE BILL_EXP_STATUS = 'Y' ";
+			String dlyBillDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_DAILY_BILLING WHERE BILL_EXP_STATUS = 'Y' ";
 			log.debug("dlyBillDel: " + dlyBillDel);
 			genericDAO.executeNativeSQL(dlyBillDel);
 			dailyBillBool = true;
@@ -6542,18 +6542,18 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING CONFIRMATION HDRS===============");
 		StringBuffer sbConfHdrs = new StringBuffer();
 
-		sbConfHdrs.append("INSERT INTO MANOWNER.MDT_AC_ARC_CONF_HDRS ");
+		sbConfHdrs.append("INSERT INTO CAMOWNER.MDT_AC_ARC_CONF_HDRS ");
 		sbConfHdrs.append("(SYSTEM_SEQ_NO ,HDR_MSG_ID ,CREATE_DATE_TIME ,INSTG_AGT ,INSTD_AGT ,ORGNL_MSG_ID ,ORGNL_MSG_NAME ,ORGNL_CREATE_DATE_TIME ,PROCESS_STATUS ");
 		sbConfHdrs.append(",GROUP_STATUS ,SERVICE ,GROUP_ERROR ,ARCHIVE_DATE) ");
 //		2020/03/26-SALEHAR- REMOVE JOIN TO CONF DETAILS
 //		sbConfHdrs.append("SELECT a.SYSTEM_SEQ_NO ,a.HDR_MSG_ID ,a.CREATE_DATE_TIME ,a.INSTG_AGT ,a.INSTD_AGT ,a.ORGNL_MSG_ID ,a.ORGNL_MSG_NAME ,a.ORGNL_CREATE_DATE_TIME ,a.PROCESS_STATUS ");
 //		sbConfHdrs.append(",a.GROUP_STATUS ,a.SERVICE ,a.GROUP_ERROR ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-//		sbConfHdrs.append("FROM MANOWNER.MDT_AC_OPS_CONF_HDRS a ");
-//		sbConfHdrs.append("LEFT JOIN MANOWNER.MDT_AC_OPS_CONF_DETAILS b ON a.SYSTEM_SEQ_NO = b.CONF_HDR_SEQ_NO ");
+//		sbConfHdrs.append("FROM CAMOWNER.MDT_AC_OPS_CONF_HDRS a ");
+//		sbConfHdrs.append("LEFT JOIN CAMOWNER.MDT_AC_OPS_CONF_DETAILS b ON a.SYSTEM_SEQ_NO = b.CONF_HDR_SEQ_NO ");
 //		sbConfHdrs.append("WHERE b.PROCESS_STATUS IN ('4') ");
 		sbConfHdrs.append("SELECT SYSTEM_SEQ_NO ,HDR_MSG_ID ,CREATE_DATE_TIME ,INSTG_AGT ,INSTD_AGT ,ORGNL_MSG_ID ,ORGNL_MSG_NAME ,ORGNL_CREATE_DATE_TIME ,PROCESS_STATUS ");
 		sbConfHdrs.append(",GROUP_STATUS ,SERVICE ,GROUP_ERROR ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbConfHdrs.append("FROM MANOWNER.MDT_AC_OPS_CONF_HDRS ");
+		sbConfHdrs.append("FROM CAMOWNER.MDT_AC_OPS_CONF_HDRS ");
 		sbConfHdrs.append("WHERE PROCESS_STATUS = 'C' ");
 
 		try
@@ -6577,11 +6577,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			{
 				StringBuffer sbDelCHdrs = new StringBuffer();
 //				2020/03/26-SALEHAR- REMOVE JOIN TO CONF DETAILS
-//				sbDelCHdrs.append("delete FROM MANOWNER.MDT_AC_OPS_CONF_HDRS a ");
+//				sbDelCHdrs.append("delete FROM CAMOWNER.MDT_AC_OPS_CONF_HDRS a ");
 //				sbDelCHdrs.append("where (a.SYSTEM_SEQ_NO) in ");
-//				sbDelCHdrs.append("(select b.CONF_HDR_SEQ_NO FROM MANOWNER.MDT_AC_OPS_CONF_DETAILS b WHERE b.PROCESS_STATUS = '4') ");
+//				sbDelCHdrs.append("(select b.CONF_HDR_SEQ_NO FROM CAMOWNER.MDT_AC_OPS_CONF_DETAILS b WHERE b.PROCESS_STATUS = '4') ");
 
-				sbDelCHdrs.append("DELETE FROM MANOWNER.MDT_AC_OPS_CONF_HDRS WHERE PROCESS_STATUS = 'C' ");
+				sbDelCHdrs.append("DELETE FROM CAMOWNER.MDT_AC_OPS_CONF_HDRS WHERE PROCESS_STATUS = 'C' ");
 
 				String delConHdsSQL = sbDelCHdrs.toString();
 				log.debug("delConHdsSQL: " + delConHdsSQL);
@@ -6605,12 +6605,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING CONFIRMATION DETAILS===============");
 		StringBuffer sbConfDtls = new StringBuffer();
 		
-		sbConfDtls.append("INSERT INTO MANOWNER.MDT_AC_ARC_CONF_DETAILS ");
+		sbConfDtls.append("INSERT INTO CAMOWNER.MDT_AC_ARC_CONF_DETAILS ");
 		sbConfDtls.append("(SYSTEM_SEQ_NO ,CONF_HDR_SEQ_NO ,ERROR_CODE ,TXN_ID ,TXN_STATUS ,ERROR_TYPE ,RECORD_ID ,MANDATE_REF_NUMBER ,INST_ID ,PROCESS_STATUS ");
 		sbConfDtls.append(",EXTRACT_SERVICE ,ORGNL_MSG_TYPE ,EXTRACT_MSG_ID ,LOCAL_INSTR_CD ,ARCHIVE_DATE,MSG_ID,IN_FILE_NAME,EXTRACT_FILE_NAME) ");
 		sbConfDtls.append("SELECT SYSTEM_SEQ_NO ,CONF_HDR_SEQ_NO ,ERROR_CODE ,TXN_ID ,TXN_STATUS ,ERROR_TYPE ,RECORD_ID ,MANDATE_REF_NUMBER ,INST_ID ,PROCESS_STATUS ");
 		sbConfDtls.append(",EXTRACT_SERVICE ,ORGNL_MSG_TYPE ,EXTRACT_MSG_ID ,LOCAL_INSTR_CD ,TO_DATE('"+archDate+"','YYYY-MM-DD'),MSG_ID,IN_FILE_NAME,EXTRACT_FILE_NAME ");
-		sbConfDtls.append("FROM MANOWNER.MDT_AC_OPS_CONF_DETAILS a WHERE a.PROCESS_STATUS = '4' ");
+		sbConfDtls.append("FROM CAMOWNER.MDT_AC_OPS_CONF_DETAILS a WHERE a.PROCESS_STATUS = '4' ");
 
 		try
 		{
@@ -6630,7 +6630,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.info("===============DELETING OPS CONF DETAILS===============");
 			try
 			{
-				String delCDtlStr = "DELETE FROM MANOWNER.MDT_AC_OPS_CONF_DETAILS b WHERE b.PROCESS_STATUS = '4' ";
+				String delCDtlStr = "DELETE FROM CAMOWNER.MDT_AC_OPS_CONF_DETAILS b WHERE b.PROCESS_STATUS = '4' ";
 				log.debug("delCDtlStr: " + delCDtlStr);
 				genericDAO.executeNativeSQL(delCDtlStr);
 				delConfDtls = true;
@@ -6651,12 +6651,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbErrorRep = new StringBuffer();
 
-		sbErrorRep.append("INSERT INTO MANOWNER.MDT_AC_ARC_ERROR_CODES_REPORT ");
+		sbErrorRep.append("INSERT INTO CAMOWNER.MDT_AC_ARC_ERROR_CODES_REPORT ");
 		sbErrorRep.append("(SYSTEM_SEQ_NO ,PROCESSING_DATE ,PROCESSING_MONTH ,DEBTOR_BANK ,CREDITOR_BANK ,ULTIMATE_CREDITOR ,ABBREV_SHORT_NAME ,TXN_ID ");
 		sbErrorRep.append(",ERROR_CODE ,ERROR_CODE_DESC ,EXTRACTED_IND ,ONLINE_IND ,ARCHIVE_DATE ,SERVICE_ID) ");
 		sbErrorRep.append("SELECT SYSTEM_SEQ_NO ,PROCESSING_DATE ,PROCESSING_MONTH ,DEBTOR_BANK ,CREDITOR_BANK ,ULTIMATE_CREDITOR ,ABBREV_SHORT_NAME ,TXN_ID ");
 		sbErrorRep.append(",ERROR_CODE ,ERROR_CODE_DESC ,EXTRACTED_IND ,ONLINE_IND ,TO_DATE('"+archDate+"','YYYY-MM-DD') ,SERVICE_ID ");
-		sbErrorRep.append("FROM MANOWNER.MDT_AC_OPS_ERROR_CODES_REPORT ");
+		sbErrorRep.append("FROM CAMOWNER.MDT_AC_OPS_ERROR_CODES_REPORT ");
 
 		try
 		{
@@ -6680,7 +6680,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String errCodeDelSQL = "DELETE FROM MANOWNER.MDT_AC_OPS_ERROR_CODES_REPORT ";
+			String errCodeDelSQL = "DELETE FROM CAMOWNER.MDT_AC_OPS_ERROR_CODES_REPORT ";
 			genericDAO.executeNativeSQL(errCodeDelSQL);
 			errCodeDel = true;
 		}
@@ -6701,13 +6701,13 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING MarkOff HDRS===============");
 		StringBuffer sbMrkOffHdrs = new StringBuffer();
 
-		sbMrkOffHdrs.append("INSERT INTO MANOWNER.MDT_AC_ARC_MRKOFF_GRP_HDR ");
+		sbMrkOffHdrs.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MRKOFF_GRP_HDR ");
 		sbMrkOffHdrs.append("(MSG_ID ,CREATE_DATE_TIME ,INITIATING_PARTY ,INSTRUCTING_AGENT ,INSTRUCTED_AGENT ,CREATED_BY ");
 		sbMrkOffHdrs.append(",CREATED_DATE,ARCHIVE_DATE) ");
 		sbMrkOffHdrs.append("SELECT DISTINCT a.MSG_ID ,a.CREATE_DATE_TIME ,a.INITIATING_PARTY ,a.INSTRUCTING_AGENT ,a.INSTRUCTED_AGENT ,a.CREATED_BY ");
 		sbMrkOffHdrs.append(",a.CREATED_DATE ,TRUNC(SYSDATE) ");
-		sbMrkOffHdrs.append("FROM MANOWNER.MDT_AC_OPS_MRKOFF_GRP_HDR a ");
-		sbMrkOffHdrs.append("LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_MRKOFF_ACCEPT_DET b ON a.MSG_ID = b.MSG_ID ");
+		sbMrkOffHdrs.append("FROM CAMOWNER.MDT_AC_OPS_MRKOFF_GRP_HDR a ");
+		sbMrkOffHdrs.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_MRKOFF_ACCEPT_DET b ON a.MSG_ID = b.MSG_ID ");
 		sbMrkOffHdrs.append("WHERE b.TRAN_STATUS = '4' ");
 
 		try
@@ -6729,7 +6729,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.info("===============ARCHIVING MarkOff DETAILS===============");
 			StringBuffer sbMrkoffDtls = new StringBuffer();
 
-			sbMrkoffDtls.append("INSERT INTO MANOWNER.MDT_AC_ARC_MRKOFF_ACCEPT_DET ");
+			sbMrkoffDtls.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MRKOFF_ACCEPT_DET ");
 			sbMrkoffDtls.append("(MSG_ID ,ACCEPTED ,REJECT_REASON_CODE ,MANDATE_ID ,MANDATE_REQ_ID ,TRACKING_IND ,LOCAL_INSTR_CD ,SEQUENCE_TYPE ");
 			sbMrkoffDtls.append(",FREQUENCY ,FROM_DATE ,FIRST_COLL_DATE ,COLL_CURRENCY ,COLL_AMOUNT ,MAX_COLL_AMT_CURR ,MAX_COLL_AMT ,CRED_SCHEME_ID ");
 			sbMrkoffDtls.append(",CRED_NAME ,MANDATE_REQ_TRAN_ID ,CRED_PHONE_NR ,CRED_EMAIL ,CRED_ACCOUNT_NO ,CRED_BRANCH_NO ,ULT_CREDITOR_NAME ");
@@ -6744,7 +6744,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			sbMrkoffDtls.append(",DEBT_BRANCH_NO ,ULT_DEBTOR_NAME ,AUTH_STATUS_IND ,AUTH_TYPE ,COLL_DAY ,DATE_ADJ_RULE_IND ,ADJUSTMENT_CAT ");
 			sbMrkoffDtls.append(",ADJUSTMENT_RATE ,ADJ_AMT_CURR ,ADJUSTMENT_AMT ,AUTHENT_CHANNEL ,MANDATE_REF_NR ,SUPPL_COLL_CURR ,SUPPL_FRST_COLL_AMT ");
 			sbMrkoffDtls.append(",DEBIT_VALUE_TYPE ,MANDATE_AUTH_DATE ,TRAN_STATUS ,MAC ,REQ_TRAN_NO ,DEBT_BANK_MEMBER_NO ,CRED_BANK_MEMBER_NO ,CREATED_BY ,CREATED_DATE ,TRUNC(SYSDATE) ,MODIFIED_BY ,MODIFIED_DATE,EXTRACT_FILE_NAME,INCOMING_FILE_NAME,EXTRACT_MSG_ID ");
-			sbMrkoffDtls.append("FROM MANOWNER.MDT_AC_OPS_MRKOFF_ACCEPT_DET ");
+			sbMrkoffDtls.append("FROM CAMOWNER.MDT_AC_OPS_MRKOFF_ACCEPT_DET ");
 			sbMrkoffDtls.append("WHERE TRAN_STATUS = '4' ");
 			try
 			{
@@ -6780,9 +6780,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		{
 			StringBuffer sbDelMrkHdrs = new StringBuffer();
 
-			sbDelMrkHdrs.append("DELETE FROM MANOWNER.MDT_AC_OPS_MRKOFF_GRP_HDR a ");
+			sbDelMrkHdrs.append("DELETE FROM CAMOWNER.MDT_AC_OPS_MRKOFF_GRP_HDR a ");
 			sbDelMrkHdrs.append("where (a.MSG_ID) in ");
-			sbDelMrkHdrs.append("(select b.MSG_ID FROM MANOWNER.MDT_AC_OPS_MRKOFF_ACCEPT_DET b WHERE b.TRAN_STATUS = '4') ");
+			sbDelMrkHdrs.append("(select b.MSG_ID FROM CAMOWNER.MDT_AC_OPS_MRKOFF_ACCEPT_DET b WHERE b.TRAN_STATUS = '4') ");
 
 			String delMrkOffHdsSQL = sbDelMrkHdrs.toString();
 			log.debug("delConHdsSQL: " + delMrkOffHdsSQL);
@@ -6800,7 +6800,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.info("===============DELETING OPS MarkOff DETAILS===============");
 			try
 			{
-				String delMrkDtlStr = "DELETE FROM MANOWNER.MDT_AC_OPS_MRKOFF_ACCEPT_DET b WHERE b.TRAN_STATUS = '4' ";
+				String delMrkDtlStr = "DELETE FROM CAMOWNER.MDT_AC_OPS_MRKOFF_ACCEPT_DET b WHERE b.TRAN_STATUS = '4' ";
 				log.debug("delCDtlStr: " + delMrkDtlStr);
 				genericDAO.executeNativeSQL(delMrkDtlStr);
 				delMrkOffDtls = true;
@@ -6830,11 +6830,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING SUSPENSION HDRS===============");
 		StringBuffer sbSuspHdrs = new StringBuffer();
 
-		sbSuspHdrs.append("INSERT INTO MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR ");
+		sbSuspHdrs.append("INSERT INTO CAMOWNER.MDT_AC_ARC_SUSP_GRP_HDR ");
 		sbSuspHdrs.append("(ASSIGNMENT_ID ,ASSIGNER ,ASSIGNEE ,CREATE_DATE_TIME ,ARCHIVE_DATE) ");
 		sbSuspHdrs.append("SELECT DISTINCT nvl(b.ASSIGNMENT_ID,'NF') as assgnid ,b.ASSIGNER ,b.ASSIGNEE ,b.CREATE_DATE_TIME ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbSuspHdrs.append("FROM MANOWNER.MDT_AC_OPS_SUSP_MSG a ");
-		sbSuspHdrs.append("LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_SUSP_GRP_HDR b ON A.ASSIGNMENT_ID = B.ASSIGNMENT_ID ");
+		sbSuspHdrs.append("FROM CAMOWNER.MDT_AC_OPS_SUSP_MSG a ");
+		sbSuspHdrs.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_SUSP_GRP_HDR b ON A.ASSIGNMENT_ID = B.ASSIGNMENT_ID ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbSuspHdrs.append("WHERE a.PROCESS_STATUS IN ('R', 'M') and nvl(b.ASSIGNMENT_ID,'NF') <> 'NF' ");
@@ -6862,7 +6862,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.info("===============ARCHIVING SUSPENSIONS DETAILS===============");
 			StringBuffer sbSuspDtls = new StringBuffer();
 
-			sbSuspDtls.append("INSERT INTO MANOWNER.MDT_AC_ARC_SUSP_MSG ");
+			sbSuspDtls.append("INSERT INTO CAMOWNER.MDT_AC_ARC_SUSP_MSG ");
 			sbSuspDtls.append("(MANDATE_SUSP_ID ,ORIGINAL_PMT_ID ,ASSIGNMENT_ID ,REASON_CODE ,MANDATE_REF_NR ,CREDITOR_BANK ,MANDATE_REQ_TRAN_ID "); 
 			sbSuspDtls.append(",CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,PROCESS_STATUS ,EXTRACT_MSG_ID ,IN_FILE_NAME ,EXTRACT_FILE_NAME ,ARCHIVE_DATE) ");
 			sbSuspDtls.append("SELECT MANDATE_SUSP_ID ,ORIGINAL_PMT_ID ,ASSIGNMENT_ID ,REASON_CODE ,MANDATE_REF_NR ,CREDITOR_BANK ,MANDATE_REQ_TRAN_ID "); 
@@ -6870,9 +6870,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 			switch(archiveType)
 			{
-			case "MATCH":  sbSuspDtls.append("FROM MANOWNER.MDT_AC_OPS_SUSP_MSG WHERE PROCESS_STATUS IN ('R', 'M') ");
+			case "MATCH":  sbSuspDtls.append("FROM CAMOWNER.MDT_AC_OPS_SUSP_MSG WHERE PROCESS_STATUS IN ('R', 'M') ");
 			break;
-			case "EXPIRE": sbSuspDtls.append("FROM MANOWNER.MDT_AC_OPS_SUSP_MSG WHERE PROCESS_STATUS = '4' AND TRUNC(CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') "); 
+			case "EXPIRE": sbSuspDtls.append("FROM CAMOWNER.MDT_AC_OPS_SUSP_MSG WHERE PROCESS_STATUS = '4' AND TRUNC(CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') "); 
 			break;
 			}
 
@@ -6910,9 +6910,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		{
 			StringBuffer sbDelSuspHdrs = new StringBuffer();
 
-			sbDelSuspHdrs.append("delete from MANOWNER.MDT_AC_OPS_SUSP_GRP_HDR b ");
+			sbDelSuspHdrs.append("delete from CAMOWNER.MDT_AC_OPS_SUSP_GRP_HDR b ");
 			sbDelSuspHdrs.append("WHERE (B.ASSIGNMENT_ID) IN ");
-			sbDelSuspHdrs.append("(SELECT A.ASSIGNMENT_ID FROM MANOWNER.MDT_AC_OPS_SUSP_MSG a ");
+			sbDelSuspHdrs.append("(SELECT A.ASSIGNMENT_ID FROM CAMOWNER.MDT_AC_OPS_SUSP_MSG a ");
 			switch(archiveType)
 			{
 			case "MATCH":  sbDelSuspHdrs.append("WHERE a.PROCESS_STATUS IN ('R', 'M')) ");
@@ -6938,7 +6938,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			try
 			{
 				StringBuffer sbDelSuspDtls = new StringBuffer();
-				sbDelSuspDtls.append("delete from MANOWNER.MDT_AC_OPS_SUSP_MSG a ");
+				sbDelSuspDtls.append("delete from CAMOWNER.MDT_AC_OPS_SUSP_MSG a ");
 				switch(archiveType)
 				{
 				case "MATCH":  sbDelSuspDtls.append("WHERE a.PROCESS_STATUS IN ('R', 'M') ");
@@ -6975,13 +6975,13 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING STATUS DETAILS===============");
 		StringBuffer sbStatusDtls = new StringBuffer();
 
-		sbStatusDtls.append("INSERT INTO MANOWNER.MDT_AC_ARC_STATUS_DETAILS ");
+		sbStatusDtls.append("INSERT INTO CAMOWNER.MDT_AC_ARC_STATUS_DETAILS ");
 		sbStatusDtls.append("(SYSTEM_SEQ_NO ,STATUS_HDR_SEQ_NO ,ERROR_CODE ,TXN_ID ,END_TO_END_ID ,TXN_STATUS ,ERROR_TYPE ,RECORD_ID ,ORGNL_TXN_SEQ_NO "); 
 		sbStatusDtls.append(",MANDATE_REF_NUMBER ,INST_ID ,PROCESS_STATUS ,DEBTOR_BRANCH_NO ,CR_ABB_SHORT_NAME ,ARCHIVE_DATE)");
 		sbStatusDtls.append("SELECT a.SYSTEM_SEQ_NO ,a.STATUS_HDR_SEQ_NO ,a.ERROR_CODE ,a.TXN_ID ,a.END_TO_END_ID ,a.TXN_STATUS ,a.ERROR_TYPE ,a.RECORD_ID ,a.ORGNL_TXN_SEQ_NO ");
 		sbStatusDtls.append(",a.MANDATE_REF_NUMBER ,a.INST_ID ,a.PROCESS_STATUS ,a.DEBTOR_BRANCH_NO ,a.CR_ABB_SHORT_NAME ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbStatusDtls.append("FROM MANOWNER.MDT_AC_OPS_STATUS_DETAILS a ");
-		sbStatusDtls.append("LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_STATUS_HDRS b ON a.STATUS_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
+		sbStatusDtls.append("FROM CAMOWNER.MDT_AC_OPS_STATUS_DETAILS a ");
+		sbStatusDtls.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_STATUS_HDRS b ON a.STATUS_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
 		sbStatusDtls.append("WHERE b.PROCESS_STATUS IN ('7') ");
 
 
@@ -7004,12 +7004,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.info("===============ARCHIVING STATUS HEADERS===============");
 			StringBuffer sbStatusHdrs = new StringBuffer();
 
-			sbStatusHdrs.append("INSERT INTO MANOWNER.MDT_AC_ARC_STATUS_HDRS ");
+			sbStatusHdrs.append("INSERT INTO CAMOWNER.MDT_AC_ARC_STATUS_HDRS ");
 			sbStatusHdrs.append("(SYSTEM_SEQ_NO ,HDR_MSG_ID ,CREATE_DATE_TIME ,INSTG_AGT ,INSTD_AGT ,ORGNL_MSG_ID ,ORGNL_MSG_NAME ,ORGNL_CREATE_DATE_TIME "); 
 			sbStatusHdrs.append(",ORGNL_NO_OF_TXNS ,ORGNL_CNTL_SUM ,PROCESS_STATUS ,GROUP_STATUS ,SERVICE ,VET_RUN_NUMBER ,WORKUNIT_REF_NO ,ORGNL_FILE_NAME ,EXTRACT_FILE_NAME ,ARCHIVE_DATE) ");
 			sbStatusHdrs.append("SELECT SYSTEM_SEQ_NO ,HDR_MSG_ID ,CREATE_DATE_TIME ,INSTG_AGT ,INSTD_AGT ,ORGNL_MSG_ID ,ORGNL_MSG_NAME ,ORGNL_CREATE_DATE_TIME "); 
 			sbStatusHdrs.append(",ORGNL_NO_OF_TXNS ,ORGNL_CNTL_SUM ,PROCESS_STATUS ,GROUP_STATUS ,SERVICE ,VET_RUN_NUMBER ,WORKUNIT_REF_NO ,ORGNL_FILE_NAME ,EXTRACT_FILE_NAME ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-			sbStatusHdrs.append("FROM MANOWNER.MDT_AC_OPS_STATUS_HDRS WHERE PROCESS_STATUS = '7' ");
+			sbStatusHdrs.append("FROM CAMOWNER.MDT_AC_OPS_STATUS_HDRS WHERE PROCESS_STATUS = '7' ");
 
 			try
 			{
@@ -7045,9 +7045,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		{
 			StringBuffer sbDelStatusDtls = new StringBuffer();
 
-			sbDelStatusDtls.append("delete FROM MANOWNER.MDT_AC_OPS_STATUS_DETAILS a ");
+			sbDelStatusDtls.append("delete FROM CAMOWNER.MDT_AC_OPS_STATUS_DETAILS a ");
 			sbDelStatusDtls.append("where (a.STATUS_HDR_SEQ_NO) in ");
-			sbDelStatusDtls.append("(select b.SYSTEM_SEQ_NO FROM MANOWNER.MDT_AC_OPS_STATUS_HDRS b WHERE b.PROCESS_STATUS = '7') ");
+			sbDelStatusDtls.append("(select b.SYSTEM_SEQ_NO FROM CAMOWNER.MDT_AC_OPS_STATUS_HDRS b WHERE b.PROCESS_STATUS = '7') ");
 
 			String delStatusDtlsSQL = sbDelStatusDtls.toString();
 			log.debug("delStatusDtlsSQL: " + delStatusDtlsSQL);
@@ -7065,7 +7065,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.info("===============DELETING OPS STATUS HDRS===============");
 			try
 			{
-				String delStatusHdrsSQL = "DELETE FROM MANOWNER.MDT_AC_OPS_STATUS_HDRS WHERE PROCESS_STATUS = '7'";
+				String delStatusHdrsSQL = "DELETE FROM CAMOWNER.MDT_AC_OPS_STATUS_HDRS WHERE PROCESS_STATUS = '7'";
 				log.debug("delStatusHdrsSQL: " + delStatusHdrsSQL);
 				genericDAO.executeNativeSQL(delStatusHdrsSQL);
 				delStatusHdrs = true;
@@ -7093,12 +7093,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbMndtCounts = new StringBuffer();
 
-		sbMndtCounts.append("INSERT INTO MANOWNER.MDT_AC_ARC_MNDT_COUNT ");
+		sbMndtCounts.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MNDT_COUNT ");
 		sbMndtCounts.append("(INST_ID ,SERVICE_ID ,NR_OF_FILES ,NR_OF_MSGS ,PROCESS_DATE ,INCOMING ,OUTGOING ,MSG_ID ,NR_MSGS_REJECTED ");
 		sbMndtCounts.append(",FILE_NAME ,NR_MSGS_ACCEPTED ,NR_MSGS_EXTRACTED) ");
 		sbMndtCounts.append("SELECT INST_ID ,SERVICE_ID ,NR_OF_FILES ,NR_OF_MSGS ,PROCESS_DATE ,INCOMING ,OUTGOING ,MSG_ID ,NR_MSGS_REJECTED ");
 		sbMndtCounts.append(",FILE_NAME ,NR_MSGS_ACCEPTED ,NR_MSGS_EXTRACTED ");
-		sbMndtCounts.append("FROM MANOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sbMndtCounts.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
 
 		try
 		{
@@ -7122,7 +7122,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String mndtCountDel = "DELETE FROM MANOWNER.MDT_AC_OPS_MNDT_COUNT ";
+			String mndtCountDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT ";
 			log.debug("mndtCountDel: " + mndtCountDel);
 			genericDAO.executeNativeSQL(mndtCountDel);
 			mndtCountBool = true;
@@ -7142,10 +7142,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbFileReg = new StringBuffer();
 
-		sbFileReg.append("INSERT INTO MANOWNER.MDT_AC_ARC_FILE_REG ");
+		sbFileReg.append("INSERT INTO CAMOWNER.MDT_AC_ARC_FILE_REG ");
 		sbFileReg.append("(FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID ,ARCHIVE_DATE) ");
 		sbFileReg.append("SELECT FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbFileReg.append("FROM MANOWNER.MDT_OPS_FILE_REG ");
+		sbFileReg.append("FROM CAMOWNER.MDT_OPS_FILE_REG ");
 
 		try
 		{
@@ -7169,7 +7169,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String fileRegDel = "DELETE FROM MANOWNER.MDT_OPS_FILE_REG ";
+			String fileRegDel = "DELETE FROM CAMOWNER.MDT_OPS_FILE_REG ";
 			log.debug("fileRegDel: " + fileRegDel);
 			genericDAO.executeNativeSQL(fileRegDel);
 			fileRegBool = true;
@@ -7188,12 +7188,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		boolean mdteReqBool = false;
 
 		StringBuffer sbMdteReq = new StringBuffer();
-		sbMdteReq.append("INSERT INTO MANOWNER.MDT_AC_ARC_MDTE_REQUEST ");
+		sbMdteReq.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MDTE_REQUEST ");
 		sbMdteReq.append("(MDT_INF_REQ_ID ,INSTR_AGENT ,INSTD_AGENT ,REQUEST_TYPE ,CREDITOR_BANK ,CR_ABB_SHORT_NAME ,DEBTOR_BANK ,MANDATE_REF_NR ,MDTE_MSG_ID "); 
 		sbMdteReq.append(",MDTE_RESP_IND ,PROCESS_STATUS ,ARCHIVE_DATE ,EXTRACT_MSG_ID ,IN_FILE_NAME ,EXTRACT_FILE_NAME) ");
 		sbMdteReq.append("SELECT MDT_INF_REQ_ID ,INSTR_AGENT ,INSTD_AGENT ,REQUEST_TYPE ,CREDITOR_BANK ,CR_ABB_SHORT_NAME ,DEBTOR_BANK ,MANDATE_REF_NR ,MDTE_MSG_ID "); 
 		sbMdteReq.append(",MDTE_RESP_IND ,PROCESS_STATUS ,TO_DATE('"+archDate+"','YYYY-MM-DD') ,EXTRACT_MSG_ID ,IN_FILE_NAME ,EXTRACT_FILE_NAME ");
-		sbMdteReq.append("FROM MANOWNER.MDT_AC_OPS_MDTE_REQUEST WHERE PROCESS_STATUS = '4' ");
+		sbMdteReq.append("FROM CAMOWNER.MDT_AC_OPS_MDTE_REQUEST WHERE PROCESS_STATUS = '4' ");
 
 		try
 		{
@@ -7217,7 +7217,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String mdteReqDel = "DELETE FROM MANOWNER.MDT_AC_OPS_MDTE_REQUEST WHERE PROCESS_STATUS = '4' ";
+			String mdteReqDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_MDTE_REQUEST WHERE PROCESS_STATUS = '4' ";
 			log.debug("mdteReqDel: " + mdteReqDel);
 			genericDAO.executeNativeSQL(mdteReqDel);
 			mdteReqBool = true;
@@ -7237,14 +7237,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbMdteResp = new StringBuffer();
 		//2020/08/25: SalehaR - Replace SQL with FLAT table SQL
-		//		sbMdteResp.append("INSERT INTO MANOWNER.MDT_AC_ARC_MDTE_RESP ");
+		//		sbMdteResp.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MDTE_RESP ");
 		//		sbMdteResp.append("(MDT_INF_REQ_ID ,INSTR_AGENT ,INSTD_AGENT ,REJECT_REASON ,CREATE_DATE_TIME ,MDTE_MSG_ID ,PROCESS_STATUS ,ACCPT_IND ");
 		//		sbMdteResp.append(",MDT_STATUS ,CR_BANK_MEMBER_ID ,DR_BANK_MEMBER_ID ,EXTRACT_MSG_ID ,ARCHIVE_DATE) ");
 		//		sbMdteResp.append("SELECT MDT_INF_REQ_ID ,INSTR_AGENT ,INSTD_AGENT ,REJECT_REASON ,CREATE_DATE_TIME ,MDTE_MSG_ID ,PROCESS_STATUS ,ACCPT_IND "); 
 		//		sbMdteResp.append(",MDT_STATUS ,CR_BANK_MEMBER_ID ,DR_BANK_MEMBER_ID ,EXTRACT_MSG_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		//		sbMdteResp.append("FROM MANOWNER.MDT_AC_OPS_MDTE_RESP WHERE PROCESS_STATUS = '9' ");
+		//		sbMdteResp.append("FROM CAMOWNER.MDT_AC_OPS_MDTE_RESP WHERE PROCESS_STATUS = '9' ");
 
-		sbMdteResp.append("INSERT INTO MANOWNER.MDT_AC_ARC_MDTE_RSP_TXNS ");
+		sbMdteResp.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MDTE_RSP_TXNS ");
 		sbMdteResp.append("(MSG_ID ,MDT_INF_REQ_ID ,CREDITOR_BANK ,DEBTOR_BANK ,SERVICE_ID ,PROCESS_STATUS ,IN_FILE_NAME ,IN_FILE_DATE ,EXTRACT_MSG_ID ,EXTRACT_FILE_NAME ,ACCEPTED_IND ");       
 		sbMdteResp.append(",RESP_REASON_CODE ,MANDATE_STATUS ,MANDATE_ID ,CONTRACT_REF ,SERVICE_LEVEL ,LOCAL_INSTR_CD ,SEQUENCE_TYPE ,FREQUENCY ,FROM_DATE ,FIRST_COLL_DATE ,COLL_AMOUNT_CURR ");   
 		sbMdteResp.append(",COLL_AMOUNT ,MAX_AMOUNT_CURR ,MAX_AMOUNT ,CRED_SCHEME_ID ,CREDITOR_NAME ,MANDATE_REQ_TRAN_ID ,CRED_PHONE_NR ,CRED_EMAIL_ADDR ,CRED_ACC_NUM ,CRED_BRANCH_NR ,ULT_CRED_NAME ");      
@@ -7257,7 +7257,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sbMdteResp.append(",CRED_ABB_SHORT_NAME ,DEBTOR_NAME ,DEBTOR_ID ,DEBT_PHONE_NR ,DEBT_EMAIL_ADDR ,DEBT_ACC_NUM ,DEBT_ACC_TYPE ,DEBT_BRANCH_NR ,ULT_DEBT_NAME ,AUTH_TYPE ,COLLECTION_DAY ");
 		sbMdteResp.append(",DATE_ADJ_RULE_IND ,ADJ_CATEGORY ,ADJ_RATE ,ADJ_AMOUNT_CURR ,ADJ_AMOUNT ,AUTH_CHANNEL ,MANDATE_REF_NR ,FIRST_COLL_AMT_CURR ,FIRST_COLL_AMT ,DEBIT_VALUE_TYPE ,MANDATE_AUTH_DATE ");  
 		sbMdteResp.append(",CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbMdteResp.append("FROM MANOWNER.MDT_AC_OPS_MDTE_RSP_TXNS WHERE PROCESS_STATUS = '4' ");
+		sbMdteResp.append("FROM CAMOWNER.MDT_AC_OPS_MDTE_RSP_TXNS WHERE PROCESS_STATUS = '4' ");
 
 		try
 		{
@@ -7281,8 +7281,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-//			String mdteRespDel = "DELETE FROM MANOWNER.MDT_AC_OPS_MDTE_RESP WHERE PROCESS_STATUS = '9' ";
-			String mdteRespDel = "DELETE FROM MANOWNER.MDT_AC_OPS_MDTE_RSP_TXNS WHERE PROCESS_STATUS = '4' ";
+//			String mdteRespDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_MDTE_RESP WHERE PROCESS_STATUS = '9' ";
+			String mdteRespDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_MDTE_RSP_TXNS WHERE PROCESS_STATUS = '4' ";
 			log.debug("mdteRespDel: " + mdteRespDel);
 			genericDAO.executeNativeSQL(mdteRespDel);
 			mdteRespBool = true;
@@ -7302,7 +7302,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbMdteRespMsg = new StringBuffer();
 
-		sbMdteRespMsg.append("INSERT INTO MANOWNER.MDT_AC_ARC_MDTE_RESP_MSG ");
+		sbMdteRespMsg.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MDTE_RESP_MSG ");
 		sbMdteRespMsg.append("(MSG_ID ,MANDATE_REQ_TRAN_ID ,MDT_INF_REQ_ID ,CREDITOR_BANK ,DEBTOR_BANK ,ACCEPTED_IND ,RESP_REASON ,MANDATE_STATUS ,MANDATE_ID ,MANDATE_REQ_ID "); 
 		sbMdteRespMsg.append(",TRACKING_IND ,LOCAL_INST_CODE ,SEQUENCE_TYPE ,FREQUENCY ,FROM_DATE ,FIRST_COLL_DATE ,COLLECTION_CURR ,COLLECTION_AMT ,MAX_AMT_CURR ,MAX_AMT ");
 		sbMdteRespMsg.append(",CR_SCHEME_ID ,CR_NAME ,CR_TEL_NO ,CR_EMAIL ,CR_ACC_NO ,CR_BRANCH_NO ,ULT_CR_NAME ,CR_ABB_SHORT_NAME ,DEBTOR_NAME ,DEBTOR_ID ,DR_TEL_NO ");
@@ -7314,7 +7314,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sbMdteRespMsg.append(",CR_SCHEME_ID ,CR_NAME ,CR_TEL_NO ,CR_EMAIL ,CR_ACC_NO ,CR_BRANCH_NO ,ULT_CR_NAME ,CR_ABB_SHORT_NAME ,DEBTOR_NAME ,DEBTOR_ID ,DR_TEL_NO ,DR_EMAIL ");
 		sbMdteRespMsg.append(",DR_ACC_NO ,DR_ACC_TYPE ,DR_BRANCH_NO ,ULT_DR_NAME ,AUTH_TYPE ,COLLECTION_DAY ,DATE_ADJ_RULE_IND ,ADJ_CATEGORY ,ADJUSTMENT_RATE ,ADJ_AMT_CURR ");
 		sbMdteRespMsg.append(",ADJ_AMT ,AUTH_CHANNEL ,MNDT_REF_NUM ,FIRST_COLL_AMT_CURR ,FIRST_COLL_AMT ,DEBIT_VALUE_TYPE ,MANDATE_AUTH_DATE ,PROCESS_STATUS ,EXTRACT_MSG_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbMdteRespMsg.append("FROM MANOWNER.MDT_AC_OPS_MDTE_RESP_MSG WHERE PROCESS_STATUS = '4' ");
+		sbMdteRespMsg.append("FROM CAMOWNER.MDT_AC_OPS_MDTE_RESP_MSG WHERE PROCESS_STATUS = '4' ");
 
 		try
 		{
@@ -7338,7 +7338,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String mdteRespMsgDel = "DELETE FROM MANOWNER.MDT_AC_OPS_MDTE_RESP_MSG WHERE PROCESS_STATUS = '4' ";
+			String mdteRespMsgDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_MDTE_RESP_MSG WHERE PROCESS_STATUS = '4' ";
 			log.debug("mdteRespMsgDel: " + mdteRespMsgDel);
 			genericDAO.executeNativeSQL(mdteRespMsgDel);
 			mdteRespMsgBool = true;
@@ -7359,10 +7359,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============ARCHIVING GROUP HEADER EXCESS TXNS===============");
 		StringBuffer leftGHMsg = new StringBuffer();
-		leftGHMsg.append("INSERT INTO MANOWNER.MDT_AC_ARC_GRP_HDR ");
+		leftGHMsg.append("INSERT INTO CAMOWNER.MDT_AC_ARC_GRP_HDR ");
 		leftGHMsg.append("(MSG_ID ,CREATE_DATE_TIME ,AUTH_CODE ,CREATED_BY ,ARCHIVE_DATE) ");
 		leftGHMsg.append("SELECT MSG_ID ,CREATE_DATE_TIME ,AUTH_CODE ,CREATED_BY ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		leftGHMsg.append("FROM MANOWNER.MDT_AC_OPS_GRP_HDR ");
+		leftGHMsg.append("FROM CAMOWNER.MDT_AC_OPS_GRP_HDR ");
 		leftGHMsg.append("WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7380,7 +7380,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		//Mandate Message
 		log.info("===============ARCHIVING MANDATES EXCESS TXNS===============");
 		StringBuffer sbMandate = new StringBuffer();
-		sbMandate.append("INSERT INTO MANOWNER.MDT_AC_ARC_MNDT_MSG ");
+		sbMandate.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MNDT_MSG ");
 		sbMandate.append("(MSG_ID ,MANDATE_ID ,MANDATE_REQ_ID ,SEQUENCE_TYPE ,FREQUENCY ,FROM_DATE ,TO_DATE ,FIRST_COLL_DATE ,FINAL_COLL_DATE ,COLL_CURRENCY ,COLL_AMOUNT ,MAX_AMOUNT_CURR ,MAX_AMOUNT ,LOCAL_INSTR_CD "); 
 		sbMandate.append(",SERVICE_LEVEL ,STATUS ,ACTIVE_IND ,ACTIVE_IND_CHANGE_DATE ,FILE_NAME ,FILE_DATE ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,PROCESS_STATUS ,MOD_REASON ,ORGNL_MSG_ID ,ORGNL_MSG_NAME_ID "); 
 		sbMandate.append(",ORGNL_MSG_CREATE_DATE_TIME ,AMEND_REASON_CODE ,AMEND_REASON_DESC ,ORGNL_MDT_REQ_ID ,TRACKING_IND ,ACCEPTED ,REJECT_REASON_CODE ,ADD_REJECT_RSN_INF ,ORIG_MANDATE_ID ,PROCESS_IND ,CONTENTS ");                 
@@ -7389,7 +7389,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sbMandate.append(",LOCAL_INSTR_CD ,SERVICE_LEVEL ,STATUS ,ACTIVE_IND ,ACTIVE_IND_CHANGE_DATE ,FILE_NAME ,FILE_DATE ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,PROCESS_STATUS ,MOD_REASON ,ORGNL_MSG_ID ");
 		sbMandate.append(",ORGNL_MSG_NAME_ID ,ORGNL_MSG_CREATE_DATE_TIME ,AMEND_REASON_CODE ,AMEND_REASON_DESC ,ORGNL_MDT_REQ_ID ,TRACKING_IND ,ACCEPTED ,REJECT_REASON_CODE ,ADD_REJECT_RSN_INF ,ORIG_MANDATE_ID,PROCESS_IND ");              
 		sbMandate.append(",CONTENTS ,SYS_GEN_SEQ_NR ,MDT_INF_REQ_ID ,RECORD_TYPE ,EXTRACT_MSG_ID ,SERVICE_ID ,ONLINE_IND ,MANDATE_REQ_TRAN_ID ,MANDATE_REF_NR ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbMandate.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG ");
+		sbMandate.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG ");
 		sbMandate.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7406,11 +7406,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============ARCHIVING CASH ACCOUNT EXCESS TXNS===============");
 		StringBuffer sbCashAcc = new StringBuffer();
-		sbCashAcc.append("INSERT INTO MANOWNER.MDT_AC_ARC_CASH_ACCOUNT ");
+		sbCashAcc.append("INSERT INTO CAMOWNER.MDT_AC_ARC_CASH_ACCOUNT ");
 		sbCashAcc.append("(ACCOUNT_NAME ,ACCOUNT_NUMBER ,ACCOUNT_TYPE ,CREATED_BY ,CREATED_DATE ,CURRENCY ,MODIFIED_BY ,MODIFIED_DATE ,PARTY_IDENT_TYPE_ID ,MSG_ID ,MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 		sbCashAcc.append("SELECT ACCOUNT_NAME ,ACCOUNT_NUMBER ,ACCOUNT_TYPE ,CREATED_BY ,CREATED_DATE ,CURRENCY ,MODIFIED_BY ,MODIFIED_DATE ,PARTY_IDENT_TYPE_ID ,MSG_ID ");
 		sbCashAcc.append(" ,MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbCashAcc.append("FROM MANOWNER.MDT_AC_OPS_CASH_ACCOUNT ");
+		sbCashAcc.append("FROM CAMOWNER.MDT_AC_OPS_CASH_ACCOUNT ");
 		sbCashAcc.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7427,14 +7427,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============ARCHIVING FIN INST EXCESS TXNS===============");
 		StringBuffer sbFinInst = new StringBuffer();
-		sbFinInst.append("INSERT INTO MANOWNER.MDT_AC_ARC_FIN_INST ");
+		sbFinInst.append("INSERT INTO CAMOWNER.MDT_AC_ARC_FIN_INST ");
 		sbFinInst.append("(INST_ID ,BR_ADDR_LINE ,BR_ADDR_TYPE ,BR_BUILD_NUMBER ,BR_COUNTRY ,BR_COUNTRY_SUB_DIV ,BR_DEPT ,BR_POST_CODE ,BR_STREET_NAME ,BR_SUB_DEPT ,BR_TOWN_NAME ,BRANCH_ID ,BRANCH_NAME "); 
 		sbFinInst.append(",CREATED_BY ,CREATED_DATE ,FI_ADDR_LINE ,FI_ADDR_TYPE ,FI_BUILD_NUMBER ,FI_COUNTRY ,FI_COUNTRY_SUB_DIV ,FI_DEPT ,FI_ID ,FI_NAME ,FI_POST_CODE ,FI_STREET_NAME ,FI_SUB_DEPT ");
 		sbFinInst.append(",FI_TOWN_NAME ,FIN_INST_TYPE_ID ,ISSUER ,MEMBER_ID ,MODIFIED_BY ,MODIFIED_DATE ,MSG_ID ,MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 		sbFinInst.append("SELECT INST_ID ,BR_ADDR_LINE ,BR_ADDR_TYPE ,BR_BUILD_NUMBER ,BR_COUNTRY ,BR_COUNTRY_SUB_DIV ,BR_DEPT ,BR_POST_CODE ,BR_STREET_NAME ,BR_SUB_DEPT ,BR_TOWN_NAME "); 
 		sbFinInst.append(",BRANCH_ID ,BRANCH_NAME ,CREATED_BY ,CREATED_DATE ,FI_ADDR_LINE ,FI_ADDR_TYPE ,FI_BUILD_NUMBER ,FI_COUNTRY ,FI_COUNTRY_SUB_DIV ,FI_DEPT ,FI_ID ,FI_NAME ");
 		sbFinInst.append(",FI_POST_CODE ,FI_STREET_NAME ,FI_SUB_DEPT ,FI_TOWN_NAME ,NVL(FIN_INST_TYPE_ID,'NF') ,ISSUER ,MEMBER_ID ,MODIFIED_BY ,MODIFIED_DATE ,MSG_ID ,MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbFinInst.append("FROM MANOWNER.MDT_AC_OPS_FIN_INST ");
+		sbFinInst.append("FROM CAMOWNER.MDT_AC_OPS_FIN_INST ");
 		sbFinInst.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7451,14 +7451,14 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============ARCHIVING PARTY IDENT EXCESS TXNS===============");
 		StringBuffer sbPartyIdent = new StringBuffer();
-		sbPartyIdent.append("INSERT INTO MANOWNER.MDT_AC_ARC_PARTY_IDENT ");
+		sbPartyIdent.append("INSERT INTO CAMOWNER.MDT_AC_ARC_PARTY_IDENT ");
 		sbPartyIdent.append("(ADDR_LINE ,ADDR_TYPE ,BUILD_NUMBER ,CITY_OF_BIRTH ,CONTACT_NAME ,COUNTRY ,COUNTRY_SUB_DIV ,CREATED_BY ,CREATED_DATE ,CTRY_OF_BIRTH ,CTRY_OF_RESIDENCE ,DATE_OF_BIRTH ,DEPT ,EMAIL ,FAX_NR "); 
 		sbPartyIdent.append(",ID ,MOB_NR ,MODIFIED_BY ,MODIFIED_DATE ,NAME ,NAME_PREFIX ,PARTY_IDENT_TYPE_ID ,PHONE_NR ,POST_CODE ,PROVINCE_OF_BIRTH ,STREET_NAME ,SUB_DEPT ,TOWN_NAME ,MSG_ID ,ENTRY_CLASS ");
 		sbPartyIdent.append(",MANDATE_REQ_TRAN_ID, ARCHIVE_DATE) ");
 		sbPartyIdent.append("SELECT ADDR_LINE ,ADDR_TYPE ,BUILD_NUMBER ,CITY_OF_BIRTH ,CONTACT_NAME ,COUNTRY ,COUNTRY_SUB_DIV ,CREATED_BY ,CREATED_DATE ,CTRY_OF_BIRTH ,CTRY_OF_RESIDENCE "); 
 		sbPartyIdent.append(",DATE_OF_BIRTH ,DEPT ,EMAIL ,FAX_NR ,ID ,MOB_NR ,MODIFIED_BY ,MODIFIED_DATE ,NAME ,NAME_PREFIX ,NVL(PARTY_IDENT_TYPE_ID,'NF'),PHONE_NR ,POST_CODE ,PROVINCE_OF_BIRTH "); 
 		sbPartyIdent.append(",STREET_NAME ,SUB_DEPT ,TOWN_NAME ,MSG_ID ,ENTRY_CLASS ,MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbPartyIdent.append("FROM MANOWNER.MDT_AC_OPS_PARTY_IDENT ");
+		sbPartyIdent.append("FROM CAMOWNER.MDT_AC_OPS_PARTY_IDENT ");
 		sbPartyIdent.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7475,10 +7475,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============ARCHIVING REF DOC EXCESS TXNS===============");
 		StringBuffer sbRefDoc = new StringBuffer();
-		sbRefDoc.append("INSERT INTO MANOWNER.MDT_AC_ARC_REF_DOC ");
+		sbRefDoc.append("INSERT INTO CAMOWNER.MDT_AC_ARC_REF_DOC ");
 		sbRefDoc.append("(CODE ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,REF_DOC_NUMBER ,RELATED_DATE ,MSG_ID ,MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 		sbRefDoc.append("SELECT CODE ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,REF_DOC_NUMBER ,RELATED_DATE ,nvl(MSG_ID,'NF') as msgid ,MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbRefDoc.append("FROM MANOWNER.MDT_AC_OPS_REF_DOC ");
+		sbRefDoc.append("FROM CAMOWNER.MDT_AC_OPS_REF_DOC ");
 		sbRefDoc.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7495,12 +7495,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============ARCHIVING SUPPL DATA EXCESS TXNS===============");
 		StringBuffer sbSupplData = new StringBuffer();
-		sbSupplData.append("INSERT INTO MANOWNER.MDT_AC_ARC_SUPPL_DATA ");
+		sbSupplData.append("INSERT INTO CAMOWNER.MDT_AC_ARC_SUPPL_DATA ");
 		sbSupplData.append("(ADJUST_AMT ,ADJUST_AMT_CURR ,ADJUST_CAT ,ADJUST_RATE ,DEBIT_VALUE_TYPE ,DTE_ADJUST_RULE_IND ,FIRST_COLL_AMT ,FIRST_COLL_AMT_CURR ,PLACE_AND_NAME "); 
 		sbSupplData.append(",CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,MANDATE_REF_NR ,AUTH_CHANNEL ,AUTH_TYPE ,COLL_DAY ,MSG_ID ,MANDATE_AUTH_DATE ,MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 		sbSupplData.append("SELECT ADJUST_AMT ,ADJUST_AMT_CURR ,ADJUST_CAT ,ADJUST_RATE ,DEBIT_VALUE_TYPE ,DTE_ADJUST_RULE_IND ,FIRST_COLL_AMT ,FIRST_COLL_AMT_CURR ,PLACE_AND_NAME ,CREATED_BY ");
 		sbSupplData.append(" ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,MANDATE_REF_NR ,AUTH_CHANNEL ,AUTH_TYPE ,COLL_DAY ,MSG_ID ,MANDATE_AUTH_DATE ,MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbSupplData.append("FROM MANOWNER.MDT_AC_OPS_SUPPL_DATA ");
+		sbSupplData.append("FROM CAMOWNER.MDT_AC_OPS_SUPPL_DATA ");
 		sbSupplData.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7517,11 +7517,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============ARCHIVING ORGNL MANDATE EXCESS TXNS===============");
 		StringBuffer sbOrigMndt = new StringBuffer();
-		sbOrigMndt.append("INSERT INTO MANOWNER.MDT_AC_ARC_ORGNL_MNDT ");
+		sbOrigMndt.append("INSERT INTO CAMOWNER.MDT_AC_ARC_ORGNL_MNDT ");
 		sbOrigMndt.append("(MANDATE_ID ,MANDATE_REQ_TRAN_ID ,MSG_ID ,MANDATE_REQ_ID ,CREDITOR_NAME ,DEBTOR_NAME ,DEBTOR_BRANCH_NO ,ORGNL_MANDATE_REQ_TRAN_ID ,ARCHIVE_DATE) ");
 		sbOrigMndt.append("SELECT MANDATE_ID ,nvl(MANDATE_REQ_TRAN_ID,'NF') as mrti ,MSG_ID ,MANDATE_REQ_ID ,CREDITOR_NAME ,DEBTOR_NAME ,DEBTOR_BRANCH_NO ");
 		sbOrigMndt.append(",ORGNL_MANDATE_REQ_TRAN_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbOrigMndt.append("FROM MANOWNER.MDT_AC_OPS_ORGNL_MNDT ");
+		sbOrigMndt.append("FROM CAMOWNER.MDT_AC_OPS_ORGNL_MNDT ");
 		sbOrigMndt.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7538,10 +7538,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============ARCHIVING SUSPENSION GRPHDR EXCESS TXNS===============");
 		StringBuffer sbSuspHdrs = new StringBuffer();
-		sbSuspHdrs.append("INSERT INTO MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR ");
+		sbSuspHdrs.append("INSERT INTO CAMOWNER.MDT_AC_ARC_SUSP_GRP_HDR ");
 		sbSuspHdrs.append("(ASSIGNMENT_ID ,ASSIGNER ,ASSIGNEE ,CREATE_DATE_TIME ,ARCHIVE_DATE) ");
 		sbSuspHdrs.append("SELECT DISTINCT nvl(ASSIGNMENT_ID,'NF') as assgnid ,ASSIGNER ,ASSIGNEE ,CREATE_DATE_TIME ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbSuspHdrs.append("FROM MANOWNER.MDT_AC_OPS_SUSP_GRP_HDR ");
+		sbSuspHdrs.append("FROM CAMOWNER.MDT_AC_OPS_SUSP_GRP_HDR ");
 		sbSuspHdrs.append("WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7558,12 +7558,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.info("===============ARCHIVING SUSPENSION MSG EXCESS TXNS===============");
 		StringBuffer sbSuspDtls = new StringBuffer();
-		sbSuspDtls.append("INSERT INTO MANOWNER.MDT_AC_ARC_SUSP_MSG ");
+		sbSuspDtls.append("INSERT INTO CAMOWNER.MDT_AC_ARC_SUSP_MSG ");
 		sbSuspDtls.append("(MANDATE_SUSP_ID ,ORIGINAL_PMT_ID ,ASSIGNMENT_ID ,REASON_CODE ,MANDATE_REF_NR ,CREDITOR_BANK ,MANDATE_REQ_TRAN_ID "); 
 		sbSuspDtls.append(",CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,PROCESS_STATUS ,EXTRACT_MSG_ID ,ARCHIVE_DATE) ");
 		sbSuspDtls.append("SELECT MANDATE_SUSP_ID ,ORIGINAL_PMT_ID ,ASSIGNMENT_ID ,REASON_CODE ,MANDATE_REF_NR ,CREDITOR_BANK ,MANDATE_REQ_TRAN_ID "); 
 		sbSuspDtls.append(",CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,PROCESS_STATUS ,EXTRACT_MSG_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbSuspDtls.append("FROM MANOWNER.MDT_AC_OPS_SUSP_MSG ");
+		sbSuspDtls.append("FROM CAMOWNER.MDT_AC_OPS_SUSP_MSG ");
 		sbSuspDtls.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -7586,52 +7586,52 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		try
 		{
 			log.info("===============DELETING GROUP HEADER EXCESS TXNS===============");
-			String ghLeftDel = "DELETE FROM  MANOWNER.MDT_AC_OPS_GRP_HDR WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String ghLeftDel = "DELETE FROM  CAMOWNER.MDT_AC_OPS_GRP_HDR WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("ghLeftDel: " + ghLeftDel);
 			genericDAO.executeNativeSQL(ghLeftDel);
 
 			log.info("===============DELETING MANDATES EXCESS TXNS===============");
-			String mndtLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_MNDT_MSG WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String mndtLeftDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("mndtLeftDel: " + mndtLeftDel);
 			genericDAO.executeNativeSQL(mndtLeftDel);
 
 			log.info("===============DELETING CASH ACCOUNT EXCESS TXNS===============");
-			String cashAccLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_CASH_ACCOUNT WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String cashAccLeftDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_CASH_ACCOUNT WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("cashAccLeftDel: " + cashAccLeftDel);
 			genericDAO.executeNativeSQL(cashAccLeftDel);
 
 			log.info("===============DELETING FIN INST EXCESS TXNS===============");
-			String finInstLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_FIN_INST WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String finInstLeftDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_FIN_INST WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("finInstLeftDel: " + finInstLeftDel);
 			genericDAO.executeNativeSQL(finInstLeftDel);
 
 			log.info("===============DELETING PARTY IDENT EXCESS TXNS===============");
-			String partyIdLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_PARTY_IDENT WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String partyIdLeftDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_PARTY_IDENT WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("partyIdLeftDel: " + partyIdLeftDel);
 			genericDAO.executeNativeSQL(partyIdLeftDel);
 
 			log.info("===============DELETING REF DOC EXCESS TXNS===============");
-			String refDocLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_REF_DOC WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String refDocLeftDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_REF_DOC WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("refDocLeftDel: " + refDocLeftDel);
 			genericDAO.executeNativeSQL(refDocLeftDel);
 
 			log.info("===============DELETING SUPPLEMENTARY DATA EXCESS TXNS===============");
-			String suppDataLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_SUPPL_DATA WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String suppDataLeftDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_SUPPL_DATA WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("suppDataLeftDel: " + suppDataLeftDel);
 			genericDAO.executeNativeSQL(suppDataLeftDel);
 
 			log.info("===============DELETING ORIGINAL MANDATE EXCESS TXNS===============");
-			String origMndtLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_ORGNL_MNDT WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String origMndtLeftDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_ORGNL_MNDT WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("origMndtLeftDel: " + origMndtLeftDel);
 			genericDAO.executeNativeSQL(origMndtLeftDel);
 
 			log.info("===============DELETING SUSPENSION GRPHDR EXCESS TXNS===============");
-			String suspGHLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_SUSP_GRP_HDR WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String suspGHLeftDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_SUSP_GRP_HDR WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("suspGHLeftDel: " + suspGHLeftDel);
 			genericDAO.executeNativeSQL(suspGHLeftDel);
 
 			log.info("===============DELETING SUSPENSION MSG EXCESS TXNS===============");
-			String suspMsgLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_SUSP_MSG WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String suspMsgLeftDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_SUSP_MSG WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("suspMsgLeftDel: " + suspMsgLeftDel);
 			genericDAO.executeNativeSQL(suspMsgLeftDel);
 
@@ -7651,52 +7651,52 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		try
 		{
 			log.info("===============CLEANING UP ARC GROUP HEADER TXNS===============");
-			String ghLeftDel = "DELETE FROM  MANOWNER.MDT_AC_ARC_GRP_HDR WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String ghLeftDel = "DELETE FROM  CAMOWNER.MDT_AC_ARC_GRP_HDR WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("ghLeftDel: " + ghLeftDel);
 			genericDAO.executeNativeSQL(ghLeftDel);
 
 			log.info("===============CLEANING UP ARC MANDATES TXNS===============");
-			String mndtLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_MNDT_MSG WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String mndtLeftDel = "DELETE FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("mndtLeftDel: " + mndtLeftDel);
 			genericDAO.executeNativeSQL(mndtLeftDel);
 
 			log.info("===============CLEANING UP ARC CASH ACCOUNT TXNS===============");
-			String cashAccLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_CASH_ACCOUNT WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String cashAccLeftDel = "DELETE FROM CAMOWNER.MDT_AC_ARC_CASH_ACCOUNT WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("cashAccLeftDel: " + cashAccLeftDel);
 			genericDAO.executeNativeSQL(cashAccLeftDel);
 
 			log.info("===============CLEANING UP ARC FIN INST TXNS===============");
-			String finInstLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_FIN_INST WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String finInstLeftDel = "DELETE FROM CAMOWNER.MDT_AC_ARC_FIN_INST WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("finInstLeftDel: " + finInstLeftDel);
 			genericDAO.executeNativeSQL(finInstLeftDel);
 
 			log.info("===============CLEANING UP ARC PARTY IDENT TXNS===============");
-			String partyIdLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_PARTY_IDENT WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String partyIdLeftDel = "DELETE FROM CAMOWNER.MDT_AC_ARC_PARTY_IDENT WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("partyIdLeftDel: " + partyIdLeftDel);
 			genericDAO.executeNativeSQL(partyIdLeftDel);
 
 			log.info("===============CLEANING UP ARC REF DOC TXNS===============");
-			String refDocLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_REF_DOC WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String refDocLeftDel = "DELETE FROM CAMOWNER.MDT_AC_ARC_REF_DOC WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("refDocLeftDel: " + refDocLeftDel);
 			genericDAO.executeNativeSQL(refDocLeftDel);
 
 			log.info("===============CLEANING UP ARC SUPPLEMENTARY DATA TXNS===============");
-			String suppDataLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_SUPPL_DATA WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String suppDataLeftDel = "DELETE FROM CAMOWNER.MDT_AC_ARC_SUPPL_DATA WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("suppDataLeftDel: " + suppDataLeftDel);
 			genericDAO.executeNativeSQL(suppDataLeftDel);
 
 			log.info("===============CLEANING UP ARC ORIGINAL MANDATE TXNS===============");
-			String origMndtLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_ORGNL_MNDT WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String origMndtLeftDel = "DELETE FROM CAMOWNER.MDT_AC_ARC_ORGNL_MNDT WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("origMndtLeftDel: " + origMndtLeftDel);
 			genericDAO.executeNativeSQL(origMndtLeftDel);
 
 			log.info("===============CLEANING UP ARC SUSPENSION GRPHDR TXNS===============");
-			String suspGHLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String suspGHLeftDel = "DELETE FROM CAMOWNER.MDT_AC_ARC_SUSP_GRP_HDR WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("suspGHLeftDel: " + suspGHLeftDel);
 			genericDAO.executeNativeSQL(suspGHLeftDel);
 
 			log.info("===============CLEANING UP ARC SUSPENSION MSG TXNS===============");
-			String suspMsgLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_SUSP_MSG WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String suspMsgLeftDel = "DELETE FROM CAMOWNER.MDT_AC_ARC_SUSP_MSG WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("suspMsgLeftDel: " + suspMsgLeftDel);
 			genericDAO.executeNativeSQL(suspMsgLeftDel);
 
@@ -7711,7 +7711,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	}
 
 
-	public boolean eodCheckSt103SroutExtracted(String service, String memberId) {
+	public boolean eodCheckSt203SroutExtracted(String service, String memberId) {
 
 		boolean confDtlsCheck = false;
 
@@ -7723,7 +7723,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("extractService", service);
 			parameters.put("memberId", memberId);
 
-			List<CasOpsConfDetailsEntity> opsConfDetailsCheckList = (List<CasOpsConfDetailsEntity>) genericDAO.findAllByNQCriteria("MdtAcOpsConfDetailsEntity.findByExtractProcessStatusOutService", parameters);
+			List<CasOpsConfDetailsEntity> opsConfDetailsCheckList = (List<CasOpsConfDetailsEntity>) genericDAO.findAllByNQCriteria("CasOpsConfDetailsEntity.findByExtractProcessStatusOutService", parameters);
 			if(opsConfDetailsCheckList != null && opsConfDetailsCheckList.size() > 0)
 			{
 				log.debug("opsConfDetailsCheckList.size(); =====> "+opsConfDetailsCheckList.size());
@@ -7869,12 +7869,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbTnxsBill = new StringBuffer();
 
-		sbTnxsBill.append("INSERT INTO MANOWNER.MDT_AC_ARC_TXNS_BILLING ");
+		sbTnxsBill.append("INSERT INTO CAMOWNER.MDT_AC_ARC_TXNS_BILLING ");
 		sbTnxsBill.append("(SYSTEM_SEQ_NO ,ORIGINATOR ,SERVICE ,SUB_SERVICE ,TXN_TYPE ,TXN_STATUS ,FILE_NAME ,STATUS ,VOLUME ,BILL_EXP_STATUS ");
 		sbTnxsBill.append(",SYSTEM_NAME ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,ACTION_DATE ,RESP_DATE ,ARCHIVE_DATE) ");
 		sbTnxsBill.append("SELECT SYSTEM_SEQ_NO ,ORIGINATOR ,SERVICE ,SUB_SERVICE ,TXN_TYPE ,TXN_STATUS ,FILE_NAME ,STATUS ,VOLUME ,BILL_EXP_STATUS ");
 		sbTnxsBill.append(",SYSTEM_NAME ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,ACTION_DATE ,RESP_DATE ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbTnxsBill.append("FROM MANOWNER.MDT_AC_OPS_TXNS_BILLING WHERE BILL_EXP_STATUS = 'Y' ");
+		sbTnxsBill.append("FROM CAMOWNER.MDT_AC_OPS_TXNS_BILLING WHERE BILL_EXP_STATUS = 'Y' ");
 
 		try
 		{
@@ -7898,7 +7898,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String opsTxnsDelete = "DELETE FROM MANOWNER.MDT_AC_OPS_TXNS_BILLING WHERE BILL_EXP_STATUS = 'Y' ";
+			String opsTxnsDelete = "DELETE FROM CAMOWNER.MDT_AC_OPS_TXNS_BILLING WHERE BILL_EXP_STATUS = 'Y' ";
 			log.debug("dlyBillDel: " + opsTxnsDelete);
 			genericDAO.executeNativeSQL(opsTxnsDelete);
 			opsTxnBillBool = true;
@@ -7998,10 +7998,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbTxnDataBool = new StringBuffer();
 
-		sbTxnDataBool.append("INSERT INTO MANOWNER.MDT_AC_ARC_TXNS_BILL_REPORT ");
+		sbTxnDataBool.append("INSERT INTO CAMOWNER.MDT_AC_ARC_TXNS_BILL_REPORT ");
 		sbTxnDataBool.append("(SYSTEM_SEQ_NO ,ORIGINATOR ,SUB_SERVICE ,TXN_TYPE ,FILE_NAME ,PROCESS_DATE ,DELIVERY_TIME ,MANDATE_REQ_TRAN_ID ,TXN_STATUS ,ARCHIVE_DATE) ");
 		sbTxnDataBool.append("SELECT SYSTEM_SEQ_NO ,ORIGINATOR ,SUB_SERVICE ,TXN_TYPE ,FILE_NAME ,PROCESS_DATE ,DELIVERY_TIME ,MANDATE_REQ_TRAN_ID ,TXN_STATUS ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbTxnDataBool.append("FROM MANOWNER.MDT_AC_OPS_TXNS_BILL_REPORT ");
+		sbTxnDataBool.append("FROM CAMOWNER.MDT_AC_OPS_TXNS_BILL_REPORT ");
 
 		try
 		{
@@ -8025,7 +8025,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String txnBilDelSQL = "DELETE FROM MANOWNER.MDT_AC_OPS_TXNS_BILL_REPORT";
+			String txnBilDelSQL = "DELETE FROM CAMOWNER.MDT_AC_OPS_TXNS_BILL_REPORT";
 			genericDAO.executeNativeSQL(txnBilDelSQL);
 			txnBilDel = true;
 		}

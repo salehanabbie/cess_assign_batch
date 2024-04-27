@@ -46,7 +46,7 @@ public class MonitorDirectory {
   private static Path pathIncomingFile = null;
   private static WatchService watchService;
   private static Path pathProcessingFile = null;
-  private static String pathFile = "/home/opsjava/Delivery/Mandates/Input/Processing/";
+  private static String pathFile = "/home/opsjava/Delivery/Cession_Assign/Input/Processing/";
   private static Map<String, String> map = new HashMap<>();
   private static String fileName = null;
   private static OpsFileRegModel opsFileRegModel;
@@ -58,8 +58,6 @@ public class MonitorDirectory {
   private static String processName = "FILEWATCHER";
   public static CasSysctrlSysParamEntity casSysctrlSysParamEntity;
   public static CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
-  public static String sadcSystem = "SADC";
-  public static String acSystem = "AC";
   public static String backEndProcess = "BACKEND";
   public static String trimFileName = null;
   public static String mdtLoadType = null, inputPath, processPath;
@@ -213,9 +211,8 @@ public class MonitorDirectory {
               String achId = fileName.substring(0, 3);
               String service = fileName.substring(3, 8);
               String instId = fileName.substring(8, 16);
-              if (casSysctrlSysParamEntity.getSysType().equalsIgnoreCase(acSystem)) {
-                instId = StringUtils.stripStart(instId, "0");
-              }
+              instId = StringUtils.stripStart(instId, "0");
+
               String creationDate = fileName.substring(17, 25);
               String fileNo = fileName.substring(25, 31);
               //							String transInd = fileName.substring(31,32);
@@ -233,40 +230,18 @@ public class MonitorDirectory {
               BigDecimal hdrSystemSeqNo = BigDecimal.ZERO;
               CasOpsStatusHdrsEntity opsStatusHdrsEntity =
                   new CasOpsStatusHdrsEntity();
-              String statusReportService = "ST100";
+              String statusReportService = "ST200";
               String msgName = null;
-              if (service.equalsIgnoreCase("MANIN")) {
-                msgName = "pain.009";
-                statusReportService = "ST100";
-              } else if (service.equalsIgnoreCase("MANAM")) {
+             if (service.equalsIgnoreCase("CARIN")) {
                 msgName = "pain.010";
-                statusReportService = "ST100";
-              } else if (service.equalsIgnoreCase("MANCN")) {
-                msgName = "pain.011";
-
-              } else if (service.equalsIgnoreCase("MANAC")) {
+                statusReportService = "ST200";
+              } else if (service.equalsIgnoreCase("RCAIN")) {
                 msgName = "pain.012";
-                statusReportService = "ST104";
-              } else if (service.equalsIgnoreCase("MANRI")) {
-                msgName = "mdte.001";
-                statusReportService = "ST105";
-              } else if (service.equalsIgnoreCase("MANRT")) {
-                msgName = "mdte.002";
-                statusReportService = "ST106";
-              } else if (service.equalsIgnoreCase("ST101")) {
-                opsStatusHdrsEntity.setService("ST102");
+                statusReportService = "ST204";
+              } else if (service.equalsIgnoreCase("ST201")) {
+                opsStatusHdrsEntity.setService("ST202");
                 msgName = "pacs.002";
-                statusReportService = "ST102";
-              } else if (service.equalsIgnoreCase("SPINP")) {
-                msgName = "camt.055";
-                statusReportService = "ST008";
-              } else if (service.equalsIgnoreCase("SRINP")) {
-                opsStatusHdrsEntity.setService("ST008");
-                msgName = "pacs.002";
-                statusReportService = "ST008";
-              } else if (service.equalsIgnoreCase("MANDB")) {
-                msgName = "pain.012";
-                statusReportService = "ST994";
+                statusReportService = "ST202";
               }
 
 
@@ -320,7 +295,7 @@ public class MonitorDirectory {
   }
 
   private static void addFile(String fileName) {
-    map.put(fileName, "/home/opsjava/Delivery/Mandates/Input/Processing/");
+    map.put(fileName, "/home/opsjava/Delivery/Cession_Assign/Input/Processing/");
     log.debug("addfile FileName----->" + fileName);
   }
 
@@ -347,8 +322,8 @@ public class MonitorDirectory {
   }
 
   private static void moveFile(String file) throws IOException {
-    Path source = Paths.get("/home/opsjava/Delivery/Mandates/Input/" + file);
-    Path target = Paths.get("/home/opsjava/Delivery/Mandates/Input/Processing/" + file);
+    Path source = Paths.get("/home/opsjava/Delivery/Cession_Assign/Input/" + file);
+    Path target = Paths.get("/home/opsjava/Delivery/Cession_Assign/Input/Processing/" + file);
     Files.move(source, target);
     log.debug("source fileName------>" + source);
     log.debug("target fileName------>" + target);

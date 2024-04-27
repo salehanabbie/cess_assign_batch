@@ -49,7 +49,7 @@ import iso.std.iso._20022.tech.xsd.pain_012_001.SupplementaryData1;
  * Modified By- SalehaR - 2016-09-13 - Alignment to TRS 15
  * SalehaR - 2017-01-06 - Duplicate Checking 
  * @author SalehaR-2019/05/10 Debug Statements & Code CleanUp
- * @author SalehaR-2019-09-17 Load to Single Table(MDT_AC_OPS_MANDATE_TXNS)
+ * @author SalehaR-2019-09-17 Load to Single Table(CAS_OPS_CESSION_ASSIGN_TXNS)
  */
 public class AC_Pain012_Loader_ST implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -63,17 +63,16 @@ public class AC_Pain012_Loader_ST implements Serializable {
 
 	private List<MandateAcceptance3> mandateAcceptance3List;
 	private List<Authorisation1Choice> authorisation1ChoiceList;
-	public static String systemName = "MANOWNER";
+	public static String systemName = "CAMOWNER";
 	public  Date todaysDate;
 	public static AdminBeanRemote adminBeanRemote;
 	public static ServiceBeanRemote beanRemote;
 	public static ValidationBeanRemote valBeanRemote;
 	public static FileProcessBeanRemote fileProcessBeanRemote;
 	private CasSysctrlSysParamEntity casSysctrlSysParamEntity = null;
-	private String sadcSystem = "SADC";
 	String xmlDateFormat = "yyyyMMdd";
-	private String pain012Schema = "/home/opsjava/Delivery/Mandates/Schema/pain.012.001.03.xsd";
-	private String mandateReqTranId = null, pain012Service,tt2TxnType, tt2Succ, tt2Unsucc,nonActInd, maninService, manamService, mancnService, messageId = null, rdyForExtStatus, loadStatus;
+	private String pain012Schema = "/home/opsjava/Delivery/Cession_Assign/Schema/pain.012.001.03.xsd";
+	private String mandateReqTranId = null, pain012Service,tt2TxnType, tt2Succ, tt2Unsucc,nonActInd, carinService, messageId = null, rdyForExtStatus, loadStatus;
 	List<CasOpsCessionAssignEntity> mandatesList;
 
 	AC_Pain012_Validation_ST acPain012Validation_ST;
@@ -82,7 +81,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 
 	Document document;
 	String fileName;
-	int mdtRejCnt =0;
+	int casRejCnt =0;
 	long startTime, endTime, duration;
 	List<CasOpsCessionAssignEntity> acceptedMndtList =new ArrayList<CasOpsCessionAssignEntity>();
 //	List<MdtAcOpsMandateTxnsEntity> matchedMndtList =new ArrayList<MdtAcOpsMandateTxnsEntity>();
@@ -110,9 +109,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 			tt2Succ = propertyUtil.getPropValue("AC.Bill.TxnSucc");
 			tt2Unsucc = propertyUtil.getPropValue("AC.Bill.TxnUnSucc");
 			nonActInd = propertyUtil.getPropValue("NonActiveInd");
-			maninService = propertyUtil.getPropValue("ACRT.Input.Pain009");
-			manamService = propertyUtil.getPropValue("ACRT.Input.Pain010");
-			mancnService = propertyUtil.getPropValue("ACRT.Input.Pain011");
+			carinService = propertyUtil.getPropValue("ACRT.Input.Pain010");
 			this.rdyForExtStatus= propertyUtil.getPropValue("ProcStatus.ReadyForExtract");
 			this.loadStatus = propertyUtil.getPropValue("ProcStatus.Loaded");
 		}
@@ -231,7 +228,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 
 						if(mandateSeverity == 0)
 						{
-							createMandate(mandateAcceptance3.getOrgnlMndt().getOrgnlMndt(), mandateAcceptance3.getAccptncRslt(), acPain012Validation_ST.mdtAcMandateTxnsEntityOriginal, mandateAcceptance3.getSplmtryData(), intParty);
+							createMandate(mandateAcceptance3.getOrgnlMndt().getOrgnlMndt(), mandateAcceptance3.getAccptncRslt(), acPain012Validation_ST.casOpsCessAssignTxnsEntityOriginal, mandateAcceptance3.getSplmtryData(), intParty);
 							//							//								accptCnt = accptCnt + 1;
 							//							if(isLoaded == true)
 							//							{
@@ -246,8 +243,8 @@ public class AC_Pain012_Loader_ST implements Serializable {
 						{
 							rejCnt = rejCnt + 1;
 						}
-						//						  log.info("the count of accepted MANAC files is "+accptCnt);
-						//						  log.info("mdtRejCnt:##################### " + rejCnt);
+						//						  log.info("the count of accepted RCAIN files is "+accptCnt);
+						//						  log.info("casRejCnt:##################### " + rejCnt);
 					}
 				}
 
@@ -652,26 +649,11 @@ public class AC_Pain012_Loader_ST implements Serializable {
 			casOpsDailyBillingEntity.setBillExpStatus(nonActInd);
 			casOpsDailyBillingEntity.setActionDate(originalMandate.getCreatedDate());
 
-			if(origBillService.equalsIgnoreCase(manamService))
+			if(origBillService.equalsIgnoreCase(carinService))
 			{
 				if(originalMandate != null && originalMandate.getLocalInstrCd() != null)
 				{
 					casOpsDailyBillingEntity.setAuthCode(originalMandate.getLocalInstrCd());
-				}
-			}
-
-			if(origBillService.equalsIgnoreCase(maninService))
-			{
-				if(originalMandate != null && originalMandate.getLocalInstrCd() != null)
-				{
-					String localInstrCd = mandate.getTp().getLclInstrm().getPrtry();
-					if (localInstrCd != null) 
-					{ 
-						if (localInstrCd.trim().equalsIgnoreCase("0999") || localInstrCd.trim().equalsIgnoreCase("0998") || localInstrCd.trim().equalsIgnoreCase("0997")) 
-						{
-							casOpsDailyBillingEntity.setAuthCode(originalMandate.getLocalInstrCd());
-						}
-					}
 				}
 			}
 
@@ -691,23 +673,9 @@ public class AC_Pain012_Loader_ST implements Serializable {
 
 			//Save Billing
 			log.debug("THIS IS THE OPS DAILY BILLING ENTITY==> "+ casOpsDailyBillingEntity);
-			//beanRemote.saveOpsDailyBilling(mdtAcOpsDailyBillingEntity);
+			//beanRemote.saveOpsDailyBilling(casAcOpsDailyBillingEntity);
 			billableTxnList.add(casOpsDailyBillingEntity);
 		}
-
-		//		isLoaded = false;
-		//			try
-		//			{
-		//				isLoaded = fileProcessBeanRemote.createAcOpsMandateTxns(mdtAcOpsMandateTxnsEntity,mandate.getDbtrAgt().getFinInstnId().getClrSysMmbId().getMmbId(), mandate.getUltmtCdtr().getId().getOrgId().getOthr().get(0).getId().toString(), mndtRfNum);
-		//			}
-		//			catch (Exception e) 
-		//			{
-		//				isLoaded = false;
-		//				log.info("Error on createAcOpsMandateTxns: " + e.getMessage());
-		//				e.printStackTrace();
-		//			}
-		//
-		//		}	
 	}
 
 	public void saveBulkMandates() {
@@ -717,7 +685,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 
 		try
 		{
-			log.info("==================== BULK INSERT MANAC TXNS ====================");
+			log.info("==================== BULK INSERT RCAIN TXNS ====================");
 			fileProcessBeanRemote.bulkSaveMandates(acceptedMndtList);
 			loadEnd = System.nanoTime();
 			loadDur = (loadEnd - loadStart) / 1000000;
@@ -738,7 +706,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 		}
 		catch (Exception e) 
 		{
-			log.error("Error on saveBulkMandates MANAC: " + e.getMessage());
+			log.error("Error on saveBulkMandates RCAIN: " + e.getMessage());
 			e.printStackTrace();
 		}
 		fileProcessBeanRemote.closeHibernateSession();
@@ -758,7 +726,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 //				This join method can only be used on JAVA 8
 //				joinResult = String.join(",", accpList);
 				joinResult = StringUtils.join(accpList,",");
-				String sqlQuery = new String("UPDATE MANOWNER.MDT_AC_OPS_MANDATE_TXNS SET PROCESS_STATUS = 'M' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESSION_ASSIGN_TXNS SET PROCESS_STATUS = 'M' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
 				fileProcessBeanRemote.bulkUpdateBySQL(sqlQuery);
 			}	        
 		}
@@ -773,7 +741,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 //				This join method can only be used on JAVA 8
 //				joinResult = String.join(",", rjctList);
 				joinResult = StringUtils.join(rjctList,",");
-				String sqlQuery = new String("UPDATE MANOWNER.MDT_AC_OPS_MANDATE_TXNS SET PROCESS_STATUS = 'R' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESSION_ASSIGN_TXNS SET PROCESS_STATUS = 'R' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
 				fileProcessBeanRemote.bulkUpdateBySQL(sqlQuery);
 			}	        
 		}
@@ -828,30 +796,30 @@ public class AC_Pain012_Loader_ST implements Serializable {
 		boolean saved = false;
 		int nrOfFile =1;
 		int nrOfMsgsInFile = mandateAcceptance3List.size();
-		CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
-		CasOpsMndtCountPK mdtOpsMndtCountPk = new CasOpsMndtCountPK();
+		CasOpsMndtCountEntity casOpsMndtCountEntity = new CasOpsMndtCountEntity();
+		CasOpsMndtCountPK casOpsMndtCountPk = new CasOpsMndtCountPK();
 
 		if(document!= null && document.getMndtAccptncRpt()!=null && document.getMndtAccptncRpt().getGrpHdr() != null && document.getMndtAccptncRpt().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId());
-		mdtOpsMndtCountPk.setServiceId("MANAC");
+			casOpsMndtCountPk.setMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId());
+		casOpsMndtCountPk.setServiceId("RCAIN");
 		if(document!= null && document.getMndtAccptncRpt()!=null && document.getMndtAccptncRpt().getGrpHdr() != null && document.getMndtAccptncRpt().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setInstId(document.getMndtAccptncRpt().getGrpHdr().getMsgId().toString().substring(12, 18));
-		mdtOpsMndtCountEntity.setNrOfMsgs(nrOfMsgsInFile);
-		mdtOpsMndtCountEntity.setNrOfFiles(nrOfFile);
-		mdtOpsMndtCountEntity.setIncoming("Y");
-		mdtOpsMndtCountEntity.setProcessDate(todaysDate);
-		mdtOpsMndtCountEntity.setOutgoing("N");
-		mdtOpsMndtCountEntity.setCasOpsMndtCountPK(mdtOpsMndtCountPk);
-		mdtOpsMndtCountEntity.setNrMsgsAccepted(acceptCount);
-		mdtOpsMndtCountEntity.setNrMsgsRejected(rejectedCount);
-		mdtOpsMndtCountEntity.setNrMsgsExtracted(0);
-		mdtOpsMndtCountEntity.setFileName(fileName);
+			casOpsMndtCountPk.setInstId(document.getMndtAccptncRpt().getGrpHdr().getMsgId().toString().substring(12, 18));
+		casOpsMndtCountEntity.setNrOfMsgs(nrOfMsgsInFile);
+		casOpsMndtCountEntity.setNrOfFiles(nrOfFile);
+		casOpsMndtCountEntity.setIncoming("Y");
+		casOpsMndtCountEntity.setProcessDate(todaysDate);
+		casOpsMndtCountEntity.setOutgoing("N");
+		casOpsMndtCountEntity.setCasOpsMndtCountPK(casOpsMndtCountPk);
+		casOpsMndtCountEntity.setNrMsgsAccepted(acceptCount);
+		casOpsMndtCountEntity.setNrMsgsRejected(rejectedCount);
+		casOpsMndtCountEntity.setNrMsgsExtracted(0);
+		casOpsMndtCountEntity.setFileName(fileName);
 
-		saved = valBeanRemote.saveOpsMndtCount(mdtOpsMndtCountEntity);
+		saved = valBeanRemote.saveOpsMndtCount(casOpsMndtCountEntity);
 		if (saved) {
-			log.debug("MdtOpsCountTable has been updated");
+			log.debug("OpsCountTable has been updated");
 		} else {
-			log.debug("MdtOpsCountTable is not updated");
+			log.debug("OpsCountTable is not updated");
 		}
 	}
 

@@ -195,7 +195,7 @@ public interface ServiceBeanRemote {
 	public boolean deleteLeftOverTxnsBySQL(String expiredDate);
 	public boolean cleanUpArchivedTxnsBySQL(String expiredDate);
 	public boolean eodCheckIfStReportExtracted(Date systemDate, String service, String memberId);
-	public boolean eodCheckSt103SroutExtracted(String service, String memberId);
+	public boolean eodCheckSt203SroutExtracted(String service, String memberId);
 	public boolean saveAcOpsTxnBilling(Object obj);
 	public List<?> retrievetxnsBilingToExport(String nonActInd);
 	public boolean createOpsTxnBillingRecords(Object obj);

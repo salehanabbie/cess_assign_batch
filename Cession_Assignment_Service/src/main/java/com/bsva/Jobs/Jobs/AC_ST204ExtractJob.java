@@ -8,22 +8,20 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 @DisallowConcurrentExecution
-public class AC_ST100ExtractJob implements Job {
-
+public class AC_ST204ExtractJob implements Job {
   @EJB
   private SimpleEjb simpleEjb;
 
   @Override
-  public void execute(JobExecutionContext context) throws JobExecutionException {
-
+  public void execute(JobExecutionContext context)
+      throws JobExecutionException {
     simpleEjb = new SimpleEjb();
     try {
-      simpleEjb.runStatusReportST100Extract();
+      simpleEjb.runStatusReportST204Extract();
+
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-
   }
-
 }

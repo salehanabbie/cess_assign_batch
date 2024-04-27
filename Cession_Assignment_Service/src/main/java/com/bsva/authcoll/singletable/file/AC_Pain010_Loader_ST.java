@@ -1,25 +1,11 @@
 package com.bsva.authcoll.singletable.file;
 
-import com.bsva.entities.CasOpsFileRegEntity;
-import java.io.IOException;
-
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import javax.ejb.EJB;
-import javax.xml.datatype.XMLGregorianCalendar;
-import org.apache.commons.lang3.time.DurationFormatUtils;
-import org.apache.log4j.Logger;
 import com.bsva.PropertyUtil;
 import com.bsva.authcoll.singletable.validation.AC_Pain010_Validation_ST;
-import com.bsva.entities.CasOpsGrpHdrEntity;
 import com.bsva.entities.CasOpsCessionAssignEntity;
 import com.bsva.entities.CasOpsCessionAssignEntityPK;
+import com.bsva.entities.CasOpsFileRegEntity;
+import com.bsva.entities.CasOpsGrpHdrEntity;
 import com.bsva.entities.CasOpsMndtCountEntity;
 import com.bsva.entities.CasOpsMndtCountPK;
 import com.bsva.entities.CasOpsStatusHdrsEntity;
@@ -41,13 +27,26 @@ import iso.std.iso._20022.tech.xsd.pain_010_001.Mandate3;
 import iso.std.iso._20022.tech.xsd.pain_010_001.MandateAmendment3;
 import iso.std.iso._20022.tech.xsd.pain_010_001.MandateAmendmentReason1;
 import iso.std.iso._20022.tech.xsd.pain_010_001.SupplementaryData1;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.xml.datatype.XMLGregorianCalendar;
+import org.apache.commons.lang3.time.DurationFormatUtils;
+import org.apache.log4j.Logger;
 
 /**
  * @author ElelwaniR
  * Modified by SalehaR - 2015/12/10 - Alignment to V2.0 of Interface Specification
  * 2017-01-06 - SalehaR - Duplicate Checking
  * @author SalehaR-2019/09/21 Align to Single Table(MDT_AC_OPS_MANDATE_TXNS)
- * @author SalehaR - 2020/08/07 - BulkInserts of MANAM
+ * @author SalehaR - 2020/08/07 - BulkInserts of CARIN
  */
 public class AC_Pain010_Loader_ST {
 	@EJB
@@ -60,8 +59,8 @@ public class AC_Pain010_Loader_ST {
 	public static ServiceBeanRemote beanRemote;
 	public static FileProcessBeanRemote fileProcessBeanRemote;
 	public static boolean result, unmarshall = false,archive = false, /*origDeleted = false,*/ grpHdrValidated = false, grpHdrCreated= false, isLoaded = false;
-	public static String systemName = "MANOWNER";
-	private String pain010Schema = "/home/opsjava/Delivery/Mandates/Schema/pain.010.001.03.xsd";
+	public static String systemName = "CAMOWNER";
+	private String pain010Schema = "/home/opsjava/Delivery/Cession_Assign/Schema/pain.010.001.03.xsd";
 	private CasSysctrlSysParamEntity casSysctrlSysParamEntity = null;
 	public static Date todaysDate;
 	Document document;
@@ -627,12 +626,12 @@ public class AC_Pain010_Loader_ST {
 
 		try
 		{	
-			log.info("====================BULK INSERT MANAM TXNS ====================");
+			log.info("====================BULK INSERT CARIN TXNS ====================");
 			fileProcessBeanRemote.bulkSaveMandates(acceptedMndtList);		
-			log.info("====================BULK INSERT MANAM TXN BILL ====================");
+			log.info("====================BULK INSERT CARIN TXN BILL ====================");
 			fileProcessBeanRemote.bulkSaveMandates(txnsBillList);
 			loadStart = System.nanoTime();
-			log.info("====================BULK INSERT MANAM TXN BILL REPORT DATA ====================");
+			log.info("====================BULK INSERT CARIN TXN BILL REPORT DATA ====================");
 			fileProcessBeanRemote.bulkSaveMandates(opsTxnsBillReportList);
 			loadEnd = System.nanoTime();
 			loadDur = (loadEnd - loadStart) / 1000000;
@@ -692,7 +691,7 @@ public class AC_Pain010_Loader_ST {
 
 		if(document!= null && document.getMndtAmdmntReq()!=null && document.getMndtAmdmntReq().getGrpHdr() != null && document.getMndtAmdmntReq().getGrpHdr().getMsgId()!=null)
 			mdtOpsMndtCountPk.setMsgId(document.getMndtAmdmntReq().getGrpHdr().getMsgId());
-		mdtOpsMndtCountPk.setServiceId("MANAM");
+		mdtOpsMndtCountPk.setServiceId("CARIN");
 		if(document!= null && document.getMndtAmdmntReq()!=null && document.getMndtAmdmntReq().getGrpHdr() != null && document.getMndtAmdmntReq().getGrpHdr().getMsgId()!=null)
 			mdtOpsMndtCountPk.setInstId(document.getMndtAmdmntReq().getGrpHdr().getMsgId().toString().substring(12, 18));
 		mdtOpsMndtCountEntity.setNrOfMsgs(nrOfMsgsInFile);

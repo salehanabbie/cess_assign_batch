@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
  * Modified by SalehaR - 2016/09/14 - Alignment to TRS 15
  * Modified by SalehaR - 2018/03/09 - Aligned to TRS 17
  * Modified by SalehaR - 2019/01/02 - CHG-153240-Validate Creation Date in Msg Id
- * @author SalehaR - 2019/09/21 Align to Single Table (MDT_AC_OPS_MANDATE_TXNS)
+ * @author SalehaR - 2019/09/21 Align to Single Table (CAS_OPS_CESS_ASSIGN_TXNS)
  * @author SalehaR-2019/10/17 File Size Limit Validation
  * @author SalehaR-2020/07/23-Remove CDV validation as per TDA
  * @author SalehaR-2020/08/07-Optimise Validation and remove SADC validation
@@ -64,7 +64,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
   CasOpsStatusHdrsEntity opsStatusHdrsEntity = null;
   CasOpsStatusDetailsEntity opsStatusDetailsEntity = null;
   public BigDecimal hdrSystemSeqNo = BigDecimal.ZERO;
-  CasSysctrlCompParamEntity mdtSysctrlCompParamEntity;
+  CasSysctrlCompParamEntity casSysctrlCompParamEntity;
 
   boolean bicCodeValid = false;
   String msgId, msgCreateDate, incomingBicCode, mandateReqId, fileName, bicfi, orgnlMsgId,
@@ -73,7 +73,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
   String statusReasonInfo, txnStatus, orgnlTxnId, reason, additonalInfo;
   Date convCreationDateTime;
   int fileNum = 0;
-  public static String systemName = "MANOWNER";
+  public static String systemName = "CAMOWNER";
   String backEndProcess = "BACKEND";
   String hdrErrorType = "HDR";
   String txnErrorType = "TXN";
@@ -105,7 +105,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
       log.error(
           "AC_Pain010_Validation_ST - Could not find MandateMessageCommons.properties in " +
 				  "classpath");
-      manamService = "MANAM";
+      manamService = "CARIN";
       fileSizeLimit = 50000;
     }
 
@@ -117,9 +117,9 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
     bicCodeValid = false;
     contextValidationBeanCheck();
     contextAdminBeanCheck();
-    //		log.debug("mdtSysctrlSysParamEntity: "+ mdtSysctrlSysParamEntity);
+    //		log.debug("casSysctrlSysParamEntity: "+ casSysctrlSysParamEntity);
     systemType = casSysctrlSysParamEntity.getSysType();
-    mdtSysctrlCompParamEntity =
+    casSysctrlCompParamEntity =
         (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
   }
 
@@ -130,7 +130,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
 
     debtorBank = null;
     creditorBank = null;
-    debtorBank = mdtSysctrlCompParamEntity.getAchInstId();
+    debtorBank = casSysctrlCompParamEntity.getAchInstId();
 
     msgId = groupHeader.getMsgId();
     log.debug("grpHdr: " + groupHdr.getMsgId());
@@ -141,9 +141,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
       log.debug("Write to GrpHdr ..MsgId fails....");
       incInstid = fileName.substring(8, 16);
       stsHdrInstgAgt = fileName.substring(10, 16);
-      if (casSysctrlSysParamEntity.getSysType().equalsIgnoreCase(acSystem)) {
-        incInstid = StringUtils.stripStart(incInstid, "0");
-      }
+      incInstid = StringUtils.stripStart(incInstid, "0");
       outMsgId = generateStatusMsgId(incInstid);
       creditorBank = incInstid;
 
@@ -229,7 +227,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate Service Id_002_____________________________________//
-      if (!validateServiceId(serviceId, "MANAM")) {
+      if (!validateServiceId(serviceId, "CARIN")) {
         generateStatusErrorDetailsList("901045", null, hdrErrorType);
         grpHdrSeverity++;
         log.info("******************validateServiceId_002 - FAILED.******************");
@@ -331,9 +329,9 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
         String instdAgt = groupHeader.getInstdAgt().getFinInstnId().getClrSysMmbId().getMmbId();
         String achInstId;
 
-        log.debug("the achI d is ******" + mdtSysctrlCompParamEntity.getAchId());
-		  if (mdtSysctrlCompParamEntity != null) {
-			  achInstId = mdtSysctrlCompParamEntity.getAchInstId();
+        log.debug("the achI d is ******" + casSysctrlCompParamEntity.getAchId());
+		  if (casSysctrlCompParamEntity != null) {
+			  achInstId = casSysctrlCompParamEntity.getAchInstId();
 		  } else {
 			  achInstId = "210000";
 		  }
@@ -633,7 +631,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
     // Authentication_012_____________________________________//
     if (mandate.getTp() != null && mandate.getTp().getLclInstrm() != null &&
         mandate.getTp().getLclInstrm().getPrtry() != null) {
-      if (!validateDebtorAuthCode(mandate.getTp().getLclInstrm().getPrtry(), "MANAM")) {
+      if (!validateDebtorAuthCode(mandate.getTp().getLclInstrm().getPrtry(), "CARIN")) {
         generateStatusErrorDetailsList("901101", mndReqTrnId, txnErrorType);
         mandateSeverity++;
         log.info("******************validateDebtorAuthCode 010_012 - FAILED.******************");
@@ -975,11 +973,11 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
 
 					creditorAccTypeDesc = mandate.getCdtrAcct().getTp().getPrtry();
 
-					MdtCnfgAccountTypeEntity mdtCnfgAccountTypeEntity = (MdtCnfgAccountTypeEntity)
+					MdtCnfgAccountTypeEntity casCnfgAccountTypeEntity = (MdtCnfgAccountTypeEntity)
 					 valBeanRemote.validateAccountType(creditorAccTypeDesc);
-					if(mdtCnfgAccountTypeEntity != null && mdtCnfgAccountTypeEntity
+					if(casCnfgAccountTypeEntity != null && casCnfgAccountTypeEntity
 					.getAccountTypeCode() != null)
-						creditorAccType = mdtCnfgAccountTypeEntity.getAccountTypeCode();
+						creditorAccType = casCnfgAccountTypeEntity.getAccountTypeCode();
 
 					if(creditorBranchNo != null && creditorAccNo != null && creditorAccType !=
 					null)
@@ -1181,11 +1179,11 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
 //			{
 //				debtorAccTypeDesc = mandate.getDbtrAcct().getTp().getPrtry();
 //
-//				MdtCnfgAccountTypeEntity mdtCnfgAccountTypeEntity = (MdtCnfgAccountTypeEntity)
+//				MdtCnfgAccountTypeEntity casCnfgAccountTypeEntity = (MdtCnfgAccountTypeEntity)
 //				valBeanRemote.validateAccountType(debtorAccTypeDesc);
-//				if(mdtCnfgAccountTypeEntity != null && mdtCnfgAccountTypeEntity.getAccountTypeCode
+//				if(casCnfgAccountTypeEntity != null && casCnfgAccountTypeEntity.getAccountTypeCode
 //				() != null)
-//					debtorAccType = mdtCnfgAccountTypeEntity.getAccountTypeCode();
+//					debtorAccType = casCnfgAccountTypeEntity.getAccountTypeCode();
 //			}
 //
 //
@@ -2183,14 +2181,14 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
 
     SimpleDateFormat sdfFileDate = new SimpleDateFormat("yyyyMMdd");
     String achId, creationDate, fileSeqNo, msgId = null;
-    String outgoingService = "ST100";
+    String outgoingService = "ST200";
 
     CasOpsCustParamEntity casOpsCustParamEntity =
         (CasOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(instId, backEndProcess);
 
     try {
-      if (mdtSysctrlCompParamEntity != null) {
-        achId = mdtSysctrlCompParamEntity.getAchId();
+      if (casSysctrlCompParamEntity != null) {
+        achId = casSysctrlCompParamEntity.getAchId();
       } else {
         achId = "021";
       }
@@ -2235,7 +2233,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
     /*log.debug("valBeanRemote: "+ valBeanRemote);*/
     CasCnfgErrorCodesEntity casCnfgErrorCodesEntity =
         (CasCnfgErrorCodesEntity) valBeanRemote.retrieveErrorCode(errCode);
-    log.debug("mdtCnfgErrorCodesEntity: " + casCnfgErrorCodesEntity);
+    log.debug("casCnfgErrorCodesEntity: " + casCnfgErrorCodesEntity);
     return casCnfgErrorCodesEntity;
   }
 
@@ -2327,7 +2325,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
 		  opsStatusHdrsEntity.setProcessStatus("6");
 	  }
     opsStatusHdrsEntity.setGroupStatus(groupStatus);
-    opsStatusHdrsEntity.setService("ST100");
+    opsStatusHdrsEntity.setService("ST200");
     opsStatusHdrsEntity.setOrgnlFileName(fileName);
 
     hdrSystemSeqNo = valBeanRemote.saveOpsStatusHdrs(opsStatusHdrsEntity);

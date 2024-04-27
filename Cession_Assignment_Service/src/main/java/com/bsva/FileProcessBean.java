@@ -50,13 +50,13 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 
 	public List<?> validateOriginalMsgId(String msgId)
 	{
-		List<CasOpsCessionAssignEntity> mdtTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsMandateTxnsEntity.findByMsgId", "msgId",msgId);
+		List<CasOpsCessionAssignEntity> mdtTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("CasOpsCessAssignTxnsEntity.findByMsgId", "msgId",msgId);
 		return mdtTxnList;
 	}
 
 	public List<?> validateMndtReqTranIdUnique(String mrti)
 	{
-		List<CasOpsCessionAssignEntity> mandateTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsMandateTxnsEntity.findByMandateReqTranId", "mandateReqTranId",mrti);
+		List<CasOpsCessionAssignEntity> mandateTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("CasOpsCessAssignTxnsEntity.findByMandateReqTranId", "mandateReqTranId",mrti);
 		return mandateTxnList;
 	}
 
@@ -74,10 +74,10 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 
 			log.debug("---------------sparameters: ------------------"+ parameters.toString());
 			//			2019/10/04-SalehaR-Remove ProcessStatus from check	
-			//		    mdtAcOpsMandateTxnsEntity = (MdtAcOpsMandateTxnsEntity) genericDAO.findByCriteriaIN(MdtAcOpsMandateTxnsEntity.class, parameters, "processStatus",Arrays.asList(extractStatus, responseRecStatus, rejectedStatus, matchedStatus));
+			//		    mdtAcOpsMandateTxnsEntity = (CasOpsCessAssignTxnsEntity) genericDAO.findByCriteriaIN(CasOpsCessAssignTxnsEntity.class, parameters, "processStatus",Arrays.asList(extractStatus, responseRecStatus, rejectedStatus, matchedStatus));
 			casOpsCessionAssignEntity = (CasOpsCessionAssignEntity) genericDAO.findByCriteria(
 					CasOpsCessionAssignEntity.class, parameters);
-			log.debug("---------------MdtAcOpsMandateTxnsEntity after findByCriteria: ------------------"+
+			log.debug("---------------CasOpsCessAssignTxnsEntity after findByCriteria: ------------------"+
 					casOpsCessionAssignEntity);
 		} 
 		catch (ObjectNotFoundException onfe) 
@@ -116,14 +116,14 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			//			parameters.put("serviceId", messageType);
 			//			parameters.put("processStatus",extractStatus);
 			//			log.debug("---------------sparameters: ------------------"+ parameters.toString());
-			//			mdtAcOpsMandateTxnsEntity = (MdtAcOpsMandateTxnsEntity) genericDAO.findByCriteria(MdtAcOpsMandateTxnsEntity.class, parameters);
-			//			log.debug("---------------MdtAcOpsMandateTxnsEntity after findByCriteria: ------------------"+ mdtAcOpsMandateTxnsEntity);
+			//			mdtAcOpsMandateTxnsEntity = (CasOpsCessAssignTxnsEntity) genericDAO.findByCriteria(CasOpsCessAssignTxnsEntity.class, parameters);
+			//			log.debug("---------------CasOpsCessAssignTxnsEntity after findByCriteria: ------------------"+ mdtAcOpsMandateTxnsEntity);
 			//
 			//			if(mdtAcOpsMandateTxnsEntity == null)
 			//			{
 			//				log.debug("Arrays.asList(extractStatus, matchedStatus, rejectedStatus) --->"+Arrays.asList(extractStatus, matchedStatus, rejectedStatus));
-			//				mdtAcOpsMandateTxnsEntity = (MdtAcOpsMandateTxnsEntity) genericDAO.findByCriteriaIN(MdtAcOpsMandateTxnsEntity.class, parameters, "processStatus",Arrays.asList(matchedStatus, rejectedStatus, responseRecStatus));
-			//				log.debug("---------------MdtAcOpsMandateTxnsEntity after findByCriteriaIN: ------------------"+ mdtAcOpsMandateTxnsEntity);
+			//				mdtAcOpsMandateTxnsEntity = (CasOpsCessAssignTxnsEntity) genericDAO.findByCriteriaIN(CasOpsCessAssignTxnsEntity.class, parameters, "processStatus",Arrays.asList(matchedStatus, rejectedStatus, responseRecStatus));
+			//				log.debug("---------------CasOpsCessAssignTxnsEntity after findByCriteriaIN: ------------------"+ mdtAcOpsMandateTxnsEntity);
 			//			}		
 		} 
 		catch (ObjectNotFoundException onfe) 
@@ -162,7 +162,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 					isLoaded = true;
 				}
 			} else {
-				log.error("Unable to convert type to MdtAcOpsMandateTxnsEntity.");
+				log.error("Unable to convert type to CasOpsCessAssignTxnsEntity.");
 				isLoaded = false;
 			}
 		} catch (Exception e) {
@@ -262,7 +262,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 				genericDAO.saveOrUpdate(casOpsCessionAssignEntity);
 				updated = true;
 			} else {
-				log.error("Unable to convert type to MdtAcOpsMandateTxnsEntity.");
+				log.error("Unable to convert type to CasOpsCessAssignTxnsEntity.");
 				updated = false;
 			}
 		} catch (Exception e) {
@@ -291,7 +291,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		{
 		case "MATCH":  sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF' ");
 		break;
-		case "ACCEPT": sbGrpHdr.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC' ");	
+		case "ACCEPT": sbGrpHdr.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN' ");	
 		break;
 		case "EXPIRE": sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') "); 
 		break;
@@ -339,7 +339,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		{
 		case "MATCH"	: sbMandate.append("WHERE PROCESS_STATUS IN ('M','R') ");
 		break;
-		case "ACCEPT"	: sbMandate.append("WHERE PROCESS_STATUS = '4' AND SERVICE_ID = 'MANAC' ");
+		case "ACCEPT"	: sbMandate.append("WHERE PROCESS_STATUS = '4' AND SERVICE_ID = 'RCAIN' ");
 		break;
 		case "EXPIRE"	: sbMandate.append("WHERE PROCESS_STATUS IN ('4','9') AND TRUNC(CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 		break;
@@ -378,7 +378,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		{
 		case "MATCH":  sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");
 		break;
-		case "ACCEPT": sbGrpHdr.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'MANAC') ");	
+		case "ACCEPT": sbGrpHdr.append("WHERE a.PROCESS_STATUS = '4' AND a.SERVICE_ID = 'RCAIN') ");	
 		break;
 		case "EXPIRE": sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('4','9') and nvl(b.MSG_ID,'NF') <> 'NF' AND TRUNC(a.CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD')) "); 
 		break;
@@ -404,7 +404,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		{
 		case "MATCH":  sbMndMsg.append("WHERE PROCESS_STATUS IN ('M','R') ");
 		break;
-		case "ACCEPT": sbMndMsg.append("WHERE PROCESS_STATUS = '4' AND SERVICE_ID = 'MANAC' ");	
+		case "ACCEPT": sbMndMsg.append("WHERE PROCESS_STATUS = '4' AND SERVICE_ID = 'RCAIN' ");	
 		break;
 		case "EXPIRE": sbMndMsg.append("WHERE PROCESS_STATUS IN ('4','9') AND TRUNC(CREATED_DATE) = TO_DATE('"+expiredDate+"','YYYY-MM-DD') "); 
 		break;
@@ -617,10 +617,10 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 
 			List<CasOpsCessionAssignEntity> painMsgsCheckList = null;
 
-			if(serviceID.equalsIgnoreCase("MANAC")) {
-				painMsgsCheckList = genericDAO.findAllByNQCriteria("MdtAcOpsMandateTxnsEntity.findByCreatedDateTruncAndServiceIdCreditor", parameters);
+			if(serviceID.equalsIgnoreCase("RCAIN")) {
+				painMsgsCheckList = genericDAO.findAllByNQCriteria("CasOpsCessAssignTxnsEntity.findByCreatedDateTruncAndServiceIdCreditor", parameters);
 			} else {
-				painMsgsCheckList = genericDAO.findAllByNQCriteria("MdtAcOpsMandateTxnsEntity.findByCreatedDateTruncAndServiceIdDebtor", parameters);	
+				painMsgsCheckList = genericDAO.findAllByNQCriteria("CasOpsCessAssignTxnsEntity.findByCreatedDateTruncAndServiceIdDebtor", parameters);	
 			}
 
 			if(painMsgsCheckList != null && painMsgsCheckList.size() > 0) {
@@ -741,7 +741,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		
 		try 
 		{
-			matchedList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsMandateTxnsEntity.matchingPain012", "mandateReqTranId",manReqTransId);
+			matchedList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("CasOpsCessAssignTxnsEntity.matchingPain012", "mandateReqTranId",manReqTransId);
 			if(matchedList != null && matchedList.size() > 0)
 			{
 				if(matchedList.size() > 1) {
@@ -963,7 +963,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		sbTT1_ManamDR.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ( ");
 		sbTT1_ManamDR.append("CREDITOR_BANK, DEBTOR_BANK, SUB_SERVICE, TXN_TYPE, TXN_STATUS,CREATED_BY, ");
 		sbTT1_ManamDR.append("CREATED_DATE, BILL_EXP_STATUS, ACTION_DATE, TXN_ID, MNDT_REF_NUM, RESP_DATE, AUTH_CODE) ");
-		sbTT1_ManamDR.append("SELECT b.INSTRUCTINGAGENTAMS, b.INSTRUCTEDAGENTAMS, 'MANAM', 'TT1', (case when a.ACCEPTEDINDICATORAMS = 'true' then 'S' else 'U' end), ");
+		sbTT1_ManamDR.append("SELECT b.INSTRUCTINGAGENTAMS, b.INSTRUCTEDAGENTAMS, 'CARIN', 'TT1', (case when a.ACCEPTEDINDICATORAMS = 'true' then 'S' else 'U' end), ");
 		sbTT1_ManamDR.append("'MANOWNER', SYSDATE, 'N', TO_DATE(SUBSTR(b.TRANSDATETIME,0,4)||'-'||SUBSTR(b.TRANSDATETIME,5,2)||'-'||SUBSTR(b.TRANSDATETIME,7,2),'YYYY-MM-DD'), ");
 		sbTT1_ManamDR.append("a.TRANSACTIONIDENTIFIERAMS, a.MANDATEREFNUMBERAMS, TO_DATE('"+procDate+"','YYYY-MM-DD'), ");
 		sbTT1_ManamDR.append("(CASE WHEN SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(b.UNDRLYGAMDMNTDTLSBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE(b.UNDRLYGAMDMNTDTLSBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), '<LclInstrm><Prtry>',1,1)+18,4) ");
@@ -983,7 +983,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on TT1 MANAM DR SQL:- "+ex.getMessage());
+			log.error("Error on TT1 CARIN DR SQL:- "+ex.getMessage());
 			ex.printStackTrace();
 			tt1ManamDRBool = false;
 		}
@@ -1067,7 +1067,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		sbTT1_ManamIR.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ( ");
 		sbTT1_ManamIR.append("CREDITOR_BANK, DEBTOR_BANK, SUB_SERVICE, TXN_TYPE, TXN_STATUS,CREATED_BY, ");
 		sbTT1_ManamIR.append("CREATED_DATE, BILL_EXP_STATUS, ACTION_DATE, TXN_ID, MNDT_REF_NUM, RESP_DATE, AUTH_CODE) ");
-		sbTT1_ManamIR.append("SELECT INSTRUCTINGAGENTAMS, INSTRUCTEDAGENTAMS, 'MANAM', 'TT1', ");
+		sbTT1_ManamIR.append("SELECT INSTRUCTINGAGENTAMS, INSTRUCTEDAGENTAMS, 'CARIN', 'TT1', ");
 		sbTT1_ManamIR.append("(case when ACCEPTEDINDICATORAMS = 'true' then 'S' else case when ACCEPTEDINDICATORAMS = 'false' then 'U' else 'D' end end), ");
 		sbTT1_ManamIR.append("'MANOWNER', SYSDATE, 'N', TO_DATE(SUBSTR(TRANSDATETIME,0,4)||'-'||SUBSTR(TRANSDATETIME,5,2)||'-'||SUBSTR(TRANSDATETIME,7,2),'YYYY-MM-DD'), ");
 		sbTT1_ManamIR.append("TRANSACTIONIDENTIFIERAMS, MANDATEREFNUMBERAMS, TO_DATE('"+procDate+"','YYYY-MM-DD'), "); 
@@ -1086,7 +1086,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on TT1 MANAM IR SQL:- "+ex.getMessage());
+			log.error("Error on TT1 CARIN IR SQL:- "+ex.getMessage());
 			ex.printStackTrace();
 			tt1ManamIRBool = false;
 		}
@@ -1103,7 +1103,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		sbTT3_Manam.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ( ");
 		sbTT3_Manam.append("CREDITOR_BANK, DEBTOR_BANK, SUB_SERVICE, TXN_TYPE, TXN_STATUS,CREATED_BY, ");
 		sbTT3_Manam.append("CREATED_DATE, BILL_EXP_STATUS, ACTION_DATE, TXN_ID, MNDT_REF_NUM, RESP_DATE, AUTH_CODE) ");
-		sbTT3_Manam.append("SELECT INSTRUCTINGAGENTAMS,INSTRUCTEDAGENTAMS, 'MANAM', 'TT3', ");
+		sbTT3_Manam.append("SELECT INSTRUCTINGAGENTAMS,INSTRUCTEDAGENTAMS, 'CARIN', 'TT3', ");
 		sbTT3_Manam.append("(case when ACCEPTEDINDICATORAMS = 'true' then 'S' else case when ACCEPTEDINDICATORAMS = 'false' then 'U' else 'D' end end), ");
 		sbTT3_Manam.append("'MANOWNER', SYSDATE, 'N', TO_DATE(SUBSTR(TRANSDATETIME,0,4)||'-'||SUBSTR(TRANSDATETIME,5,2)||'-'||SUBSTR(TRANSDATETIME,7,2),'YYYY-MM-DD'), ");
 		sbTT3_Manam.append("TRANSACTIONIDENTIFIERAMS, MANDATEREFNUMBERAMS, TO_DATE('"+procDate+"','YYYY-MM-DD'), ");  
@@ -1122,7 +1122,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on TT3 MANAM SQL:- "+ex.getMessage());
+			log.error("Error on TT3 CARIN SQL:- "+ex.getMessage());
 			ex.printStackTrace();
 			tt3ManamBool = false;
 		}

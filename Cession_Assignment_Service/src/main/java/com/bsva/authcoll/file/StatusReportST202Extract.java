@@ -10,35 +10,31 @@ import com.bsva.PropertyUtil;
  * @author SalehaR
  *
  */
-public class StatusReportST100Extract 
+public class StatusReportST202Extract
 {
-//	StatusReportS
-	
-	private Logger log = Logger.getLogger(StatusReportST100Extract.class);
+	private Logger log = Logger.getLogger(StatusReportST202Extract.class);
 	private String pacs002ServiceId = null;
 	
 	@EJB
 	PropertyUtil propertyUtil;
 	
-	public StatusReportST100Extract()
+	public StatusReportST202Extract()
 	{
-		
 		try
 		{
 			propertyUtil = new PropertyUtil();
-			pacs002ServiceId = propertyUtil.getPropValue("StatusRep.ST100");
+			pacs002ServiceId = propertyUtil.getPropValue("StatusRep.ST202");
 
 			log.debug("-------pacs002ServiceId------ "+pacs002ServiceId);
 
 		}
 		catch (Exception e) 
 		{
-			log.error("StatusReportST100Extract - Could not find MandateMessageCommons.properties in classpath");
+			log.error("StatusReportST102Extract - Could not find MandateMessageCommons.properties in classpath");
 		}
 		
 		try
 		{
-			log.debug("!!!!!!!!!!!!!!!!!!!!!!!!!***************************In the ST100 Scheduler call ******************************!!!!!!!!!!!!!!!!!!!!!");
 			AC_StatusReport_Pacs002_001_04 ac_StatusReport_Pacs002_001_04 = new AC_StatusReport_Pacs002_001_04();
 			ac_StatusReport_Pacs002_001_04.generatePacs002StatusReport(pacs002ServiceId);
 		}

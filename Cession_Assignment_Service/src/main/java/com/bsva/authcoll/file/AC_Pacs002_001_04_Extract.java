@@ -89,7 +89,7 @@ public class AC_Pacs002_001_04_Extract {
 	String extractedStatus = "4";
 	String messgId;
 	public Date todaysDate;
-	CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
+	CasSysctrlCompParamEntity casSysctrlCompParamEntity = null;
 	CasSysctrlSysParamEntity casSysctrlSysParamEntity;
 	CasOpsRefSeqNrEntity casOpsRefSeqNrEntity = null;
 	String serviceId, mdtReqId, instdIdFileName, instIdMsgId;
@@ -103,7 +103,7 @@ public class AC_Pacs002_001_04_Extract {
 	boolean populateOpi = false, populateOad = false;
 	CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity;
 
-	private String pacs002Schema = "/home/opsjava/Delivery/Mandates/Schema/pacs.002.001.04.xsd";
+	private String pacs002Schema = "/home/opsjava/Delivery/Cession_Assign/Schema/pacs.002.001.04.xsd";
 	private String urn = "urn:iso:std:iso:20022:tech:xsd:pacs.002.001.04";
 	private String outgoingService = "ST103";
 	private Document pacsDocument;
@@ -152,12 +152,12 @@ public class AC_Pacs002_001_04_Extract {
 	{
 		log.debug("Extracting Pacs 002 File (ST103)");
 
-		mdtSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
-		log.debug("mdtSysctrlCompParamEntity in FileExtract: "+mdtSysctrlCompParamEntity);
+		casSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
+		log.debug("casSysctrlCompParamEntity in FileExtract: "+casSysctrlCompParamEntity);
 
 		casSysctrlSysParamEntity = new CasSysctrlSysParamEntity();
 		casSysctrlSysParamEntity = (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
-		log.debug("PAIN009 - mdtSysctrlSysParamEntity in FileExtract: "+casSysctrlSysParamEntity);
+		log.debug("PAIN009 - casSysctrlSysParamEntity in FileExtract: "+casSysctrlSysParamEntity);
 
 		String destInstId = null;
 		txnIdList = new ArrayList<String>();
@@ -357,8 +357,8 @@ public class AC_Pacs002_001_04_Extract {
 		{
 			outFileName = generatePacs002FileName(serviceId); 
 
-			String out ="/home/opsjava/Delivery/Mandates/Output/temp/"+outFileName+".xml";
-			File f = new File("/home/opsjava/Delivery/Mandates/Output/temp/" + outFileName +".xml")  ;  
+			String out ="/home/opsjava/Delivery/Cession_Assign/Output/temp/"+outFileName+".xml";
+			File f = new File("/home/opsjava/Delivery/Cession_Assign/Output/temp/" + outFileName +".xml")  ;  
 
 			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Schema schema = sf.newSchema(new File(pacs002Schema));
@@ -396,9 +396,9 @@ public class AC_Pacs002_001_04_Extract {
 		try
 		{
 
-			if(mdtSysctrlCompParamEntity != null)
+			if(casSysctrlCompParamEntity != null)
 			{
-				achId = mdtSysctrlCompParamEntity.getAchId();				
+				achId = casSysctrlCompParamEntity.getAchId();				
 			}
 			else
 			{
@@ -451,10 +451,10 @@ public class AC_Pacs002_001_04_Extract {
 		int fileLastSeqNo = 0;
 		try
 		{	
-			if(mdtSysctrlCompParamEntity != null)
+			if(casSysctrlCompParamEntity != null)
 			{
-				achId = mdtSysctrlCompParamEntity.getAchId();
-				testLiveInd = mdtSysctrlCompParamEntity.getTransamissionInd();
+				achId = casSysctrlCompParamEntity.getAchId();
+				testLiveInd = casSysctrlCompParamEntity.getTransamissionInd();
 			}
 			else
 			{
@@ -543,8 +543,8 @@ public class AC_Pacs002_001_04_Extract {
 
 		//	Set Instructing Agent - This will be BSVA
 		String instrtgAgnt = "210000";
-		if(mdtSysctrlCompParamEntity != null)
-			instrtgAgnt = mdtSysctrlCompParamEntity.getAchInstId();
+		if(casSysctrlCompParamEntity != null)
+			instrtgAgnt = casSysctrlCompParamEntity.getAchInstId();
 		else
 			instrtgAgnt="210000";
 
@@ -721,35 +721,11 @@ public class AC_Pacs002_001_04_Extract {
 			log.error("Error on creating PACS 002 Extract.");
 		}
 	}
-
-	//20170602 - SalehaR - SOT/EOT created at SOD and EOD
-//	public void generateSOT(String instgAgt, String service)
-//	{
-//		//Retrieve SOT/EOT Ind
-//		mdtAcOpsSotEotCtrlEntity = new MdtAcOpsSotEotCtrlEntity();
-//		mdtAcOpsSotEotCtrlEntity =  (MdtAcOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(instgAgt, service);
-//		log.debug("mdtAcOpsSotEotCtrlEntity: "+mdtAcOpsSotEotCtrlEntity);
-//
-//		if(mdtAcOpsSotEotCtrlEntity != null)
-//		{
-//			if(mdtAcOpsSotEotCtrlEntity.getSotOut().equalsIgnoreCase("N"))
-//			{
-//				StartOfTransmissionExtract startOfTransmissionExtract = new StartOfTransmissionExtract(instgAgt, service, "S");
-//				startOfTransmissionExtract.createStartOfTransmissionFile();
-//
-//				mdtAcOpsSotEotCtrlEntity.setSotOut("Y");
-//
-//				boolean updated = beanRemote.updateSOTEOTCntrl(mdtAcOpsSotEotCtrlEntity);
-//
-//			}
-//		}
-//	}
-
-
+	
 	public  void copyFile(String fileName) throws IOException 
 	{
-		File tmpFile = new File("/home/opsjava/Delivery/Mandates/Output/" + fileName +".xml");
-		String outputFile = "/home/opsjava/Delivery/Mandates/Output/temp/" + fileName +".xml";
+		File tmpFile = new File("/home/opsjava/Delivery/Cession_Assign/Output/" + fileName +".xml");
+		String outputFile = "/home/opsjava/Delivery/Cession_Assign/Output/temp/" + fileName +".xml";
 		FileOutputStream fos = new FileOutputStream(tmpFile);
 		Path source = Paths.get(outputFile);
 		Files.copy(source, fos);
@@ -770,35 +746,35 @@ public class AC_Pacs002_001_04_Extract {
 
 		log.debug("# of mandates submitted ******--->" + nrOfMsgs);
 
-		CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
-		CasOpsMndtCountPK mdtOpsMndtCountPk = new CasOpsMndtCountPK();
+		CasOpsMndtCountEntity casOpsMndtCountEntity = new CasOpsMndtCountEntity();
+		CasOpsMndtCountPK casOpsMndtCountPk = new CasOpsMndtCountPK();
 
 		if(pacsDocument!= null && pacsDocument.getFIToFIPmtStsRpt()!=null && pacsDocument.getFIToFIPmtStsRpt().getGrpHdr() != null && pacsDocument.getFIToFIPmtStsRpt().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setMsgId(pacsDocument.getFIToFIPmtStsRpt().getGrpHdr().getMsgId());
-		mdtOpsMndtCountPk.setServiceId(outgoingService);
+			casOpsMndtCountPk.setMsgId(pacsDocument.getFIToFIPmtStsRpt().getGrpHdr().getMsgId());
+		casOpsMndtCountPk.setServiceId(outgoingService);
 		if(pacsDocument!= null && pacsDocument.getFIToFIPmtStsRpt()!=null && pacsDocument.getFIToFIPmtStsRpt().getGrpHdr() != null && pacsDocument.getFIToFIPmtStsRpt().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setInstId(pacsDocument.getFIToFIPmtStsRpt().getGrpHdr().getMsgId().toString().substring(12, 18));
-		mdtOpsMndtCountEntity.setNrOfMsgs(nrOfMsgs);
-		mdtOpsMndtCountEntity.setNrOfFiles(nrOfFile);
-		mdtOpsMndtCountEntity.setNrMsgsAccepted(0);
-		mdtOpsMndtCountEntity.setNrMsgsRejected(0);
-		mdtOpsMndtCountEntity.setNrMsgsExtracted(nrOfMsgs);
-		mdtOpsMndtCountEntity.setIncoming("N");
-		mdtOpsMndtCountEntity.setProcessDate(todaysDate);
-		mdtOpsMndtCountEntity.setOutgoing("Y");
-		mdtOpsMndtCountEntity.setCasOpsMndtCountPK(mdtOpsMndtCountPk);
-		mdtOpsMndtCountEntity.setFileName(outFileName);
+			casOpsMndtCountPk.setInstId(pacsDocument.getFIToFIPmtStsRpt().getGrpHdr().getMsgId().toString().substring(12, 18));
+		casOpsMndtCountEntity.setNrOfMsgs(nrOfMsgs);
+		casOpsMndtCountEntity.setNrOfFiles(nrOfFile);
+		casOpsMndtCountEntity.setNrMsgsAccepted(0);
+		casOpsMndtCountEntity.setNrMsgsRejected(0);
+		casOpsMndtCountEntity.setNrMsgsExtracted(nrOfMsgs);
+		casOpsMndtCountEntity.setIncoming("N");
+		casOpsMndtCountEntity.setProcessDate(todaysDate);
+		casOpsMndtCountEntity.setOutgoing("Y");
+		casOpsMndtCountEntity.setCasOpsMndtCountPK(casOpsMndtCountPk);
+		casOpsMndtCountEntity.setFileName(outFileName);
 
-		saved = valBeanRemote.saveOpsMndtCount(mdtOpsMndtCountEntity);
+		saved = valBeanRemote.saveOpsMndtCount(casOpsMndtCountEntity);
 
-		log.debug("WRITING mdtOpsMndtCountEntity IN THE AC_Pacs002FileExtract"+mdtOpsMndtCountEntity);
+		log.debug("WRITING Count Record IN THE AC_Pacs002FileExtract"+casOpsMndtCountEntity);
 
 
 		if (saved) {
-			log.debug("MdtOpsCountTable has been updated");
+			log.debug("OpsCountTable has been updated");
 
 		} else {
-			log.debug("MdtOpsCountTable is not updated");
+			log.debug("OpsCountTable is not updated");
 
 		}
 

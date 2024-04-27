@@ -44,8 +44,6 @@ public class FileLoader_ST implements Serializable {
   private static String backEndProcess = "BACKEND";
   private static final long serialVersionUID = 1L;
   private static String pathFile = null;
-  private static String sadcSystem = "SADC";
-  private static String acSystem = "AC";
   private static CasSysctrlSysParamEntity casSysctrlSysParamEntity;
   private static String transmissionInd;
   private static String dataTransInd = "D";
@@ -95,9 +93,9 @@ public class FileLoader_ST implements Serializable {
     if (casSysctrlSysParamEntity != null) {
       if (casOpsServicesEntity != null) {
         if (casOpsServicesEntity.getActiveInd().equalsIgnoreCase("Y")) {
-          if (serviceId.equalsIgnoreCase("MANAM") &&
+          if (serviceId.equalsIgnoreCase("CARIN") &&
               transmissionInd.equalsIgnoreCase(dataTransInd)) {
-            log.debug("FILE TYPE IS MANAM");
+            log.debug("FILE TYPE IS CARIN");
             String namespace = null;
             if (casOpsCustParamEntity != null) {
               namespace = casOpsCustParamEntity.getManAmdXsdNs();
@@ -114,11 +112,11 @@ public class FileLoader_ST implements Serializable {
             else {
               log.error("Error in adminBeanRemote.createOpsFileRegModel");
             }
-          }//end of if MANAM
+          }//end of if CARIN
 
-          if (serviceId.equalsIgnoreCase("ST101") &&
+          if (serviceId.equalsIgnoreCase("ST201") &&
               transmissionInd.equalsIgnoreCase(dataTransInd)) {
-            log.debug("FILE TYPE IS ST101");
+            log.debug("FILE TYPE IS ST201");
             String namespace = null;
             if (casOpsCustParamEntity != null) {
               namespace = casOpsCustParamEntity.getManStatusRepXsdNs();
@@ -139,10 +137,10 @@ public class FileLoader_ST implements Serializable {
           }
 
 
-          //***********************Checking if it is MANAC
-          if (serviceId.equalsIgnoreCase("MANAC") &&
+          //***********************Checking if it is RCAIN
+          if (serviceId.equalsIgnoreCase("RCAIN") &&
               transmissionInd.equalsIgnoreCase(dataTransInd)) {
-            log.debug("FILE TYPE IS MANAC");
+            log.debug("FILE TYPE IS RCAIN");
             String namespace = null;
             if (casOpsCustParamEntity != null) {
               namespace = casOpsCustParamEntity.getManAccpXsdNs();
@@ -159,7 +157,7 @@ public class FileLoader_ST implements Serializable {
             else {
               log.error("Error in adminBeanRemote.createOpsFileRegModel");
             }
-          }//end of if MANAC
+          }//end of if RCAIN
         } else {
           log.error("********************" + serviceId +
               " is not in an active status. File cannot be processed.********************");
@@ -171,22 +169,16 @@ public class FileLoader_ST implements Serializable {
       }
       //***********************Checking if it is EOT
       if (transmissionInd.equalsIgnoreCase(endTransInd)) {
-
-        log.debug("FILE TYPE IS EOT");
         log.info("*************Loading File " + fileName + "*************************");
-        if (casSysctrlSysParamEntity.getSysType().equalsIgnoreCase(acSystem)) {
           endOfTransmission_FileLoader =
               new EndOfTransmission_FileLoader(pathFile + fileName, fileName);
-        }
       }
 
       if (transmissionInd.equalsIgnoreCase(startTransInd)) {
         log.debug("FILE TYPE IS SOT");
         log.info("*************Loading File " + fileName + "*************************");
-        if (casSysctrlSysParamEntity.getSysType().equalsIgnoreCase(acSystem)) {
           startOfTransmission_FileLoader =
               new StartOfTransmission_FileLoader(pathFile + fileName, fileName);
-        }
       }
     }// end of if(mdtSysctrlSysParamEntity != null)
     else {

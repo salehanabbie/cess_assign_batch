@@ -64,22 +64,20 @@ public class Validation_ST {
   String memberNo;
   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
   String backEndProcess = "BACKEND";
-  String sadcSystem = "SADC";
-  public String acSystem = "AC";
-  public String sysUser = "MANOWNER";
+  public String sysUser = "CAMOWNER";
   String branchmemberIdDebtorVal, branchmemberIdCreditorVal;
   public CasSysctrlSysParamEntity casSysctrlSysParamEntity;
 
   public static Logger log = Logger.getLogger("Validation_ST");
 
   //This must be reset at every file.
-  public CasOpsCessionAssignEntity mdtAcMandateTxnsEntityOriginal = null;
-  protected CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
+  public CasOpsCessionAssignEntity casOpsCessAssignTxnsEntityOriginal = null;
+  protected CasSysctrlCompParamEntity casSysctrlCompParamEntity = null;
   CasOpsGrpHdrEntity opsGrpHdrEntity = null;
   CasOpsCessionAssignEntity casOpsCessionAssignEntity = null;
-  List<CasOpsCessionAssignEntity> mdtAcOpsMandateTxnList;
+  List<CasOpsCessionAssignEntity> casOpsMandateTxnList;
   String incomingMsgId = null;
-  List<CasCnfgLocalInstrCodesEntity> mdtCnfgLocalInstrCodesList;
+  List<CasCnfgLocalInstrCodesEntity> casCnfgLocalInstrCodesList;
   HashMap<String, String> listOfErrorCodes;
   List<CasOpsServicesEntity> opsServicesList = new ArrayList<CasOpsServicesEntity>();
   List<SysCisBankEntity> sysCisBankList = new ArrayList<SysCisBankEntity>();
@@ -108,7 +106,7 @@ public class Validation_ST {
     contextFileProcBeanCheck();
     casSysctrlSysParamEntity =
         (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
-    log.debug("mdtSysctrlSysParamEntity in validation: " + casSysctrlSysParamEntity);
+    log.debug("casSysctrlSysParamEntity in validation: " + casSysctrlSysParamEntity);
     //
     //		Retrieve STATIC Data from Tables
     populateConfigTableData(false);
@@ -253,24 +251,24 @@ public class Validation_ST {
 	{
 		if(mandateReqTranId != null && !mandateReqTranId.isEmpty())
 		{
-			mdtAcOpsMndtMsgList = new ArrayList<MdtAcOpsMndtMsgEntity>();
-			 mdtAcOpsMndtMsgList = (List<MdtAcOpsMndtMsgEntity>)valBeanRemote
+			casOpsMndtMsgList = new ArrayList<MdtAcOpsMndtMsgEntity>();
+			 casOpsMndtMsgList = (List<MdtAcOpsMndtMsgEntity>)valBeanRemote
 			 .retrieveAllOpsMndtMsg(mandateReqTranId);
 
-			 log.debug("mdtAcOpsMndtMsgList.size(): "+ mdtAcOpsMndtMsgList.size());
-			if(mdtAcOpsMndtMsgList.size()> 0)
+			 log.debug("casOpsMndtMsgList.size(): "+ casOpsMndtMsgList.size());
+			if(casOpsMndtMsgList.size()> 0)
 			{
-				for(MdtAcOpsMndtMsgEntity mdtAcOpsMndtMsgEntity :mdtAcOpsMndtMsgList)
+				for(MdtAcOpsMndtMsgEntity casOpsMndtMsgEntity :casOpsMndtMsgList)
 				{
 
-					if(mdtAcOpsMndtMsgEntity.getServiceId().equalsIgnoreCase("MANIN") && !
-					(mdtAcOpsMndtMsgEntity.getProcessStatus().equalsIgnoreCase("4")) && !
-					(mdtAcOpsMndtMsgEntity.getProcessStatus().equalsIgnoreCase("M")))
+					if(casOpsMndtMsgEntity.getServiceId().equalsIgnoreCase("MANIN") && !
+					(casOpsMndtMsgEntity.getProcessStatus().equalsIgnoreCase("4")) && !
+					(casOpsMndtMsgEntity.getProcessStatus().equalsIgnoreCase("M")))
 					return true;
 					else
 
-						if(mdtAcOpsMndtMsgEntity.getServiceId().equalsIgnoreCase("MANAC") && !
-						(mdtAcOpsMndtMsgEntity.getServiceId().equalsIgnoreCase("4")))
+						if(casOpsMndtMsgEntity.getServiceId().equalsIgnoreCase("MANAC") && !
+						(casOpsMndtMsgEntity.getServiceId().equalsIgnoreCase("4")))
 						return true;
 
 						else
@@ -305,13 +303,13 @@ public class Validation_ST {
 			  }
 		  }
 		  //2019-10-06 SalehaR - Use Cached List
-		  //			MdtOpsServicesEntity mdtOpsServicesEntity = (MdtOpsServicesEntity)
+		  //			MdtOpsServicesEntity casOpsServicesEntity = (MdtOpsServicesEntity)
 		  //			valBeanRemote.validateServiceId_002(serviceName);
-		  //			if (mdtOpsServicesEntity == null)
+		  //			if (casOpsServicesEntity == null)
 		  //				return false;
 		  //			else
 		  //			{
-		  //				if(mdtOpsServicesEntity.getServiceIdIn().equalsIgnoreCase(validService))
+		  //				if(casOpsServicesEntity.getServiceIdIn().equalsIgnoreCase(validService))
 		  //					return true;
 		  //				else
 		  //					return false;
@@ -394,7 +392,7 @@ public class Validation_ST {
           log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
         }
 
-        if (msgType.equalsIgnoreCase("mdte.001")) {
+        if (msgType.equalsIgnoreCase("case.001")) {
           msgIdLastFileNo = Integer.valueOf(localEntity.getManReqLstSeq());
           log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
         }
@@ -406,7 +404,7 @@ public class Validation_ST {
           msgIdLastFileNo = Integer.valueOf(localEntity.getManConfirmLstSeq());
           log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
         }
-        if (msgType.equalsIgnoreCase("mdte.002")) {
+        if (msgType.equalsIgnoreCase("case.002")) {
           msgIdLastFileNo = Integer.valueOf(localEntity.getManRespLstSeq());
           log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
         }
@@ -428,13 +426,13 @@ public class Validation_ST {
 				  localEntity.setManAmdLstSeq(lastSeqNr);
 			  } else if (msgType.equalsIgnoreCase("pain.011")) {
 				  localEntity.setManCanLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("mdte.001")) {
+			  } else if (msgType.equalsIgnoreCase("case.001")) {
 				  localEntity.setManReqLstSeq(lastSeqNr);
 			  } else if (msgType.equalsIgnoreCase("pain.012")) {
 				  localEntity.setManAccpLstSeq(lastSeqNr);
 			  } else if (msgType.equalsIgnoreCase("pacs.002")) {
 				  localEntity.setManConfirmLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("mdte.002")) {
+			  } else if (msgType.equalsIgnoreCase("case.002")) {
 				  localEntity.setManRespLstSeq(lastSeqNr);
 			  }
 
@@ -457,13 +455,13 @@ public class Validation_ST {
 				  localEntity.setManAmdLstSeq(lastSeqNr);
 			  } else if (msgType.equalsIgnoreCase("pain.011")) {
 				  localEntity.setManCanLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("mdte.001")) {
+			  } else if (msgType.equalsIgnoreCase("case.001")) {
 				  localEntity.setManReqLstSeq(lastSeqNr);
 			  } else if (msgType.equalsIgnoreCase("pain.012")) {
 				  localEntity.setManAccpLstSeq(lastSeqNr);
 			  } else if (msgType.equalsIgnoreCase("pacs.002")) {
 				  localEntity.setManConfirmLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("mdte.002")) {
+			  } else if (msgType.equalsIgnoreCase("case.002")) {
 				  localEntity.setManRespLstSeq(lastSeqNr);
 			  }
 
@@ -494,12 +492,10 @@ public class Validation_ST {
       log.debug("The File Msg id is ############" + msgId);
 
       log.debug("###################################################################");
-      log.debug("mdtSysctrlSysParamEntity.getSysType() : " +
+      log.debug("casSysctrlSysParamEntity.getSysType() : " +
           casSysctrlSysParamEntity.getSysType());
       String sysTypeTmp = casSysctrlSysParamEntity.getSysType().trim();
-      log.debug("mdtSysctrlSysParamEntity.getSysType().length is : " + sysTypeTmp.length());
-      log.debug("acSystem :" + acSystem);
-      log.debug("###################################################################");
+      log.debug("casSysctrlSysParamEntity.getSysType().length is : " + sysTypeTmp.length());
 
       List<CasOpsCessionAssignEntity> mandateTxnList =
           (List<CasOpsCessionAssignEntity>) fileProcBeanRemote.
@@ -688,63 +684,24 @@ public class Validation_ST {
 
   public boolean validateDebtorAuthCode(String authCode, String service) {
     log.debug("authCode: " + authCode);
-	  if (authCode != null && !authCode.isEmpty()) {
-		  authCode.trim();
+    if (authCode != null && !authCode.isEmpty()) {
+      authCode.trim();
 
-		  if (casSysctrlSysParamEntity != null &&
-				  casSysctrlSysParamEntity.getSysName().equalsIgnoreCase(sadcSystem)) {
-			  if (authCode.equalsIgnoreCase("0227") || authCode.equalsIgnoreCase("0228") ||
-					  authCode.equalsIgnoreCase("0230")) {
-				  return true;
-			  } else {
-				  return false;
-			  }
-		  } else {
-
-			  //Migration - 2018/08/27 //0999/0998
-			  //if(authCode.equalsIgnoreCase("0226") ||authCode.equalsIgnoreCase("0227") ||authCode
-			  // .equalsIgnoreCase("0228") || authCode.equalsIgnoreCase("0229")|| authCode
-			  // .equalsIgnoreCase("0230"))
-			  //0226 is for Pain.010 only
-			  //0229/0230 is for Real Time
-			  if (service.equalsIgnoreCase("MANIN")) {
-				  if (authCode.equalsIgnoreCase("0227") || authCode.equalsIgnoreCase("0228") ||
-						  authCode.equalsIgnoreCase("0999") || authCode.equalsIgnoreCase("0998") ||
-						  authCode.equalsIgnoreCase("0997")) {
-					  return true;
-				  } else {
-					  return false;
-				  }
-			  } else {
-				  if (service.equalsIgnoreCase("MANAM")) {
-					  if (authCode.equalsIgnoreCase("0226") || authCode.equalsIgnoreCase("0227") ||
-							  authCode.equalsIgnoreCase("0228")) {
-						  return true;
-					  } else {
-						  return false;
-					  }
-				  } else {
-					  if (service.equalsIgnoreCase("MANRT")) {
-						  if (authCode.equalsIgnoreCase("0226") ||
-								  authCode.equalsIgnoreCase("0227") ||
-								  authCode.equalsIgnoreCase("0228")
-								  || authCode.equalsIgnoreCase("0229") ||
-								  authCode.equalsIgnoreCase("0230")) {
-							  return true;
-						  } else {
-							  return false;
-						  }
-					  } else {
-						  return false;
-					  }
-				  }
-			  }
-		  }
-	  } else {
-		  return false;
-	  }
+      if (service.equalsIgnoreCase("CARIN")) {
+        if (authCode.equalsIgnoreCase("0231") || authCode.equalsIgnoreCase("0232") ||
+            authCode.equalsIgnoreCase("0233") || authCode.equalsIgnoreCase("0234")) {
+          return true;
+        } else
+        {
+          return false;
+        }
+      }
+      return false;
+    }
+    else {
+      return false;
+    }
   }
-
 
   /**
    * @param seqCode Rule 009_013
@@ -1298,7 +1255,7 @@ public class Validation_ST {
   //	{
   //		if(origMandReqId != null && !origMandReqId.isEmpty())
   //		{
-  //			if(mdtSysctrlSysParamEntity.getSysType().equalsIgnoreCase(sadcSystem))
+  //			if(casSysctrlSysParamEntity.getSysType().equalsIgnoreCase(sadcSystem))
   //			{
   //				log.debug("In the MdtOpsMandateRegisterEntity section.......====>>>>>");
   //				originalMandateRegisterEntity = (MdtOpsMandateRegisterEntity) valBeanRemote
@@ -1316,12 +1273,12 @@ public class Validation_ST {
   //			else
   //			{
   //				log.debug("In the MdtAcOpsMndtMsgEntity section.......====>>>>>");
-  //				MdtAcOpsMndtMsgEntity mdtAcOpsMndtMsgEntity = (MdtAcOpsMndtMsgEntity)
+  //				MdtAcOpsMndtMsgEntity casOpsMndtMsgEntity = (MdtAcOpsMndtMsgEntity)
 	//				beanRemote.retrieveAcMandate(msgId, origMandReqId);
   //
-  //				if(mdtAcOpsMndtMsgEntity != null)
+  //				if(casOpsMndtMsgEntity != null)
   //				{
-  //					if(mdtAcOpsMndtMsgEntity.getActiveInd().equalsIgnoreCase("Y"))
+  //					if(casOpsMndtMsgEntity.getActiveInd().equalsIgnoreCase("Y"))
   //						return true;
   //					else
   //						return false;
@@ -1767,7 +1724,7 @@ public class Validation_ST {
 
 	/*public MdtAcOpsMndtMsgEntity matchPain012(String origMandReqId, String origMndtReqTransId)
 	{
-		mdtAcOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
+		casOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
 		MdtAcOpsMndtMsgEntity matchedMandate= null;
 		if(origMandReqId != null && !origMandReqId.isEmpty() &&  origMndtReqTransId != null &&
 		!origMndtReqTransId.isEmpty())
@@ -1780,18 +1737,18 @@ public class Validation_ST {
 			{
 				log.debug("<<<<<<<<--------"+origMandReqId+" has been matched to
 				MANCN------------------>>");
-				mdtAcOpsMndtMsgEntityOriginal = matchedMandate;
+				casOpsMndtMsgEntityOriginal = matchedMandate;
 			}
 			else
 			{
 				matchedMandate = (MdtAcOpsMndtMsgEntity) valBeanRemote.matchPain012ToOrigMandate
-				(origMandReqId, origMndtReqTransId, "MANAM");
+				(origMandReqId, origMndtReqTransId, "CARIN");
 
 				if(matchedMandate != null)
 				{
 					log.debug("<<<<<<<<--------"+origMandReqId+" has been matched to
-					MANAM------------------>>");
-					mdtAcOpsMndtMsgEntityOriginal = matchedMandate;
+					CARIN------------------>>");
+					casOpsMndtMsgEntityOriginal = matchedMandate;
 				}
 				else
 				{
@@ -1802,7 +1759,7 @@ public class Validation_ST {
 					{
 						log.debug("<<<<<<<<--------"+origMandReqId+" has been matched to
 						MANIN------------------>>");
-						mdtAcOpsMndtMsgEntityOriginal = matchedMandate;
+						casOpsMndtMsgEntityOriginal = matchedMandate;
 					}
 				}
 			}
@@ -1814,24 +1771,18 @@ public class Validation_ST {
     TreeMap<String, CasOpsCessionAssignEntity> matchedMap =
         new TreeMap<String, CasOpsCessionAssignEntity>();
 
-    mdtAcMandateTxnsEntityOriginal = null;
+    casOpsCessAssignTxnsEntityOriginal = null;
     //		MdtAcOpsMandateTxnsEntity matchedMandate= null;
     if (origMndtReqTransId != null && !origMndtReqTransId.isEmpty()) {
       matchedMap = fileProcBeanRemote.optimisedMatchPain012(origMndtReqTransId);
 
       if (matchedMap.size() > 0) {
-        if (matchedMap.containsKey("MANCN")) {
-          log.info("<<<<<<<<--------" + origMndtReqTransId +
-              " has been matched to MANCN------------------>>");
-          mdtAcMandateTxnsEntityOriginal = matchedMap.get("MANCN");
-        } else if (matchedMap.containsKey("MANAM")) {
-          log.info("<<<<<<<<--------" + origMndtReqTransId +
-              " has been matched to MANAM------------------>>");
-          mdtAcMandateTxnsEntityOriginal = matchedMap.get("MANAM");
+        if (matchedMap.containsKey("CARIN")) {
+          log.info("<<<<<<<<--------" + origMndtReqTransId + " has been matched to CARIN------------------>>");
+          casOpsCessAssignTxnsEntityOriginal = matchedMap.get("CARIN");
         } else if (matchedMap.containsKey("MANIN")) {
-          log.info("<<<<<<<<--------" + origMndtReqTransId +
-              " has been matched to MANIN------------------>>");
-          mdtAcMandateTxnsEntityOriginal = matchedMap.get("MANIN");
+          log.info("<<<<<<<<--------" + origMndtReqTransId + " has been matched to MANIN------------------>>");
+          casOpsCessAssignTxnsEntityOriginal = matchedMap.get("MANIN");
         }
       }
 
@@ -1842,18 +1793,18 @@ public class Validation_ST {
       //			{
       //				log.info("<<<<<<<<--------"+origMndtReqTransId+" has been matched to
 		//				MANCN------------------>>");
-      //				mdtAcMandateTxnsEntityOriginal = matchedMandate;
+      //				casOpsCessAssignTxnsEntityOriginal = matchedMandate;
       //			}
       //			else
       //			{
       //				matchedMandate = (MdtAcOpsMandateTxnsEntity) fileProcBeanRemote
-		//				.matchPain012ToOrigMandate(origMndtReqTransId, "MANAM");
+		//				.matchPain012ToOrigMandate(origMndtReqTransId, "CARIN");
       //
       //				if(matchedMandate != null)
       //				{
       //					log.info("<<<<<<<<--------"+origMndtReqTransId+" has been matched to
-		//					MANAM------------------>>");
-      //					mdtAcMandateTxnsEntityOriginal = matchedMandate;
+		//					CARIN------------------>>");
+      //					casOpsCessAssignTxnsEntityOriginal = matchedMandate;
       //				}
       //				else
       //				{
@@ -1865,14 +1816,14 @@ public class Validation_ST {
       //
       //						log.info("<<<<<<<<--------"+origMndtReqTransId+" has been matched
 		//						to MANIN ------------------>>");
-      //						mdtAcMandateTxnsEntityOriginal = matchedMandate;
+      //						casOpsCessAssignTxnsEntityOriginal = matchedMandate;
       //					}
       //
       //				}
       //			}
     }
     //		return matchedMandate;
-    return mdtAcMandateTxnsEntityOriginal;
+    return casOpsCessAssignTxnsEntityOriginal;
 
 
     //2016-11-12 - Matching changes -- Allow for Pain.012 before Pacs.002
@@ -1880,12 +1831,12 @@ public class Validation_ST {
     //		if (origMandReqId != null && !origMandReqId.isEmpty() &&  origMndtReqTransId != null
 	  //		&& !origMndtReqTransId.isEmpty())
     //		{
-    //			mdtAcOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
-    //			mdtAcOpsMndtMsgEntityOriginal = (MdtAcOpsMndtMsgEntity) valBeanRemote
+    //			casOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
+    //			casOpsMndtMsgEntityOriginal = (MdtAcOpsMndtMsgEntity) valBeanRemote
 	  //			.matchOriginalMandate(origMandReqId, origMndtReqTransId,"MANCN",
 	  //			processStatus);
     //
-    //			if(mdtAcOpsMndtMsgEntityOriginal != null)
+    //			if(casOpsMndtMsgEntityOriginal != null)
     //			{
     //				log.debug("<<<<<<<<--------"+origMandReqId+" has been matched to
 	  //				MANCN------------------>>");
@@ -1893,25 +1844,25 @@ public class Validation_ST {
     //			}
     //			else
     //			{
-    //				mdtAcOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
-    //				mdtAcOpsMndtMsgEntityOriginal = (MdtAcOpsMndtMsgEntity) valBeanRemote
-	  //				.matchOriginalMandate(origMandReqId, origMndtReqTransId, "MANAM",
+    //				casOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
+    //				casOpsMndtMsgEntityOriginal = (MdtAcOpsMndtMsgEntity) valBeanRemote
+	  //				.matchOriginalMandate(origMandReqId, origMndtReqTransId, "CARIN",
 	  //				processStatus);
     //
-    //				if(mdtAcOpsMndtMsgEntityOriginal != null)
+    //				if(casOpsMndtMsgEntityOriginal != null)
     //				{
     //					log.debug("<<<<<<<<--------"+origMandReqId+" has been matched to
-	  //					MANAM------------------>>");
+	  //					CARIN------------------>>");
     //					return true;
     //				}
     //				else
     //				{
-    //					mdtAcOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
-    //					mdtAcOpsMndtMsgEntityOriginal = (MdtAcOpsMndtMsgEntity) valBeanRemote
+    //					casOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
+    //					casOpsMndtMsgEntityOriginal = (MdtAcOpsMndtMsgEntity) valBeanRemote
 	  //					.matchOriginalMandate(origMandReqId, origMndtReqTransId, "MANIN",
 	  //					processStatus);
     //
-    //					if(mdtAcOpsMndtMsgEntityOriginal != null)
+    //					if(casOpsMndtMsgEntityOriginal != null)
     //					{
     //						log.debug("<<<<<<<<--------"+origMandReqId+" has been matched to
 	  //						MANIN------------------>>");
@@ -1941,7 +1892,7 @@ public class Validation_ST {
           (CasOpsCessionAssignEntity) fileProcBeanRemote.matchPacs002ToOrigMandate(mandateReqTranId,
               messageType);
       if (matchedMandate != null) {
-        mdtAcMandateTxnsEntityOriginal = matchedMandate;
+        casOpsCessAssignTxnsEntityOriginal = matchedMandate;
       }
     }
 
@@ -2519,10 +2470,10 @@ public class Validation_ST {
 
   public boolean validatePacs002MsgId(String msgId) {
 	  if (msgId != null && !msgId.isEmpty()) {
-		  List<CasOpsConfHdrsEntity> mdtAcOpsConfHdrsList =
+		  List<CasOpsConfHdrsEntity> casOpsConfHdrsList =
 				  (List<CasOpsConfHdrsEntity>) valBeanRemote.validatePacs002MsgId(msgId);
 		  log.debug("the message id is *******************************************" + msgId);
-		  if (mdtAcOpsConfHdrsList != null & mdtAcOpsConfHdrsList.size() > 0) {
+		  if (casOpsConfHdrsList != null & casOpsConfHdrsList.size() > 0) {
 			  return false;
 		  } else {
 			  return true;
@@ -2592,7 +2543,7 @@ public class Validation_ST {
       return null;
     }
 
-    CasOpsServicesEntity mdtOpsServiceEntity = IterableUtils.find(opsServicesList,
+    CasOpsServicesEntity casOpsServiceEntity = IterableUtils.find(opsServicesList,
         new Predicate<CasOpsServicesEntity>() {
           public boolean evaluate(CasOpsServicesEntity opsServicesEntity) {
             return ((serviceIdIn.equalsIgnoreCase(opsServicesEntity.getServiceIdIn())) &&
@@ -2600,7 +2551,7 @@ public class Validation_ST {
           }
         });
 
-    return mdtOpsServiceEntity;
+    return casOpsServiceEntity;
   }
 
   public SysCisBankEntity findCisBanks(final String bankNo) {
@@ -2841,14 +2792,14 @@ public class Validation_ST {
         IterableUtils.find(opsFileSizeLimitList, new Predicate<CasOpsFileSizeLimitEntity>() {
 
           @Override
-          public boolean evaluate(CasOpsFileSizeLimitEntity mdtAcOpsFileSizeLimitEntity) {
+          public boolean evaluate(CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity) {
             // TODO Auto-generated method stub
             return
                 ((serviceName.equalsIgnoreCase(
-                    mdtAcOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getSubService())) &&
+                    casOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getSubService())) &&
                     memberNo.equalsIgnoreCase(
-                        mdtAcOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getMemberId()) &&
-                    inwardFileSize <= Integer.valueOf(mdtAcOpsFileSizeLimitEntity.getLimit()));
+                        casOpsFileSizeLimitEntity.getCasOpsFileSizeLimitPK().getMemberId()) &&
+                    inwardFileSize <= Integer.valueOf(casOpsFileSizeLimitEntity.getLimit()));
           }
 
         });

@@ -1,5 +1,25 @@
 package com.bsva.authcoll.singletable.file;
 
+import com.bsva.PropertyUtil;
+import com.bsva.authcoll.singletable.validation.AC_Pacs002_Validation_ST;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsConfDetailsEntity;
+import com.bsva.entities.CasOpsConfHdrsEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsMndtCountPK;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasSysctrlCompParamEntity;
+import com.bsva.entities.CasSysctrlSysParamEntity;
+import com.bsva.interfaces.AdminBeanRemote;
+import com.bsva.interfaces.FileProcessBeanRemote;
+import com.bsva.interfaces.ServiceBeanRemote;
+import com.bsva.interfaces.ValidationBeanRemote;
+import com.bsva.utils.PainUnmarshaller;
+import com.bsva.utils.Util;
+import iso.std.iso._20022.tech.xsd.pacs_002_001.Document;
+import iso.std.iso._20022.tech.xsd.pacs_002_001.PaymentTransaction33;
+import iso.std.iso._20022.tech.xsd.pacs_002_001.StatusReasonInformation9;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,26 +33,6 @@ import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.log4j.Logger;
-import com.bsva.PropertyUtil;
-import com.bsva.authcoll.singletable.validation.AC_Pacs002_Validation_ST;
-import com.bsva.entities.CasOpsConfDetailsEntity;
-import com.bsva.entities.CasOpsConfHdrsEntity;
-import com.bsva.entities.CasOpsCessionAssignEntity;
-import com.bsva.entities.CasOpsMndtCountEntity;
-import com.bsva.entities.CasOpsMndtCountPK;
-import com.bsva.entities.CasOpsStatusHdrsEntity;
-import com.bsva.entities.CasOpsFileRegEntity;
-import com.bsva.entities.CasSysctrlCompParamEntity;
-import com.bsva.entities.CasSysctrlSysParamEntity;
-import com.bsva.interfaces.AdminBeanRemote;
-import com.bsva.interfaces.FileProcessBeanRemote;
-import com.bsva.interfaces.ServiceBeanRemote;
-import com.bsva.interfaces.ValidationBeanRemote;
-import com.bsva.utils.PainUnmarshaller;
-import com.bsva.utils.Util;
-import iso.std.iso._20022.tech.xsd.pacs_002_001.Document;
-import iso.std.iso._20022.tech.xsd.pacs_002_001.PaymentTransaction33;
-import iso.std.iso._20022.tech.xsd.pacs_002_001.StatusReasonInformation9;
 
 /**
  * @author Saleha Saib
@@ -50,7 +50,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 	@EJB
 	PropertyUtil propertyUtil;
 
-	public static String systemName = "MANOWNER";
+	public static String systemName = "CAMOWNER";
 	public static Date todaysDate;
 	public static AdminBeanRemote adminBeanRemote;
 	public static ServiceBeanRemote beanRemote;
@@ -76,7 +76,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 	BigDecimal hdrSystemSeqNo = BigDecimal.ZERO;
 	int mandateSeverity = 0, grpHdrSeverity = 0;
 
-	private String pacs002Schema = "/home/opsjava/Delivery/Mandates/Schema/pacs.002.001.04.xsd";
+	private String pacs002Schema = "/home/opsjava/Delivery/Cession_Assign/Schema/pacs.002.001.04.xsd";
 	private String backEndProcess = "BACKEND";
 	long startTime, endTime, duration;
 
@@ -199,7 +199,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 
 							if(mandateSeverity == 0) 
 							{
-								mapConfDetails(transaction, ac_Pacs002_Validation_ST.mdtAcMandateTxnsEntityOriginal);
+								mapConfDetails(transaction, ac_Pacs002_Validation_ST.casOpsCessAssignTxnsEntityOriginal);
 							}
 							else
 							{
@@ -332,55 +332,6 @@ public class AC_Pacs002_Loader_ST implements Serializable
 		log.info("|TOTAL EXECUTION TIME FOR "+fileName+" IS "+DurationFormatUtils.formatDuration(duration, "HH:mm:ss.S")+" milliseconds |");
 	}
 
-	//	public void loadPacs002(PaymentTransaction33 transaction, MdtAcOpsMandateTxnsEntity originalMandate)
-	//	{
-	//		if(grpHdrSeverity == 0)
-	//		{
-	//			confHdrEntity.setSystemSeqNo(new BigDecimal(123));
-	//			confHdrEntity.setHdrMsgId(document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId().trim());
-	//			confHdrEntity.setCreateDateTime(getCovertDateTime(document.getFIToFIPmtStsRpt().getGrpHdr().getCreDtTm()));
-	//			confHdrEntity.setInstgAgt(document.getFIToFIPmtStsRpt().getGrpHdr().getInstgAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
-	//			confHdrEntity.setInstdAgt(document.getFIToFIPmtStsRpt().getGrpHdr().getInstdAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim());
-	//			confHdrEntity.setOrgnlMsgId(document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getOrgnlMsgId().trim());
-	//			confHdrEntity.setOrgnlMsgName(document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getOrgnlMsgNmId().trim());
-	//			confHdrEntity.setOrgnlCreateDateTime(getCovertDateTime(document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getOrgnlCreDtTm()));
-	//			confHdrEntity.setProcessStatus("C");
-	//			confHdrEntity.setGroupStatus(document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getGrpSts().value().trim());
-	//
-	//			if(document.getFIToFIPmtStsRpt() != null && document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts() != null && document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getStsRsnInf().size() > 0)
-	//			{
-	//				if(document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getStsRsnInf().get(0) != null && document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getStsRsnInf().get(0).getRsn() != null 
-	//						&& document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getStsRsnInf().get(0).getRsn().getPrtry() != null)
-	//				{
-	//					confHdrEntity.setGroupError(document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getStsRsnInf().get(0).getRsn().getPrtry().trim());
-	//				}
-	//			}
-	//			confHdrEntity.setService("ST101");
-	//
-	//			hdrSystemSeqNo = valBeanRemote.saveOpsConfHdrs(confHdrEntity);
-	//		}
-	//
-	//		if(mandateSeverity == 0 && transactionList != null && transactionList.size() > 0)
-	//		{
-	//			if(hdrSystemSeqNo.compareTo(BigDecimal.ZERO) != 0)
-	//			{
-	//				transErrorList = new ArrayList<StatusReasonInformation9>();
-	//				transErrorList = transaction.getStsRsnInf();
-	//
-	//				if(transErrorList.size() > 0)
-	//				{
-	//					log.debug("In the transErrorList section ---->>>>");	
-	//					for (StatusReasonInformation9 statusReasonInformation9 : transErrorList) 
-	//					{
-	//						log.debug("In the transErrorList section ---->>>>");	
-	//						generateConfErrorDetails(transaction, statusReasonInformation9.getRsn().getPrtry(), originalMandate);
-	//					}
-	//					saveConfErrorDetails();
-	//				}
-	//			}//end of if(hdrSeqNo is populated.
-	//		}//end of if mandateSeverity==0
-	//	}
-
 	public void loadConfHdr() {
 		hdrSystemSeqNo = BigDecimal.ZERO;
 		confHdrEntity.setSystemSeqNo(new BigDecimal(123));
@@ -402,7 +353,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 				confHdrEntity.setGroupError(document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getStsRsnInf().get(0).getRsn().getPrtry().trim());
 			}
 		}
-		confHdrEntity.setService("ST101");
+		confHdrEntity.setService("ST201");
 
 		hdrSystemSeqNo = valBeanRemote.saveOpsConfHdrs(confHdrEntity);
 	}
@@ -414,7 +365,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 
 		try
 		{
-			log.info("==================== BULK INSERT ST101 TXNS ====================");
+			log.info("==================== BULK INSERT ST201 TXNS ====================");
 			fileProcessBeanRemote.bulkSaveMandates(acceptConfDtlsList);
 			loadEnd = System.nanoTime();
 			loadDur = (loadEnd - loadStart) / 1000000;
@@ -448,7 +399,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 			for (List<String> accpList : partitionList) {
 				String joinResult = null;
 				joinResult = StringUtils.join(accpList,",");
-				String sqlQuery = new String("UPDATE MANOWNER.MDT_AC_OPS_MANDATE_TXNS SET PROCESS_STATUS = '9' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS SET PROCESS_STATUS = '9' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
 				fileProcessBeanRemote.bulkUpdateBySQL(sqlQuery);
 			}	        
 		}
@@ -461,7 +412,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 			for (List<String> rjctList : partitionList) {
 				String joinResult = null;
 				joinResult = StringUtils.join(rjctList,",");
-				String sqlQuery = new String("UPDATE MANOWNER.MDT_AC_OPS_MANDATE_TXNS SET PROCESS_STATUS = 'R' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS SET PROCESS_STATUS = 'I' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
 				fileProcessBeanRemote.bulkUpdateBySQL(sqlQuery);
 			}	        
 		}
@@ -483,7 +434,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 			String bankCode = transaction.getOrgnlTxId().substring(0,4).trim();
 			confDetEntity.setInstId("21"+bankCode);
 			confDetEntity.setProcessStatus("3");
-			confDetEntity.setExtractService("ST103");
+			confDetEntity.setExtractService("ST203");
 			confDetEntity.setOrgnlMsgType(document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getOrgnlMsgNmId().trim().toLowerCase());
 			confDetEntity.setLocalInstrCd(originalMandate.getLocalInstrCd());
 			confDetEntity.setMsgId(document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId());
@@ -496,32 +447,12 @@ public class AC_Pacs002_Loader_ST implements Serializable
 				if(transaction.getTxSts().value().equalsIgnoreCase("ACCP"))
 				{
 					accpMRTIList.add("'"+originalMandate.getCasOpsCessionAssignEntityPK().getMandateReqTranId()+"'");
-					//					origMandate.setTxnId("'"+originalMandate.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()+"'");
 				}
 				else
 				{
 					rjctMRTIList.add("'"+originalMandate.getCasOpsCessionAssignEntityPK().getMandateReqTranId()+"'");
-					//					origMandate.setTxnId("'"+originalMandate.getMdtAcOpsMandateTxnsEntityPK().getMandateReqTranId()+"'");
 				}
 			}
-
-			//			SalehaR-2020/08/19: Original Code
-			//			//Change status for matched transactions ONLY 
-			//			if(originalMandate.getProcessStatus().equalsIgnoreCase("4"))
-			//			{
-			//				if(transaction.getTxSts().value().equalsIgnoreCase("ACCP"))
-			//				{
-			//					originalMandate.setProcessStatus("9");
-			//				}
-			//				else
-			//				{
-			//					originalMandate.setProcessStatus("R");
-			//				}
-			//				
-			//				//				Bulk Update Txns
-			//				origTxnsList.add(originalMandate);
-			//				//				result= fileProcessBeanRemote.updateMdtOpsMandateTxns(originalMandate);
-			//			}
 		}
 		else
 		{
@@ -551,7 +482,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 
 		if(document!= null && document.getFIToFIPmtStsRpt()!=null && document.getFIToFIPmtStsRpt().getGrpHdr() != null && document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId()!=null)
 			mdtOpsMndtCountPk.setMsgId(document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId());
-		mdtOpsMndtCountPk.setServiceId("ST101");
+		mdtOpsMndtCountPk.setServiceId("ST201");
 		if(document!= null && document.getFIToFIPmtStsRpt()!=null && document.getFIToFIPmtStsRpt().getGrpHdr() != null && document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId()!=null)
 			mdtOpsMndtCountPk.setInstId(document.getFIToFIPmtStsRpt().getGrpHdr().getMsgId().toString().substring(12, 18));
 		mdtOpsMndtCountEntity.setCasOpsMndtCountPK(mdtOpsMndtCountPk);
@@ -602,7 +533,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 
 			confDetEntity.setInstId("21"+bankCode);
 			confDetEntity.setProcessStatus("3");
-			confDetEntity.setExtractService("ST103");
+			confDetEntity.setExtractService("ST203");
 			confDetEntity.setOrgnlMsgType(document.getFIToFIPmtStsRpt().getOrgnlGrpInfAndSts().getOrgnlMsgNmId().trim().toLowerCase());
 			confDetEntity.setLocalInstrCd(originalMandate.getLocalInstrCd());
 			//			log.info("LOCAL INSTRUMENT CODE--->"+originalMandate.getLocalInstrCd());

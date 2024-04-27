@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
  * @author Saleha Saib
  * 2016/11/01 - Added extra val rule for TxnInfAndSts
  * @author SalehaR - Aligned to TRS 17 - 2018/03/09
- * @author SalehaR - 2018/12/31 - CHG-153240-Validate Msg Id Uniqueness on ST101/SPINP/SRINP
+ * @author SalehaR - 2018/12/31 - CHG-153240-Validate Msg Id Uniqueness on ST201/SPINP/SRINP
  * Modified by SalehaR - 2019/01/02 - CHG-153240-Validate Creation Date in Msg Id
  * @author SalehaR-2019/05/10 Debug Statements & Code CleanUp
  * @author SalehaR-2019/09/21 Aligned to Single Table(MDT_AC_OPS_MANDATE_TXNS)
@@ -49,7 +49,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
   int grpHdrSeverity = 0;
   int mandateSeverity = 0;
 
-  public static String systemName = "MANOWNER";
+  public static String systemName = "CAMOWNER";
   //Ac ops Status Lists
   List<CasOpsStatusHdrsEntity> opsStatusHdrsList = null;
   List<CasOpsStatusDetailsEntity> opsStatusDetailsList = null;
@@ -84,14 +84,14 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
 
   //Populate Error Codes Report Data
   String debtorBank = null, creditorBank = null, ultCreditor = null, abbShortName = null,
-      st101Service = null;
+      st201Service = null;
 
   public AC_Pacs002_Validation_ST(String fileName) {
     this.fileName = fileName;
 
     try {
       propertyUtil = new PropertyUtil();
-      this.st101Service = propertyUtil.getPropValue("Input.Pacs002");
+      this.st201Service = propertyUtil.getPropValue("Input.Pacs002");
       fileSizeLimitStr = propertyUtil.getPropValue("AC.FILE.TRANSACTION.LIMIT");
 //			log.info("fileSizeLimit ==> "+fileSizeLimitStr);
       fileSizeLimit = Integer.valueOf(fileSizeLimitStr);
@@ -99,7 +99,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       log.error(
           "AC_Pacs002_Validation_ST - Could not find MandateMessageCommons.properties in " +
 				  "classpath");
-      st101Service = "ST101";
+      st201Service = "ST201";
       fileSizeLimit = 50000;
     }
 
@@ -110,9 +110,9 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     contextValidationBeanCheck();
     contextAdminBeanCheck();
     hdrSystemSeqNo = BigDecimal.ZERO;
-    log.debug("mdtSysctrlSysParamEntity: " + casSysctrlSysParamEntity);
+    log.debug("casSysctrlSysParamEntity: " + casSysctrlSysParamEntity);
     systemType = casSysctrlSysParamEntity.getSysType();
-    mdtSysctrlCompParamEntity =
+    casSysctrlCompParamEntity =
         (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
   }
 
@@ -120,7 +120,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
                                  Integer inwardFileSize) {
     debtorBank = null;
     creditorBank = null;
-    creditorBank = mdtSysctrlCompParamEntity.getAchInstId();
+    creditorBank = casSysctrlCompParamEntity.getAchInstId();
 
     groupHeader = new GroupHeader53();
     groupHeader = fiPaymentStatusReportV04.getGrpHdr();
@@ -137,9 +137,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       log.debug("Write to GrpHdr ..MsgId fails....");
       incInstid = fileName.substring(8, 16);
       stsHdrInstgAgt = fileName.substring(10, 16);
-      if (casSysctrlSysParamEntity.getSysType().equalsIgnoreCase(acSystem)) {
-        incInstid = StringUtils.stripStart(incInstid, "0");
-      }
+      incInstid = StringUtils.stripStart(incInstid, "0");
       outMsgId = generateMsgId(incInstid);
       debtorBank = incInstid;
       grpHdrSeverity++;
@@ -225,7 +223,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
 
       //____________________________Validate Service Id _rule
 		// 009_002_____________________________________//
-      if (!validateServiceId(serviceId, "ST101")) {
+      if (!validateServiceId(serviceId, "ST201")) {
         grpHdrSeverity++;
         generateStatusErrorDetailsList("901045", null, hdrErrorType);
         log.info("******************validateServiceId_mcon002 - Failed.******************");
@@ -273,42 +271,6 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
         log.debug("******************validateMsgId_006 - Passed.******************");
       }
 
-      //____________________________Validate GrpHdr Creation Date Time_Rule009_008
-		// _____________________________________//
-//			if(groupHeader.getCreDtTm() != null)
-//			{
-//				convCreationDateTime = getCovertDateTime(groupHeader.getCreDtTm());
-//				if(convCreationDateTime != null)
-//				{
-//					String strCreationDate = sdfDateTime.format(convCreationDateTime);
-//
-//					if(!validateDate(strCreationDate, "yyyy-MM-dd HH:mm:ss"))
-//					{
-//						grpHdrSeverity++;
-//						generateStatusErrorDetailsList("901007", null, hdrErrorType);
-//						log.info("******************validateDate_008 - Failed.******************");
-//					}
-//					else
-//					{
-//						grpHdrSeverity = grpHdrSeverity+0;
-//						log.debug("******************validateDate_008 - Passed
-//						.******************");
-//					}
-//				}
-//				else
-//				{
-//					grpHdrSeverity++;
-//					generateStatusErrorDetailsList("901007", null, hdrErrorType);
-//					log.info("******************validateDate_008 - Failed.******************");
-//				}
-//			}
-//			else
-//			{
-//				grpHdrSeverity++;
-//				generateStatusErrorDetailsList("901007", null, hdrErrorType);
-//				log.info("******************validateDate_008 - Failed.******************");
-//			}
-
       //____________________________Validate Instructing Agent_Rule009_010
 		// _____________________________________//
       if (!validateDebtorBank(
@@ -329,9 +291,9 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
         String instdAgt = groupHeader.getInstdAgt().getFinInstnId().getClrSysMmbId().getMmbId();
         String achInstId;
 
-        log.debug("the achI d is ******" + mdtSysctrlCompParamEntity.getAchId());
-		  if (mdtSysctrlCompParamEntity != null) {
-			  achInstId = mdtSysctrlCompParamEntity.getAchInstId();
+        log.debug("the achI d is ******" + casSysctrlCompParamEntity.getAchId());
+		  if (casSysctrlCompParamEntity != null) {
+			  achInstId = casSysctrlCompParamEntity.getAchInstId();
 		  } else {
 			  achInstId = "210000";
 		  }
@@ -490,51 +452,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
 
-      //There is no rule to check the reject reason at  group header level.
-      //2016/03/06 - SalehaR - In alignment with v3.1 of Interface Specification
-      //			if(origGrpInfStats.getStsRsnInf() != null)
-      //			{
-      //				for (StatusReasonInformation9 statusReasonInformation9 : origGrpInfStats
-		//				.getStsRsnInf())
-      //				{
-      //						if(statusReasonInformation9.getRsn() != null &&
-		//						statusReasonInformation9.getRsn().getPrtry() != null)
-      //						{
-      //							if(!validateErrorCodes(statusReasonInformation9.getRsn()
-		//							.getPrtry().toString()))
-      //							{
-      //								grpHdrSeverity++;
-      //								generateStatusErrorDetailsList("901082", null,
-		//								hdrErrorType);
-      //								log.info("******************validateRejReason_014 - Failed
-		//								.******************");
-      //							}
-      //							else
-      //							{
-      //								grpHdrSeverity = grpHdrSeverity+0;
-      //								log.info("******************validateRejReason_014 - Passed
-		//								.******************");
-      //							}
-      //						}
-      //						else
-      //						{
-      //							grpHdrSeverity++;
-      //							generateStatusErrorDetailsList("901082", null, hdrErrorType);
-      //							log.info("******************validateRejReason_014 - Failed
-		//							.******************");
-      //						}
-      //				}
-      //			}
-      //			else
-      //			{
-      //				grpHdrSeverity++;
-      //				generateStatusErrorDetailsList("901082", null, hdrErrorType);
-      //				log.info("******************validateRejReason_014 - Failed
-		//				.******************");
-      //			}
-
-
-      if (!validateFileSizeLimit(st101Service, instgAgt, inwardFileSize)) {
+      if (!validateFileSizeLimit(st201Service, instgAgt, inwardFileSize)) {
 
         generateStatusErrorDetailsList("902206", null, hdrErrorType);
         grpHdrSeverity++;
@@ -612,7 +530,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     mandateSeverity = 0;
 
     orgnlTxnId = paymentTransaction33.getOrgnlTxId();
-    log.info("=== <VALIDATING ST101> " + orgnlTxnId + " ===");
+    log.info("=== <VALIDATING ST201> " + orgnlTxnId + " ===");
 
     //Populate Debtor Bank
     if (orgnlTxnId != null && !orgnlTxnId.isEmpty()) {
@@ -785,7 +703,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
 		  opsStatusHdrsEntity.setProcessStatus("6");
 	  }
     opsStatusHdrsEntity.setGroupStatus(groupStatus);
-    opsStatusHdrsEntity.setService("ST102");
+    opsStatusHdrsEntity.setService("ST202");
     opsStatusHdrsEntity.setOrgnlFileName(fileName);
 
     log.debug("opsStatusHdrsEntity in pacs 002 validation =====>>>>: " + opsStatusHdrsEntity);
@@ -812,7 +730,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
   public boolean saveStatusErrorDetails() {
     log.debug("*********In the saveStatusErrorDetails*******");
     boolean generated = false;
-    log.debug("mdtSysctrlSysParamEntity:" + casSysctrlSysParamEntity);
+    log.debug("casSysctrlSysParamEntity:" + casSysctrlSysParamEntity);
 
     if (opsStatusDetailsList.size() > 0) {
       log.debug("Status Error List Size --> " + opsStatusDetailsList.size());
@@ -835,14 +753,14 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     log.debug("In the generateMsgId()");
     SimpleDateFormat sdfFileDate = new SimpleDateFormat("yyyyMMdd");
     String achId, creationDate, fileSeqNo, msgId = null;
-    String outgoingService = "ST102";
+    String outgoingService = "ST202";
 
     CasOpsCustParamEntity casOpsCustParamEntity =
         (CasOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(instId, backEndProcess);
 
     try {
-      if (mdtSysctrlCompParamEntity != null) {
-        achId = mdtSysctrlCompParamEntity.getAchId();
+      if (casSysctrlCompParamEntity != null) {
+        achId = casSysctrlCompParamEntity.getAchId();
       } else {
         achId = "021";
       }
@@ -885,7 +803,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
   public CasCnfgErrorCodesEntity retrieveErrorCode(String errCode) {
     CasCnfgErrorCodesEntity casCnfgErrorCodesEntity =
         (CasCnfgErrorCodesEntity) valBeanRemote.retrieveErrorCode(errCode);
-    log.debug("mdtCnfgErrorCodesEntity: " + casCnfgErrorCodesEntity);
+    log.debug("casCnfgErrorCodesEntity: " + casCnfgErrorCodesEntity);
     return casCnfgErrorCodesEntity;
   }
 

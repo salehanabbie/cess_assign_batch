@@ -29,7 +29,7 @@ public class FileRegMonitorDirectory {
   private static Path pathProcessingFile = null;
   public static String mdtLoadType = null, inputPath, processPath;
   private static String fileName = null;
-  private static String pathFile = "/home/opsjava/Delivery/Mandates/Input/Processing/";
+  private static String pathFile = "/home/opsjava/Delivery/Cession_Assign/Input/Processing/";
   public static CasSysctrlSysParamEntity casSysctrlSysParamEntity;
   private static AdminBeanRemote adminBeanRemote;
   private static String processName = "FILEWATCHER";
@@ -54,8 +54,8 @@ public class FileRegMonitorDirectory {
 
     } catch (Exception ex) {
       log.error("MonitorDirectory - Could not find MandateMessageCommons.properties in classpath");
-      inputPath = "/home/opsjava/Delivery/Mandates/Input/";
-      processPath = "/home/opsjava/Delivery/Mandates/Input/Processing/";
+      inputPath = "/home/opsjava/Delivery/Cession_Assign/Input/";
+      processPath = "/home/opsjava/Delivery/Cession_Assign/Input/Processing/";
     }
 
     try {
@@ -169,23 +169,12 @@ public class FileRegMonitorDirectory {
     Date date = new Date();
 
     log.debug("File Created Date" + date);
-
-    String online = OnlineFile(fileName);
-
-    String newFileName = null;
-
-    if (online == "Y") {
-      newFileName = fileName.substring(0, fileName.indexOf("_")) + testLiveIndProp;
-    } else {
-      newFileName = fileName;
-    }
-
-    opsFileRegModel.setFileName(newFileName);
+    opsFileRegModel.setFileName(fileName);
     opsFileRegModel.setFilepath(pathFile + fileName);
     opsFileRegModel.setProcessDate(date);
     opsFileRegModel.setReason(null);
     opsFileRegModel.setStatus("W");
-    opsFileRegModel.setOnlineInd(online);
+    opsFileRegModel.setOnlineInd("N");
     opsFileRegModel.setInOutInd("I");
 
     Boolean result = adminBeanRemote.createOpsFileRegModel(opsFileRegModel);
@@ -194,25 +183,10 @@ public class FileRegMonitorDirectory {
 
   }
 
-  private static String OnlineFile(String fileName) {
-
-    String online = null;
-
-    boolean thisContains = fileName.contains("_");
-
-    if (thisContains == false) {
-      online = "N";
-    } else {
-      online = "Y";
-    }
-
-    return online;
-  }
-
   private static void moveFile(String file) throws IOException {
 
-    Path source = Paths.get("/home/opsjava/Delivery/Mandates/Input/" + file);
-    Path target = Paths.get("/home/opsjava/Delivery/Mandates/Input/Processing/" + file);
+    Path source = Paths.get("/home/opsjava/Delivery/Cession_Assign/Input/" + file);
+    Path target = Paths.get("/home/opsjava/Delivery/Cession_Assign/Input/Processing/" + file);
     Files.move(source, target);
     log.debug("source fileName------>" + source);
     log.debug("target fileName------>" + target);

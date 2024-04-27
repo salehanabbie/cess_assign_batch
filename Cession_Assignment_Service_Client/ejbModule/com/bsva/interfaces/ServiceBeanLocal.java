@@ -377,7 +377,7 @@ public interface ServiceBeanLocal {
 
   public boolean eodCheckIfStReportExtracted(Date systemDate, String service, String memberId);
 
-  public boolean eodCheckSt103SroutExtracted(String service, String memberId);
+  public boolean eodCheckSt203SroutExtracted(String service, String memberId);
 
   public boolean saveAcOpsTxnBilling(Object obj);
 

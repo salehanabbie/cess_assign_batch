@@ -1,49 +1,14 @@
 package com.bsva.authcoll.singletable.file;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.ejb.EJB;
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Marshaller;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-
-import org.apache.commons.collections4.ListUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DurationFormatUtils;
-import org.apache.log4j.Logger;
 import com.bsva.PropertyUtil;
 import com.bsva.commons.model.OpsFileRegModel;
-import com.bsva.entities.CasOpsFileSizeLimitEntity;
 import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
 import com.bsva.entities.CasOpsMndtCountEntity;
 import com.bsva.entities.CasOpsMndtCountPK;
-import com.bsva.entities.CasOpsSotEotCtrlEntity;
-import com.bsva.entities.CasOpsCustParamEntity;
 import com.bsva.entities.CasOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.SysCisBankEntity;
@@ -97,6 +62,39 @@ import iso.std.iso._20022.tech.xsd.pain_012_001.SequenceType2Code;
 import iso.std.iso._20022.tech.xsd.pain_012_001.ServiceLevel8Choice;
 import iso.std.iso._20022.tech.xsd.pain_012_001.SupplementaryData1;
 import iso.std.iso._20022.tech.xsd.pain_012_001.SupplementaryDataEnvelope1;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import javax.ejb.EJB;
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Marshaller;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
+import org.apache.log4j.Logger;
 
 /**
  * @author SalehaR - 20190921
@@ -125,14 +123,14 @@ public class AC_Pain012_Extract_ST {
 	List<CasOpsCustParamEntity> custParamsList = null;
 	List<SysCisBankEntity> sysCisBankList = null;
 
-	CasSysctrlCompParamEntity mdtSysctrlCompParamEntity;
+	CasSysctrlCompParamEntity casSysctrlCompParamEntity;
 	CasSysctrlSysParamEntity casSysctrlSysParamEntity;
 	CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity;
 
 	DecimalFormat df = new DecimalFormat("### ### ### ### ### ##0.00;-#");
 	DecimalFormat df5Dec = new DecimalFormat("### ### ### ### ### ##0.00000;-#");
 	int lastSeqNoUsed;
-	private String pain012Schema = "/home/opsjava/Delivery/Mandates/Schema/pain.012.001.03.xsd";
+	private String pain012Schema = "/home/opsjava/Delivery/Cession_Assign/Schema/pain.012.001.03.xsd";
 	String urn = "urn:iso:std:iso:20022:tech:xsd:pain.012.001.03";
 	public boolean results;
 	String xmlDateFormat = "yyyy-MM-dd'T'HH:mm:ss"; 
@@ -168,8 +166,8 @@ public class AC_Pain012_Extract_ST {
 
 		}catch (Exception e) {
 			log.error("AC_Pain012_Extract_ST - Could not find MandateMessageCommons.properties in classpath");
-			outgoingService = "MANOC";
-			inwardService = "MANAC";
+			outgoingService = "RCAOT";
+			inwardService = "RCAIN";
 			bsvaMemNr = "210000";
 			processStatus ="4";
 		}
@@ -177,12 +175,12 @@ public class AC_Pain012_Extract_ST {
 
 	public void extract() 
 	{
-		mdtSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
-		log.debug("mdtSysctrlCompParamEntity in PAIN012 FileExtract: "+mdtSysctrlCompParamEntity);
+		casSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
+		log.debug("casSysctrlCompParamEntity in PAIN012 FileExtract: "+casSysctrlCompParamEntity);
 
 		casSysctrlSysParamEntity = new CasSysctrlSysParamEntity();
 		casSysctrlSysParamEntity = (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
-		log.debug("AC_Pain012_Extract_ST - mdtSysctrlSysParamEntity in FileExtract: "+casSysctrlSysParamEntity);
+		log.debug("AC_Pain012_Extract_ST - casSysctrlSysParamEntity in FileExtract: "+casSysctrlSysParamEntity);
 		origTxnsList = new ArrayList<CasOpsCessionAssignEntity>();
 		String destInstId = null;
 
@@ -201,7 +199,7 @@ public class AC_Pain012_Extract_ST {
 				sysCisBankList = (List<SysCisBankEntity>) adminBeanRemote.retrieveSysMemberNo(destInstId);
 				if(sysCisBankList.size()>0)
 				{
-					//__________________Retrieve All Mandates for Extract______________________//
+					//__________________Retrieve All Cession_Assign for Extract______________________//
 					extractMandList = new ArrayList<CasOpsCessionAssignEntity>();
 					extractMandList = (List<CasOpsCessionAssignEntity>) fileProcessBeanRemote.retrieveMandatesForExtract(false,destInstId, inwardService, rdyToExtStatus);
 
@@ -231,7 +229,7 @@ public class AC_Pain012_Extract_ST {
 						log.debug("extractDataList.size():"+extractMandList.size());
 						try
 						{
-							log.info("*****EXTRACTING PAIN 012(MANOC) file for "+destInstId+"*****");
+							log.info("*****EXTRACTING PAIN 012(RCAOT) file for "+destInstId+"*****");
 							// Creating the XML Root Element
 							doc = new Document();
 							MandateAcceptanceReportV03 mandateAcceptanceReportV03 = new MandateAcceptanceReportV03();
@@ -248,21 +246,6 @@ public class AC_Pain012_Extract_ST {
 								
 								
 								extOrigMRTIList.add("'"+extMandate.getCasOpsCessionAssignEntityPK().getMandateReqTranId()+"'");
-//								try 
-//								{
-//									extMandate.setProcessStatus(propertyUtil.getPropValue("ProcStatus.Extracted"));
-//									extMandate.setExtractMsgId(outMsgId);
-//									extMandate.setExtractFileName(outFileName);
-//									extMandate.setModifiedDate(todaysDate);
-//
-//									origTxnsList.add(extMandate);
-//									//fileProcessBeanRemote.updateMdtOpsMandateTxns(extMandate);
-//								}
-//								catch (Exception ex) 
-//								{
-//									log.error("Error on updating MdtAcOpsMandateTxnsEntity: "+ex.getMessage());
-//									ex.printStackTrace();
-//								}
 							}
 
 							doc.setMndtAccptncRpt(mandateAcceptanceReportV03);
@@ -277,7 +260,7 @@ public class AC_Pain012_Extract_ST {
 						}
 						catch(Exception e)
 						{
-							log.error("Error on generating MANOC file.... "+e.getMessage());
+							log.error("Error on generating RCAOT file.... "+e.getMessage());
 							e.printStackTrace();
 						}
 
@@ -315,7 +298,7 @@ public class AC_Pain012_Extract_ST {
 
 		try
 		{
-			log.info("==================== BULK UPDATE MANOC TXNS ====================");
+			log.info("==================== BULK UPDATE RCAOT TXNS ====================");
 			//fileProcessBeanRemote.bulkUpdateMandates(origTxnsList);
 			
 			bulkUpdateViaSQL();
@@ -355,7 +338,7 @@ public class AC_Pain012_Extract_ST {
 				String joinResult = null;
 
 				joinResult = StringUtils.join(mrtiToUpdateList,",");
-				String sqlQuery = new String("UPDATE MANOWNER.MDT_AC_OPS_MANDATE_TXNS SET  PROCESS_STATUS = '"+processStatus+"',EXTRACT_MSG_ID = '"+extractMsgId+"', "
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESSION_ASSIGN_TXNS SET  PROCESS_STATUS = '"+processStatus+"',EXTRACT_MSG_ID = '"+extractMsgId+"', "
 						+ " EXTRACT_FILE_NAME ='"+extractFileName+"' , MODIFIED_DATE =  TO_DATE('"+modifiedDate+"','yyyy/MM/dd HH24:MI:SS')  WHERE SERVICE_ID = '"+inwardService+"' AND  MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
 				log.debug("SQL query---->" +sqlQuery);
 
@@ -385,8 +368,8 @@ public class AC_Pain012_Extract_ST {
 		}
 
 		String instrtgAgnt= null;
-		if(mdtSysctrlCompParamEntity != null) {
-			instrtgAgnt = mdtSysctrlCompParamEntity.getAchInstId();	
+		if(casSysctrlCompParamEntity != null) {
+			instrtgAgnt = casSysctrlCompParamEntity.getAchInstId();	
 		}
 		else{
 			instrtgAgnt = bsvaMemNr;
@@ -424,9 +407,9 @@ public class AC_Pain012_Extract_ST {
 
 		try
 		{
-			if(mdtSysctrlCompParamEntity != null)
+			if(casSysctrlCompParamEntity != null)
 			{
-				achId = mdtSysctrlCompParamEntity.getAchId();
+				achId = casSysctrlCompParamEntity.getAchId();
 			}
 			else
 			{
@@ -876,10 +859,10 @@ public class AC_Pain012_Extract_ST {
 		int fileLastSeqNo = 0;
 		try
 		{	
-			if(mdtSysctrlCompParamEntity != null)
+			if(casSysctrlCompParamEntity != null)
 			{
-				achId = mdtSysctrlCompParamEntity.getAchId();
-				testLiveInd = mdtSysctrlCompParamEntity.getTransamissionInd();
+				achId = casSysctrlCompParamEntity.getAchId();
+				testLiveInd = casSysctrlCompParamEntity.getTransamissionInd();
 			}
 			else
 			{
@@ -903,7 +886,7 @@ public class AC_Pain012_Extract_ST {
 		}
 		catch (Exception e) 
 		{
-			log.error("AC_Pain012_Extract_ST: Exception generating fileName for MANOC file : " + e);
+			log.error("AC_Pain012_Extract_ST: Exception generating fileName for RCAOT file : " + e);
 			e.printStackTrace();
 			e.getCause();
 		}
@@ -917,8 +900,8 @@ public class AC_Pain012_Extract_ST {
 		{
 			//			Created on the top..need filename to update extracted records
 			//			outFileName = createFileName(destInstId); 
-			String out ="/home/opsjava/Delivery/Mandates/Output/temp/"+outFileName+".xml";
-			File f = new File("/home/opsjava/Delivery/Mandates/Output/temp/" + outFileName +".xml")  ;  
+			String out ="/home/opsjava/Delivery/Cession_Assign/Output/temp/"+outFileName+".xml";
+			File f = new File("/home/opsjava/Delivery/Cession_Assign/Output/temp/" + outFileName +".xml")  ;  
 
 			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Schema schema = sf.newSchema(new File(pain012Schema));
@@ -988,8 +971,8 @@ public class AC_Pain012_Extract_ST {
 
 	public  void copyFile(String fileName) throws IOException 
 	{
-		File tmpFile = new File("/home/opsjava/Delivery/Mandates/Output/" + fileName +".xml");
-		String outputFile = "/home/opsjava/Delivery/Mandates/Output/temp/" + fileName +".xml";
+		File tmpFile = new File("/home/opsjava/Delivery/Cession_Assign/Output/" + fileName +".xml");
+		String outputFile = "/home/opsjava/Delivery/Cession_Assign/Output/temp/" + fileName +".xml";
 		FileOutputStream fos = new FileOutputStream(tmpFile);
 		Path source = Paths.get(outputFile);
 		Files.copy(source, fos);
@@ -1003,32 +986,32 @@ public class AC_Pain012_Extract_ST {
 		int nrOfFile =1;
 		//int nrOfMsgs = extractMandList.size();
 
-		CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
-		CasOpsMndtCountPK mdtOpsMndtCountPk = new CasOpsMndtCountPK();
+		CasOpsMndtCountEntity casOpsMndtCountEntity = new CasOpsMndtCountEntity();
+		CasOpsMndtCountPK casOpsMndtCountPk = new CasOpsMndtCountPK();
 
 		if(doc!= null && doc.getMndtAccptncRpt()!=null && doc.getMndtAccptncRpt().getGrpHdr() != null && doc.getMndtAccptncRpt().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setMsgId(doc.getMndtAccptncRpt().getGrpHdr().getMsgId());
-		mdtOpsMndtCountPk.setServiceId(outgoingService);
+			casOpsMndtCountPk.setMsgId(doc.getMndtAccptncRpt().getGrpHdr().getMsgId());
+		casOpsMndtCountPk.setServiceId(outgoingService);
 		if(doc!= null && doc.getMndtAccptncRpt()!=null && doc.getMndtAccptncRpt().getGrpHdr() != null && doc.getMndtAccptncRpt().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setInstId(doc.getMndtAccptncRpt().getGrpHdr().getMsgId().toString().substring(12, 18));
-		mdtOpsMndtCountEntity.setNrOfMsgs(nrOfMsgs);
-		mdtOpsMndtCountEntity.setNrOfFiles(nrOfFile);
-		mdtOpsMndtCountEntity.setNrMsgsAccepted(0);
-		mdtOpsMndtCountEntity.setNrMsgsRejected(0);
-		mdtOpsMndtCountEntity.setNrMsgsExtracted(nrOfMsgs);
-		mdtOpsMndtCountEntity.setIncoming("N");
-		mdtOpsMndtCountEntity.setProcessDate(todaysDate);
-		mdtOpsMndtCountEntity.setOutgoing("Y");
-		mdtOpsMndtCountEntity.setCasOpsMndtCountPK(mdtOpsMndtCountPk);
-		mdtOpsMndtCountEntity.setFileName(outFileName);
+			casOpsMndtCountPk.setInstId(doc.getMndtAccptncRpt().getGrpHdr().getMsgId().toString().substring(12, 18));
+		casOpsMndtCountEntity.setNrOfMsgs(nrOfMsgs);
+		casOpsMndtCountEntity.setNrOfFiles(nrOfFile);
+		casOpsMndtCountEntity.setNrMsgsAccepted(0);
+		casOpsMndtCountEntity.setNrMsgsRejected(0);
+		casOpsMndtCountEntity.setNrMsgsExtracted(nrOfMsgs);
+		casOpsMndtCountEntity.setIncoming("N");
+		casOpsMndtCountEntity.setProcessDate(todaysDate);
+		casOpsMndtCountEntity.setOutgoing("Y");
+		casOpsMndtCountEntity.setCasOpsMndtCountPK(casOpsMndtCountPk);
+		casOpsMndtCountEntity.setFileName(outFileName);
 
-		saved = valBeanRemote.saveOpsMndtCount(mdtOpsMndtCountEntity);
+		saved = valBeanRemote.saveOpsMndtCount(casOpsMndtCountEntity);
 
 		if (saved) {
-			log.debug("MdtOpsCountTable has been updated");
+			log.debug("OpsCountTable has been updated");
 
 		} else {
-			log.debug("MdtOpsCountTable is not updated");
+			log.debug("OpsCountTable is not updated");
 		}
 	}
 

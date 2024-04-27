@@ -75,7 +75,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 	Date originalCreateDateTime;
 	int fileNum = 0;
 	String backEndProcess = "BACKEND";
-	public static String systemName = "MANOWNER";
+	public static String systemName = "CAMOWNER";
 	String hdrErrorType = "HDR";
 	String txnErrorType = "TXN";
 	String extractStatus = "4";
@@ -142,10 +142,8 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		{
 			incInstid = fileName.substring(8,16);
 			stsHdrInstgAgt = fileName.substring(10,16);
-			if(casSysctrlSysParamEntity.getSysType().equalsIgnoreCase(acSystem))
-			{
-				incInstid = StringUtils.stripStart(incInstid,"0");
-			}
+			incInstid = StringUtils.stripStart(incInstid,"0");
+
 			outMsgId = generateStatusHdrMsgId(incInstid);
 			debtorBank = incInstid;
 			log.debug("Write to GrpHdr ..MsgId fails....");
@@ -625,7 +623,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 		// ADDED 0999 & 0998 FOR MIGRATION on 2018/09/11 by DimakatsoN
 		//____________________________Validate Accept Ind _rule 012_013_____________________________________//
-		if(mandate!= null && mandate.getTp() != null && mandate.getTp().getLclInstrm() != null && mandate.getTp().getLclInstrm().getPrtry() != null/* && mdtAcMandateTxnsEntityOriginal!= null && mdtAcMandateTxnsEntityOriginal.getLocalInstrCd() != null*/)
+		if(mandate!= null && mandate.getTp() != null && mandate.getTp().getLclInstrm() != null && mandate.getTp().getLclInstrm().getPrtry() != null/* && casOpsCessAssignTxnsEntityOriginal!= null && casOpsCessAssignTxnsEntityOriginal.getLocalInstrCd() != null*/)
 		{
 			String lclInstCd = mandate.getTp().getLclInstrm().getPrtry();
 			//			log.info("Local Instrument"+lclInstCd);
@@ -697,67 +695,6 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 
 
-		//07/12/2017-DimakatsoN-Remove validation as per SCR 225v4
-		//____________________________Validate Authentication_Status_Id 012.029______________________________________//
-
-		/*
-		////This field is optional in pain.012 for MANCN
-
-		if(accptResult != null)
-		{
-
-			if(accptResult.isAccptd() ==  false)
-			{
-				if(mandate.getRfrdDoc() != null && mandate.getRfrdDoc().getTp() != null && mandate.getRfrdDoc().getTp().getCdOrPrtry() != null && mandate.getRfrdDoc().getTp().getCdOrPrtry().getPrtry() != null)
-				{
-					if(!validateAuthenticationInd(mandate.getRfrdDoc().getTp().getCdOrPrtry().getPrtry()))
-					{
-						if(systemType.equalsIgnoreCase(sadcSystem))
-							populateMdtErrorList("901182",msgId,mandate.getMndtId());
-						else
-							generateStatusErrorDetailsList("901182", mndtReqTransId, txnErrorType);
-						mandateSeverity++;
-						log.info("******************validateAuthstatusInd_029 - Failed.******************");
-					}
-					else
-					{
-						mandateSeverity = mandateSeverity+0;
-						log.debug("******************validateAuthstatusInd_029 - Passed******************");
-					}
-				}
-			}
-			else if(accptResult.isAccptd() ==  true){
-				if(mandate.getRfrdDoc() != null && mandate.getRfrdDoc().getTp() != null && mandate.getRfrdDoc().getTp().getCdOrPrtry() != null && mandate.getRfrdDoc().getTp().getCdOrPrtry().getPrtry() != null)
-				{
-					if(!validateAuthId(mandate.getRfrdDoc().getTp().getCdOrPrtry().getPrtry()))
-					{
-						if(systemType.equalsIgnoreCase(sadcSystem))
-							populateMdtErrorList("901182",msgId,mandate.getMndtId());
-						else
-							generateStatusErrorDetailsList("901182", mndtReqTransId, txnErrorType);
-						mandateSeverity++;
-						log.info("******************validateAuthstatusInd_029 - Failed.******************");
-					}
-					else
-					{
-						mandateSeverity = mandateSeverity+0;
-						log.debug("******************validateAuthstatusInd_029 - Passed******************");
-					}
-				}
-			}
-		}
-		else
-					{
-						if(systemType.equalsIgnoreCase(sadcSystem))
-							populateMdtErrorList("901182",msgId,mandate.getMndtId());
-						else
-							generateStatusErrorDetailsList("901182", mndtReqTransId, txnErrorType);
-						mandateSeverity++;
-						log.info("******************validateAuthstatusInd_029 - Failed.******************");
-					}
-
-
-		 */
 
 		if(mandate.getMndtId() != null)
 		{
@@ -895,7 +832,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validate Contract Ref_015 - FAILED.******************");
 			}
-			//This is optional for MANAM
+			//This is optional for CARIN
 		}
 
 		if(mandateSeverity == 0)
@@ -947,7 +884,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validateTrackingInd_016- Failed.******************");
 			}
-			//This if field is optional in PAIN.012 for MANAM
+			//This if field is optional in PAIN.012 for CARIN
 		}*/
 		// Commented out as per EMC 116383
 
@@ -959,11 +896,11 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 		if(!(origServiceId.equalsIgnoreCase("MANCN")))
 		{
-			if(mandate.getTp() != null && mandate.getTp().getLclInstrm() != null && mandate.getTp().getLclInstrm().getPrtry() != null && mdtAcMandateTxnsEntityOriginal!= null && mdtAcMandateTxnsEntityOriginal.getLocalInstrCd() != null)
+			if(mandate.getTp() != null && mandate.getTp().getLclInstrm() != null && mandate.getTp().getLclInstrm().getPrtry() != null && casOpsCessAssignTxnsEntityOriginal!= null && casOpsCessAssignTxnsEntityOriginal.getLocalInstrCd() != null)
 			{
 				log.debug("PAIN.012 LclInstCd: "+mandate.getTp().getLclInstrm().getPrtry().toString());
-				log.debug("MANIN DB LclInsCd: "+mdtAcMandateTxnsEntityOriginal.getLocalInstrCd());
-				if(mdtAcMandateTxnsEntityOriginal.getLocalInstrCd().equalsIgnoreCase(mandate.getTp().getLclInstrm().getPrtry().toString()))
+				log.debug("MANIN DB LclInsCd: "+casOpsCessAssignTxnsEntityOriginal.getLocalInstrCd());
+				if(casOpsCessAssignTxnsEntityOriginal.getLocalInstrCd().equalsIgnoreCase(mandate.getTp().getLclInstrm().getPrtry().toString()))
 				{
 					mandateSeverity = mandateSeverity+0;
 					log.debug("******************validateDebtorAuthCode_017 - Passed.******************");
@@ -993,9 +930,9 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 		if(origServiceId.equalsIgnoreCase("MANIN"))
 		{
-			if(mandate.getOcrncs() != null && mandate.getOcrncs().getSeqTp() != null && mdtAcMandateTxnsEntityOriginal != null && mdtAcMandateTxnsEntityOriginal.getSequenceType() != null)
+			if(mandate.getOcrncs() != null && mandate.getOcrncs().getSeqTp() != null && casOpsCessAssignTxnsEntityOriginal != null && casOpsCessAssignTxnsEntityOriginal.getSequenceType() != null)
 			{
-				if(mdtAcMandateTxnsEntityOriginal.getSequenceType().equalsIgnoreCase(mandate.getOcrncs().getSeqTp().toString()))
+				if(casOpsCessAssignTxnsEntityOriginal.getSequenceType().equalsIgnoreCase(mandate.getOcrncs().getSeqTp().toString()))
 				{
 					mandateSeverity = mandateSeverity+0;
 					log.debug("******************validateInstallmentOccurrence_012_018 - Passed.******************");
@@ -1015,7 +952,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 			}
 		}
 
-		if(origServiceId.equalsIgnoreCase("MANAM"))
+		if(origServiceId.equalsIgnoreCase("CARIN"))
 		{
 			//____________________________Validate Sequence Type_012.999_____________________________________//
 			if(mandate.getOcrncs() != null && mandate.getOcrncs().getSeqTp() != null)
@@ -1038,9 +975,9 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		/*
 		 * 07/12/2017 -Dimakatson- Removed as per SCR 225v4
 		//____________________________Validate Frequency Code _rule 012_019_____________________________________//
-		if(mandate.getOcrncs() != null && mandate.getOcrncs().getFrqcy() != null && mandate.getOcrncs().getFrqcy() !=null && mdtAcMandateTxnsEntityOriginal!= null && mdtAcMandateTxnsEntityOriginal.getFrequency() != null)		
+		if(mandate.getOcrncs() != null && mandate.getOcrncs().getFrqcy() != null && mandate.getOcrncs().getFrqcy() !=null && casOpsCessAssignTxnsEntityOriginal!= null && casOpsCessAssignTxnsEntityOriginal.getFrequency() != null)		
 		{
-			if(mdtAcMandateTxnsEntityOriginal.getFrequency().equalsIgnoreCase(mandate.getOcrncs().getFrqcy().toString()))
+			if(casOpsCessAssignTxnsEntityOriginal.getFrequency().equalsIgnoreCase(mandate.getOcrncs().getFrqcy().toString()))
 			{
 				mandateSeverity = mandateSeverity+0;
 				log.debug("******************validateInstallmentFrequency_012_019 - Passed.******************");
@@ -1067,7 +1004,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validateInstallmentFrequency_012_019 - Failed.******************");
 			}
-			//This field is optional for pain.012 for MANAM
+			//This field is optional for pain.012 for CARIN
 		}
 
 		 */
@@ -1078,11 +1015,11 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		//2016-04-06 - SALEHAR - This validation has been removed for Pain.011 as per MS email
 		//			if(!(origServiceId.equalsIgnoreCase("MANCN")))
 		//			{
-		if(mandate.getOcrncs()!= null && mandate.getOcrncs().getDrtn() != null && mandate.getOcrncs().getDrtn().getFrDt()!=null &&mdtAcMandateTxnsEntityOriginal!= null && mdtAcMandateTxnsEntityOriginal.getFromDate() != null)
+		if(mandate.getOcrncs()!= null && mandate.getOcrncs().getDrtn() != null && mandate.getOcrncs().getDrtn().getFrDt()!=null &&casOpsCessAssignTxnsEntityOriginal!= null && casOpsCessAssignTxnsEntityOriginal.getFromDate() != null)
 		{
 			fromDate = getCovertDateTime(mandate.getOcrncs().getDrtn().getFrDt());
 			String strPain012FromDate = sdf.format(fromDate);
-			String strOrgnlMsgFromDate = sdf.format(mdtAcMandateTxnsEntityOriginal.getFromDate());
+			String strOrgnlMsgFromDate = sdf.format(casOpsCessAssignTxnsEntityOriginal.getFromDate());
 			if(strPain012FromDate.equalsIgnoreCase(strOrgnlMsgFromDate))
 			{
 				log.debug("******************validateDate_rule_012_020 - Passed.******************");
@@ -1117,11 +1054,11 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		//07/12/2017 -DimakatsoN -Removed as per SCR 225v4
 		/*	Date firstDate = null;
 		//____________________________Validate First Collection Date _rule 012_021_____________________________________//
-		if(mandate.getOcrncs()!= null && mandate.getOcrncs().getFrstColltnDt() != null && mdtAcMandateTxnsEntityOriginal!= null && mdtAcMandateTxnsEntityOriginal.getFirstCollDate() != null)
+		if(mandate.getOcrncs()!= null && mandate.getOcrncs().getFrstColltnDt() != null && casOpsCessAssignTxnsEntityOriginal!= null && casOpsCessAssignTxnsEntityOriginal.getFirstCollDate() != null)
 		{
 			firstDate = getCovertDateTime(mandate.getOcrncs().getFrstColltnDt());
 			String strPain012FirstDate = sdf.format(firstDate);
-			String strOrgnlMsgFirstDate = sdf.format(mdtAcMandateTxnsEntityOriginal.getFirstCollDate());
+			String strOrgnlMsgFirstDate = sdf.format(casOpsCessAssignTxnsEntityOriginal.getFirstCollDate());
 
 			if(strPain012FirstDate.equalsIgnoreCase(strOrgnlMsgFirstDate))
 			{
@@ -1215,9 +1152,9 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 				 // 07/12/2017 - DimakatsoN- Removed as per SRC 225v4
 					//____________________________Validate Installment Amount_rule 012_022______________________________________//
-					if(mandate.getColltnAmt() != null && mandate.getColltnAmt().getValue() != null && mdtAcMandateTxnsEntityOriginal!= null && mdtAcMandateTxnsEntityOriginal.getCollAmount() != null)
+					if(mandate.getColltnAmt() != null && mandate.getColltnAmt().getValue() != null && casOpsCessAssignTxnsEntityOriginal!= null && casOpsCessAssignTxnsEntityOriginal.getCollAmount() != null)
 					{
-						if(mandate.getColltnAmt().getValue().compareTo(mdtAcMandateTxnsEntityOriginal.getCollAmount()) == 0)
+						if(mandate.getColltnAmt().getValue().compareTo(casOpsCessAssignTxnsEntityOriginal.getCollAmount()) == 0)
 						{
 							mandateSeverity = mandateSeverity+0;
 							log.debug("******************validateInitialAmount_012_022- PASSED.******************");
@@ -1288,9 +1225,9 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		//____________________________Validate Maximum Amount 012_023_____________________________________//
 		if(!(origServiceId.equalsIgnoreCase("MANCN")))
 			{
-		if(mandate.getMaxAmt() != null && mandate.getMaxAmt().getValue() != null && mdtAcMandateTxnsEntityOriginal != null && mdtAcMandateTxnsEntityOriginal.getMaxAmount() != null)
+		if(mandate.getMaxAmt() != null && mandate.getMaxAmt().getValue() != null && casOpsCessAssignTxnsEntityOriginal != null && casOpsCessAssignTxnsEntityOriginal.getMaxAmount() != null)
 		{
-			if(mandate.getMaxAmt().getValue().compareTo(mdtAcMandateTxnsEntityOriginal.getMaxAmount()) == 0)
+			if(mandate.getMaxAmt().getValue().compareTo(casOpsCessAssignTxnsEntityOriginal.getMaxAmount()) == 0)
 			{
 				mandateSeverity = mandateSeverity+0;
 				log.debug("******************validateMaxAmt_012_023_ - PASSED.******************");
@@ -1344,7 +1281,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				log.info("******************validateCdtrNm_012.999 - FAILED.******************");
 			}
 		}
-		//This field is optional in pain.012 for MANAM
+		//This field is optional in pain.012 for CARIN
 
 
 		if(validateRule999(mndtReqTransId))
@@ -1359,9 +1296,9 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 			log.info("******************validateMandReqTranId_012.046 - FAILED.******************");
 		}
 
-		if(mndtReqTransId != null && mdtAcMandateTxnsEntityOriginal.getCasOpsCessionAssignEntityPK().getMandateReqTranId() != null)
+		if(mndtReqTransId != null && casOpsCessAssignTxnsEntityOriginal.getCasOpsCessionAssignEntityPK().getMandateReqTranId() != null)
 		{
-			if(mndtReqTransId.equalsIgnoreCase(mdtAcMandateTxnsEntityOriginal.getCasOpsCessionAssignEntityPK().getMandateReqTranId()))
+			if(mndtReqTransId.equalsIgnoreCase(casOpsCessAssignTxnsEntityOriginal.getCasOpsCessionAssignEntityPK().getMandateReqTranId()))
 			{
 				mandateSeverity = mandateSeverity+0;
 				log.debug("******************validateMandReqTranId_012.049 - PASSED.******************");
@@ -1437,14 +1374,14 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validateCreditorAccountNo_012_025 - Failed.******************");
 			}
-			//This field is optional in pain.012 for MANAM/MANCN
+			//This field is optional in pain.012 for CARIN/MANCN
 		}
 		 */
 		//____________________________Validate  Creditor Branch Number_rule 012_024_____________________________________//
 		if(mandate.getCdtrAgt() != null && mandate.getCdtrAgt().getFinInstnId() != null && mandate.getCdtrAgt().getFinInstnId().getClrSysMmbId() != null && 
-				mandate.getCdtrAgt().getFinInstnId().getClrSysMmbId().getMmbId() != null && mdtAcMandateTxnsEntityOriginal != null && mdtAcMandateTxnsEntityOriginal.getCredBranchNr() != null)
+				mandate.getCdtrAgt().getFinInstnId().getClrSysMmbId().getMmbId() != null && casOpsCessAssignTxnsEntityOriginal != null && casOpsCessAssignTxnsEntityOriginal.getCredBranchNr() != null)
 		{
-			if(mandate.getCdtrAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim().equalsIgnoreCase(mdtAcMandateTxnsEntityOriginal.getCredBranchNr().trim()))
+			if(mandate.getCdtrAgt().getFinInstnId().getClrSysMmbId().getMmbId().trim().equalsIgnoreCase(casOpsCessAssignTxnsEntityOriginal.getCredBranchNr().trim()))
 			{
 				log.debug("******************validateCreditorBranchNo_012_024 - Passed.******************");
 				mandateSeverity = mandateSeverity+0;
@@ -1464,7 +1401,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validateCreditorBranchNo_012_024 - Failed.******************");
 			}
-			//This field is optional in pain.012 for MANAM/MANCN
+			//This field is optional in pain.012 for CARIN/MANCN
 		}
 
 		/*
@@ -1502,7 +1439,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validateCrAbbShortName_012.047 - Failed.******************");
 			}
-			//This field is optional in pain.012 for MANAM/MANCN
+			//This field is optional in pain.012 for CARIN/MANCN
 		}
 		 */
 
@@ -1532,12 +1469,12 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				log.info("******************validategetDbtrNm_012.999 - FAILED.******************");
 			}
 		}
-		//This field is optional in pain.012 for MANAM
+		//This field is optional in pain.012 for CARIN
 
 		/*
 		 * 07/12/2017 -DimakatsoN -Removed as per SCR 225v4
 		//____________________________Validate Debtor Id Num 012_026______________________________________//
-		if(origServiceId.equalsIgnoreCase("MANIN") || origServiceId.equalsIgnoreCase("MANAM"))
+		if(origServiceId.equalsIgnoreCase("MANIN") || origServiceId.equalsIgnoreCase("CARIN"))
 		{
 			if(mandate != null && mandate.getDbtr() != null && mandate.getDbtr().getId() != null && mandate.getDbtr().getId().getPrvtId() != null && mandate.getDbtr().getId().getPrvtId().getOthr() != null)
 			{
@@ -1571,7 +1508,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 					mandateSeverity++;
 					log.info("******************validateDebtorIdentifier_026 - Failed.******************");
 				}
-				//This field is optional in pain.012 for MANAM
+				//This field is optional in pain.012 for CARIN
 			}
 		}
 		//This field is not validated in MANCN
@@ -1609,7 +1546,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validateDebtorAccountNo_012_027 - Failed.******************");
 			}
-			//This field is optional in pain.012 for MANAM
+			//This field is optional in pain.012 for CARIN
 		}
 
 		 */
@@ -1635,7 +1572,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validateAccountType_012.999 - FAILED.******************");
 			}
-			//This field is optional in pain.012 for MANAM
+			//This field is optional in pain.012 for CARIN
 		}
 
 		/*
@@ -1670,7 +1607,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validateDebtorBranchNo_012_028 - Failed.******************");
 			}
-			//This field is optional in pain.012 for MANAM
+			//This field is optional in pain.012 for CARIN
 		}
 		 */
 
@@ -1707,7 +1644,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		}
 		 */
 
-		if(origServiceId.equalsIgnoreCase("MANIN") || origServiceId.equalsIgnoreCase("MANAM"))
+		if(origServiceId.equalsIgnoreCase("MANIN") || origServiceId.equalsIgnoreCase("CARIN"))
 		{
 
 
@@ -1839,10 +1776,10 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 			 */
 			//____________________________Validate Collection Day 012_031______________________________________//
 			if(supplementaryData1 != null && supplementaryData1.getEnvlp() != null && supplementaryData1.getEnvlp().getCnts() != null && 
-					supplementaryData1.getEnvlp().getCnts().getCllctnDy() != null && mdtAcMandateTxnsEntityOriginal != null && mdtAcMandateTxnsEntityOriginal.getCollectionDay() != null)
+					supplementaryData1.getEnvlp().getCnts().getCllctnDy() != null && casOpsCessAssignTxnsEntityOriginal != null && casOpsCessAssignTxnsEntityOriginal.getCollectionDay() != null)
 			{
 				int CllctnDy = Integer.valueOf(supplementaryData1.getEnvlp().getCnts().getCllctnDy().trim());
-				int collDay= Integer.valueOf(mdtAcMandateTxnsEntityOriginal.getCollectionDay().trim());
+				int collDay= Integer.valueOf(casOpsCessAssignTxnsEntityOriginal.getCollectionDay().trim());
 
 				log.debug("CllctnDy----->"+CllctnDy);
 				log.debug("collDay------>"+collDay);
@@ -1869,10 +1806,10 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 			//____________________________Validate Date Adjustement Rule Indicator 012_032______________________________________//
 
 			if(supplementaryData1 != null && supplementaryData1.getEnvlp() != null && supplementaryData1.getEnvlp().getCnts() != null && 
-					supplementaryData1.getEnvlp().getCnts().getDtAdjRl() != null && mdtAcMandateTxnsEntityOriginal != null && mdtAcMandateTxnsEntityOriginal.getDateAdjRuleInd() != null)
+					supplementaryData1.getEnvlp().getCnts().getDtAdjRl() != null && casOpsCessAssignTxnsEntityOriginal != null && casOpsCessAssignTxnsEntityOriginal.getDateAdjRuleInd() != null)
 			{
 
-				if(supplementaryData1.getEnvlp().getCnts().getDtAdjRl().trim().equalsIgnoreCase(mdtAcMandateTxnsEntityOriginal.getDateAdjRuleInd().trim()))
+				if(supplementaryData1.getEnvlp().getCnts().getDtAdjRl().trim().equalsIgnoreCase(casOpsCessAssignTxnsEntityOriginal.getDateAdjRuleInd().trim()))
 				{
 					mandateSeverity = mandateSeverity+0;
 					log.debug("******************validategetAdjstCtgy_032 - Passed******************");
@@ -1892,16 +1829,16 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 					mandateSeverity++;
 					log.info("******************validateAdjtRuleInd_032 - Failed.******************");
 				}
-				//This field is optional in pain.012 for MANAM
+				//This field is optional in pain.012 for CARIN
 			}
 
 
 			//____________________________Validate Adjustment Category 012_033_____________________________ _________//
 			if(supplementaryData1 != null && supplementaryData1.getEnvlp() != null && supplementaryData1.getEnvlp().getCnts() != null && 
-					supplementaryData1.getEnvlp().getCnts().getAdjstCtgy() != null && mdtAcMandateTxnsEntityOriginal != null && mdtAcMandateTxnsEntityOriginal.getAdjCategory() != null)
+					supplementaryData1.getEnvlp().getCnts().getAdjstCtgy() != null && casOpsCessAssignTxnsEntityOriginal != null && casOpsCessAssignTxnsEntityOriginal.getAdjCategory() != null)
 			{
 
-				if(supplementaryData1.getEnvlp().getCnts().getAdjstCtgy().toString().trim().equalsIgnoreCase(mdtAcMandateTxnsEntityOriginal.getAdjCategory().trim()))
+				if(supplementaryData1.getEnvlp().getCnts().getAdjstCtgy().toString().trim().equalsIgnoreCase(casOpsCessAssignTxnsEntityOriginal.getAdjCategory().trim()))
 				{
 					mandateSeverity = mandateSeverity+0;
 					log.debug("******************validategetAdjstCtgy_033 - Passed.******************");
@@ -1921,7 +1858,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 					mandateSeverity++;
 					log.info("******************validategetAdjstCtgy_033 - Failed.******************");
 				}
-				//This field is optional in pain.012 for MANAM
+				//This field is optional in pain.012 for CARIN
 			}
 
 
@@ -2060,7 +1997,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 			{
 
 
-				if(mandate.getTp() != null && mandate.getTp().getLclInstrm() != null && mandate.getTp().getLclInstrm().getPrtry() != null && mdtAcMandateTxnsEntityOriginal!= null && mdtAcMandateTxnsEntityOriginal.getLocalInstrCd() != null)
+				if(mandate.getTp() != null && mandate.getTp().getLclInstrm() != null && mandate.getTp().getLclInstrm().getPrtry() != null && casOpsCessAssignTxnsEntityOriginal!= null && casOpsCessAssignTxnsEntityOriginal.getLocalInstrCd() != null)
 				{
 
 					String localInstrCd = mandate.getTp().getLclInstrm().getPrtry();
@@ -2128,7 +2065,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 		//____________________________Validate Debit Value Type_ 012_030_____________________________ _________//
 		if(supplementaryData1 != null && supplementaryData1.getEnvlp() != null && supplementaryData1.getEnvlp().getCnts() != null && 
-				supplementaryData1.getEnvlp().getCnts().getDbVlTp() != null && mdtAcMandateTxnsEntityOriginal != null && mdtAcMandateTxnsEntityOriginal.getDebitValueType() != null)
+				supplementaryData1.getEnvlp().getCnts().getDbVlTp() != null && casOpsCessAssignTxnsEntityOriginal != null && casOpsCessAssignTxnsEntityOriginal.getDebitValueType() != null)
 		{
 			if(origServiceId.equalsIgnoreCase("MANIN"))
 			{
@@ -2136,7 +2073,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity = mandateSeverity+0;
 			}
 
-//			if(supplementaryData1.getEnvlp().getCnts().getDbVlTp().toString().trim().equalsIgnoreCase(mdtAcMandateTxnsEntityOriginal.getDebitValueType().trim()))
+//			if(supplementaryData1.getEnvlp().getCnts().getDbVlTp().toString().trim().equalsIgnoreCase(casOpsCessAssignTxnsEntityOriginal.getDebitValueType().trim()))
 //			{
 //				mandateSeverity = mandateSeverity+0;
 //				log.debug("******************validateDebitValType_030 - Passed.******************");
@@ -2156,7 +2093,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				mandateSeverity++;
 				log.info("******************validateDebitValType_030 - Failed.******************");
 			}
-			//This field is optional in pain.012 for MANAM/MANCN
+			//This field is optional in pain.012 for CARIN/MANCN
 		}
 
 		/*

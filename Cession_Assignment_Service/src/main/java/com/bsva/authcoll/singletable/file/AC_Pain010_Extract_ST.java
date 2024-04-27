@@ -1,47 +1,15 @@
 package com.bsva.authcoll.singletable.file;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.ejb.EJB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Marshaller;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
-
-import org.apache.commons.collections4.ListUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DurationFormatUtils;
-import org.apache.log4j.Logger;
 import com.bsva.PropertyUtil;
 import com.bsva.commons.model.OpsFileRegModel;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
 import com.bsva.entities.CasOpsFileSizeLimitEntity;
 import com.bsva.entities.CasOpsGrpHdrEntity;
-import com.bsva.entities.CasOpsCessionAssignEntity;
 import com.bsva.entities.CasOpsMndtCountEntity;
 import com.bsva.entities.CasOpsMndtCountPK;
-import com.bsva.entities.CasOpsSotEotCtrlEntity;
-import com.bsva.entities.CasOpsCustParamEntity;
 import com.bsva.entities.CasOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.SysCisBankEntity;
@@ -95,12 +63,42 @@ import iso.std.iso._20022.tech.xsd.pain_010_001.SequenceType2Code;
 import iso.std.iso._20022.tech.xsd.pain_010_001.ServiceLevel8Choice;
 import iso.std.iso._20022.tech.xsd.pain_010_001.SupplementaryData1;
 import iso.std.iso._20022.tech.xsd.pain_010_001.SupplementaryDataEnvelope1;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import javax.ejb.EJB;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Marshaller;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
+import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
+import org.apache.log4j.Logger;
 
 /*
  * @author DimakatsoN
  * Modified by SalehaR - 2015/12/10 - Alignment to V2.0 of Interface Specification
  * Modified by SalehaR - 2016/09/15 - Alignment to TRS 15
- * @author SalehaR- 2019/09/21 Aligned to Single Table(MDT_AC_OPS_MANDATE_TXNS)
+ * @author SalehaR- 2019/09/21 Aligned to Single Table(CAS_OPS_CESS_ASSIGN_TXNS)
  * @author SalehaR-2019/11/06 - Add Counts and Execution Time
  */
 public class AC_Pain010_Extract_ST {
@@ -169,8 +167,8 @@ public class AC_Pain010_Extract_ST {
 
 		}catch (Exception e) {
 			log.error("AC_Pain010_Extract_ST - Could not find MandateMessageCommons.properties in classpath");
-			outgoingService = "MANOM";
-			inwardServ = "MANAM";
+			outgoingService = "CAROT";
+			inwardServ = "CARIN";
 			processStatus ="4";
 		}
 	}
@@ -196,7 +194,7 @@ public class AC_Pain010_Extract_ST {
 				sysCisBankList = (List<SysCisBankEntity>) adminBeanRemote.retrieveSysMemberNo(destInstId);
 				if(sysCisBankList.size()>0)
 				{
-					//__________________Retrieve All Mandates for Extract______________________//
+					//__________________Retrieve All Cession_Assign for Extract______________________//
 					extractMandList = new ArrayList<CasOpsCessionAssignEntity>();
 					extractMandList = (List<CasOpsCessionAssignEntity>) fileProcessBeanRemote.retrieveMandatesForExtract(true, destInstId, inwardServ ,rdyToExtStatus);
 
@@ -225,7 +223,7 @@ public class AC_Pain010_Extract_ST {
 							nrOfMsgs = chunk.size();
 							try
 							{
-								log.info("*****EXTRACTING PAIN 010(MANOM) file for "+destInstId+"*****");
+								log.info("*****EXTRACTING PAIN 010(CAROT) file for "+destInstId+"*****");
 								// Creating the XML Root Element
 								doc = new Document();
 								MandateAmendmentRequestV03 mandateAmendmentRequestV03 = new MandateAmendmentRequestV03();
@@ -271,7 +269,7 @@ public class AC_Pain010_Extract_ST {
 							}
 							catch(Exception e)
 							{
-								log.error("AC_Pain010_Extract_ST: Error on generating MANOM file.... "+e.getMessage());
+								log.error("AC_Pain010_Extract_ST: Error on generating CAROT file.... "+e.getMessage());
 								e.printStackTrace();
 							}
 						}
@@ -310,8 +308,8 @@ public class AC_Pain010_Extract_ST {
 
 		try
 		{
-			log.info("==================== BULK UPDATE MANOM TXNS ====================");
-			//fileProcessBeanRemote.bulkUpdateMandates(origTxnsList);
+			log.info("==================== BULK UPDATE CAROT TXNS ====================");
+			//fileProcessBeanRemote.bulkUpdateCession_Assign(origTxnsList);
 			bulkUpdateViaSQL();
 		}
 		catch (Exception e) 
@@ -350,7 +348,7 @@ public class AC_Pain010_Extract_ST {
 				String joinResult = null;
 
 				joinResult = StringUtils.join(mrtiToUpdateList,",");
-				String sqlQuery = new String("UPDATE MANOWNER.MDT_AC_OPS_MANDATE_TXNS SET  PROCESS_STATUS = '"+processStatus+"', EXTRACT_MSG_ID = '"+extractMsgId+"', "
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS SET  PROCESS_STATUS = '"+processStatus+"', EXTRACT_MSG_ID = '"+extractMsgId+"', "
 						+ " EXTRACT_FILE_NAME ='"+extractFileName+"' , MODIFIED_DATE =  TO_DATE('"+modifiedDate+"','yyyy/MM/dd HH24:MI:SS')  WHERE SERVICE_ID = '"+inwardServ+"' AND MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
 				log.debug("SQL query---->" +sqlQuery);
 
@@ -852,8 +850,8 @@ public class AC_Pain010_Extract_ST {
 			JAXBContext context = JAXBContext.newInstance(Document.class);
 			//			outFileName = createFileName(destInstId); 
 			log.debug("outFileName ================================"+outFileName);
-			String out ="/home/opsjava/Delivery/Mandates/Output/temp/"+outFileName+".xml";
-			File f = new File("/home/opsjava/Delivery/Mandates/Output/temp/" + outFileName +".xml")  ;  
+			String out ="/home/opsjava/Delivery/Cession_Assign/Output/temp/"+outFileName+".xml";
+			File f = new File("/home/opsjava/Delivery/Cession_Assign/Output/temp/" + outFileName +".xml")  ;  
 			JAXBContext jaxbContext = JAXBContext.newInstance(Document.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
@@ -910,7 +908,7 @@ public class AC_Pain010_Extract_ST {
 		}
 		catch (Exception e) 
 		{
-			log.error("**** Exception generating fileName for MANAM file **** : " + e);
+			log.error("**** Exception generating fileName for CARIN file **** : " + e);
 			e.printStackTrace();
 			e.getCause();
 		}
@@ -1080,8 +1078,8 @@ public class AC_Pain010_Extract_ST {
 
 	public  void copyFile(String fileName) throws IOException 
 	{
-		File tmpFile = new File("/home/opsjava/Delivery/Mandates/Output/" + fileName +".xml");
-		String outputFile = "/home/opsjava/Delivery/Mandates/Output/temp/" + fileName +".xml";
+		File tmpFile = new File("/home/opsjava/Delivery/Cession_Assign/Output/" + fileName +".xml");
+		String outputFile = "/home/opsjava/Delivery/Cession_Assign/Output/temp/" + fileName +".xml";
 		FileOutputStream fos = new FileOutputStream(tmpFile);
 		Path source = Paths.get(outputFile);
 		Files.copy(source, fos);

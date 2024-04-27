@@ -1,9 +1,9 @@
 package com.bsva;
 
 import com.bsva.authcoll.file.AC_Pacs002_001_04_Extract;
-import com.bsva.authcoll.file.StatusReportST100Extract;
-import com.bsva.authcoll.file.StatusReportST102Extract;
-import com.bsva.authcoll.file.StatusReportST104Extract;
+import com.bsva.authcoll.file.StatusReportST200Extract;
+import com.bsva.authcoll.file.StatusReportST202Extract;
+import com.bsva.authcoll.file.StatusReportST204Extract;
 import com.bsva.authcoll.singletable.file.AC_Pain010_Extract_ST;
 import com.bsva.authcoll.singletable.file.AC_Pain012_Extract_ST;
 import com.bsva.authcoll.singletable.file.EotFilesCreator_ST;
@@ -50,16 +50,16 @@ public class SimpleEjb {
     filewatcher.startMonitor();
   }
 
-  public void runStatusReportST100Extract() throws Exception {
-    StatusReportST100Extract statusReportST100Extract = new StatusReportST100Extract();
+  public void runStatusReportST200Extract() throws Exception {
+    StatusReportST200Extract statusReportST200Extract = new StatusReportST200Extract();
   }
 
-  public void runStatusReportST102Extract() throws Exception {
-    StatusReportST102Extract statusReportST102Extract = new StatusReportST102Extract();
+  public void runStatusReportST202Extract() throws Exception {
+    StatusReportST202Extract statusReportST202Extract = new StatusReportST202Extract();
   }
 
-  public void runStatusReportST104Extract() throws Exception {
-    StatusReportST104Extract statusReportST104Extract = new StatusReportST104Extract();
+  public void runStatusReportST204Extract() throws Exception {
+    StatusReportST204Extract statusReportST204Extract = new StatusReportST204Extract();
   }
 
   public void runBillingExport() throws Exception {

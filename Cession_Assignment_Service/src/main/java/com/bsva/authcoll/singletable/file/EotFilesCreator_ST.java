@@ -48,23 +48,20 @@ public class EotFilesCreator_ST {
 	private static QuartzSchedulerBeanRemote quartzSchedulerBeanRemote;
 	String file = null, destInstId = null, fileType = null, quartzSchedulerBeanRemoteservice = null;
 	
-	String maninServ, manamServ, mancnServ, manacServ, manrtServ, manriServ, spinpServ, srinpServ, mandbServ;
-	String manotServ, manomServ, mancoServ, manocServ, st103Serv, manroServ, manrfServ, spoutServ, sroutServ, mandcServ;
-	String st100Serv, st102Serv, st104Serv, st105Serv, st106Serv, st007Serv, st008Serv, st994Serv;
+	String carinServ, rcainServ, st201Serv;
+	String carotServ, rcaotServ, st203Serv;
+	String st200Serv, st202Serv, st204Serv;
 	String activeInd, nonActiveInd, mdtLoadType;
 	List<CasSysctrlServicesEntity> sysCntrlServicesList = new ArrayList<CasSysctrlServicesEntity>();// list
 	Date currentDate = new Date();
 	boolean txnsToExtract = false;
-	boolean fileStatusManin = false, fileStatusManam = false, fileStatusMancn = false, fileStatusManac = false,
-			fileStatusSpinp = false, fileStatusSt100 = false, fileStatusSt102 = false, fileStatusSt104 = false,
-			fileStatusSt007 = false, fileStatusSt008 = false, fileStatusManrt = false, fileStatusSt106 = false,
-			fileStatusManri = false, fileStatusSt105 = false, fileStatusSt103 = false, fileStatusSrinp = false, fileStatusSt994 = false, fileStatusMandc = false;
+	boolean fileStatusCarin = false,  fileStatusRcain = false, fileStatusSt201 = false,
+			fileStatusSt200 = false, fileStatusSt202 = false, fileStatusSt204 = false,
+			fileStatusCarot = false, fileStatusRcaot = false, fileStatusSt203 = false;
 	public String feedbackMsg;
 	CasSysctrlSysParamEntity casSysctrlSysParamEntity = new CasSysctrlSysParamEntity();
-	boolean maninToExtract = false, manamToExtract = false, mancnToExtract = false, manacToExtract = false,
-			st103Extract = false, sroutExtract = false, st105ToExtract = false, manriToExtract = false,
-			manrtToExtract = false, st106ToExtract = false, spoutToExtract = false, st100ToExtract = false,
-			st102ToExtract = false, st104ToExtract = false, st007ToExtract = false, st008ToExtract = false, st994ToExtract = false, mandcToExtract = false;
+	boolean carinToExtract = false, rcainToExtract = false, st03ToExtract = false,
+			st200ToExtract = false, st202ToExtract = false, st204ToExtract = false;
 
 	public EotFilesCreator_ST() {
 		contextAdminBeanCheck();
@@ -77,38 +74,19 @@ public class EotFilesCreator_ST {
 		try {
 			propertyUtil = new PropertyUtil();
 			this.activeInd = propertyUtil.getPropValue("ActiveInd");
-
 			this.nonActiveInd = propertyUtil.getPropValue("NonActiveInd");
-			this.manotServ = propertyUtil.getPropValue("Output.Pain009");
-			this.manomServ = propertyUtil.getPropValue("Output.Pain010");
-			this.mancoServ = propertyUtil.getPropValue("Output.Pain011");
-			this.manocServ = propertyUtil.getPropValue("Output.Pain012");
-			this.st103Serv = propertyUtil.getPropValue("Output.Pacs002");
-			this.manroServ = propertyUtil.getPropValue("Output.Mdte001");
-			this.manrfServ = propertyUtil.getPropValue("Output.Mdte002");
-			this.spoutServ = propertyUtil.getPropValue("Output.Camt055");
-			this.sroutServ = propertyUtil.getPropValue("Output.Pacs002Resp");
-			this.mandcServ =propertyUtil.getPropValue("Output.MarkOffFile");
 
-			this.st100Serv = propertyUtil.getPropValue("StatusRep.ST100");
-			this.st102Serv = propertyUtil.getPropValue("StatusRep.ST102");
-			this.st104Serv = propertyUtil.getPropValue("StatusRep.ST104");
-			this.st105Serv = propertyUtil.getPropValue("StatusRep.ST105");
-			this.st106Serv = propertyUtil.getPropValue("StatusRep.ST106");
-			this.st007Serv = propertyUtil.getPropValue("StatusRep.ST007");
-			this.st008Serv = propertyUtil.getPropValue("StatusRep.ST008");
-			this.st994Serv = propertyUtil.getPropValue("StatusRep.ST994");
+			this.carinServ = propertyUtil.getPropValue("Input.Pain010");
+			this.rcainServ = propertyUtil.getPropValue("Input.Pain012");
+			this.st201Serv = propertyUtil.getPropValue("Input.Pacs002");
 
-			this.maninServ = propertyUtil.getPropValue("Input.Pain009");
-			this.manamServ = propertyUtil.getPropValue("Input.Pain010");
-			this.mancnServ = propertyUtil.getPropValue("Input.Pain011");
-			this.manacServ = propertyUtil.getPropValue("Input.Pain012");
-			this.manrtServ = propertyUtil.getPropValue("Input.Mdte002");
-			this.manriServ = propertyUtil.getPropValue("Input.Mdte001");
-			this.spinpServ = propertyUtil.getPropValue("Input.Camt055");
-			this.srinpServ = propertyUtil.getPropValue("Input.Pacs002Resp");
-			this.mandbServ =propertyUtil.getPropValue("Input.MarkOffFile");
+			this.carotServ = propertyUtil.getPropValue("Output.Pain010");
+			this.rcaotServ = propertyUtil.getPropValue("Output.Pain012");
+			this.st203Serv = propertyUtil.getPropValue("Output.Pacs002");
 
+			this.st200Serv = propertyUtil.getPropValue("StatusRep.ST200");
+			this.st202Serv = propertyUtil.getPropValue("StatusRep.ST202");
+			this.st204Serv = propertyUtil.getPropValue("StatusRep.ST204");
 		} catch (Exception e) {
 			log.error("EOTFilesCreator - Could not find MandateMessageCommons.properties in classpath");
 		}
@@ -151,75 +129,25 @@ public class EotFilesCreator_ST {
 				String creditorInd = sysCisBankEntity.getAcCreditor();
 				
 				// Check if no files are sitting on 'V' or 'R' or 'W'
-				fileStatusManin = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), maninServ);
-				fileStatusManam = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), manamServ);
-				fileStatusMancn = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), mancnServ);
-				fileStatusManac = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), manacServ);
-				fileStatusSpinp = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), spinpServ);
-				fileStatusSt100 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st100Serv);
-				fileStatusSt102 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st102Serv);
-				fileStatusSt104 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st104Serv);
-				fileStatusSt007 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st007Serv);
-				fileStatusSt008 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st008Serv);
-				fileStatusManrt = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), manrtServ);
-				fileStatusSt106 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st106Serv);
-				fileStatusManri = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), manriServ);
-				fileStatusSt105 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st105Serv);
-				fileStatusSt103 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st103Serv);
-				fileStatusSrinp = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), srinpServ);
-				fileStatusSt994 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st994Serv);
-				fileStatusMandc = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), mandbServ);
+				fileStatusCarin = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), carinServ);
+				fileStatusRcain = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), rcainServ);
+				fileStatusSt201 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st201Serv);
+				fileStatusSt200 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st200Serv);
+				fileStatusSt202 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st202Serv);
+				fileStatusSt204 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st204Serv);
+				fileStatusCarot = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), carotServ);
+				fileStatusSt203 = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), st203Serv);
+				fileStatusRcaot = beanRemote.checkIfAllFilesLoaded(casSysctrlSysParamEntity.getProcessDate(), rcaotServ);
 
-				/*
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusManin);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusManam);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusMancn);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusManac);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSpinp);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSt100);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSt102);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSt104);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSt007);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSt008);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusManrt);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSt106);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusManri);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSt105);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSt103);
-				 * log.info("fileStatus frin Service Bean ==> "+fileStatusSrinp);
-				 */
-				
 				// Check if no txns are sitting on '3' or 'L'
-				maninToExtract = fileProcessBeanRemote.eodCheckIfOutgoingExtracted(casSysctrlSysParamEntity.getProcessDate(), maninServ, memberId);
-				manamToExtract = fileProcessBeanRemote.eodCheckIfOutgoingExtracted(casSysctrlSysParamEntity.getProcessDate(), manamServ, memberId);
-				mancnToExtract = fileProcessBeanRemote.eodCheckIfOutgoingExtracted(casSysctrlSysParamEntity.getProcessDate(), mancnServ, memberId);
-				manacToExtract = fileProcessBeanRemote.eodCheckIfOutgoingExtracted(casSysctrlSysParamEntity.getProcessDate(), manacServ, memberId);
-				st100ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st100Serv, memberId);
-				st102ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st102Serv, memberId);
-				st104ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st104Serv, memberId);
-				st007ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st007Serv, memberId);
-				st008ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st008Serv, memberId);
-				st103Extract = beanRemote.eodCheckSt103SroutExtracted(st103Serv, memberId);
-				sroutExtract = beanRemote.eodCheckSt103SroutExtracted(sroutServ, memberId);
-				st105ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st105Serv, memberId);
-				st106ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st106Serv, memberId);
-				st994ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st994Serv, memberId);
-				/*
-				 * log.info("manotToExtract is =====> " + manotToExtract);
-				 * log.info("st100ToExtract is =====> " + st100ToExtract);
-				 * log.info("st102ToExtract is =====> " + st102ToExtract);
-				 * log.info("st104ToExtract is =====> " + st104ToExtract);
-				 * log.info("st007ToExtract is =====> " + st007ToExtract);
-				 * log.info("st008ToExtract is =====> " + st008ToExtract);
-				 * log.info("spoutToExtract is =====> " + spoutToExtract);
-				 * log.info("manriToExtract is =====> " + manriToExtract);
-				 * log.info("st105ToExtract is =====> " + st105ToExtract);
-				 * log.info("manrtToExtract is =====> " + manrtToExtract);
-				 * log.info("st106ToExtract is =====> " + st106ToExtract);
-				 * log.info("sroutExtract is =====> " + sroutExtract);
-				 * log.info("st103Extract is =====> " + st103Extract);
-				 */
+				carinToExtract = fileProcessBeanRemote.eodCheckIfOutgoingExtracted(casSysctrlSysParamEntity.getProcessDate(), carinServ, memberId);
+				rcainToExtract = fileProcessBeanRemote.eodCheckIfOutgoingExtracted(casSysctrlSysParamEntity.getProcessDate(), rcainServ, memberId);
+				st200ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st200Serv, memberId);
+				st202ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st202Serv, memberId);
+				st204ToExtract = beanRemote.eodCheckIfStReportExtracted(casSysctrlSysParamEntity.getProcessDate(), st204Serv, memberId);
+				st03ToExtract = beanRemote.eodCheckSt203SroutExtracted(st203Serv, memberId);
 
+				
 				log.debug("memberId ==> " + memberId);
 				log.debug("creditorInd ==> " + creditorInd);
 				log.debug("debtorInd ==> " + debtorInd);
@@ -245,38 +173,15 @@ public class EotFilesCreator_ST {
 					// Output Debtor Services
 					log.debug("userDate" + userDate);
 					log.debug("endOfService" + endOfService);
-					if (outService.equalsIgnoreCase(manotServ)) {
-						CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-						
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusManin) {
-								if (maninToExtract) {
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
-
-										log.debug("Inside MANOT EOTS");
-										generateEOT(memberId, outService);
-										log.debug("EOTS for MANIN Created");
-									}
-								} else {
-									notExtractedError(eotCreated, manotServ, memberId);
-								}
-
-							} else {
-								fileStatusError(eotCreated, maninServ, memberId);
-							}
-						}
-					}
-
-					if (outService.equalsIgnoreCase(manomServ)) {
+					
+					if (outService.equalsIgnoreCase(carotServ)) {
                         CasOpsSotEotCtrlEntity
                             casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
 						
 						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusManam) {
+							if (fileStatusCarin) {
 
-								if (manamToExtract) {
+								if (carinToExtract) {
 
 									if ((userDate.after(endOfService))
 											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
@@ -284,355 +189,122 @@ public class EotFilesCreator_ST {
 									}
 
 								} else {
-									notExtractedError(eotCreated, manomServ, memberId);
+									notExtractedError(eotCreated, carotServ, memberId);
 								}
 							} else {
-								fileStatusError(eotCreated, manamServ, memberId);
+								fileStatusError(eotCreated, carinServ, memberId);
 							}
 						}
 
-					}
-
-					if (outService.equalsIgnoreCase(mancoServ)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-						
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusMancn) {
-
-								if (mancnToExtract) {
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, mancoServ, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, mancnServ, memberId);
-							}
-						}
 					}
 
 					// Output Creditor Services
-					if (outService.equalsIgnoreCase(manocServ)) {
+					if (outService.equalsIgnoreCase(rcaotServ)) {
                         CasOpsSotEotCtrlEntity
                             casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
 						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusManac) {
+							if (fileStatusRcain) {
 
-								if (manacToExtract) {
+								if (rcainToExtract) {
 									if ((userDate.after(endOfService))
 											&& (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
 										generateEOT(memberId, outService);
 									}
 								} else {
-									notExtractedError(eotCreated, manocServ, memberId);
+									notExtractedError(eotCreated, rcaotServ, memberId);
 								}
 							} else {
-								fileStatusError(eotCreated, manacServ, memberId);
+								fileStatusError(eotCreated, rcainServ, memberId);
 							}
 						}		
 					}
 
-					if (outService.equalsIgnoreCase(spoutServ)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSpinp) {
-
-								if (spoutToExtract) {
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, spoutServ, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, spinpServ, memberId);
-							}
-						}
-					}
-
-					if (outService.equalsIgnoreCase(st100Serv)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSt100 && fileStatusManin && fileStatusManam && fileStatusMancn) {
-
-								if (st100ToExtract && maninToExtract && manamToExtract && mancnToExtract) {
-
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, st100Serv, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, st100Serv, memberId);
-							}
-						}
-					}
-
-					if (outService.equalsIgnoreCase(st102Serv)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSt102) {
-
-								if (st102ToExtract) {
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, st102Serv, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, st102Serv, memberId);
-							}
-						}	
-					}
-
-					if (outService.equalsIgnoreCase(st104Serv)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSt104 && fileStatusManac) {
-
-								if (st104ToExtract && manacToExtract) {
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, st104Serv, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, st104Serv, memberId);
-							}
-						}	
-					}
-
-					if (outService.equalsIgnoreCase(st007Serv)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSt007) {
-
-								if (st007ToExtract) {
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-
-								} else {
-									notExtractedError(eotCreated, st007Serv, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, st007Serv, memberId);
-							}
-						}
-					}
-
-					if (outService.equalsIgnoreCase(st008Serv)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSt008) {
-
-								if (st008ToExtract) {
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, st008Serv, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, st008Serv, memberId);
-							}
-						}
-					}
-
-					if (outService.equalsIgnoreCase(manrfServ)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusManrt) {
-
-								if (manrtToExtract) {
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, manrfServ, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, manrtServ, memberId);
-							}
-						}	
-					}
-
-					if (outService.equalsIgnoreCase(st106Serv)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSt106 && fileStatusManrt) {
-
-								if (st106ToExtract && manrtToExtract) {
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, st106Serv, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, st106Serv, memberId);
-							}
-						}
-					}
-
-					if (outService.equalsIgnoreCase(manroServ)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusManri) {
-
-								if (manriToExtract) {
-
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, manroServ, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, manriServ, memberId);
-							}
-						}
-					}
-
-					if (outService.equalsIgnoreCase(st105Serv)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSt105 && fileStatusManri) {
-
-								if (st105ToExtract && manriToExtract) {
-
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, st105Serv, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, st105Serv, memberId);
-							}
-						}
-					}
-
-					if (outService.equalsIgnoreCase(st103Serv)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSt103) {
-
-								if (st103Extract) {
-
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, st103Serv, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, st103Serv, memberId);
-							}
-						}	
-					}
-
-					if (outService.equalsIgnoreCase(sroutServ)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSrinp) {
-
-								if (sroutExtract) {
-
-									if ((userDate.after(endOfService))
-											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, sroutServ, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, sroutServ, memberId);
-							}
-						}
-					}
-
-					if (outService.equalsIgnoreCase(mandcServ)) {
-                        CasOpsSotEotCtrlEntity
-                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
-                        
-						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusMandc) {
-
-								if (mandcToExtract) {
-									if ((userDate.after(endOfService)) && (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
-										generateEOT(memberId, outService);
-									}
-								} else {
-									notExtractedError(eotCreated, mandcServ, memberId);
-								}
-							} else {
-								fileStatusError(eotCreated, mandbServ, memberId);
-							}
-						}		
-					}
 					
-					if (outService.equalsIgnoreCase(st994Serv)) {
+					if (outService.equalsIgnoreCase(st200Serv)) {
                         CasOpsSotEotCtrlEntity
                             casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
                         
 						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
-							if (fileStatusSt994 && fileStatusMandc) {
+							if (fileStatusSt200 && fileStatusCarin) {
 
-								if (st994ToExtract && mandcToExtract) {
+								if (st200ToExtract && carinToExtract) {
 
-									if ((userDate.after(endOfService)) && (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
+									if ((userDate.after(endOfService))
+											&& (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
 										generateEOT(memberId, outService);
 									}
 								} else {
-									notExtractedError(eotCreated, st994Serv, memberId);
+									notExtractedError(eotCreated, st200Serv, memberId);
 								}
 							} else {
-								fileStatusError(eotCreated, st994Serv, memberId);
+								fileStatusError(eotCreated, st200Serv, memberId);
 							}
 						}
+					}
+
+					if (outService.equalsIgnoreCase(st202Serv)) {
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+							if (fileStatusSt202) {
+
+								if (st202ToExtract) {
+									if ((userDate.after(endOfService))
+											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
+										generateEOT(memberId, outService);
+									}
+								} else {
+									notExtractedError(eotCreated, st202Serv, memberId);
+								}
+							} else {
+								fileStatusError(eotCreated, st202Serv, memberId);
+							}
+						}	
+					}
+
+					if (outService.equalsIgnoreCase(st204Serv)) {
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+							if (fileStatusSt204 && fileStatusRcain) {
+
+								if (st204ToExtract && rcainToExtract) {
+									if ((userDate.after(endOfService))
+											&& (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))) {
+										generateEOT(memberId, outService);
+									}
+								} else {
+									notExtractedError(eotCreated, st204Serv, memberId);
+								}
+							} else {
+								fileStatusError(eotCreated, st204Serv, memberId);
+							}
+						}	
+					}
+
+					if (outService.equalsIgnoreCase(st203Serv)) {
+                        CasOpsSotEotCtrlEntity
+                            casOpsSotEotCtrlEntity = retrieveSotEot(memberId,outService);
+                        
+						if(!casOpsSotEotCtrlEntity.equals(null) && (!casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y"))) {
+							if (fileStatusSt203) {
+
+								if (st03ToExtract) {
+
+									if ((userDate.after(endOfService))
+											&& (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))) {
+										generateEOT(memberId, outService);
+									}
+								} else {
+									notExtractedError(eotCreated, st203Serv, memberId);
+								}
+							} else {
+								fileStatusError(eotCreated, st203Serv, memberId);
+							}
+						}	
 					}
 				}
 			}
