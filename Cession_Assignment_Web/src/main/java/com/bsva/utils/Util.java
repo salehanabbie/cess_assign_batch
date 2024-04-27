@@ -39,7 +39,7 @@ public class Util {
 					ic.lookup("java:global/Mandate_Service_Layer-0.0.1-SNAPSHOT/Service-0.0.1-SNAPSHOT/ServiceBean!com.bsva.interfaces.ServiceBeanRemote");
 			ServiceBeanRemote beanRemote = (ServiceBeanRemote)object;
 		*/
-			return (ServiceBeanRemote) ic.lookup("java:global/MandateMessage_Service_Common-0.0.1-SNAPSHOT/MandateMessage_Service-0.0.1-SNAPSHOT/ServiceBean!com.bsva.interfaces.ServiceBeanRemote");
+			return (ServiceBeanRemote) ic.lookup("java:global/Cession_Assignment_Service_Common-0.0.1-SNAPSHOT/Cession_Assignment_Service-0.0.1-SNAPSHOT/ServiceBean!com.bsva.interfaces.ServiceBeanRemote");
 
 			//return (ServiceBeanRemote) ic.lookup("java:jboss/datasources/MandateDS");
 
@@ -80,7 +80,7 @@ public class Util {
 			ServiceBeanRemote beanRemote = (ServiceBeanRemote)object;
 		*/
 
-			return (AdminBeanRemote) ic.lookup("java:global/MandateMessage_Service_Common-0.0.1-SNAPSHOT/MandateMessage_Service-0.0.1-SNAPSHOT/AdminBean!com.bsva.interfaces.AdminBeanRemote");
+			return (AdminBeanRemote) ic.lookup("java:global/Cession_Assignment_Service_Common-0.0.1-SNAPSHOT/Cession_Assignment_Service-0.0.1-SNAPSHOT/AdminBean!com.bsva.interfaces.AdminBeanRemote");
 		}
 		catch (Exception e)
 		{
@@ -103,7 +103,7 @@ public class Util {
 			ServiceBeanRemote beanRemote = (ServiceBeanRemote)object;
 		*/
 
-			return (TimerBeanRemote) ic.lookup("java:global/MandateMessage_Service_Common-0.0.1-SNAPSHOT/MandateMessage_Service-0.0.1-SNAPSHOT/TimerBean!com.bsva.interfaces.TimerBeanRemote");
+			return (TimerBeanRemote) ic.lookup("java:global/Cession_Assignment_Service_Common-0.0.1-SNAPSHOT/Cession_Assignment_Service-0.0.1-SNAPSHOT/TimerBean!com.bsva.interfaces.TimerBeanRemote");
 		}
 		catch (Exception e)
 		{
@@ -126,7 +126,7 @@ public class Util {
 			ServiceBeanRemote beanRemote = (ServiceBeanRemote)object;
 		*/
 
-			return (ValidationBeanRemote) ic.lookup("java:global/Mandate_Service_Common-0.0.1-SNAPSHOT/Mandate_Service-0.0.1-SNAPSHOT/ValidationBean!com.bsva.interfaces.ValidationBeanRemote");
+			return (ValidationBeanRemote) ic.lookup("java:global/Cession_Assignment_Service_Common-0.0.1-SNAPSHOT/Cession_Assignment_Service-0.0.1-SNAPSHOT/ValidationBean!com.bsva.interfaces.ValidationBeanRemote");
 
 		}
 		catch (Exception e)
@@ -149,7 +149,7 @@ public class Util {
 			ServiceBeanRemote beanRemote = (ServiceBeanRemote)object;   */
 
 
-			return (QuartzSchedulerBeanRemote) ic.lookup("java:global/MandateMessage_Service_Common-0.0.1-SNAPSHOT/MandateMessage_Service-0.0.1-SNAPSHOT/QuartzSchedulerBean!com.bsva.interfaces.QuartzSchedulerBeanRemote");
+			return (QuartzSchedulerBeanRemote) ic.lookup("java:global/Cession_Assignment_Service_Common-0.0.1-SNAPSHOT/Cession_Assignment_Service-0.0.1-SNAPSHOT/QuartzSchedulerBean!com.bsva.interfaces.QuartzSchedulerBeanRemote");
 
 		}
 		catch (Exception e)
@@ -171,7 +171,7 @@ public class Util {
 			/*Object object =
 					ic.lookup("java:global/Mandate_Service_Layer-0.0.1-SNAPSHOT/Service-0.0.1-SNAPSHOT/ServiceBean!com.bsva.interfaces.ServiceBeanRemote");
 			ServiceBeanRemote beanRemote = (ServiceBeanRemote)object;   */
-			return (FileWatcherRemote) ic.lookup("java:global/MandateMessage_Service_Common-0.0.1-SNAPSHOT/MandateMessage_Service-0.0.1-SNAPSHOT/FileWatcher!com.bsva.interfaces.FileWatcherRemote");
+			return (FileWatcherRemote) ic.lookup("java:global/Cession_Assignment_Service_Common-0.0.1-SNAPSHOT/Cession_Assignment_Service-0.0.1-SNAPSHOT/FileWatcher!com.bsva.interfaces.FileWatcherRemote");
 
 		}
 		catch (Exception e)
@@ -189,7 +189,7 @@ public class Util {
 		}
 		try
 		{
-			return (PropertyUtilRemote) ic.lookup("java:global/MandateMessage_Service_Common-0.0.1-SNAPSHOT/MandateMessage_Service-0.0.1-SNAPSHOT/PropertyUtil!com.bsva.interfaces.PropertyUtilRemote");
+			return (PropertyUtilRemote) ic.lookup("java:global/Cession_Assignment_Service_Common-0.0.1-SNAPSHOT/Cession_Assignment_Service-0.0.1-SNAPSHOT/PropertyUtil!com.bsva.interfaces.PropertyUtilRemote");
 
 		}
 		catch (Exception e)
@@ -207,7 +207,7 @@ public class Util {
 		}
 		try
 		{
-			return (ReportBeanRemote) ic.lookup("java:global/MandateMessage_Service_Common-0.0.1-SNAPSHOT/MandateMessage_Service-0.0.1-SNAPSHOT/ReportBean!com.bsva.interfaces.ReportBeanRemote");
+			return (ReportBeanRemote) ic.lookup("java:global/Cession_Assignment_Service_Common-0.0.1-SNAPSHOT/Cession_Assignment_Service-0.0.1-SNAPSHOT/ReportBean!com.bsva.interfaces.ReportBeanRemote");
 		}
 		catch (Exception e)
 		{
@@ -230,7 +230,7 @@ public class Util {
 			ServiceBeanRemote beanRemote = (ServiceBeanRemote)object;
 
 
-//			return (CisServiceRemote) ic.lookup("java:global/MandateMessage_Service_Common-0.0.1-SNAPSHOT/MandateMessage_Service-0.0.1-SNAPSHOT/CisServiceBean!com.bsva.cis.ejb.interfaces.CisServiceRemote");
+//			return (CisServiceRemote) ic.lookup("java:global/Cession_Assignment_Service_Common-0.0.1-SNAPSHOT/Cession_Assignment_Service-0.0.1-SNAPSHOT/CisServiceBean!com.bsva.cis.ejb.interfaces.CisServiceRemote");
 			return (CisServiceRemote) ic.lookup("java:global/BSVA_CIS_Web-0.0.1-SNAPSHOT/CisServiceBean!com.bsva.cis.ejb.interfaces.CisServiceRemote");
 
 		}

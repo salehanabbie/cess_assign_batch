@@ -7,9 +7,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 @Remote
-public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel> {
-
-
+public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel>{
   public List<?> viewAllLocalInstrumentCodes();
 
   public List<?> viewAcOpsSOTEOTByCriteria(String instId);

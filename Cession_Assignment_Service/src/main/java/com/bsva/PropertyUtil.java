@@ -22,7 +22,7 @@ public class PropertyUtil
 		 
 		try {
 			Properties prop = new Properties();
-			String propFileName = "MandateMessageCommons.properties";
+			String propFileName = "CessionAssignment.properties";
 														    
  
 			inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);

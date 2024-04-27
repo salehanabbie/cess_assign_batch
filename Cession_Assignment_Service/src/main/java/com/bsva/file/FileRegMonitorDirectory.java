@@ -53,7 +53,7 @@ public class FileRegMonitorDirectory {
       testLiveIndProp = propertyUtil.getPropValue("TestLiveInd");
 
     } catch (Exception ex) {
-      log.error("MonitorDirectory - Could not find MandateMessageCommons.properties in classpath");
+      log.error("MonitorDirectory - Could not find CessionAssignment.properties in classpath");
       inputPath = "/home/opsjava/Delivery/Cession_Assign/Input/";
       processPath = "/home/opsjava/Delivery/Cession_Assign/Input/Processing/";
     }

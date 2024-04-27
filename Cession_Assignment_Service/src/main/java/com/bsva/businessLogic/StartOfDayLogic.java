@@ -72,10 +72,10 @@ public class StartOfDayLogic {
   Date processingDate = null;
   List<SysCisBankEntity> sysCisBankEntityList = new ArrayList<SysCisBankEntity>();
   Date currentDate = new Date();
-  CasSysctrlSysParamEntity casSysctrlSysParamEntity, mdtSysParamEntity;
+  CasSysctrlSysParamEntity casSysctrlSysParamEntity, casSysParamEntity;
   CasSysctrlSlaTimesEntity casSysctrlSlaTimesEntity;
   CasOpsProcessControlsEntity casOpsProcessControlsEntity = new CasOpsProcessControlsEntity();
-  List<CasSysctrlFileSizeLimitEntity> mdtSysctrlFileSizeLimitEntityList =
+  List<CasSysctrlFileSizeLimitEntity> casSysctrlFileSizeLimitEntityList =
       new ArrayList<CasSysctrlFileSizeLimitEntity>();
   int lastSeqNo = 0000;
   String seqNo = String.format("%06d", lastSeqNo);
@@ -392,17 +392,17 @@ public class StartOfDayLogic {
     log.info("Date: " + strrDate);
     Date userDate = parser.parse(strrDate);
 
-    //Date time01 = parser.parse(mdtSysctrlSlaTimesEntity.getStartTime());
+    //Date time01 = parser.parse(casSysctrlSlaTimesEntity.getStartTime());
     Date time02 = parser.parse(casSysctrlSlaTimesEntity.getEndTime());
 
 
-    mdtSysParamEntity = new CasSysctrlSysParamEntity();
+    casSysParamEntity = new CasSysctrlSysParamEntity();
 
     processingDate = currentDate;
     responsePeriodVal = String.valueOf(archiveday);
 
     if (userDate.before(time02)) {
-      mdtSysParamEntity.setProcessDate(processingDate);
+      casSysParamEntity.setProcessDate(processingDate);
       log.info("processingDate-->" + processingDate);
     } else {
       if (userDate.after(time02)) {
@@ -416,47 +416,47 @@ public class StartOfDayLogic {
         } catch (ParseException e) {
           e.printStackTrace();
         }
-        mdtSysParamEntity.setProcessDate(currDate);
+        casSysParamEntity.setProcessDate(currDate);
         log.info("currDate-->" + currDate);
       }
     }
 
-    //mdtSysParamEntity.setProcessDate(currDate);
-    mdtSysParamEntity.setSysName("MANDATES");
-    mdtSysParamEntity.setDefCurr("ZAR");
+    //casSysParamEntity.setProcessDate(currDate);
+    casSysParamEntity.setSysName("MANDATES");
+    casSysParamEntity.setDefCurr("ZAR");
     short inactiveDuration = 1;
     BigInteger archivePeriod = new BigInteger(archivePeriodVal);
-    mdtSysParamEntity.setInactiveDuration(inactiveDuration);
-    mdtSysParamEntity.setSysType("AC");
-    mdtSysParamEntity.setArchivePeriod(archivePeriod);
-    mdtSysParamEntity.setActiveInd("Y");
-    mdtSysParamEntity.setCreatedBy("");
-    mdtSysParamEntity.setInBalanceInd("N");
-    mdtSysParamEntity.setCreatedDate(currentDate);
-    mdtSysParamEntity.setModifiedBy(null);
-    mdtSysParamEntity.setModifiedDate(null);
-    mdtSysParamEntity.setSodRunInd("Y");
-    mdtSysParamEntity.setEodRunInd("N");
-    mdtSysParamEntity.setNextMondayHolInd("Y");
-    mdtSysParamEntity.setEasterDaysInd("Y");
-    mdtSysParamEntity.setSysCloseRunInd("N");
-    mdtSysParamEntity.setCisDwnldInd("Y");
-    mdtSysParamEntity.setCisDwnldDate(currDate);
-    mdtSysParamEntity.setResponsePeriod(Short.valueOf(responsePeriodVal));
-    mdtSysParamEntity.setIamPort(Short.valueOf(iamport));
-    mdtSysParamEntity.setItemLimit(new BigInteger(itemLimit));
-    mdtSysParamEntity.setFileTransactionLimit(new BigInteger(transactionLimit));
+    casSysParamEntity.setInactiveDuration(inactiveDuration);
+    casSysParamEntity.setSysType("AC");
+    casSysParamEntity.setArchivePeriod(archivePeriod);
+    casSysParamEntity.setActiveInd("Y");
+    casSysParamEntity.setCreatedBy("");
+    casSysParamEntity.setInBalanceInd("N");
+    casSysParamEntity.setCreatedDate(currentDate);
+    casSysParamEntity.setModifiedBy(null);
+    casSysParamEntity.setModifiedDate(null);
+    casSysParamEntity.setSodRunInd("Y");
+    casSysParamEntity.setEodRunInd("N");
+    casSysParamEntity.setNextMondayHolInd("Y");
+    casSysParamEntity.setEasterDaysInd("Y");
+    casSysParamEntity.setSysCloseRunInd("N");
+    casSysParamEntity.setCisDwnldInd("Y");
+    casSysParamEntity.setCisDwnldDate(currDate);
+    casSysParamEntity.setResponsePeriod(Short.valueOf(responsePeriodVal));
+    casSysParamEntity.setIamPort(Short.valueOf(iamport));
+    casSysParamEntity.setItemLimit(new BigInteger(itemLimit));
+    casSysParamEntity.setFileTransactionLimit(new BigInteger(transactionLimit));
 
 
-    log.info("mdtSysParamEntity" + mdtSysParamEntity);
-    saved = adminBeanRemote.createSysParameters(mdtSysParamEntity);
+    log.info("casSysParamEntity" + casSysParamEntity);
+    saved = adminBeanRemote.createSysParameters(casSysParamEntity);
     log.info("the saved information is #####################" + saved);
 
     if (saved) {
       log.info("System parameters has been populated ....");
     } else {
-      if (saved && mdtSysParamEntity.getActiveInd().equalsIgnoreCase("Y") &&
-          mdtSysParamEntity.getProcessDate().equals(currentDate)) {
+      if (saved && casSysParamEntity.getActiveInd().equalsIgnoreCase("Y") &&
+          casSysParamEntity.getProcessDate().equals(currentDate)) {
         log.info("The Table has been populated for the day *****************");
       }
     }
@@ -467,26 +467,26 @@ public class StartOfDayLogic {
 //	{
 //		boolean saved = false;
 //
-//		List<MdtSysctrlCronEntity> mdtSysctrlCronEntityList = new
+//		List<MdtSysctrlCronEntity> casSysctrlCronEntityList = new
 //		ArrayList<MdtSysctrlCronEntity>();
-//		mdtSysctrlCronEntityList = (List<MdtSysctrlCronEntity>) adminBeanRemote.retrieveCronTime();
+//		casSysctrlCronEntityList = (List<MdtSysctrlCronEntity>) adminBeanRemote.retrieveCronTime();
 //
-//		List<MdtOpsCronEntity> mdtOpsCronEntityList = new ArrayList<MdtOpsCronEntity>();
-//		mdtOpsCronEntityList = (List<MdtOpsCronEntity>) adminBeanRemote.retrieveOpsCronTime();
+//		List<MdtOpsCronEntity> casOpsCronEntityList = new ArrayList<MdtOpsCronEntity>();
+//		casOpsCronEntityList = (List<MdtOpsCronEntity>) adminBeanRemote.retrieveOpsCronTime();
 //
-//		if (mdtOpsCronEntityList.size() == 0) {
-//			if (mdtSysctrlCronEntityList.size() > 0) {
-//				for (MdtSysctrlCronEntity mdtSysctrlCronEntity : mdtSysctrlCronEntityList) {
-//					MdtOpsCronEntity mdtOpsCronEntity = new MdtOpsCronEntity();
+//		if (casOpsCronEntityList.size() == 0) {
+//			if (casSysctrlCronEntityList.size() > 0) {
+//				for (MdtSysctrlCronEntity casSysctrlCronEntity : casSysctrlCronEntityList) {
+//					MdtOpsCronEntity casOpsCronEntity = new MdtOpsCronEntity();
 //
-//					mdtOpsCronEntity.setActiveInd(mdtSysctrlCronEntity.getActiveInd());
-//					mdtOpsCronEntity.setCreatedBy(mdtSysctrlCronEntity.getCreatedBy());
-//					mdtOpsCronEntity.setCreatedDate(mdtSysctrlCronEntity.getCreatedDate());
-//					mdtOpsCronEntity.setCronTime(mdtSysctrlCronEntity.getCronTime());
-//					mdtOpsCronEntity.setModifiedBy(mdtSysctrlCronEntity.getModifiedBy());
-//					mdtOpsCronEntity.setModifiedDate(mdtSysctrlCronEntity.getModifiedDate());
-//					mdtOpsCronEntity.setProcessName(mdtSysctrlCronEntity.getProcessName());
-//					saved = adminBeanRemote.createOpsCron(mdtOpsCronEntity);
+//					casOpsCronEntity.setActiveInd(casSysctrlCronEntity.getActiveInd());
+//					casOpsCronEntity.setCreatedBy(casSysctrlCronEntity.getCreatedBy());
+//					casOpsCronEntity.setCreatedDate(casSysctrlCronEntity.getCreatedDate());
+//					casOpsCronEntity.setCronTime(casSysctrlCronEntity.getCronTime());
+//					casOpsCronEntity.setModifiedBy(casSysctrlCronEntity.getModifiedBy());
+//					casOpsCronEntity.setModifiedDate(casSysctrlCronEntity.getModifiedDate());
+//					casOpsCronEntity.setProcessName(casSysctrlCronEntity.getProcessName());
+//					saved = adminBeanRemote.createOpsCron(casOpsCronEntity);
 //				}
 //			}
 //		}
@@ -502,18 +502,18 @@ public class StartOfDayLogic {
   public boolean populatesOpsSlaTimesTable() {
     boolean saved = false;
 
-    List<CasSysctrlSlaTimesEntity> mdtSysctrlSlaTimesEntityList =
+    List<CasSysctrlSlaTimesEntity> casSysctrlSlaTimesEntityList =
         new ArrayList<CasSysctrlSlaTimesEntity>();
-    mdtSysctrlSlaTimesEntityList =
+    casSysctrlSlaTimesEntityList =
         (List<CasSysctrlSlaTimesEntity>) adminBeanRemote.retrieveSlaTime();
 
     List<CasOpsSlaTimesEntity> casOpsSlaTimesEntityList = new ArrayList<CasOpsSlaTimesEntity>();
 
     casOpsSlaTimesEntityList = (List<CasOpsSlaTimesEntity>) adminBeanRemote.retrieveOpsSlaTime();
-    log.debug("The sla times has ##############################" + mdtSysctrlSlaTimesEntityList);
+    log.debug("The sla times has ##############################" + casSysctrlSlaTimesEntityList);
     if (casOpsSlaTimesEntityList != null && casOpsSlaTimesEntityList.size() == 0) {
-      if (mdtSysctrlSlaTimesEntityList.size() > 0) {
-        for (CasSysctrlSlaTimesEntity casSysctrlSlaTimesEntity : mdtSysctrlSlaTimesEntityList) {
+      if (casSysctrlSlaTimesEntityList.size() > 0) {
+        for (CasSysctrlSlaTimesEntity casSysctrlSlaTimesEntity : casSysctrlSlaTimesEntityList) {
 
           CasOpsSlaTimesEntity casOpsSlaTimesEntity = new CasOpsSlaTimesEntity();
 
@@ -641,9 +641,9 @@ public class StartOfDayLogic {
 			}
 		}
 
-			mdtSysctrlCustParamEntity = new MdtSysctrlCustParamEntity();
-		mdtSysctrlCustParamEntity.setInstId(sysCisBankEntity.getMemberNo());
-		saved =adminBeanRemote.createCustParameters(mdtSysctrlCustParamEntity);
+			casSysctrlCustParamEntity = new MdtSysctrlCustParamEntity();
+		casSysctrlCustParamEntity.setInstId(sysCisBankEntity.getMemberNo());
+		saved =adminBeanRemote.createCustParameters(casSysctrlCustParamEntity);
 
 	}
 	 */
@@ -651,28 +651,28 @@ public class StartOfDayLogic {
 //	public boolean populatePublicHoliday ()
 //	{
 //		boolean saved = false;
-//		List<MdtSysctrlPubholEntity> mdtSysctrlPubholEntityList = new
+//		List<MdtSysctrlPubholEntity> casSysctrlPubholEntityList = new
 //		ArrayList<MdtSysctrlPubholEntity>();
-//		mdtSysctrlPubholEntityList = adminBeanRemote.retrievePublicHoliday();
+//		casSysctrlPubholEntityList = adminBeanRemote.retrievePublicHoliday();
 //
 //
-//		List<MdtAcOpsPubholEntity> mdtAcOpsPubholEntityList = new
+//		List<MdtAcOpsPubholEntity> casAcOpsPubholEntityList = new
 //		ArrayList<MdtAcOpsPubholEntity>();
-//		mdtAcOpsPubholEntityList = adminBeanRemote.retrieveSysPubHoliday();
+//		casAcOpsPubholEntityList = adminBeanRemote.retrieveSysPubHoliday();
 //
-//		if (mdtAcOpsPubholEntityList.size()==0)
+//		if (casAcOpsPubholEntityList.size()==0)
 //		{
-//			if (mdtSysctrlPubholEntityList.size()>0)
+//			if (casSysctrlPubholEntityList.size()>0)
 //			{
-//				for (MdtSysctrlPubholEntity  mdtSysctrlPubholEntity :mdtSysctrlPubholEntityList )
+//				for (MdtSysctrlPubholEntity  casSysctrlPubholEntity :casSysctrlPubholEntityList )
 //				{
-//					MdtAcOpsPubholEntity  mdtAcOpsPubholEntity = new MdtAcOpsPubholEntity();
+//					MdtAcOpsPubholEntity  casAcOpsPubholEntity = new MdtAcOpsPubholEntity();
 //
-//					mdtAcOpsPubholEntity.setActiveInd(mdtSysctrlPubholEntity.getActiveInd());
-//					mdtAcOpsPubholEntity.setPubHolDate(mdtSysctrlPubholEntity.getPubHolDate());
-//					mdtAcOpsPubholEntity.setPubHolidayDesc(mdtSysctrlPubholEntity
+//					casAcOpsPubholEntity.setActiveInd(casSysctrlPubholEntity.getActiveInd());
+//					casAcOpsPubholEntity.setPubHolDate(casSysctrlPubholEntity.getPubHolDate());
+//					casAcOpsPubholEntity.setPubHolidayDesc(casSysctrlPubholEntity
 //					.getPubHolidayDesc());
-//					saved =adminBeanRemote.createAcOpsPublicNHoliday(mdtAcOpsPubholEntity);
+//					saved =adminBeanRemote.createAcOpsPublicNHoliday(casAcOpsPubholEntity);
 //				}
 //			}
 //		}
@@ -727,7 +727,7 @@ public class StartOfDayLogic {
         new ArrayList<CasOpsSotEotCtrlEntity>();
     casOpsSotEotCtrlEntityList =
         (List<CasOpsSotEotCtrlEntity>) adminBeanRemote.retrieveACOpsSotEot();
-    log.debug("<<<<<<<<<<<<<<-----mdtAcOpsSotEotCtrlEntityList------->>>>>>>>>>>>>>" +
+    log.debug("<<<<<<<<<<<<<<-----casAcOpsSotEotCtrlEntityList------->>>>>>>>>>>>>>" +
         casOpsSotEotCtrlEntityList);
 
     sysCntrlCustList =
@@ -923,7 +923,7 @@ public class StartOfDayLogic {
           log.debug("Current Report Name ==> " + casCnfgReportNamesEntity.getReportNr());
           //PASA Report
           if (casCnfgReportNamesEntity.getReportNr().startsWith("PS")) {
-            CasOpsRepSeqNrEntity mdtOpsRepSeqNr = new CasOpsRepSeqNrEntity();
+            CasOpsRepSeqNrEntity casOpsRepSeqNr = new CasOpsRepSeqNrEntity();
             CasOpsRepSeqNrPK opsReportSeqPk = new CasOpsRepSeqNrPK();
             //						try
             //						{
@@ -937,18 +937,18 @@ public class StartOfDayLogic {
             log.debug("Inside If of 1st For");
             opsReportSeqPk.setMemberNo("0000");
             opsReportSeqPk.setReportNo(casCnfgReportNamesEntity.getReportNr());
-            //						opsReportSeqPk.setMemberNo(mdtSysctrlCustParamEntity.getInstId
+            //						opsReportSeqPk.setMemberNo(casSysctrlCustParamEntity.getInstId
 			  //						());
             opsReportSeqPk.setProcessDate(currDate);
             log.debug("currDate 1 ----> " + currDate);
-            mdtOpsRepSeqNr.setCasOpsRepSeqNrEntityPK(opsReportSeqPk);
+            casOpsRepSeqNr.setCasOpsRepSeqNrEntityPK(opsReportSeqPk);
             //opsRefSeqNr.setServiceId(syscntrServiceEntity.getServiceIdOut());
-            mdtOpsRepSeqNr.setCreatedDate(new Date());
-            mdtOpsRepSeqNr.setCreatedBy(systemName);
-            mdtOpsRepSeqNr.setLastSeqNo(seqNo);
-            mdtOpsRepSeqNr.setModifiedBy(systemName);
-            mdtOpsRepSeqNr.setModifiedDate(new Date());
-            saved = adminBeanRemote.createOpsReportSeqNr(mdtOpsRepSeqNr);
+            casOpsRepSeqNr.setCreatedDate(new Date());
+            casOpsRepSeqNr.setCreatedBy(systemName);
+            casOpsRepSeqNr.setLastSeqNo(seqNo);
+            casOpsRepSeqNr.setModifiedBy(systemName);
+            casOpsRepSeqNr.setModifiedDate(new Date());
+            saved = adminBeanRemote.createOpsReportSeqNr(casOpsRepSeqNr);
           } else {
             //Bank Report
             log.debug("Inside else");
@@ -1012,18 +1012,18 @@ public class StartOfDayLogic {
 
         for (CasSysctrlServicesEntity syscntrlservice : sysCntrlServicesList) {
           if (syscntrlservice.getActiveInd().equalsIgnoreCase("Y")) {
-            CasOpsLastExtractTimesEntity mdtOpsLastExtractTimes =
+            CasOpsLastExtractTimesEntity casOpsLastExtractTimes =
                 new CasOpsLastExtractTimesEntity();
 
-            mdtOpsLastExtractTimes.setServiceIdOut(syscntrlservice.getServiceIdOut());
-            mdtOpsLastExtractTimes.setFileTransactionLimit(new BigInteger(transactionLimit));
-            mdtOpsLastExtractTimes.setLastExtractTime(new Date());
-            mdtOpsLastExtractTimes.setCreatedBy(systemName);
-            mdtOpsLastExtractTimes.setCreatedDate(new Date());
-            mdtOpsLastExtractTimes.setModifiedBy(systemName);
-            mdtOpsLastExtractTimes.setModifiedDate(new Date());
+            casOpsLastExtractTimes.setServiceIdOut(syscntrlservice.getServiceIdOut());
+            casOpsLastExtractTimes.setFileTransactionLimit(new BigInteger(transactionLimit));
+            casOpsLastExtractTimes.setLastExtractTime(new Date());
+            casOpsLastExtractTimes.setCreatedBy(systemName);
+            casOpsLastExtractTimes.setCreatedDate(new Date());
+            casOpsLastExtractTimes.setModifiedBy(systemName);
+            casOpsLastExtractTimes.setModifiedDate(new Date());
 
-            saved = adminBeanRemote.createOpLastExtractTimeEntiy(mdtOpsLastExtractTimes);
+            saved = adminBeanRemote.createOpLastExtractTimeEntiy(casOpsLastExtractTimes);
           }
         }
       }
@@ -1041,11 +1041,11 @@ public class StartOfDayLogic {
 
     boolean saved = false;
 
-    List<CasSysctrlFileSizeLimitEntity> mdtSysctrlFileSizeLimitEntityList =
+    List<CasSysctrlFileSizeLimitEntity> casSysctrlFileSizeLimitEntityList =
         new ArrayList<CasSysctrlFileSizeLimitEntity>();
 
 
-    mdtSysctrlFileSizeLimitEntityList =
+    casSysctrlFileSizeLimitEntityList =
         (List<CasSysctrlFileSizeLimitEntity>) adminBeanRemote.retrieveSysctrlFileSizeLimit();
 
     List<CasOpsFileSizeLimitEntity> casOpsFileSizeLimitEntityList =
@@ -1056,13 +1056,13 @@ public class StartOfDayLogic {
         (List<CasOpsFileSizeLimitEntity>) adminBeanRemote.retrieveOpsFileSizeLimit();
 
     log.debug("The file size limit has ##############################" +
-        mdtSysctrlFileSizeLimitEntityList);
+        casSysctrlFileSizeLimitEntityList);
     if (casOpsFileSizeLimitEntityList != null && casOpsFileSizeLimitEntityList.size() == 0) {
 
-      if (mdtSysctrlFileSizeLimitEntityList.size() > 0) {
+      if (casSysctrlFileSizeLimitEntityList.size() > 0) {
 
         for (CasSysctrlFileSizeLimitEntity casSysctrlFileSizeLimitEntity :
-				mdtSysctrlFileSizeLimitEntityList) {
+				casSysctrlFileSizeLimitEntityList) {
 
           CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity =
               new CasOpsFileSizeLimitEntity();
@@ -1096,13 +1096,13 @@ public class StartOfDayLogic {
 
   public void updateSodRunInd() {
 
-    CasSysctrlSysParamEntity mdtsysEnt = new CasSysctrlSysParamEntity();
-    mdtsysEnt = (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
-    if (mdtsysEnt != null) {
-      mdtsysEnt.setSodRunInd("Y");
-      mdtsysEnt.setEodRunInd("N");
+    CasSysctrlSysParamEntity cassysEnt = new CasSysctrlSysParamEntity();
+    cassysEnt = (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
+    if (cassysEnt != null) {
+      cassysEnt.setSodRunInd("Y");
+      cassysEnt.setEodRunInd("N");
 
-      boolean saved = adminBeanRemote.updateSystemParameters(mdtsysEnt);
+      boolean saved = adminBeanRemote.updateSystemParameters(cassysEnt);
 
 		if (saved) {
 			log.info("SOD run indicator has been updated...");
@@ -1185,7 +1185,7 @@ public class StartOfDayLogic {
     CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
     casOpsSotEotCtrlEntity =
         (CasOpsSotEotCtrlEntity) serviceBeanRemote.retrieveSOTEOTCntrl(memberNo, service);
-    log.debug("mdtAcOpsSotEotCtrlEntity: " + casOpsSotEotCtrlEntity);
+    log.debug("casAcOpsSotEotCtrlEntity: " + casOpsSotEotCtrlEntity);
 
     if (casOpsSotEotCtrlEntity != null) {
       try {
