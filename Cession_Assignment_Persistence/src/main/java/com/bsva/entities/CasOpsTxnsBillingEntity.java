@@ -22,13 +22,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findAll", query = "SELECT m FROM CasOpsTxnsBillingEntity m"),
-    @NamedQuery(name = "CasOpsTxnsBillingEntity.findBySystemSeqNo", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.CasOpsTxnsBillingPK.systemSeqNo = :systemSeqNo"),
+    @NamedQuery(name = "CasOpsTxnsBillingEntity.findBySystemSeqNo", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.casOpsTxnsBillingPK.systemSeqNo = :systemSeqNo"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByOriginator", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.originator = :originator"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByService", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.service = :service"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findBySubService", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.subService = :subService"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByTxnType", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.txnType = :txnType"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByTxnStatus", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.txnStatus = :txnStatus"),
-    @NamedQuery(name = "CasOpsTxnsBillingEntity.findByFileName", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.CasOpsTxnsBillingPK.fileName = :fileName"),
+    @NamedQuery(name = "CasOpsTxnsBillingEntity.findByFileName", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.casOpsTxnsBillingPK.fileName = :fileName"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByStatus", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.status = :status"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByVolume", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.volume = :volume"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByBillExpStatus", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.billExpStatus = :billExpStatus"),
@@ -37,12 +37,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByCreatedDate", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.createdDate = :createdDate"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByModifiedBy", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.modifiedBy = :modifiedBy"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByModifiedDate", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.modifiedDate = :modifiedDate"),
-    @NamedQuery(name = "CasOpsTxnsBillingEntity.findByActionDate", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.CasOpsTxnsBillingPK.actionDate = :actionDate"),
+    @NamedQuery(name = "CasOpsTxnsBillingEntity.findByActionDate", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.casOpsTxnsBillingPK.actionDate = :actionDate"),
     @NamedQuery(name = "CasOpsTxnsBillingEntity.findByRespDate", query = "SELECT m FROM CasOpsTxnsBillingEntity m WHERE m.respDate = :respDate")})
 public class CasOpsTxnsBillingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected CasOpsTxnsBillingPK CasOpsTxnsBillingPK;
+    protected CasOpsTxnsBillingPK casOpsTxnsBillingPK;
     @Size(max = 6)
     @Column(name = "ORIGINATOR")
     private String originator;
@@ -89,20 +89,20 @@ public class CasOpsTxnsBillingEntity implements Serializable {
     public CasOpsTxnsBillingEntity() {
     }
 
-    public CasOpsTxnsBillingEntity(CasOpsTxnsBillingPK CasOpsTxnsBillingPK) {
-        this.CasOpsTxnsBillingPK = CasOpsTxnsBillingPK;
+    public CasOpsTxnsBillingEntity(CasOpsTxnsBillingPK casOpsTxnsBillingPK) {
+        this.casOpsTxnsBillingPK = casOpsTxnsBillingPK;
     }
 
     public CasOpsTxnsBillingEntity(BigDecimal systemSeqNo, String fileName, Date actionDate) {
-        this.CasOpsTxnsBillingPK = new CasOpsTxnsBillingPK(systemSeqNo, fileName, actionDate);
+        this.casOpsTxnsBillingPK = new CasOpsTxnsBillingPK(systemSeqNo, fileName, actionDate);
     }
 
     public CasOpsTxnsBillingPK getCasOpsTxnsBillingPK() {
-        return CasOpsTxnsBillingPK;
+        return casOpsTxnsBillingPK;
     }
 
-    public void setCasOpsTxnsBillingPK(CasOpsTxnsBillingPK CasOpsTxnsBillingPK) {
-        this.CasOpsTxnsBillingPK = CasOpsTxnsBillingPK;
+    public void setCasOpsTxnsBillingPK(CasOpsTxnsBillingPK casOpsTxnsBillingPK) {
+        this.casOpsTxnsBillingPK = casOpsTxnsBillingPK;
     }
 
     public String getOriginator() {
@@ -221,7 +221,7 @@ public class CasOpsTxnsBillingEntity implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((CasOpsTxnsBillingPK == null) ? 0 : CasOpsTxnsBillingPK.hashCode());
+		result = prime * result + ((casOpsTxnsBillingPK == null) ? 0 : casOpsTxnsBillingPK.hashCode());
 		result = prime * result + ((billExpStatus == null) ? 0 : billExpStatus.hashCode());
 		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
 		result = prime * result + ((createdDate == null) ? 0 : createdDate.hashCode());
@@ -248,10 +248,10 @@ public class CasOpsTxnsBillingEntity implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		CasOpsTxnsBillingEntity other = (CasOpsTxnsBillingEntity) obj;
-		if (CasOpsTxnsBillingPK == null) {
-			if (other.CasOpsTxnsBillingPK != null)
+		if (casOpsTxnsBillingPK == null) {
+			if (other.casOpsTxnsBillingPK != null)
 				return false;
-		} else if (!CasOpsTxnsBillingPK.equals(other.CasOpsTxnsBillingPK))
+		} else if (!casOpsTxnsBillingPK.equals(other.casOpsTxnsBillingPK))
 			return false;
 		if (billExpStatus == null) {
 			if (other.billExpStatus != null)
@@ -328,7 +328,7 @@ public class CasOpsTxnsBillingEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CasOpsTxnsBillingEntity [CasOpsTxnsBillingPK=" + CasOpsTxnsBillingPK + ", originator="
+		return "CasOpsTxnsBillingEntity [casOpsTxnsBillingPK=" + casOpsTxnsBillingPK + ", originator="
 				+ originator + ", service=" + service + ", subService=" + subService + ", txnType=" + txnType
 				+ ", txnStatus=" + txnStatus + ", status=" + status + ", volume=" + volume + ", billExpStatus="
 				+ billExpStatus + ", systemName=" + systemName + ", createdBy=" + createdBy + ", createdDate="

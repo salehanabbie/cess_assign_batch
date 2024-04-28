@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasSysctrlFileSizeLimitEntity.findAll", query = "SELECT m FROM CasSysctrlFileSizeLimitEntity m"),
-    @NamedQuery(name = "CasSysctrlFileSizeLimitEntity.findByMemberId", query = "SELECT m FROM CasSysctrlFileSizeLimitEntity m WHERE m.mdtSysctrlFileSizeLimitPK.memberId = :memberId"),
-    @NamedQuery(name = "CasSysctrlFileSizeLimitEntity.findBySubService", query = "SELECT m FROM CasSysctrlFileSizeLimitEntity m WHERE m.mdtSysctrlFileSizeLimitPK.subService = :subService"),
+    @NamedQuery(name = "CasSysctrlFileSizeLimitEntity.findByMemberId", query = "SELECT m FROM CasSysctrlFileSizeLimitEntity m WHERE m.casSysctrlFileSizeLimitPK.memberId = :memberId"),
+    @NamedQuery(name = "CasSysctrlFileSizeLimitEntity.findBySubService", query = "SELECT m FROM CasSysctrlFileSizeLimitEntity m WHERE m.casSysctrlFileSizeLimitPK.subService = :subService"),
     @NamedQuery(name = "CasSysctrlFileSizeLimitEntity.findByLimit", query = "SELECT m FROM CasSysctrlFileSizeLimitEntity m WHERE m.limit = :limit"),
     @NamedQuery(name = "CasSysctrlFileSizeLimitEntity.findByActiveId", query = "SELECT m FROM CasSysctrlFileSizeLimitEntity m WHERE m.activeId = :activeId"),
     @NamedQuery(name = "CasSysctrlFileSizeLimitEntity.findByDirection", query = "SELECT m FROM CasSysctrlFileSizeLimitEntity m WHERE m.direction = :direction"),
@@ -202,7 +202,7 @@ public class CasSysctrlFileSizeLimitEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CasSysctrlFileSizeLimitEntity [mdtSysctrlFileSizeLimitPK=" + casSysctrlFileSizeLimitPK + ", limit="
+		return "CasSysctrlFileSizeLimitEntity [casSysctrlFileSizeLimitPK=" + casSysctrlFileSizeLimitPK + ", limit="
 				+ limit + ", activeId=" + activeId + ", direction=" + direction + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", modifiedBy=" + modifiedBy + ", modifiedDate=" + modifiedDate
 				+ "]";

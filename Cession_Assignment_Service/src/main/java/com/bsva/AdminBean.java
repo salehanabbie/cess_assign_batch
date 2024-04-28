@@ -359,7 +359,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     sb.append(
         "SELECT  INST_ID as instId, SERVICE_ID as serviceId,  COUNT(NR_OF_FILES) AS nrOfFiles, " +
             "SUM(NR_OF_MSGS) as nrOfMsgs  ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_COUNT  ");
+    sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT  ");
     sb.append("WHERE INST_ID = '" + instId + "' AND SERVICE_ID = '" + serviceId + "' ");
     sb.append("GROUP BY  INST_ID , SERVICE_ID");
 
@@ -477,7 +477,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<MandatesCountCommonsModel> mandatesCountList = new ArrayList<MandatesCountCommonsModel>();
 
     mdtOpsCountEntityList = (List<CasOpsMndtCountEntity>) genericDAO.findAllByNamedQuery(
-        "MdtAcOpsMndtCountEntity.findByIncoming", "incoming", "Y");
+        "CasOpsMndtCountEntity.findByIncoming", "incoming", "Y");
 
 
     if (mdtOpsCountEntityList.size() > 0) {
@@ -521,7 +521,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<MandatesCountCommonsModel> mandateCountList = new ArrayList<MandatesCountCommonsModel>();
 
     mdtOpsCountEntityList = (List<CasOpsMndtCountEntity>) genericDAO.findAllByNamedQuery(
-        "MdtAcOpsMndtCountEntity.findByOutgoing", "outgoing", "Y");
+        "CasOpsMndtCountEntity.findByOutgoing", "outgoing", "Y");
 
 
     if (mdtOpsCountEntityList.size() > 0) {
@@ -570,7 +570,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasCnfgAuthTypeEntity> casCnfgAuthTypeEntityList = genericDAO
-          .findAllByNamedQuery("MdtCnfgAuthTypeEntity.findByAuthType", "authType",
+          .findAllByNamedQuery("CasCnfgAuthTypeEntity.findByAuthType", "authType",
               authType.toUpperCase());
 
       if (casCnfgAuthTypeEntityList.size() > 0) {
@@ -802,7 +802,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasCnfgLocalInstrCodesEntity> mdtLocalInstrCodesList = genericDAO.findAllByNamedQuery(
-          "MdtCnfgLocalInstrCodesEntity.findByLocalInstrumentCodeLIKE", "localInstrumentCode",
+          "CasCnfgLocalInstrCodesEntity.findByLocalInstrumentCodeLIKE", "localInstrumentCode",
           localInstrumentCode + "%");
 
       if (mdtLocalInstrCodesList.size() > 0) {
@@ -857,7 +857,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasCnfgReasonCodesEntity> mdtReasonCodesList =
-          genericDAO.findAllByNamedQuery("MdtCnfgReasonCodesEntity.findByReasonCodeLIKE",
+          genericDAO.findAllByNamedQuery("CasCnfgReasonCodesEntity.findByReasonCodeLIKE",
               "reasonCode", reasonCode.toUpperCase() + "%");
 
       if (mdtReasonCodesList.size() > 0) {
@@ -886,7 +886,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasOpsTransCtrlMsgEntity> casOpsTransCtrlMsgEntity =
-          genericDAO.findAllByNamedQuery("MdtAcOpsTransCtrlMsgEntity.findByMsgType", "msgType",
+          genericDAO.findAllByNamedQuery("CasOpsTransCtrlMsgEntity.findByMsgType", "msgType",
               "EOT");
 
       if (casOpsTransCtrlMsgEntity.size() > 0) {
@@ -918,7 +918,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasCnfgFrequencyCodesEntity> mdtFrequencyCodesList =
-          genericDAO.findAllByNamedQuery("MdtCnfgFrequencyCodesEntity.findByFrequencyCodeLIKE",
+          genericDAO.findAllByNamedQuery("CasCnfgFrequencyCodesEntity.findByFrequencyCodeLIKE",
               "frequencyCode", frequencyCode.toUpperCase() + "%");
 
       if (mdtFrequencyCodesList.size() > 0) {
@@ -946,7 +946,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasCnfgDebitValueTypeEntity> debitValueTypeEntityList =
-          genericDAO.findAllByNamedQuery("MdtCnfgDebitValueTypeEntity.findByDebValueTypeCodeLIKE",
+          genericDAO.findAllByNamedQuery("CasCnfgDebitValueTypeEntity.findByDebValueTypeCodeLIKE",
               "debValueTypeCode", dbtValueTypeCode.toUpperCase() + "%");
 
       if (debitValueTypeEntityList != null && debitValueTypeEntityList.size() > 0) {
@@ -971,7 +971,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<CurrencyCodesModel> allCurrencyCodes = new ArrayList<CurrencyCodesModel>();
     try {
       List<CasCnfgCurrencyCodesEntity> mdtCurrencyCodesList =
-          genericDAO.findAllByNamedQuery("MdtCnfgCurrencyCodesEntity.findByCountryCodeLIKE",
+          genericDAO.findAllByNamedQuery("CasCnfgCurrencyCodesEntity.findByCountryCodeLIKE",
               "countryCode", countryCode.toUpperCase() + "%");
 
       if (mdtCurrencyCodesList.size() > 0) {
@@ -1000,7 +1000,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasCnfgSequenceTypeEntity> mdtSeqTypesList =
-          genericDAO.findAllByNamedQuery("MdtCnfgSequenceTypeEntity.findBySeqTypeCodeLIKE",
+          genericDAO.findAllByNamedQuery("CasCnfgSequenceTypeEntity.findBySeqTypeCodeLIKE",
               "seqTypeCode", seqCode.toUpperCase() + "%");
 
       if (mdtSeqTypesList.size() > 0) {
@@ -1144,7 +1144,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasOpsSotEotCtrlEntity> casOpsSotEotCtrlEntityList =
-          genericDAO.findAllByNamedQuery("MdtAcOpsSotEotCtrlEntity.findByInstId", "instId", instId);
+          genericDAO.findAllByNamedQuery("CasOpsSotEotCtrlEntity.findByInstId", "instId", instId);
 
       if (casOpsSotEotCtrlEntityList.size() > 0) {
 
@@ -1229,7 +1229,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasCnfgErrorCodesEntity> mdtErrorCodesList =
-          genericDAO.findAllByNamedQuery("MdtCnfgErrorCodesEntity.findByErrorCodeLIKE", "errorCode",
+          genericDAO.findAllByNamedQuery("CasCnfgErrorCodesEntity.findByErrorCodeLIKE", "errorCode",
               errorCode + "%");
 
       if (mdtErrorCodesList.size() > 0) {
@@ -1286,7 +1286,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasSysctrlCustParamEntity> mdtSysCustParamList = genericDAO
-          .findAllByNamedQuery("MdtSysctrlCustParamEntity.findByInstId", "instId", instId);
+          .findAllByNamedQuery("CasSysctrlCustParamEntity.findByInstId", "instId", instId);
 
       if (mdtSysCustParamList.size() > 0) {
 
@@ -1466,7 +1466,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     List<CasOpsMndtCountEntity> opsMndtList = new ArrayList<CasOpsMndtCountEntity>();
     opsMndtList =
-        genericDAO.findAllByNamedQuery("MdtAcOpsMndtCountEntity.findByIncoming", "incoming", "Y");
+        genericDAO.findAllByNamedQuery("CasOpsMndtCountEntity.findByIncoming", "incoming", "Y");
     return opsMndtList;
 
   }
@@ -1713,7 +1713,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public Object retrieveActiveSysParameter() {
     CasSysctrlSysParamEntity casSysctrlSysParamEntity;
     casSysctrlSysParamEntity = (CasSysctrlSysParamEntity) genericDAO.findByNamedQuery(
-        "MdtSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
+        "CasSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
     return casSysctrlSysParamEntity;
   }
 
@@ -1721,7 +1721,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public Object retrieveStartTime() {
     CasSysctrlSlaTimesEntity casSysctrlSlaTimesEntity;
     casSysctrlSlaTimesEntity = (CasSysctrlSlaTimesEntity) genericDAO.findByNamedQuery(
-        "MdtSysctrlSlaTimesEntity.findByService", "service", "SOD");
+        "CasSysctrlSlaTimesEntity.findByService", "service", "SOD");
 
     return casSysctrlSlaTimesEntity;
   }
@@ -1881,7 +1881,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasOpsFileRegEntity> mdtOpsFileRegList = genericDAO
-          .findAllByNamedQuery("MdtOpsFileRegEntity.findByFileName", "fileName",
+          .findAllByNamedQuery("CasOpsFileRegEntity.findByFileName", "fileName",
               fileName.toUpperCase());
 
       if (mdtOpsFileRegList.size() > 0) {
@@ -1927,7 +1927,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
       log.debug("sysName --> " + sysName);
       List<CasSysctrlSysParamEntity> mdtSysParamsList =
-          genericDAO.findAllByNamedQuery("MdtSysctrlSysParamEntity.findBySysName", "sysName",
+          genericDAO.findAllByNamedQuery("CasSysctrlSysParamEntity.findBySysName", "sysName",
               sysName.toUpperCase());
       if (mdtSysParamsList.size() > 0) {
         SystemsParametersLogic systemParameterLogic = new SystemsParametersLogic();
@@ -2422,7 +2422,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasCnfgReportNamesEntity> casCnfgReportNamesEntityList =
-          genericDAO.findAllByNamedQuery("MdtCnfgReportNamesEntity.findByActiveInd", "activeInd",
+          genericDAO.findAllByNamedQuery("CasCnfgReportNamesEntity.findByActiveInd", "activeInd",
               "Y");
 
 
@@ -2453,7 +2453,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasCnfgReportNamesEntity> casCnfgReportNamesEntityList =
-          genericDAO.findAllByNamedQuery("MdtCnfgReportNamesEntity.findByReportNrLIKE", "reportNr",
+          genericDAO.findAllByNamedQuery("CasCnfgReportNamesEntity.findByReportNrLIKE", "reportNr",
               reportName + "%");
 
       if (casCnfgReportNamesEntityList.size() > 0) {
@@ -2728,7 +2728,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
 
       List<CasSysctrlProcessStatusEntity> mdtSysctrlProcessStatusEntityList =
-          genericDAO.findAllByNamedQuery("MdtSysctrlProcessStatusEntity.findByStatus", "status",
+          genericDAO.findAllByNamedQuery("CasSysctrlProcessStatusEntity.findByStatus", "status",
               status.toUpperCase());
 
       if (mdtSysctrlProcessStatusEntityList.size() > 0) {
@@ -2801,7 +2801,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public Object retrieveSysParamEntity() {
     CasSysctrlSysParamEntity mdtsysParamEntity;
     mdtsysParamEntity = (CasSysctrlSysParamEntity) genericDAO.findByNamedQuery(
-        "MdtSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
+        "CasSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
     return mdtsysParamEntity;
 
   }
@@ -2985,7 +2985,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     SystemParameterModel systemParameterModel = new SystemParameterModel();
     try {
       casSysctrlSysParamEntity = (CasSysctrlSysParamEntity) genericDAO.findByNamedQuery(
-          "MdtSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
+          "CasSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
       if (casSysctrlSysParamEntity != null) {
         SystemsParametersLogic systemParameterLogic = new SystemsParametersLogic();
         systemParameterModel =
@@ -3137,7 +3137,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
       List<CasCnfgAdjustmentCatEntity> allCasCnfgAdjustmentCatEntityList =
-          genericDAO.findAllByNamedQuery("MdtCnfgAdjustmentCatEntity.findByAdjustmentCategory",
+          genericDAO.findAllByNamedQuery("CasCnfgAdjustmentCatEntity.findByAdjustmentCategory",
               "adjustmentCategory", adjustmentCategory);
 
       if (allCasCnfgAdjustmentCatEntityList.size() > 0) {
@@ -3274,7 +3274,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
       CasOpsStatusHdrsEntity opsStatusHdrsEntity =
           (CasOpsStatusHdrsEntity) genericDAO.findByNamedQuery(
-              "MdtAcOpsStatusHdrsEntity.findByOrgnlMsgId", "orgnlMsgId", orgnlMsgId);
+              "CasOpsStatusHdrsEntity.findByOrgnlMsgId", "orgnlMsgId", orgnlMsgId);
       if (opsStatusHdrsEntity != null) {
         ViewFileStatusLogic viewFileStatusLogic = new ViewFileStatusLogic();
         opsStatusHdrsModel = viewFileStatusLogic.translateEntityToCommonsModel(opsStatusHdrsEntity);
@@ -3383,7 +3383,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
             ".SERVICE_ID as serviceId,a.FILE_NAME as fileName, c.MANDATE_REF_NR as mandateRefNr,b" +
             ".MEMBER_ID as creditorMemberNo ");
     sb.append(
-        "	FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a, MANOWNER.MDT_AC_OPS_FIN_INST b, MANOWNER" +
+        "	FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a, CAMOWNER.MDT_AC_OPS_FIN_INST b, CAMOWNER" +
             ".MDT_AC_OPS_SUPPL_DATA c ");
     sb.append("	WHERE a.MSG_ID = b.MSG_ID AND a.MSG_ID = c.MSG_Id AND ");
     sb.append(
@@ -3400,7 +3400,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 		sb.append(" FROM MDT_AC_OPS_MNDT_MSG a  ");
 		sb.append(" LEFT OUTER JOIN MDT_AC_OPS_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b
  .MANDATE_REQ_TRAN_ID ");
-		sb.append(" LEFT OUTER JOIN MDT_OPS_FILE_REG c ON a.FILE_NAME = c.FILE_NAME ");
+		sb.append(" LEFT OUTER JOIN CAS_OPS_FILE_REG c ON a.FILE_NAME = c.FILE_NAME ");
 		sb.append(" WHERE a.ONLINE_IND = '"+onlineInd+"' AND a.PROCESS_STATUS = '4' AND   b
 		.FIN_INST_TYPE_ID = 'FI03' ") ;  */
 
@@ -3525,7 +3525,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
       List<CasCnfgAccountTypeEntity> allCasCnfgAccountTypeEntity =
-          genericDAO.findAllByNamedQuery("MdtCnfgAccountTypeEntity.findByAccountTypeCode",
+          genericDAO.findAllByNamedQuery("CasCnfgAccountTypeEntity.findByAccountTypeCode",
               "accountTypeCode", accountTypeCode);
 
 
@@ -3589,7 +3589,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
       CasCnfgSeverityCodesEntity casCnfgSeverityCodesEntity =
           (CasCnfgSeverityCodesEntity) genericDAO.findByNamedQueryShort(
-              "MdtCnfgSeverityCodesEntity.findBySeverityCode", "severityCode", sevCode);
+              "CasCnfgSeverityCodesEntity.findBySeverityCode", "severityCode", sevCode);
 
       //			MdtCnfgSeverityCodesEntity mdtCnfgSeverityCodesEntity  =
       //			(MdtCnfgSeverityCodesEntity) genericDAO.find(MdtCnfgSeverityCodesEntity.class,
@@ -3749,7 +3749,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
       List<CasSysctrlServicesEntity> allMdtSysctrlServicesEntityList =
-          genericDAO.findAllByNamedQuery("MdtSysctrlServicesEntity.findByRecordId", "recordId",
+          genericDAO.findAllByNamedQuery("CasSysctrlServicesEntity.findByRecordId", "recordId",
               recordId);
 
       if (allMdtSysctrlServicesEntityList.size() > 0) {
@@ -3813,7 +3813,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
 
     mdtSysParamsList = (List<CasSysctrlSysParamEntity>) genericDAO.findAllByNamedQuery(
-        "MdtSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
+        "CasSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
 
 
     if (mdtSysParamsList.size() > 0) {
@@ -3840,7 +3840,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<SystemParameterModel> systemParameterModels = new ArrayList<SystemParameterModel>();
 
     mdtSysParamsList = (List<CasSysctrlSysParamEntity>) genericDAO.findAllByNamedQuery(
-        "MdtSysctrlSysParamEntity.findByActiveInd", "activeInd", "N");
+        "CasSysctrlSysParamEntity.findByActiveInd", "activeInd", "N");
 
     if (mdtSysParamsList.size() > 0) {
 
@@ -3890,11 +3890,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     sb.append(
         "SELECT a.SERVICE_ID AS serviceId,b.MEMBER_ID AS memberId,c.MEMBER_NAME AS memberName, a" +
             ".CREATED_DATE AS createdDate ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+    sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
     sb.append(
-        "LEFT JOIN MANOWNER.MDT_AC_OPS_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b" +
+        "LEFT JOIN CAMOWNER.MDT_AC_OPS_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b" +
             ".MANDATE_REQ_TRAN_ID ");
-    sb.append("LEFT JOIN MANOWNER.SYS_CIS_BANK c ON b.MEMBER_ID = c.MEMBER_NO ");
+    sb.append("LEFT JOIN CAMOWNER.SYS_CIS_BANK c ON b.MEMBER_ID = c.MEMBER_NO ");
     sb.append("WHERE ONLINE_IND= '" + onlineInd + "' AND b.MEMBER_ID = '" + memberId +
         "'  AND a.PROCESS_STATUS = '4' AND  b.FIN_INST_TYPE_ID ='FI04' AND TO_CHAR(a" +
         ".CREATED_DATE, 'ddMMYYYY') < '" +
@@ -3976,8 +3976,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     StringBuffer sb = new StringBuffer();
 
     sb.append("SELECT SUM(a.NR_OF_FILES) as nrOfFiles ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_COUNT a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.MDT_OPS_FILE_REG b ");
+    sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.CAS_OPS_FILE_REG b ");
     sb.append("ON a.FILE_NAME = b.FILE_NAME ");
 
 
@@ -4024,8 +4024,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     StringBuffer sb = new StringBuffer();
 
     sb.append("SELECT SUM (a.NR_OF_MSGS) as nrOfMsgs ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_COUNT a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.MDT_OPS_FILE_REG b ");
+    sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.CAS_OPS_FILE_REG b ");
     sb.append("ON a.FILE_NAME = b.FILE_NAME ");
 
     String sqlQuery = sb.toString();
@@ -4086,11 +4086,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
         " SELECT a.MANDATE_REQ_TRAN_ID as mandateReqTranId, a.MANDATE_REQ_ID as mandateReqId ,a" +
             ".SERVICE_ID as serviceId, a.FILE_NAME as fileName,b.MEMBER_ID as creditorMemberNo, b" +
             ".MEMBER_ID as debtorMemberNo ");
-    sb.append(" FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
+    sb.append(" FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
     sb.append(
-        " LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b" +
+        " LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b" +
             ".MANDATE_REQ_TRAN_ID ");
-    sb.append(" LEFT OUTER JOIN MANOWNER.MDT_OPS_FILE_REG c ON a.FILE_NAME = c.FILE_NAME ");
+    sb.append(" LEFT OUTER JOIN CAMOWNER.CAS_OPS_FILE_REG c ON a.FILE_NAME = c.FILE_NAME ");
     sb.append(
         " WHERE a.ONLINE_IND = 'Y' AND a.PROCESS_STATUS = '4' AND  b.FIN_INST_TYPE_ID = 'FI04'  " +
             "Or b.FIN_INST_TYPE_ID = 'FI03' ");
@@ -4140,11 +4140,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
         " SELECT a.MANDATE_REQ_TRAN_ID as mandateReqTranId, a.MANDATE_REQ_ID as mandateReqId ,a" +
             ".SERVICE_ID as serviceId, a.FILE_NAME as fileName,b.MEMBER_ID as creditorMemberNo, b" +
             ".MEMBER_ID as debtorMemberNo  ");
-    sb.append(" FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a           ");
+    sb.append(" FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a           ");
     sb.append(
-        " LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b" +
+        " LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_FIN_INST b ON a.MANDATE_REQ_TRAN_ID = b" +
             ".MANDATE_REQ_TRAN_ID ");
-    sb.append(" LEFT OUTER JOIN MANOWNER.MDT_OPS_FILE_REG c ON a.FILE_NAME = c.FILE_NAME ");
+    sb.append(" LEFT OUTER JOIN CAMOWNER.CAS_OPS_FILE_REG c ON a.FILE_NAME = c.FILE_NAME ");
     sb.append(
         " WHERE a.ONLINE_IND = 'N' AND a.PROCESS_STATUS = '4' AND  b.FIN_INST_TYPE_ID = 'FI04'  " +
             "Or b.FIN_INST_TYPE_ID = 'FI03'");
@@ -4188,7 +4188,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
       List<CasOpsFileRegEntity> opsFileRegEntityList =
           (List<CasOpsFileRegEntity>) genericDAO.findAllByNamedQuery(
-              "MdtOpsFileRegEntity.findByFileName", "fileName", fileName);
+              "CasOpsFileRegEntity.findByFileName", "fileName", fileName);
       //log.info("---------------opsFileRegEntityList: ------------------"+ opsFileRegEntityList);
 
       if (opsFileRegEntityList.size() > 0) {
@@ -4325,7 +4325,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
             ".SERVICE_ID as serviceId,a.FILE_NAME as fileName, c.MANDATE_REF_NR as mandateRefNr,b" +
             ".MEMBER_ID as debtorMemberNo ");
     sb.append(
-        "	FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a, MANOWNER.MDT_AC_OPS_FIN_INST b, MANOWNER" +
+        "	FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a, CAMOWNER.MDT_AC_OPS_FIN_INST b, CAMOWNER" +
             ".MDT_AC_OPS_SUPPL_DATA c ");
     sb.append("	WHERE a.MSG_ID = b.MSG_ID AND a.MSG_ID = c.MSG_Id AND ");
     sb.append(
@@ -4437,7 +4437,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     StringBuffer sb = new StringBuffer();
 
     sb.append("SELECT SERVICE_ID as serviceId ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_SOT_EOT_CTRL ");
+    sb.append("FROM CAMOWNER.CAS_OPS_SOT_EOT_CTRL ");
     sb.append("GROUP BY SERVICE_ID ");
 
     String sqlQuery = sb.toString();
@@ -4479,7 +4479,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
       casOpsServicesEntity = (CasOpsServicesEntity) genericDAO.findByNamedQuery(
-          "MdtOpsServicesEntity.findByServiceIdOut", "serviceIdOut", outgoingService);
+          "CasOpsServicesEntity.findByServiceIdOut", "serviceIdOut", outgoingService);
     } catch (ObjectNotFoundException ne) {
       log.debug("No matching record found:  " + ne.getMessage());
       ne.printStackTrace();
@@ -4583,7 +4583,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
         "SELECT USER_ID  as userId, ACTION_DATE as actionDate,  TABLE_NAME as tableName, " +
             "COLUMN_NAME as columnName, ");
     sb.append("OLD_VALUE as oldValue, NEW_VALUE as newValue, ACTION as action ");
-    sb.append("FROM MANOWNER.AUD_TRACKING ");
+    sb.append("FROM CAMOWNER.AUD_TRACKING ");
     sb.append("WHERE USER_ID ='" + userId + "' AND ACTION_DATE BETWEEN TO_DATE('" + strToDate +
         "','yyyy-MM-dd') AND TO_DATE('" + strFromDate + "','yyyy-MM-dd') AND  ACTION = '" + action +
         "' ");
@@ -4665,7 +4665,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public Object retrieveCisStartTime() {
     CasSysctrlSlaTimesEntity casSysctrlSlaTimesEntity;
     casSysctrlSlaTimesEntity = (CasSysctrlSlaTimesEntity) genericDAO.findByNamedQuery(
-        "MdtSysctrlSlaTimesEntity.findByService", "service", "CIS");
+        "CasSysctrlSlaTimesEntity.findByService", "service", "CIS");
 
 
     return casSysctrlSlaTimesEntity;
@@ -4681,7 +4681,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       parameters.put("fileName2", "%" + memberNo + "%");
       log.debug("parameters---> " + parameters.toString());
       opsFileRegEntityList =
-          genericDAO.findAllByNQCriteria("MdtOpsFileRegEntity.findByFileNameLike", parameters);
+          genericDAO.findAllByNQCriteria("CasOpsFileRegEntity.findByFileNameLike", parameters);
       log.debug("---------------opsFileRegList after findAllByCriteria: ------------------" +
           opsFileRegEntityList);
 
@@ -4715,7 +4715,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     casOpsTransCtrlMsgEntityList =
         (List<CasOpsTransCtrlMsgEntity>) genericDAO.findAllByNamedQuery(
-            "MdtAcOpsTransCtrlMsgEntity.findByMsgType", "msgType", "EOT");
+            "CasOpsTransCtrlMsgEntity.findByMsgType", "msgType", "EOT");
 
     if (casOpsTransCtrlMsgEntityList.size() > 0) {
       for (CasOpsTransCtrlMsgEntity localEntity : casOpsTransCtrlMsgEntityList) {
@@ -4742,7 +4742,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     StringBuffer sb = new StringBuffer();
     sb.append(
         "SELECT  INSTG_AGT as instrAgnt, SERVICE as serviceId,  COUNT(SERVICE) AS numberOfFiles ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_STATUS_HDRS ");
+    sb.append("FROM CAMOWNER.CAS_OPS_STATUS_HDRS ");
     sb.append("WHERE INSTG_AGT = '" + instId + "' AND SERVICE = '" + serviceId + "' ");
     sb.append("GROUP BY  INSTG_AGT , SERVICE ");
 
@@ -4813,7 +4813,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
       List<CasCnfgAmendmentCodesEntity> allCasCnfgAmendmentCodesEntity =
-          genericDAO.findAllByNamedQuery("MdtCnfgAmendmentCodesEntity.findByAmendmentCodesLIKE",
+          genericDAO.findAllByNamedQuery("CasCnfgAmendmentCodesEntity.findByAmendmentCodesLIKE",
               "amendmentCodes", amendmentCodes + "%");
       log.debug("allMdtCnfgAmendmentCodesEntity: " + allCasCnfgAmendmentCodesEntity);
 
@@ -4948,8 +4948,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 		memberNo,a.EXTRACT_MSG_ID AS fileName,'TT2' AS transType,TO_DATE('"+currentDate+"',
 		'YYYY-MM-DD') - TRUNC(a.CREATED_DATE) AS nrDaysOutstanding, a.MANDATE_REQ_TRAN_ID as
 		mandateReqTransId,a.SERVICE_ID as serviceId ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_STATUS IN ('4','9') AND SUBSTR(a.EXTRACT_MSG_ID,13,6)
 		='"+memberId+"' AND  TRUNC(a.CREATED_DATE) = TO_DATE('"+currentDate+"','YYYY-MM-DD') -1
 		 ");
@@ -4958,8 +4958,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 		.EXTRACT_MSG_ID AS fileName,'TT2' AS transType,TRUNC(current_date) - TRUNC(CREATED_DATE)
 		AS nrDaysOutstanding, a.MANDATE_REQ_TRAN_ID as mandateReqTransId,a.SERVICE_ID as serviceId
 		 ");
-		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
 		sb.append("WHERE a.PROCESS_STATUS IN('4','9') AND SUBSTR(a.EXTRACT_MSG_ID,13,6)
 		='"+memberId+"' AND  TRUNC(a.CREATED_DATE) = TO_DATE('"+currentDate+"','YYYY-MM-DD') -2
 		 ");
@@ -4971,8 +4971,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 		sb.append("TRUNC(current_date) - TO_DATE(SUBSTR(TRANSDATETIME, 1, 8), 'YYYYMMDD') as
 		nrDaysOutstanding,a.TRANSACTIONIDENTIFIERAMS as mandateReqTransId,SUBSTR(a
 		.ORIGINALMSGIDAMS,5,5) as serviceId ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON a.INSTRUCTINGAGENTAMS = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON a.INSTRUCTINGAGENTAMS = b.MEMBER_NO ");
 		sb.append("WHERE EXTRACTVALUE(XMLTYPE(CONCAT(CONCAT('<A>',a.MANDATEBLOCKAMS),'</A>')),
 		'/A/Tp/LclInstrm/Prtry') = '0227' AND a.INSTRUCTEDAGENTAMS='"+memberId+"' AND ");
 		sb.append("a.REASONCODEAMS = '900000' AND a.msgtypeams = 'pain.009' AND a.RESULTCODE = '0'
@@ -4984,10 +4984,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 		sb.append("TRUNC(current_date) - TO_DATE(SUBSTR(b.TRANSDATETIME, 1, 8), 'YYYYMMDD') as
 		nrDaysOutstanding,a.TRANSACTIONIDENTIFIERAMS as mandateReqTransId,SUBSTR(a
 		.ORIGINALMSGIDAMS,5,5) as serviceId ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("INNER JOIN MANOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("INNER JOIN CAMOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b
 		.TRANSACTIONIDENTIFIERAMS ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON  a.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON  a.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
 		sb.append("WHERE a.SERVICEIDAMS = 'ST012' AND a.MTI = 5506 AND a.RESULTCODE = 0 AND b.MTI
 		= 5501 AND b.RESULTCODE = 0 AND a.REASONCODEAMS = '900000' AND ");
 		sb.append("b.REASONCODEAMS = '900000' AND b.INSTRUCTEDAGENTAMS='"+memberId+"' AND TO_DATE
@@ -5000,8 +5000,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 		sb.append("TRUNC(current_date) - TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8), 'YYYYMMDD')as
 		nrDaysOutstanding,a.TRANSACTIONIDENTIFIERAMS as mandateReqTransId,SUBSTR(a
 		.ORIGINALMSGIDAMS,5,5) as serviceId ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON  a.INSTRUCTINGAGENTAMS = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON  a.INSTRUCTINGAGENTAMS = b.MEMBER_NO ");
 		sb.append("WHERE SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(UNDRLYGAMDMNTDTLSBLOCKAMS, chr(10)
 		), chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE
 		(UNDRLYGAMDMNTDTLSBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), '<LclInstrm><Prtry>',1,1)
@@ -5015,10 +5015,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 		sb.append("TRUNC(current_date) - TO_DATE(SUBSTR(b.TRANSDATETIME, 1, 8), 'YYYYMMDD') as
 		nrDaysOutstanding,b.TRANSACTIONIDENTIFIERAMS as mandateReqTransId,SUBSTR(b
 		.ORIGINALMSGIDAMS,5,5) as serviceId ");
-		sb.append("FROM  MANOWNER.JNL_ACQ  a ");
-		sb.append("INNER JOIN MANOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b
+		sb.append("FROM  CAMOWNER.JNL_ACQ  a ");
+		sb.append("INNER JOIN CAMOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b
 		.TRANSACTIONIDENTIFIERAMS ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON  b.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON  b.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
 		sb.append("WHERE a.SERVICEIDAMS = 'ST012' AND a.MTI = 5506 AND a.RESULTCODE = 0 ");
 		sb.append("AND b.MTI = 5503 AND b.RESULTCODE = 0 AND a.REASONCODEAMS = '900000' AND b
 		.REASONCODEAMS = '900000' AND  b.INSTRUCTEDAGENTAMS='"+memberId+"' ");
@@ -5032,8 +5032,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 		sb.append("TRUNC(current_date) - TO_DATE(SUBSTR(a.TRANSDATETIME, 1, 8), 'YYYYMMDD')as
 		nrDaysOutstanding,a.TRANSACTIONIDENTIFIERAMS as mandateReqTransId,SUBSTR(a
 		.ORIGINALMSGIDAMS,5,5) as serviceId ");
-		sb.append("FROM MANOWNER.JNL_ACQ a ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON  a.INSTRUCTINGAGENTAMS = b.MEMBER_NO ");
+		sb.append("FROM CAMOWNER.JNL_ACQ a ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON  a.INSTRUCTINGAGENTAMS = b.MEMBER_NO ");
 		sb.append("WHERE SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(UNDRLYGAMDMNTDTLSBLOCKAMS, chr(10)
 		), chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE
 		(UNDRLYGAMDMNTDTLSBLOCKAMS, chr(10)), chr(13)), chr(9)), ' '), '<LclInstrm><Prtry>',1,1)
@@ -5048,10 +5048,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 		sb.append("TRUNC(current_date) - TO_DATE(SUBSTR(b.TRANSDATETIME, 1, 8), 'YYYYMMDD') as
 		nrDaysOutstanding,b.TRANSACTIONIDENTIFIERAMS as mandateReqTransId,SUBSTR(b
 		.ORIGINALMSGIDAMS,5,5)  as serviceId  ");
-		sb.append("FROM  MANOWNER.JNL_ACQ  a " );
-		sb.append("INNER JOIN MANOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b
+		sb.append("FROM  CAMOWNER.JNL_ACQ  a " );
+		sb.append("INNER JOIN CAMOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b
 		.TRANSACTIONIDENTIFIERAMS ");
-		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON  b.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
+		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON  b.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
 		sb.append("WHERE a.SERVICEIDAMS = 'MANIR' AND a.MTI = 5505 AND a.RESULTCODE = 0 ");
 		sb.append("AND b.MTI = 5505 AND b.RESULTCODE = 0 AND a.REASONCODEAMS = '900000' AND b
 		.REASONCODEAMS = '900000' AND  b.INSTRUCTEDAGENTAMS='"+memberId+"' ");
@@ -5065,8 +5065,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
             currentDate +
             "','YYYY-MM-DD') - TRUNC(a.CREATED_DATE) AS nrDaysOutstanding, a.MANDATE_REQ_TRAN_ID " +
             "as mandateReqTransId,a.SERVICE_ID as serviceId ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
+    sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
     sb.append("WHERE a.PROCESS_STATUS IN ('4','9') AND SUBSTR(a.EXTRACT_MSG_ID,13,6)='" + memberId +
         "' AND  TRUNC(a.CREATED_DATE) = TO_DATE('" + currentDate + "','YYYY-MM-DD') -1  ");
     sb.append("UNION ");
@@ -5075,8 +5075,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
             " AS fileName,'TT2' AS transType,TRUNC(current_date) - TRUNC(CREATED_DATE) AS " +
             "nrDaysOutstanding, a.MANDATE_REQ_TRAN_ID as mandateReqTransId,a.SERVICE_ID as " +
             "serviceId ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
+    sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON SUBSTR(a.MSG_ID,13,6) = b.MEMBER_NO ");
     sb.append("WHERE a.PROCESS_STATUS IN('4','9') AND SUBSTR(a.EXTRACT_MSG_ID,13,6)='" + memberId +
         "' AND  TRUNC(a.CREATED_DATE) = TO_DATE('" + currentDate + "','YYYY-MM-DD') -2   ");
     sb.append("UNION ");
@@ -5088,11 +5088,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     sb.append(
         "a.TRANSACTIONIDENTIFIERAMS AS mandateReqTransId,SUBSTR(a.ORIGINALMSGIDAMS,5,5)  AS " +
             "serviceId ");
-    sb.append("FROM MANOWNER.JNL_ACQ a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+    sb.append("FROM CAMOWNER.JNL_ACQ a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
     sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
     sb.append("and a.MSGTYPEAMS = 'pain.009' and b.msgtypeams = 'pain.012' ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ");
     sb.append("ON  a.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
     sb.append(
         "WHERE a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' and a.msgtypeams = 'pain.009' AND  a" +
@@ -5110,11 +5110,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     sb.append(
         "a.TRANSACTIONIDENTIFIERAMS AS mandateReqTransId,SUBSTR(a.ORIGINALMSGIDAMS,5,5)  AS " +
             "serviceId ");
-    sb.append("FROM MANOWNER.JNL_ACQ a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+    sb.append("FROM CAMOWNER.JNL_ACQ a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
     sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
     sb.append("AND a.MSGTYPEAMS = 'pain.010' AND b.msgtypeams = 'pain.012' ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ");
     sb.append("ON  a.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
     sb.append(
         "WHERE a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' AND a.msgtypeams = 'pain.010' AND  a" +
@@ -5132,11 +5132,11 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     sb.append(
         "a.TRANSACTIONIDENTIFIERAMS AS mandateReqTransId,SUBSTR(a.ORIGINALMSGIDAMS,5,5)  AS " +
             "serviceId ");
-    sb.append("FROM MANOWNER.JNL_ACQ a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+    sb.append("FROM CAMOWNER.JNL_ACQ a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
     sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
     sb.append("AND a.MSGTYPEAMS = 'pain.011' AND b.msgtypeams = 'pain.012' ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ");
     sb.append("ON  a.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
     sb.append(
         "WHERE a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' AND a.msgtypeams = 'pain.011' AND  a" +
@@ -5217,7 +5217,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 			  left join mdt_ops_cust_param b  on b.inst_id = a.member_no*/
 
       sb.append("SELECT MEMBER_NAME as memberName ,MEMBER_NO as memberNo ");
-      sb.append("FROM MANOWNER.SYS_CIS_BANK a ");
+      sb.append("FROM CAMOWNER.SYS_CIS_BANK a ");
       sb.append("WHERE AC_CREDITOR = 'Y' ");
       sb.append("ORDER BY MEMBER_NAME ASC ");
 
@@ -5272,7 +5272,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       List<CasOpsDailyBillingEntity> dailyBillingList =
           new ArrayList<CasOpsDailyBillingEntity>();
       dailyBillingList =
-          genericDAO.findAllByNamedQuery("MdtAcOpsDailyBillingEntity.findByTxnType", "txnType",
+          genericDAO.findAllByNamedQuery("CasOpsDailyBillingEntity.findByTxnType", "txnType",
               txnType);
 
       if (dailyBillingList != null && dailyBillingList.size() > 0) {
@@ -5868,7 +5868,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
       List<CasOpsSlaTimesEntity> casOpsSlaTimesEntity =
-          genericDAO.findAllByNamedQuery("MdtOpsSlaTimesEntity.findByService", "service", service);
+          genericDAO.findAllByNamedQuery("CasOpsSlaTimesEntity.findByService", "service", service);
       log.info("mdtOpsSlaTimesEntity: " + casOpsSlaTimesEntity);
 
       if (casOpsSlaTimesEntity.size() > 0) {
@@ -5915,7 +5915,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     try {
       List<CasSysctrlSlaTimesEntity> casSysctrlSlaTimesEntity =
-          genericDAO.findAllByNamedQuery("MdtSysctrlSlaTimesEntity.findByService", "service",
+          genericDAO.findAllByNamedQuery("CasSysctrlSlaTimesEntity.findByService", "service",
               service);
       log.info("mdtSysctrlSlaTimesEntity: " + casSysctrlSlaTimesEntity);
 
@@ -5974,7 +5974,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
       List<CasOpsFileRegEntity> casOpsFileRegEntityList =
           (List<CasOpsFileRegEntity>) genericDAO.findAllByNamedQuery(
-              "MdtOpsFileRegEntity.findByInOutIndASC", "inOutInd", direction);
+              "CasOpsFileRegEntity.findByInOutIndASC", "inOutInd", direction);
 
       if (casOpsFileRegEntityList != null && casOpsFileRegEntityList.size() > 0) {
         OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
@@ -6002,7 +6002,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     CasOpsSlaTimesEntity casOpsSlaTimesEntity;
     casOpsSlaTimesEntity =
-        (CasOpsSlaTimesEntity) genericDAO.findByNamedQuery("MdtOpsSlaTimesEntity.findByService",
+        (CasOpsSlaTimesEntity) genericDAO.findByNamedQuery("CasOpsSlaTimesEntity.findByService",
             "service", "EOD");
 
     return casOpsSlaTimesEntity;
@@ -6018,7 +6018,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
       CasSysctrlSlaTimesEntity sysctrlSlaTimesEntity =
           (CasSysctrlSlaTimesEntity) genericDAO.findByNamedQuery(
-              "MdtSysctrlSlaTimesEntity.findByService", "service", processType);
+              "CasSysctrlSlaTimesEntity.findByService", "service", processType);
 //			log.info("sysctrlSlaTimesEntity ==> "+sysctrlSlaTimesEntity);
       if (sysctrlSlaTimesEntity != null) {
         SysCtrlSlaTimesLogic sysCtrlSlaTimesLogic = new SysCtrlSlaTimesLogic();
@@ -6154,7 +6154,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     sb.append(
         "SELECT DR_BANK_MEMBER_ID,CR_BANK_MEMBER_ID,  REJECT_REASON, COUNT(*) AS " +
             "rejectReasonCodeCount ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MDTE_RESP ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MDTE_RESP ");
     sb.append(
         "WHERE DR_BANK_MEMBER_ID = '" + debtorBankId + "' AND CR_BANK_MEMBER_ID ='" + memberId +
             "' AND ");
@@ -6206,8 +6206,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     sb.append(
         "SELECT b.ASSIGNER,a.CREDITOR_BANK , a.REASON_CODE, COUNT(*)AS rejectReasonCodeCount ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_SUSP_MSG a ");
-    sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID = b.ASSIGNMENT_ID ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_SUSP_MSG a ");
+    sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID = b.ASSIGNMENT_ID ");
     sb.append("WHERE b.ASSIGNER = '" + debtorBank + "' AND a.CREDITOR_BANK ='" + memberId +
         "' AND a.REASON_CODE = '" + suspensionCode + "' ");
     sb.append("GROUP BY b.ASSIGNER,a.REASON_CODE,a.CREDITOR_BANK ");
@@ -6250,12 +6250,12 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
     sb.append(
         "SELECT b.MEMBER_ID,c.MEMBER_ID, a.REJECT_REASON_CODE, COUNT(*) AS rejectReasonCodeCount ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
     sb.append(
-        "LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a" +
+        "LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a" +
             ".MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
     sb.append(
-        "LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a" +
+        "LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a" +
             ".MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID ");
     sb.append(
         "WHERE b.FIN_INST_TYPE_ID = 'FI03' AND  c.FIN_INST_TYPE_ID = 'FI04' AND b.MEMBER_ID = '" +
@@ -6328,7 +6328,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 			  left join mdt_ops_cust_param b  on b.inst_id = a.member_no*/
 
       sb.append("SELECT MEMBER_NAME as memberName ,MEMBER_NO as memberNo ");
-      sb.append("FROM MANOWNER.SYS_CIS_BANK a ");
+      sb.append("FROM CAMOWNER.SYS_CIS_BANK a ");
       sb.append("WHERE AC_DEBTOR = 'Y' ");
       sb.append("ORDER BY MEMBER_NAME ASC ");
 
@@ -6384,7 +6384,7 @@ null
     sb.append(
         "SELECT DR_BANK_MEMBER_ID,CR_BANK_MEMBER_ID,REJECT_REASON, COUNT(*) AS " +
             "rejectReasonCodeCount ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MDTE_RESP ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MDTE_RESP ");
     sb.append("WHERE DR_BANK_MEMBER_ID ='" + debtorBank + "' AND CR_BANK_MEMBER_ID = '" + memberId +
         "' AND REJECT_REASON is not null ");
     sb.append("GROUP BY DR_BANK_MEMBER_ID,CR_BANK_MEMBER_ID,REJECT_REASON ");
@@ -6424,8 +6424,8 @@ null
     StringBuffer sb = new StringBuffer();
 
 		/*select SUBSTR(b.ASSIGNMENT_ID, 13, 6),a.CREDITOR_BANK ,a.REASON_CODE, count(*) as Count
-		from MANOWNER.MDT_AC_ARC_SUSP_MSG a
-		LEFT JOIN MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID =b.ASSIGNMENT_ID
+		from CAMOWNER.MDT_AC_ARC_SUSP_MSG a
+		LEFT JOIN CAMOWNER.MDT_AC_ARC_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID =b.ASSIGNMENT_ID
 		where SUBSTR(b.ASSIGNMENT_ID, 13, 6) = '210016' AND a.CREDITOR_BANK = '210002' AND a
 .REASON_CODE is not null
 		GROUP BY SUBSTR(b.ASSIGNMENT_ID, 13, 6),a.CREDITOR_BANK,a.REASON_CODE*/
@@ -6433,8 +6433,8 @@ null
     sb.append(
         "SELECT SUBSTR(b.ASSIGNMENT_ID, 13, 6),a.CREDITOR_BANK , a.REASON_CODE, COUNT(*) AS " +
             "rejectReasonCodeCount ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_SUSP_MSG a ");
-    sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID =b.ASSIGNMENT_ID ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_SUSP_MSG a ");
+    sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_SUSP_GRP_HDR b ON a.ASSIGNMENT_ID =b.ASSIGNMENT_ID ");
     sb.append(
         "WHERE SUBSTR(b.ASSIGNMENT_ID, 13, 6) = '" + debtorBank + "' AND a.CREDITOR_BANK = '" +
             memberId + "' AND a.REASON_CODE is not null ");
@@ -6475,9 +6475,9 @@ null
 
 		/*SELECT b.MEMBER_ID,c.MEMBER_ID, a.REJECT_REASON_CODE, COUNT(*) AS COUNT
 		FROM MDT_AC_ARC_MNDT_MSG a
-		LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID
+		LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a.MANDATE_REQ_TRAN_ID
 		= b.MANDATE_REQ_TRAN_ID
-		LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID
+		LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a.MANDATE_REQ_TRAN_ID
 				= c.MANDATE_REQ_TRAN_ID
 		WHERE b.FIN_INST_TYPE_ID = 'FI03' AND  c.FIN_INST_TYPE_ID = 'FI04'AND  b.MEMBER_ID =
 		'210003' AND a.SERVICE_ID ='MANAC'
@@ -6486,12 +6486,12 @@ null
 
     sb.append(
         "SELECT b.MEMBER_ID,c.MEMBER_ID, a.REJECT_REASON_CODE, COUNT(*) AS rejectReasonCodeCount ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
     sb.append(
-        "LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a" +
+        "LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a" +
             ".MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
     sb.append(
-        "LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a" +
+        "LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a" +
             ".MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID ");
     sb.append(
         "WHERE b.FIN_INST_TYPE_ID = 'FI03' AND  c.FIN_INST_TYPE_ID = 'FI04' AND b.MEMBER_ID = '" +
@@ -6530,7 +6530,7 @@ null
     CasSysctrlSchedulerCronEntity casSysctrlSchedulerCronEntity =
         new CasSysctrlSchedulerCronEntity();
     casSysctrlSchedulerCronEntity = (CasSysctrlSchedulerCronEntity) genericDAO.findByNamedQuery(
-        "MdtSysctrlSchedulerCronEntity.findBySchedulerCronInterval", "schedulerCronInterval",
+        "CasSysctrlSchedulerCronEntity.findBySchedulerCronInterval", "schedulerCronInterval",
         cronInt);
 
     if (casSysctrlSchedulerCronEntity != null) {
@@ -6728,8 +6728,8 @@ null
     StringBuffer sb = new StringBuffer();
 
     sb.append("SELECT COUNT(*) as amendReasonCodeCount ");
-    sb.append("FROM MANOWNER.JNL_ACQ a ");
-    sb.append("left outer join MANOWNER.MDT_CNFG_AMENDMENT_CODES b ");
+    sb.append("FROM CAMOWNER.JNL_ACQ a ");
+    sb.append("left outer join CAMOWNER.MDT_CNFG_AMENDMENT_CODES b ");
     sb.append("on a.AMENDMENTREASONAMS = b.AMENDMENT_CODES ");
     sb.append("WHERE a.RESULTCODE = 0 AND a.MSGTYPEAMS = 'pain.010' ");
     sb.append(
@@ -6770,9 +6770,9 @@ null
     StringBuffer sb = new StringBuffer();
 
     sb.append("SELECT b.MEMBER_ID, a.REJECT_REASON_CODE, COUNT(*) AS rejectReasonCodeCount ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
     sb.append(
-        "LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a" +
+        "LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a" +
             ".MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
     sb.append("WHERE b.FIN_INST_TYPE_ID = 'FI03' AND b.MEMBER_ID = '" + memberId + "' ");
     sb.append("AND a.REJECT_REASON_CODE ='" + reasonCode +
@@ -6815,7 +6815,7 @@ null
     sb.append(
         "SELECT DR_BANK_MEMBER_ID,CR_BANK_MEMBER_ID,  REJECT_REASON, COUNT(*) AS " +
             "rejectReasonCodeCount ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MDTE_RESP ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MDTE_RESP ");
     sb.append("WHERE CR_BANK_MEMBER_ID ='" + memberId + "' AND ");
     sb.append(
         "REJECT_REASON = '" + rejectReasonCode + "' AND TRUNC(CREATE_DATE_TIME) BETWEEN TO_DATE('" +
@@ -6917,7 +6917,7 @@ null
     CasOpsSlaTimesEntity opsSlaTimesEntity = new CasOpsSlaTimesEntity();
     try {
       opsSlaTimesEntity =
-          (CasOpsSlaTimesEntity) genericDAO.findByNamedQuery("MdtOpsSlaTimesEntity.findByService",
+          (CasOpsSlaTimesEntity) genericDAO.findByNamedQuery("CasOpsSlaTimesEntity.findByService",
               "service", service);
       if (opsSlaTimesEntity != null) {
         OpsSlaTimesLogic opsSlaTimesLogic = new OpsSlaTimesLogic();
@@ -7034,7 +7034,7 @@ null
 
     try {
       reportNameEntity = (CasCnfgReportNamesEntity) genericDAO.findByNamedQuery(
-          "MdtCnfgReportNamesEntity.findByReportNr", "reportNr", reportNr);
+          "CasCnfgReportNamesEntity.findByReportNr", "reportNr", reportNr);
     } catch (Exception ex) {
       log.error("Error on retrieveReportName: " + ex.getMessage());
     }
@@ -7049,7 +7049,7 @@ null
 
     CasOpsSlaTimesEntity casOpsSlaTimesEntity;
     casOpsSlaTimesEntity =
-        (CasOpsSlaTimesEntity) genericDAO.findByNamedQuery("MdtOpsSlaTimesEntity.findByService",
+        (CasOpsSlaTimesEntity) genericDAO.findByNamedQuery("CasOpsSlaTimesEntity.findByService",
             "service", outService);
 
     return casOpsSlaTimesEntity;
@@ -7120,7 +7120,7 @@ null
       parameters.put("fileName", "%" + service + "%");
       parameters.put("fileName2", "%" + memberNo + "%");
       mdtAcCountEntityList =
-          genericDAO.findAllByNQCriteria("MdtAcOpsMndtCountEntity.findByFileNameLike2", parameters);
+          genericDAO.findAllByNQCriteria("CasOpsMndtCountEntity.findByFileNameLike2", parameters);
       log.info("mdtAcCountEntityList in ADMINBEAN AFTER NAMED QUERY ----->" + mdtAcCountEntityList);
       log.info("searchedFileList in ADMINBEAN AFTER NAMED QUERY ----->" + searchedFileList);
       if (mdtAcCountEntityList != null && mdtAcCountEntityList.size() > 0) {
@@ -7176,7 +7176,7 @@ null
   public List<?> retrieveActiveReportNr() {
     List<CasCnfgReportNamesEntity> reportNrEntityList = new ArrayList<CasCnfgReportNamesEntity>();
     reportNrEntityList = (List<CasCnfgReportNamesEntity>) genericDAO.findAllByNamedQuery(
-        "MdtCnfgReportNamesEntity.findByActiveInd", "activeInd", "Y");
+        "CasCnfgReportNamesEntity.findByActiveInd", "activeInd", "Y");
     log.debug("reportNrEntityList in AdminBean ---> " + reportNrEntityList);
 
     return reportNrEntityList;
@@ -7192,12 +7192,12 @@ null
       //			log.info("memberNo in repSeqNr: "+memberId);
 
       HashMap<String, Object> parameters = new HashMap<String, Object>();
-      parameters.put("mdtOpsRepSeqNrPK.memberNo", memberId);
-      parameters.put("mdtOpsRepSeqNrPK.reportNo", reportNr);
+      parameters.put("casOpsRepSeqNrPK.memberNo", memberId);
+      parameters.put("casOpsRepSeqNrPK.reportNo", reportNr);
       log.debug("---------------sparameters: ------------------" + parameters.toString());
       casOpsRepSeqNrEntity =
           (CasOpsRepSeqNrEntity) genericDAO.findByCriteria(CasOpsRepSeqNrEntity.class, parameters);
-      log.debug("---------------MdtOpsRefSeqNrEntity after findByCriteria: ------------------" +
+      log.debug("---------------CasOpsRepSeqNrEntity after findByCriteria: ------------------" +
           casOpsRepSeqNrEntity);
 
       //mdtOpsFileSeqNrEntity = (MdtOpsRefSeqNrEntity) genericDAO.findByNamedQuery
@@ -7234,7 +7234,7 @@ null
 
     try {
       errorCodesList =
-          genericDAO.findAllByNamedQuery("MdtCnfgErrorCodesEntity.findByActiveInd", "activeInd",
+          genericDAO.findAllByNamedQuery("CasCnfgErrorCodesEntity.findByActiveInd", "activeInd",
               activeInd);
     } catch (ObjectNotFoundException onfe) {
       log.error("No Object Exists on DB");
@@ -7255,7 +7255,7 @@ null
     sb.append(
         "select a.service_id as serviceId, a.inst_id as instId, a.sot_in as sotIn, a.eot_in as " +
             "eotIn ");
-    sb.append("from mdt_ac_ops_sot_eot_ctrl a, mdt_ops_services b ");
+    sb.append("from cas_ops_sot_eot_ctrl a, cas_ops_services b ");
     sb.append("where a.service_id = b.service_id_in ");
     String sqlQuery = sb.toString();
     log.debug("sqlQuery:" + sqlQuery);
@@ -7348,7 +7348,7 @@ null
     sb.append(
         "select a.service_id as serviceId, a.inst_id as instId, a.sot_in as sotIn, a.eot_in as " +
             "eotIn ");
-    sb.append("from mdt_ac_ops_sot_eot_ctrl a ");
+    sb.append("from cas_ops_sot_eot_ctrl a ");
 
     if (instId != null || serviceId != null || sotInInd != null || eotInInd != null) {
       sb.append("where ");
@@ -7428,7 +7428,7 @@ null
     sb.append(
         "select a.service_id as serviceId, a.inst_id as instId, a.sot_out as sotOut, a.eot_out as" +
             " eotOut ");
-    sb.append("from mdt_ac_ops_sot_eot_ctrl a ");
+    sb.append("from cas_ops_sot_eot_ctrl a ");
 
     if (instId != null || serviceId != null || sotOutInd != null || eotOutInd != null) {
       sb.append("where ");
@@ -7508,7 +7508,7 @@ null
     sb.append(
         "select a.service_id as serviceId, a.inst_id as instId, a.sot_out as sotOut, a.eot_out as" +
             " eotOut ");
-    sb.append("from mdt_ac_ops_sot_eot_ctrl a, mdt_ops_services b ");
+    sb.append("from cas_ops_sot_eot_ctrl a, mdt_ops_services b ");
     sb.append("where a.service_id = b.service_id_out ");
     String sqlQuery = sb.toString();
     log.debug("sqlQuery:" + sqlQuery);
@@ -7548,7 +7548,7 @@ null
     CasCnfgReportNamesEntity casCnfgReportNamesEntity = new CasCnfgReportNamesEntity();
     try {
       casCnfgReportNamesEntity = (CasCnfgReportNamesEntity) genericDAO.findByNamedQuery(
-          "MdtCnfgReportNamesEntity.findByReportNr", "reportNr", reportNr);
+          "CasCnfgReportNamesEntity.findByReportNr", "reportNr", reportNr);
       if (casCnfgReportNamesEntity != null) {
         ReportsLogic reportsLogic = new ReportsLogic();
         reportsNamesModel = reportsLogic.retrieveReportNames(casCnfgReportNamesEntity);
@@ -7719,7 +7719,7 @@ null
     }
 
     //		Archive Files
-    //		EndOfDayLogic eodLogic = new EndOfDayLogic("MANOWNER");
+    //		EndOfDayLogic eodLogic = new EndOfDayLogic("CAMOWNER");
     //		eodLogic.testArchiveFiles();
   }
 
@@ -7818,9 +7818,9 @@ null
     sb.append(",b.MEMBER_NAME AS dr_memname ");
     sb.append(",c.REASON_CODE ");
     sb.append(",c.NAME ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a ");
-    sb.append(",MANOWNER.SYS_CIS_BANK b ");
-    sb.append(",MANOWNER.MDT_CNFG_REASON_CODES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a ");
+    sb.append(",CAMOWNER.SYS_CIS_BANK b ");
+    sb.append(",CAMOWNER.MDT_CNFG_REASON_CODES c ");
     //		2018-12-20 SalehaR: CHG-152647 - Report on all Banks (Remove AC_DEBTOR = Y)
     //		sb.append("WHERE a.MEMBER_NO <> b.MEMBER_NO AND a.AC_CREDITOR = 'Y' AND b.AC_DEBTOR =
     //		'Y') ");
@@ -7834,7 +7834,7 @@ null
             "rejectReasonCodeCount ");
     sb.append("FROM TEMPTBL aa ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.JNL_ACQ bb ON aa.cr_memno = bb.INSTRUCTINGAGENTAMS AND aa" +
+        "LEFT OUTER JOIN CAMOWNER.JNL_ACQ bb ON aa.cr_memno = bb.INSTRUCTINGAGENTAMS AND aa" +
             ".dr_memno = bb.INSTRUCTEDAGENTAMS ");
     sb.append(
         "AND aa.REASON_CODE = bb.REJECTEDREASONCODEAMS AND SUBSTR(bb.TRANSDATETIME,1,8) BETWEEN '" +
@@ -7887,7 +7887,7 @@ null
 			  left join mdt_ops_cust_param b  on b.inst_id = a.member_no*/
 
       sb.append("SELECT MEMBER_NAME as memberName ,MEMBER_NO as memberNo ");
-      sb.append("FROM MANOWNER.SYS_CIS_BANK a ");
+      sb.append("FROM CAMOWNER.SYS_CIS_BANK a ");
       sb.append("WHERE AC_DEBTOR = 'Y' AND MEMBER_NO <> '" + memberNo + "' ");
       sb.append("ORDER BY MEMBER_NAME ASC ");
 
@@ -7975,7 +7975,7 @@ null
       StringBuffer sb = new StringBuffer();
 
       sb.append("SELECT MEMBER_NAME as memberName ,MEMBER_NO as memberNo ");
-      sb.append("FROM MANOWNER.SYS_CIS_BANK a ");
+      sb.append("FROM CAMOWNER.SYS_CIS_BANK a ");
       sb.append("WHERE MEMBER_NO <> '" + memberNo + "' ");
       sb.append("ORDER BY MEMBER_NAME ASC ");
 
@@ -8114,7 +8114,7 @@ null
 
     StringBuffer manualRtTnxsBill = new StringBuffer();
 
-    manualRtTnxsBill.append("INSERT INTO MANOWNER.MDT_AC_OPS_RT_TXNS_BILL ");
+    manualRtTnxsBill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_RT_TXNS_BILL ");
     manualRtTnxsBill.append(
         "(JNL_ID,TRANSMISSION_NO,ORIGINATOR,SERVICE,SUB_SERVICE,TXN_TYPE,TXN_STATUS, ");
     manualRtTnxsBill.append(
@@ -8137,12 +8137,12 @@ null
     manualRtTnxsBill.append(
         "WHEN (MTI = '5502' OR MTI = '5504' OR MTI = '5505') THEN 'TT3' END), ");
     manualRtTnxsBill.append(
-        "'S',TRANSACTIONIDENTIFIERAMS,'I',1,'Y','MANDATES','MANOWNER',SYSDATE,'MANOWNER',SYSDATE," +
+        "'S',TRANSACTIONIDENTIFIERAMS,'I',1,'Y','MANDATES','CAMOWNER',SYSDATE,'CAMOWNER',SYSDATE," +
             " ");
     manualRtTnxsBill.append(
         "TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'),TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') ");
-    manualRtTnxsBill.append("FROM MANOWNER.JNL_ACQ ");
+    manualRtTnxsBill.append("FROM CAMOWNER.JNL_ACQ ");
     manualRtTnxsBill.append(
         "WHERE (MTI = '5501' OR MTI = '5502' OR MTI = '5503' OR MTI = '5504' OR MTI = '5505') ");
     manualRtTnxsBill.append(
@@ -8209,8 +8209,8 @@ null
         "'MANDATES',INSTRUCTINGAGENTAMS,'I','S',(CASE WHEN (MTI = '5501' OR MTI = '5503') THEN " +
             "'TT1'WHEN (MTI = '5502' OR MTI = '5504' OR MTI = '5505') THEN 'TT3' END), ");
     manualBillOwnerTxns.append(
-        "1,'',TRANSACTIONIDENTIFIERAMS,1,'MANOWNER',SYSDATE,'MANOWNER',SYSDATE ");
-    manualBillOwnerTxns.append("FROM MANOWNER.JNL_ACQ ");
+        "1,'',TRANSACTIONIDENTIFIERAMS,1,'CAMOWNER',SYSDATE,'CAMOWNER',SYSDATE ");
+    manualBillOwnerTxns.append("FROM CAMOWNER.JNL_ACQ ");
     manualBillOwnerTxns.append(
         "WHERE (MTI = '5501' OR MTI = '5502' OR MTI = '5503' OR MTI = '5504' OR MTI = '5505') ");
     manualBillOwnerTxns.append("AND TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD') ");
@@ -8253,7 +8253,7 @@ null
 
     StringBuffer manualTT1Pain009Bill = new StringBuffer();
 
-    manualTT1Pain009Bill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ( ");
+    manualTT1Pain009Bill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING ( ");
     manualTT1Pain009Bill.append(
         "CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS,CREATED_BY,CREATED_DATE, ");
     manualTT1Pain009Bill.append(
@@ -8264,23 +8264,23 @@ null
         "TO_CHAR((case when a.ACCEPTEDINDICATORAMS = 'true' then 'S' else case when a" +
             ".ACCEPTEDINDICATORAMS = 'false' then 'U' else null end end)), ");
     manualTT1Pain009Bill.append(
-        "'MANOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(b.TRANSDATETIME,1,8),'YYYY-MM-DD'), ");
+        "'CAMOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(b.TRANSDATETIME,1,8),'YYYY-MM-DD'), ");
     manualTT1Pain009Bill.append(
         "'',a.TRANSACTIONIDENTIFIERAMS,a.MANDATEREFNUMBERAMS,'',TO_DATE(SUBSTR(b.TRANSDATETIME,1," +
             "8),'YYYY-MM-DD') ");
-    manualTT1Pain009Bill.append("FROM MANOWNER.JNL_ACQ a ");
+    manualTT1Pain009Bill.append("FROM CAMOWNER.JNL_ACQ a ");
     manualTT1Pain009Bill.append(
-        "INNER JOIN MANOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS" +
+        "INNER JOIN CAMOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS" +
             " ");
     manualTT1Pain009Bill.append(
         "WHERE a.SERVICEIDAMS = 'ST012' AND a.MTI = 5506 AND a.RESULTCODE = 0 AND b.MTI = 5501 " +
             "AND b.RESULTCODE = 0 AND a.REASONCODEAMS = '900000' AND b.REASONCODEAMS = '900000' ");
     manualTT1Pain009Bill.append(
-        "AND b.ID  > (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1," +
+        "AND b.ID  > (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1," +
             "8),'YYYY-MM-DD') = TO_DATE('" +
             strFromDate + "','YYYY-MM-DD') -1) AND ");
     manualTT1Pain009Bill.append(
-        "b.ID <= (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "b.ID <= (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strToDate + "','YYYY-MM-DD')) ");
     manualTT1Pain009Bill.append("ORDER BY a.TRANSACTIONIDENTIFIERAMS ASC ");
@@ -8318,7 +8318,7 @@ null
 
     StringBuffer manualTT1MANIRDataBill = new StringBuffer();
 
-    manualTT1MANIRDataBill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING( ");
+    manualTT1MANIRDataBill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING( ");
     manualTT1MANIRDataBill.append(
         "CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS,CREATED_BY,CREATED_DATE," +
             "BILL_EXP_STATUS, ");
@@ -8329,17 +8329,17 @@ null
         "TO_CHAR((case when ACCEPTEDINDICATORAMS = 'true' then 'S' else case when  " +
             "ACCEPTEDINDICATORAMS = 'false' then 'U' else null end end)), ");
     manualTT1MANIRDataBill.append(
-        "'MANOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'),''," +
+        "'CAMOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'),''," +
             "TRANSACTIONIDENTIFIERAMS,MANDATEREFNUMBERAMS,'',TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') ");
-    manualTT1MANIRDataBill.append("FROM MANOWNER.JNL_ACQ ");
+    manualTT1MANIRDataBill.append("FROM CAMOWNER.JNL_ACQ ");
     manualTT1MANIRDataBill.append("WHERE SERVICEIDAMS = 'MANIR' AND RESULTCODE = 0 AND MTI=5501 ");
     manualTT1MANIRDataBill.append(
-        "AND ID > (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "AND ID > (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strFromDate + "','YYYY-MM-DD') -1) AND ");
     manualTT1MANIRDataBill.append(
-        "ID <= (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "ID <= (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strToDate + "','YYYY-MM-DD'))");
     manualTT1MANIRDataBill.append("ORDER BY TRANSACTIONIDENTIFIERAMS ASC ");
@@ -8378,7 +8378,7 @@ null
 
     StringBuffer manualTT3ManirPain009Bill = new StringBuffer();
 
-    manualTT3ManirPain009Bill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING( ");
+    manualTT3ManirPain009Bill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING( ");
     manualTT3ManirPain009Bill.append(
         "CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS,CREATED_BY,CREATED_DATE, ");
     manualTT3ManirPain009Bill.append(
@@ -8389,18 +8389,18 @@ null
         "TO_CHAR((case when ACCEPTEDINDICATORAMS = 'true' then 'S' else  case when  " +
             "ACCEPTEDINDICATORAMS = 'false' then 'U' else null end end)), ");
     manualTT3ManirPain009Bill.append(
-        "'MANOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'),''," +
+        "'CAMOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'),''," +
             "TRANSACTIONIDENTIFIERAMS,MANDATEREFNUMBERAMS,'',TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') ");
-    manualTT3ManirPain009Bill.append("FROM MANOWNER.JNL_ACQ ");
+    manualTT3ManirPain009Bill.append("FROM CAMOWNER.JNL_ACQ ");
     manualTT3ManirPain009Bill.append(
         "WHERE SERVICEIDAMS = 'MANIR' AND RESULTCODE = 0 AND MTI=5502 ");
     manualTT3ManirPain009Bill.append(
-        "AND ID > (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "AND ID > (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strFromDate + "','YYYY-MM-DD') -1) AND ");
     manualTT3ManirPain009Bill.append(
-        "ID <= (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "ID <= (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strToDate + "','YYYY-MM-DD'))");
     manualTT3ManirPain009Bill.append("ORDER BY TRANSACTIONIDENTIFIERAMS ASC ");
@@ -8439,7 +8439,7 @@ null
 
     StringBuffer manualTT1MandrPain010Bill = new StringBuffer();
 
-    manualTT1MandrPain010Bill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+    manualTT1MandrPain010Bill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
     manualTT1MandrPain010Bill.append(
         "(CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS,CREATED_BY,CREATED_DATE, ");
     manualTT1MandrPain010Bill.append(
@@ -8451,7 +8451,7 @@ null
     manualTT1MandrPain010Bill.append(
         "case when  a.ACCEPTEDINDICATORAMS = 'false' then 'U' else null end end)), ");
     manualTT1MandrPain010Bill.append(
-        "'MANOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(b.TRANSDATETIME,1,8),'YYYY-MM-DD'), ");
+        "'CAMOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(b.TRANSDATETIME,1,8),'YYYY-MM-DD'), ");
     manualTT1MandrPain010Bill.append(
         "(CASE WHEN SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(b.UNDRLYGAMDMNTDTLSBLOCKAMS, chr(10))," +
             " chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE(b" +
@@ -8468,19 +8468,19 @@ null
     manualTT1MandrPain010Bill.append(
         "a.TRANSACTIONIDENTIFIERAMS,a.MANDATEREFNUMBERAMS,'',TO_DATE(SUBSTR(b.TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') ");
-    manualTT1MandrPain010Bill.append("FROM MANOWNER.JNL_ACQ a ");
+    manualTT1MandrPain010Bill.append("FROM CAMOWNER.JNL_ACQ a ");
     manualTT1MandrPain010Bill.append(
-        "INNER JOIN MANOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS" +
+        "INNER JOIN CAMOWNER.JNL_ACQ b ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS" +
             " ");
     manualTT1MandrPain010Bill.append(
         "WHERE a.SERVICEIDAMS = 'ST012' AND a.MTI = 5506 AND a.RESULTCODE = 0  AND b.MTI = 5503 " +
             "AND b.RESULTCODE = 0 AND a.REASONCODEAMS = '900000' AND b.REASONCODEAMS = '900000' ");
     manualTT1MandrPain010Bill.append(
-        "AND b.ID > (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)" +
+        "AND b.ID > (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)" +
             ",'YYYY-MM-DD') = TO_DATE('" +
             strFromDate + "','YYYY-MM-DD') -1) AND ");
     manualTT1MandrPain010Bill.append(
-        "b.ID <= (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "b.ID <= (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strToDate + "','YYYY-MM-DD'))");
     manualTT1MandrPain010Bill.append("ORDER BY a.TRANSACTIONIDENTIFIERAMS ASC ");
@@ -8518,7 +8518,7 @@ null
 
     StringBuffer manualTT11ManamManirBill = new StringBuffer();
 
-    manualTT11ManamManirBill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+    manualTT11ManamManirBill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
     manualTT11ManamManirBill.append(
         "(CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS,CREATED_BY,CREATED_DATE, ");
     manualTT11ManamManirBill.append(
@@ -8530,7 +8530,7 @@ null
     manualTT11ManamManirBill.append(
         "case when  ACCEPTEDINDICATORAMS = 'false' then 'U' else null end end)), ");
     manualTT11ManamManirBill.append(
-        "'MANOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'), ");
+        "'CAMOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'), ");
     manualTT11ManamManirBill.append(
         "(CASE WHEN SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(UNDRLYGAMDMNTDTLSBLOCKAMS, chr(10)), " +
             "chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE" +
@@ -8546,15 +8546,15 @@ null
     manualTT11ManamManirBill.append(
         "TRANSACTIONIDENTIFIERAMS,MANDATEREFNUMBERAMS,'',TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') ");
-    manualTT11ManamManirBill.append("FROM MANOWNER.JNL_ACQ ");
+    manualTT11ManamManirBill.append("FROM CAMOWNER.JNL_ACQ ");
     manualTT11ManamManirBill.append(
         "WHERE SERVICEIDAMS = 'MANIR' AND RESULTCODE = 0 AND MTI=5503 ");
     manualTT11ManamManirBill.append(
-        "AND ID > (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "AND ID > (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strFromDate + "','YYYY-MM-DD') -1) AND ");
     manualTT11ManamManirBill.append(
-        "ID <= (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "ID <= (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strToDate + "','YYYY-MM-DD')) ");
     manualTT11ManamManirBill.append("ORDER BY TRANSACTIONIDENTIFIERAMS ASC ");
@@ -8593,7 +8593,7 @@ null
     StringBuffer manualTT3ManIrPain010SuccBill = new StringBuffer();
 
 
-    manualTT3ManIrPain010SuccBill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+    manualTT3ManIrPain010SuccBill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
     manualTT3ManIrPain010SuccBill.append(
         "(CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS, ");
     manualTT3ManIrPain010SuccBill.append(
@@ -8606,7 +8606,7 @@ null
     manualTT3ManIrPain010SuccBill.append(
         "case when  ACCEPTEDINDICATORAMS = 'false' then 'U' else null end end)), ");
     manualTT3ManIrPain010SuccBill.append(
-        "'MANOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'), ");
+        "'CAMOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'), ");
     manualTT3ManIrPain010SuccBill.append(
         "(CASE WHEN SUBSTR(REPLACE(REPLACE(REPLACE(REPLACE(UNDRLYGAMDMNTDTLSBLOCKAMS, chr(10)), " +
             "chr(13)), chr(9)), ' '), INSTR(REPLACE(REPLACE(REPLACE(REPLACE" +
@@ -8622,15 +8622,15 @@ null
     manualTT3ManIrPain010SuccBill.append(
         "TRANSACTIONIDENTIFIERAMS,MANDATEREFNUMBERAMS,'',TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') ");
-    manualTT3ManIrPain010SuccBill.append("FROM MANOWNER.JNL_ACQ ");
+    manualTT3ManIrPain010SuccBill.append("FROM CAMOWNER.JNL_ACQ ");
     manualTT3ManIrPain010SuccBill.append(
         "WHERE SERVICEIDAMS = 'MANIR' AND RESULTCODE = 0 AND MTI=5504 ");
     manualTT3ManIrPain010SuccBill.append(
-        "AND ID > (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "AND ID > (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strFromDate + "','YYYY-MM-DD') -1) AND ");
     manualTT3ManIrPain010SuccBill.append(
-        "ID <= (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "ID <= (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strToDate + "','YYYY-MM-DD'))");
     manualTT3ManIrPain010SuccBill.append("ORDER BY TRANSACTIONIDENTIFIERAMS ASC ");
@@ -8668,7 +8668,7 @@ null
 
     StringBuffer manualTT1ManIrPain011SuccBill = new StringBuffer();
 
-    manualTT1ManIrPain011SuccBill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+    manualTT1ManIrPain011SuccBill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
     manualTT1ManIrPain011SuccBill.append(
         "(CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS, ");
     manualTT1ManIrPain011SuccBill.append(
@@ -8681,19 +8681,19 @@ null
     manualTT1ManIrPain011SuccBill.append(
         "case when  ACCEPTEDINDICATORAMS = 'false' then 'U' else null end end)), ");
     manualTT1ManIrPain011SuccBill.append(
-        "'MANOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'),'', ");
+        "'CAMOWNER',SYSDATE,'Y',TO_DATE(SUBSTR(TRANSDATETIME,1,8),'YYYY-MM-DD'),'', ");
     manualTT1ManIrPain011SuccBill.append(
         "TRANSACTIONIDENTIFIERAMS,MANDATEREFNUMBERAMS,'',TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') ");
-    manualTT1ManIrPain011SuccBill.append("FROM MANOWNER.JNL_ACQ ");
+    manualTT1ManIrPain011SuccBill.append("FROM CAMOWNER.JNL_ACQ ");
     manualTT1ManIrPain011SuccBill.append(
         "WHERE SERVICEIDAMS = 'MANIR' AND RESULTCODE = 0 AND MTI=5505 AND ");
     manualTT1ManIrPain011SuccBill.append(
-        "ID > (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "ID > (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strFromDate + "','YYYY-MM-DD') -1) AND ");
     manualTT1ManIrPain011SuccBill.append(
-        "ID <= (SELECT MAX(ID) FROM MANOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
+        "ID <= (SELECT MAX(ID) FROM CAMOWNER.JNL_ACQ WHERE TO_DATE(SUBSTR(TRANSDATETIME,1,8)," +
             "'YYYY-MM-DD') = TO_DATE('" +
             strToDate + "','YYYY-MM-DD'))");
     manualTT1ManIrPain011SuccBill.append("ORDER BY TRANSACTIONIDENTIFIERAMS ASC ");
@@ -8746,8 +8746,8 @@ null
       manualBillingExport.append(
           "SELECT RESP_DATE,CREDITOR_BANK,DEBTOR_BANK,COUNT(*),'MANDATES',SUB_SERVICE,TXN_TYPE, ");
     }
-    manualBillingExport.append("TXN_STATUS,'MANOWNER',SYSDATE,'0','N','MANDATES','I',1 ");
-    manualBillingExport.append("FROM MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+    manualBillingExport.append("TXN_STATUS,'CAMOWNER',SYSDATE,'0','N','MANDATES','I',1 ");
+    manualBillingExport.append("FROM CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
     manualBillingExport.append(
         "WHERE BILL_EXP_STATUS = 'Y'  AND RESP_DATE BETWEEN  TO_DATE('" + strFromDate +
             "','YYYY-MM-DD') AND TO_DATE('" + strToDate + "','YYYY-MM-DD') ");
@@ -8790,17 +8790,17 @@ null
 
     StringBuffer manualTT2TxnsBilling = new StringBuffer();
 
-    manualTT2TxnsBilling.append("INSERT INTO  MANOWNER.MDT_AC_OPS_TXNS_BILLING ");
+    manualTT2TxnsBilling.append("INSERT INTO  CAMOWNER.MDT_AC_OPS_TXNS_BILLING ");
     manualTT2TxnsBilling.append(
         "(SYSTEM_SEQ_NO, ORIGINATOR,SERVICE,SUB_SERVICE,TXN_TYPE,TXN_STATUS,FILE_NAME, ");
     manualTT2TxnsBilling.append(
         "STATUS,VOLUME,BILL_EXP_STATUS,SYSTEM_NAME,CREATED_BY,CREATED_DATE,MODIFIED_BY, ");
     manualTT2TxnsBilling.append("MODIFIED_DATE,ACTION_DATE,RESP_DATE) ");
-    manualTT2TxnsBilling.append("SELECT MANOWNER.MDT_AC_OPS_TXNS_BILLING_SEQ.NEXTVAL, ");
+    manualTT2TxnsBilling.append("SELECT CAMOWNER.MDT_AC_OPS_TXNS_BILLING_SEQ.NEXTVAL, ");
     manualTT2TxnsBilling.append(
         "INST_ID,'MANDATES',SERVICE_ID,'TT2','S',FILE_NAME,'I',NR_OF_MSGS,'Y','MANDATES', ");
-    manualTT2TxnsBilling.append("'MANOWNER',SYSDATE,'MANOWNER',SYSDATE,PROCESS_DATE,PROCESS_DATE ");
-    manualTT2TxnsBilling.append("FROM MANOWNER.MDT_AC_ARC_MNDT_COUNT ");
+    manualTT2TxnsBilling.append("'CAMOWNER',SYSDATE,'CAMOWNER',SYSDATE,PROCESS_DATE,PROCESS_DATE ");
+    manualTT2TxnsBilling.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_COUNT ");
     manualTT2TxnsBilling.append(
         "WHERE PROCESS_DATE BETWEEN TO_DATE('" + strFromDate + "','YYYY-MM-DD') AND TO_DATE('" +
             strToDate + "','YYYY-MM-DD') ");
@@ -8850,8 +8850,8 @@ null
     manualTT2TxnsBillToBillowner.append(
         "PROCESS_DATE,'MANDATES',SERVICE_ID,'MANDATES',INST_ID,'I','S','TT2', ");
     manualTT2TxnsBillToBillowner.append(
-        "NR_OF_MSGS,'',FILE_NAME,'','MANOWNER',SYSDATE,'MANOWNER',SYSDATE ");
-    manualTT2TxnsBillToBillowner.append("FROM MANOWNER.MDT_AC_ARC_MNDT_COUNT ");
+        "NR_OF_MSGS,'',FILE_NAME,'','CAMOWNER',SYSDATE,'CAMOWNER',SYSDATE ");
+    manualTT2TxnsBillToBillowner.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_COUNT ");
     manualTT2TxnsBillToBillowner.append(
         "WHERE PROCESS_DATE BETWEEN TO_DATE('" + strFromDate + "','YYYY-MM-DD') AND TO_DATE('" +
             strToDate + "','YYYY-MM-DD') ");
@@ -8893,7 +8893,7 @@ null
 
     StringBuffer manualTT2InterBill = new StringBuffer();
 
-    manualTT2InterBill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+    manualTT2InterBill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
     manualTT2InterBill.append(
         "(CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS,CREATED_BY,CREATED_DATE, ");
     manualTT2InterBill.append(
@@ -8902,11 +8902,11 @@ null
         "SELECT a.CREDITOR_BANK,a.DEBTOR_BANK,a.SERVICE_ID,'TT2',(case when b.ACCEPTED_IND = " +
             "'true' then 'S' else 'U' end), ");
     manualTT2InterBill.append(
-        "'MANOWNER',SYSDATE,'Y',a.CREATED_DATE,a.LOCAL_INSTR_CD,a.MANDATE_REQ_TRAN_ID,b" +
+        "'CAMOWNER',SYSDATE,'Y',a.CREATED_DATE,a.LOCAL_INSTR_CD,a.MANDATE_REQ_TRAN_ID,b" +
             ".MANDATE_REF_NR,a.EXTRACT_MSG_ID,a.IN_FILE_DATE ");
-    manualTT2InterBill.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+    manualTT2InterBill.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
     manualTT2InterBill.append(
-        "INNER JOIN MANOWNER.MDT_AC_ARC_MANDATE_TXNS b ON a.MANDATE_REQ_TRAN_ID = b" +
+        "INNER JOIN CAMOWNER.MDT_AC_ARC_MANDATE_TXNS b ON a.MANDATE_REQ_TRAN_ID = b" +
             ".MANDATE_REQ_TRAN_ID ");
     manualTT2InterBill.append(
         "WHERE a.PROCESS_STATUS IN('M','R') AND a.SERVICE_ID IN('MANIN','MANAM','MANCN') AND b" +
@@ -8950,7 +8950,7 @@ null
 
     StringBuffer manualSrinpInterBill = new StringBuffer();
 
-    manualSrinpInterBill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+    manualSrinpInterBill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
     manualSrinpInterBill.append(
         "(CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS,CREATED_BY,CREATED_DATE, ");
     manualSrinpInterBill.append(
@@ -8959,11 +8959,11 @@ null
         "SELECT a.INSTG_AGT,b.INST_ID,a.SERVICE,'TT2',(case when b.TXN_STATUS = 'ACCP' then 'S' " +
             "else 'U' end), ");
     manualSrinpInterBill.append(
-        "'MANOWNER',SYSDATE,'Y',a.CREATE_DATE_TIME,'',b.TXN_ID,b.MANDATE_REF_NUMBER,b" +
+        "'CAMOWNER',SYSDATE,'Y',a.CREATE_DATE_TIME,'',b.TXN_ID,b.MANDATE_REF_NUMBER,b" +
             ".EXTRACT_MSG_ID,a.CREATE_DATE_TIME ");
-    manualSrinpInterBill.append("FROM MANOWNER.MDT_AC_ARC_CONF_HDRS a ");
+    manualSrinpInterBill.append("FROM CAMOWNER.MDT_AC_ARC_CONF_HDRS a ");
     manualSrinpInterBill.append(
-        "INNER JOIN MANOWNER.MDT_AC_ARC_CONF_DETAILS b ON a.SYSTEM_SEQ_NO = b.CONF_HDR_SEQ_NO ");
+        "INNER JOIN CAMOWNER.MDT_AC_ARC_CONF_DETAILS b ON a.SYSTEM_SEQ_NO = b.CONF_HDR_SEQ_NO ");
     manualSrinpInterBill.append(
         "WHERE b.EXTRACT_SERVICE = 'SROUT' AND TRUNC(a.CREATE_DATE_TIME) BETWEEN TO_DATE('" +
             strFromDate + "','YYYY-MM-DD') AND TO_DATE('" + strToDate + "','YYYY-MM-DD') ");
@@ -9004,7 +9004,7 @@ null
 
     StringBuffer manualManrtInterBill = new StringBuffer();
 
-    manualManrtInterBill.append("INSERT INTO MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+    manualManrtInterBill.append("INSERT INTO CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
     manualManrtInterBill.append(
         "(CREDITOR_BANK,DEBTOR_BANK,SUB_SERVICE,TXN_TYPE,TXN_STATUS,CREATED_BY,CREATED_DATE, ");
     manualManrtInterBill.append(
@@ -9013,9 +9013,9 @@ null
         "SELECT CREDITOR_BANK,DEBTOR_BANK,SERVICE_ID,'TT2',(case when ACCEPTED_IND = 'true' then " +
             "'S' else 'U' end), ");
     manualManrtInterBill.append(
-        "'MANOWNER',SYSDATE,'Y',IN_FILE_DATE,'',MDT_INF_REQ_ID,MANDATE_REF_NR,EXTRACT_MSG_ID," +
+        "'CAMOWNER',SYSDATE,'Y',IN_FILE_DATE,'',MDT_INF_REQ_ID,MANDATE_REF_NR,EXTRACT_MSG_ID," +
             "IN_FILE_DATE ");
-    manualManrtInterBill.append("FROM MANOWNER.MDT_AC_ARC_MDTE_RSP_TXNS ");
+    manualManrtInterBill.append("FROM CAMOWNER.MDT_AC_ARC_MDTE_RSP_TXNS ");
     manualManrtInterBill.append(
         "WHERE IN_FILE_DATE BETWEEN TO_DATE('" + strFromDate + "','YYYY-MM-DD') AND TO_DATE('" +
             strToDate + "','YYYY-MM-DD') ");
@@ -9228,7 +9228,7 @@ null
       sb.append(
           "EXT_MSG_ID as extMsgId, TXN_ID as txnId, MNDT_REF_NUM as mndtRefNum, AUTH_CODE as " +
               "authCode, TXN_STATUS as txnStatus, RESP_DATE as respDate ");
-      sb.append("FROM MANOWNER.MDT_AC_OPS_DAILY_BILLING ");
+      sb.append("FROM CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
       sb.append(
           "WHERE (TXN_TYPE = 'TT1' OR TXN_TYPE = 'TT3') AND CREDITOR_BANK = '" + creditorBank +
               "' AND TRUNC(ACTION_DATE) = TO_DATE('" + repDate + "','YYYY-MM-DD') ");
@@ -9239,7 +9239,7 @@ null
       sb.append(
           "EXT_MSG_ID as extMsgId, TXN_ID as txnId, MNDT_REF_NUM as mndtRefNum, AUTH_CODE as " +
               "authCode, TXN_STATUS as txnStatus, RESP_DATE as respDate ");
-      sb.append("FROM MANOWNER.MDT_AC_ARC_DAILY_BILLING ");
+      sb.append("FROM CAMOWNER.MDT_AC_ARC_DAILY_BILLING ");
       sb.append(
           "WHERE (TXN_TYPE = 'TT1' OR TXN_TYPE = 'TT3') AND CREDITOR_BANK = '" + creditorBank +
               "' AND TRUNC(ACTION_DATE) = TO_DATE('" + repDate + "','YYYY-MM-DD') ");

@@ -84,7 +84,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 		CasOpsServicesEntity casOpsServicesEntity = new CasOpsServicesEntity();
 		try
 		{
-			casOpsServicesEntity = (CasOpsServicesEntity) genericDAO.findByNamedQuery("MdtOpsServicesEntity.findByServiceIdIn","serviceIdIn", serviceName.toUpperCase());
+			casOpsServicesEntity = (CasOpsServicesEntity) genericDAO.findByNamedQuery("CasOpsServicesEntity.findByServiceIdIn","serviceIdIn", serviceName.toUpperCase());
 		}
 		catch(ObjectNotFoundException onfe)
 		{
@@ -126,14 +126,14 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 	{
 
 		log.debug("instId: "+instId);
-		CasOpsCustParamEntity mdtSysctrlCustParamEntity = (CasOpsCustParamEntity) genericDAO.findByNamedQuery("MdtOpsCustParamEntity.findByInstId","instId", instId);
+		CasOpsCustParamEntity mdtSysctrlCustParamEntity = (CasOpsCustParamEntity) genericDAO.findByNamedQuery("CasOpsCustParamEntity.findByInstId","instId", instId);
 
 		return mdtSysctrlCustParamEntity;
 	}
 
 	public List<?> retrieveStatusHdrs(String service)
 	{
-		List<CasOpsStatusHdrsEntity> casOpsStatusHdrsEntityList = genericDAO.findAllByNamedQuery("MdtAcOpsStatusHdrsEntity.findByService", "service", service);
+		List<CasOpsStatusHdrsEntity> casOpsStatusHdrsEntityList = genericDAO.findAllByNamedQuery("CasOpsStatusHdrsEntity.findByService", "service", service);
 		return casOpsStatusHdrsEntityList;
 	}
 	public Object validateMemberNo(String memberNo)
@@ -144,13 +144,13 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public Object validateInstallmentOccurrence_013(String seqCode)
 	{
-		CasCnfgSequenceTypeEntity mdtSequenceTypeEntity = (CasCnfgSequenceTypeEntity) genericDAO.findByNamedQuery("MdtCnfgSequenceTypeEntity.findBySeqTypeCode", "seqTypeCode",seqCode);
+		CasCnfgSequenceTypeEntity mdtSequenceTypeEntity = (CasCnfgSequenceTypeEntity) genericDAO.findByNamedQuery("CasCnfgSequenceTypeEntity.findBySeqTypeCode", "seqTypeCode",seqCode);
 		return mdtSequenceTypeEntity;
 	}
 
 	public Object validateInstallmentFrequency_014(String freqCode)
 	{
-		CasCnfgFrequencyCodesEntity mdtFrequencyCodesEntity = (CasCnfgFrequencyCodesEntity) genericDAO.findByNamedQuery("MdtCnfgFrequencyCodesEntity.findByFrequencyCode", "frequencyCode",freqCode);
+		CasCnfgFrequencyCodesEntity mdtFrequencyCodesEntity = (CasCnfgFrequencyCodesEntity) genericDAO.findByNamedQuery("CasCnfgFrequencyCodesEntity.findByFrequencyCode", "frequencyCode",freqCode);
 		return mdtFrequencyCodesEntity;
 	}
 	/*
@@ -224,19 +224,19 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public Object retrieveErrorCode(String errorCode)
 	{
-		CasCnfgErrorCodesEntity casCnfgErrorCodesEntity = (CasCnfgErrorCodesEntity) genericDAO.findByNamedQuery("MdtCnfgErrorCodesEntity.findByErrorCode","errorCode", errorCode);
+		CasCnfgErrorCodesEntity casCnfgErrorCodesEntity = (CasCnfgErrorCodesEntity) genericDAO.findByNamedQuery("CasCnfgErrorCodesEntity.findByErrorCode","errorCode", errorCode);
 		return casCnfgErrorCodesEntity;
 	}
 
 	public Object retrieveSystemParameters (String  activeInd)
 	{
-		CasSysctrlSysParamEntity  casSysctrlSysParamEntity = (CasSysctrlSysParamEntity)genericDAO.findByNamedQuery("MdtSysctrlSysParamEntity.findByActiveInd", "activeInd", activeInd);
+		CasSysctrlSysParamEntity  casSysctrlSysParamEntity = (CasSysctrlSysParamEntity)genericDAO.findByNamedQuery("CasSysctrlSysParamEntity.findByActiveInd", "activeInd", activeInd);
 		return casSysctrlSysParamEntity;
 	}
 
 	public Object retrieveOpsCustParam(String bicCode)
 	{
-		CasOpsCustParamEntity casOpsCustParamEntity =(CasOpsCustParamEntity)genericDAO.findByNamedQuery("MdtOpsCustParamEntity.findByInstId", "instId", bicCode);
+		CasOpsCustParamEntity casOpsCustParamEntity =(CasOpsCustParamEntity)genericDAO.findByNamedQuery("CasOpsCustParamEntity.findByInstId", "instId", bicCode);
 
 		return casOpsCustParamEntity;
 	}
@@ -245,7 +245,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public Object retrieveOriginalACGrpHdr(String msgId)
 	{
-		CasOpsGrpHdrEntity casOpsGrpHdrEntity = (CasOpsGrpHdrEntity) genericDAO.findByNamedQuery("MdtAcOpsGrpHdrEntity.findByMsgId","msgId", msgId);
+		CasOpsGrpHdrEntity casOpsGrpHdrEntity = (CasOpsGrpHdrEntity) genericDAO.findByNamedQuery("CasOpsGrpHdrEntity.findByMsgId","msgId", msgId);
 
 		return casOpsGrpHdrEntity;
 	}
@@ -253,13 +253,13 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 	public Object retrieveServiceID(String service)
 	{
 
-		List <CasOpsStatusHdrsEntity> casOpsStatusHdrsEntityList = genericDAO.findAllByNamedQuery("MdtAcOpsStatusHdrsEntity.findByService", "service", service);
+		List <CasOpsStatusHdrsEntity> casOpsStatusHdrsEntityList = genericDAO.findAllByNamedQuery("CasOpsStatusHdrsEntity.findByService", "service", service);
 		log.debug("mdtAcOpsStatusHdrsEntityList----------->> "+ casOpsStatusHdrsEntityList);
 		return casOpsStatusHdrsEntityList;
 	}
 	public Object retrieveStatusDetails (BigDecimal statusHdrSeqNo)
 	{
-		List <CasOpsStatusDetailsEntity> casOpsStatusDetailsEntityList = genericDAO.findAllByNamedQuery("MdtAcOpsStatusDetailsEntity.findByStatusHdrSeqNo", "statusHdrSeqNo",statusHdrSeqNo );
+		List <CasOpsStatusDetailsEntity> casOpsStatusDetailsEntityList = genericDAO.findAllByNamedQuery("CasOpsStatusDetailsEntity.findByStatusHdrSeqNo", "statusHdrSeqNo",statusHdrSeqNo );
 		return casOpsStatusDetailsEntityList;
 	}
 
@@ -417,7 +417,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public Object retrieveCompanyParameters(String process)
 	{
-		CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = (CasSysctrlCompParamEntity) genericDAO.findByNamedQuery( "MdtSysctrlCompParamEntity.findAll", null, null);
+		CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = (CasSysctrlCompParamEntity) genericDAO.findByNamedQuery( "CasSysctrlCompParamEntity.findAll", null, null);
 		log.debug("mdtSysctrlCompParamEntity: "+mdtSysctrlCompParamEntity);
 		if(mdtSysctrlCompParamEntity != null && process.equalsIgnoreCase(webProcess))
 		{
@@ -432,7 +432,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public Object retrieveOpsServiceIn(String inService)
 	{
-		CasOpsServicesEntity casOpsServicesEntity = (CasOpsServicesEntity) genericDAO.findByNamedQuery("MdtOpsServicesEntity.findByServiceIdIn", "serviceIdIn", inService);
+		CasOpsServicesEntity casOpsServicesEntity = (CasOpsServicesEntity) genericDAO.findByNamedQuery("CasOpsServicesEntity.findByServiceIdIn", "serviceIdIn", inService);
 		return casOpsServicesEntity;
 	}
 
@@ -474,7 +474,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public Object retrieveOpsCustomerParameters(String instId, String process)
 	{
-		CasOpsCustParamEntity casOpsCustParamEntity = (CasOpsCustParamEntity) genericDAO.findByNamedQuery("MdtOpsCustParamEntity.findByInstId","instId", instId);
+		CasOpsCustParamEntity casOpsCustParamEntity = (CasOpsCustParamEntity) genericDAO.findByNamedQuery("CasOpsCustParamEntity.findByInstId","instId", instId);
 		if(casOpsCustParamEntity != null && process.equalsIgnoreCase(webProcess))
 		{
 			CustParamLogic customerCustParamLogic = new CustParamLogic();
@@ -510,13 +510,13 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public Object retrieveOpsFileReg(String fileName)
 	{
-		CasOpsFileRegEntity casOpsFileRegEntity = (CasOpsFileRegEntity) genericDAO.findByNamedQuery("MdtOpsFileRegEntity.findByFileName", "fileName", fileName);
+		CasOpsFileRegEntity casOpsFileRegEntity = (CasOpsFileRegEntity) genericDAO.findByNamedQuery("CasOpsFileRegEntity.findByFileName", "fileName", fileName);
 		return casOpsFileRegEntity;
 	}
 
 	public Object validateDebitValueType(String debitValueType)
 	{
-		CasCnfgDebitValueTypeEntity mdtDebitValueTypeEntity = (CasCnfgDebitValueTypeEntity) genericDAO.findByNamedQuery("MdtCnfgDebitValueTypeEntity.findByDebValueTypeDescription", "debValueTypeDescription",debitValueType);
+		CasCnfgDebitValueTypeEntity mdtDebitValueTypeEntity = (CasCnfgDebitValueTypeEntity) genericDAO.findByNamedQuery("CasCnfgDebitValueTypeEntity.findByDebValueTypeDescription", "debValueTypeDescription",debitValueType);
 		return mdtDebitValueTypeEntity;
 	}
 
@@ -530,8 +530,8 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 			log.debug("instId: "+instId);
 
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
-			parameters.put("mdtOpsRefSeqNrPK.serviceId", serviceId);
-			parameters.put("mdtOpsRefSeqNrPK.memberNo", instId);
+			parameters.put("casOpsRefSeqNrPK.serviceId", serviceId);
+			parameters.put("casOpsRefSeqNrPK.memberNo", instId);
 			log.debug("---------------sparameters: ------------------"+ parameters.toString());
 			mdtOpsFileSeqNrEntity = (CasOpsRefSeqNrEntity) genericDAO.findByCriteria(
 					CasOpsRefSeqNrEntity.class, parameters);
@@ -683,21 +683,21 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public Object validateAdjustmentCategory(String adjCat)
 	{
-		CasCnfgAdjustmentCatEntity mdtAdjustmentCatEntity = (CasCnfgAdjustmentCatEntity) genericDAO.findByNamedQuery("MdtCnfgAdjustmentCatEntity.findByAdjustmentCategory", "adjustmentCategory",adjCat);
+		CasCnfgAdjustmentCatEntity mdtAdjustmentCatEntity = (CasCnfgAdjustmentCatEntity) genericDAO.findByNamedQuery("CasCnfgAdjustmentCatEntity.findByAdjustmentCategory", "adjustmentCategory",adjCat);
 		return mdtAdjustmentCatEntity;
 	}
 
 	@Override
 	public Object validateExternalStatusReasonCode(String statusReasonCode)
 	{
-		CasCnfgReasonCodesEntity casCnfgReasonCodesEntity =(CasCnfgReasonCodesEntity) genericDAO.findByNamedQuery("MdtCnfgReasonCodesEntity.findByReasonCode","reasonCode",statusReasonCode);
+		CasCnfgReasonCodesEntity casCnfgReasonCodesEntity =(CasCnfgReasonCodesEntity) genericDAO.findByNamedQuery("CasCnfgReasonCodesEntity.findByReasonCode","reasonCode",statusReasonCode);
 		return casCnfgReasonCodesEntity;
 	}
 
 	@Override
 	public Object validateErrorCodes(String errorCode)
 	{
-		CasCnfgErrorCodesEntity casCnfgErrorCodesEntity =(CasCnfgErrorCodesEntity) genericDAO.findByNamedQuery("MdtCnfgErrorCodesEntity.findByErrorCode","errorCode",errorCode);
+		CasCnfgErrorCodesEntity casCnfgErrorCodesEntity =(CasCnfgErrorCodesEntity) genericDAO.findByNamedQuery("CasCnfgErrorCodesEntity.findByErrorCode","errorCode",errorCode);
 		return casCnfgErrorCodesEntity;
 	}
 
@@ -730,21 +730,21 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 	@Override
 	public Object validateAccountType(String accountType)
 	{
-		CasCnfgAccountTypeEntity casCnfgAccountTypeEntity = (CasCnfgAccountTypeEntity) genericDAO.findByNamedQuery("MdtCnfgAccountTypeEntity.findByAccountTypeDescription", "accountTypeDescription",accountType);
+		CasCnfgAccountTypeEntity casCnfgAccountTypeEntity = (CasCnfgAccountTypeEntity) genericDAO.findByNamedQuery("CasCnfgAccountTypeEntity.findByAccountTypeDescription", "accountTypeDescription",accountType);
 		return casCnfgAccountTypeEntity;
 	}
 
 	@Override
 	public Object validateAdjCategory(String adjCategory)
 	{
-		CasCnfgAdjustmentCatEntity casCnfgAdjustmentCatEntity = (CasCnfgAdjustmentCatEntity) genericDAO.findByNamedQuery("MdtCnfgAdjustmentCatEntity.findByAdjustmentCategory", "adjustmentCategory",adjCategory);
+		CasCnfgAdjustmentCatEntity casCnfgAdjustmentCatEntity = (CasCnfgAdjustmentCatEntity) genericDAO.findByNamedQuery("CasCnfgAdjustmentCatEntity.findByAdjustmentCategory", "adjustmentCategory",adjCategory);
 		return casCnfgAdjustmentCatEntity;
 	}
 
 	@Override
 	public Object validateAuthType(String authType)
 	{
-		CasCnfgAuthTypeEntity casCnfgAuthTypeEntity = (CasCnfgAuthTypeEntity) genericDAO.findByNamedQuery("MdtCnfgAuthTypeEntity.findByAuthType", "authType",authType);
+		CasCnfgAuthTypeEntity casCnfgAuthTypeEntity = (CasCnfgAuthTypeEntity) genericDAO.findByNamedQuery("CasCnfgAuthTypeEntity.findByAuthType", "authType",authType);
 		return casCnfgAuthTypeEntity;
 	}
 
@@ -754,7 +754,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 		MdtCnfgValRuleEntity mdtCnfgValRuleEntity = null;
 		try
 		{
-			mdtCnfgValRuleEntity = (MdtCnfgValRuleEntity) genericDAO.findByNamedQuery("MdtCnfgValRuleEntity.findByRuleNr", "ruleNr",valRuleNr);
+			mdtCnfgValRuleEntity = (MdtCnfgValRuleEntity) genericDAO.findByNamedQuery("CassCnfgValRuleEntity.findByRuleNr", "ruleNr",valRuleNr);
 		}
 		catch(ObjectNotFoundException onfe)
 		{
@@ -771,7 +771,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 	public  List<?>  retrieveLocalInstrument(String localInstrCode)
 	{
 		log.debug("localInstrCode.in valBean: "+ localInstrCode); 
-		List<CasCnfgLocalInstrCodesEntity> mdtCnfgLocalInstruEntityList = (List<CasCnfgLocalInstrCodesEntity>) genericDAO.findByNamedQuery("MdtCnfgLocalInstrCodesEntity.findByLocalInstrumentCode","localInstrumentCode", localInstrCode);
+		List<CasCnfgLocalInstrCodesEntity> mdtCnfgLocalInstruEntityList = (List<CasCnfgLocalInstrCodesEntity>) genericDAO.findByNamedQuery("CasCnfgLocalInstrCodesEntity.findByLocalInstrumentCode","localInstrumentCode", localInstrCode);
 		log.debug("******************************mdtAcOpsMndtMsgList.in valBean: "+ mdtCnfgLocalInstruEntityList);
 		return mdtCnfgLocalInstruEntityList;
 	}
@@ -779,7 +779,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 	@Override
 	public Object validateAmendReasonCode(String amendReason) 
 	{
-		CasCnfgAmendmentCodesEntity casCnfgAmendmentCodesEntity =(CasCnfgAmendmentCodesEntity) genericDAO.findByNamedQuery("MdtCnfgAmendmentCodesEntity.findByAmendmentCodes","amendmentCodes",amendReason);
+		CasCnfgAmendmentCodesEntity casCnfgAmendmentCodesEntity =(CasCnfgAmendmentCodesEntity) genericDAO.findByNamedQuery("CasCnfgAmendmentCodesEntity.findByAmendmentCodes","amendmentCodes",amendReason);
 		return casCnfgAmendmentCodesEntity;
 	}
 
@@ -1117,7 +1117,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 		List<CasOpsConfHdrsEntity> mdtAcOpsConfHdrsList = null;
 		try
 		{
-			mdtAcOpsConfHdrsList = (List<CasOpsConfHdrsEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsConfHdrsEntity.findByHdrMsgId", "hdrMsgId",msgId);
+			mdtAcOpsConfHdrsList = (List<CasOpsConfHdrsEntity>) genericDAO.findAllByNamedQuery("CassOpsConfHdrsEntity.findByHdrMsgId", "hdrMsgId",msgId);
 		}
 		catch(Exception ex)
 		{
@@ -1304,7 +1304,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	@Override
 	public List<?> retrieveFileSizeLimit(String destInstId) {
-		List<CasOpsFileSizeLimitEntity> opsFileSizeLimitList = (List<CasOpsFileSizeLimitEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsFileSizeLimitEntity.findByMemberId", "memberId",destInstId);
+		List<CasOpsFileSizeLimitEntity> opsFileSizeLimitList = (List<CasOpsFileSizeLimitEntity>) genericDAO.findAllByNamedQuery("CasOpsFileSizeLimitEntity.findByMemberId", "memberId",destInstId);
 		return opsFileSizeLimitList;
 	}
 	
@@ -1313,7 +1313,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 		List<CasOpsFileSizeLimitEntity> casOpsFileSizeLimitEntityList = null;
 		try
 		{
-			casOpsFileSizeLimitEntityList = (List<CasOpsFileSizeLimitEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsFileSizeLimitEntity.findBySubService", "subService",serviceId);
+			casOpsFileSizeLimitEntityList = (List<CasOpsFileSizeLimitEntity>) genericDAO.findAllByNamedQuery("CassOpsFileSizeLimitEntity.findBySubService", "subService",serviceId);
 		}
 		catch(Exception ex)
 		{

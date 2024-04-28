@@ -185,7 +185,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		log.debug("generateDuplicateError.crAbbShrtName ---->"+crAbbShrtName);
 		log.debug("generateDuplicateError.mndtRefNo ---->"+mndtRefNo);
 
-		CasOpsStatusHdrsEntity casOpsStatusHdrsEntity = (CasOpsStatusHdrsEntity) genericDAO.findByNamedQuery("MdtAcOpsStatusHdrsEntity.findByOrgnlMsgId","orgnlMsgId", msgId);
+		CasOpsStatusHdrsEntity casOpsStatusHdrsEntity = (CasOpsStatusHdrsEntity) genericDAO.findByNamedQuery("CasOpsStatusHdrsEntity.findByOrgnlMsgId","orgnlMsgId", msgId);
 		log.debug("mdtAcOpsStatusHdrsEntity from Duplicate Error ---->"+ casOpsStatusHdrsEntity);
 
 		if(casOpsStatusHdrsEntity != null)
@@ -998,7 +998,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		TreeMap<String, CasOpsFileSizeLimitEntity> matchedMap = new TreeMap<String, CasOpsFileSizeLimitEntity>();
 		try
 		{
-			casOpsFileSizeLimitEntityList = (List<CasOpsFileSizeLimitEntity>) genericDAO.findAllByNamedQuery("MdtAcOpsFileSizeLimitEntity.findBySubService", "subService",serviceId);
+			casOpsFileSizeLimitEntityList = (List<CasOpsFileSizeLimitEntity>) genericDAO.findAllByNamedQuery("CasOpsFileSizeLimitEntity.findBySubService", "subService",serviceId);
 			if(casOpsFileSizeLimitEntityList != null && casOpsFileSizeLimitEntityList.size() > 0)
 			{
 				if(casOpsFileSizeLimitEntityList.size() > 1) {

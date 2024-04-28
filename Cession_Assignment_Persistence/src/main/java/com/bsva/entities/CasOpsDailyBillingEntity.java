@@ -29,28 +29,28 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "CAS_OPS_DAILY_BILLING", schema="CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findAll", query = "SELECT m FROM CasAcOpsDailyBillingEntity m"),
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findBySystemSeqNo", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.systemSeqNo = :systemSeqNo"),
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findByCreditorBank", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.creditorBank = :creditorBank"),
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findByDebtorBank", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.debtorBank = :debtorBank"),
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findBySubService", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.subService = :subService"),
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findByTxnType", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.txnType = :txnType"),
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findByTxnStatus", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.txnStatus = :txnStatus"),
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findByCreatedBy", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.createdBy = :createdBy"),
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findByCreatedDate", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.createdDate = :createdDate"),
-    @NamedQuery(name = "CasAcOpsDailyBillingEntity.findByBillExpStatus", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.billExpStatus = :billExpStatus"),
-	@NamedQuery(name = "CasAcOpsDailyBillingEntity.findByActionDate", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.actionDate = :actionDate"),
-	@NamedQuery(name = "CasAcOpsDailyBillingEntity.findByAuthCode", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.authCode = :authCode"),
-	@NamedQuery(name = "CasAcOpsDailyBillingEntity.findByTxnId", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.txnId = :txnId"),
-	@NamedQuery(name = "CasAcOpsDailyBillingEntity.findByMndtRefNum", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.mndtRefNum = :mndtRefNum"),
-	@NamedQuery(name = "CasAcOpsDailyBillingEntity.findByExtMsgId", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.extMsgId = :extMsgId"),
-	@NamedQuery(name = "CasAcOpsDailyBillingEntity.findByRespDate", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.respDate = :respDate"),
-	@NamedQuery(name = "CasAcOpsDailyBillingEntity.findByCreatedDateSubSTR", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE m.creditorBank = :creditorBank and m.actionDate = :actionDate"),
-	@NamedQuery(name = "CasAcOpsDailyBillingEntity.findByRealTimebyTxnType", query = "SELECT m FROM CasAcOpsDailyBillingEntity m WHERE (m.txnType = :txnType1 OR m.txnType = :txnType2)")})
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findAll", query = "SELECT m FROM CasOpsDailyBillingEntity m"),
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findBySystemSeqNo", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.systemSeqNo = :systemSeqNo"),
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findByCreditorBank", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.creditorBank = :creditorBank"),
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findByDebtorBank", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.debtorBank = :debtorBank"),
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findBySubService", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.subService = :subService"),
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findByTxnType", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.txnType = :txnType"),
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findByTxnStatus", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.txnStatus = :txnStatus"),
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findByCreatedBy", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.createdBy = :createdBy"),
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findByCreatedDate", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.createdDate = :createdDate"),
+    @NamedQuery(name = "CasOpsDailyBillingEntity.findByBillExpStatus", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.billExpStatus = :billExpStatus"),
+	@NamedQuery(name = "CasOpsDailyBillingEntity.findByActionDate", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.actionDate = :actionDate"),
+	@NamedQuery(name = "CasOpsDailyBillingEntity.findByAuthCode", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.authCode = :authCode"),
+	@NamedQuery(name = "CasOpsDailyBillingEntity.findByTxnId", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.txnId = :txnId"),
+	@NamedQuery(name = "CasOpsDailyBillingEntity.findByMndtRefNum", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.mndtRefNum = :mndtRefNum"),
+	@NamedQuery(name = "CasOpsDailyBillingEntity.findByExtMsgId", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.extMsgId = :extMsgId"),
+	@NamedQuery(name = "CasOpsDailyBillingEntity.findByRespDate", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.respDate = :respDate"),
+	@NamedQuery(name = "CasOpsDailyBillingEntity.findByCreatedDateSubSTR", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE m.creditorBank = :creditorBank and m.actionDate = :actionDate"),
+	@NamedQuery(name = "CasOpsDailyBillingEntity.findByRealTimebyTxnType", query = "SELECT m FROM CasOpsDailyBillingEntity m WHERE (m.txnType = :txnType1 OR m.txnType = :txnType2)")})
 	public class CasOpsDailyBillingEntity implements Serializable
 	{
 	    private static final long serialVersionUID = 1L;
-	    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MANOWNER.MDT_AC_OPS_DAILY_BILLING_SEQ") )
+	    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "CAMOWNER.CAS_OPS_DAILY_BILLING_SEQ") )
 	    @GeneratedValue(generator = "generator")
 	    @Id
 	    @Basic(optional = false)
@@ -338,7 +338,7 @@ import org.hibernate.annotations.Parameter;
 
 		@Override
 		public String toString() {
-			return "CasAcOpsDailyBillingEntity [systemSeqNo=" + systemSeqNo + ", creditorBank=" + creditorBank
+			return "CasOpsDailyBillingEntity [systemSeqNo=" + systemSeqNo + ", creditorBank=" + creditorBank
 					+ ", debtorBank=" + debtorBank + ", subService=" + subService + ", txnType=" + txnType
 					+ ", txnStatus=" + txnStatus + ", createdBy=" + createdBy + ", createdDate=" + createdDate
 					+ ", billExpStatus=" + billExpStatus + ", actionDate=" + actionDate + ", authCode=" + authCode

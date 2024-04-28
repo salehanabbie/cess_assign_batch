@@ -5,7 +5,9 @@
     <session-factory>
         <!-- This will change to the JNDI. I have kept the connection details here
             for the test cases. We will Abstract this at a later stage -->
-        <property name="connection.datasource">java:jboss/datasources/CessAssignDS</property>
+        <property name="connection.datasource">
+            java:jboss/datasources/CessAssignDS
+        </property>
         <!-- <property name="connection.url">jdbc:oracle:thin:@172.16.161.105:1521:ONED</property>
             <property name="connection.username">MANOWNER</property> <property name="connection.password">MANOWNER</property>
             <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property> -->
@@ -61,6 +63,16 @@
         <mapping class="com.bsva.entities.CasOpsTransCtrlMsgEntity"/>
         <mapping class="com.bsva.entities.CasOpsTxnsBillingEntity"/>
         <mapping class="com.bsva.entities.CasOpsTxnsBillReportEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlCompParamEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlCustParamEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlFileSizeLimitEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlFileStatusEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlProcessStatusEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlSchedulerEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlSchedulerCronEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlServicesEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlServicesEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlSlaTimesEntity"/>
         <mapping class="com.bsva.entities.CisBranchEntity"/>
         <mapping class="com.bsva.entities.CisMemberEntity"/>
         <mapping class="com.bsva.entities.IamSessionEntity"/>
@@ -69,15 +81,13 @@
         <mapping class="com.bsva.entities.SysCisBankEntity"/>
         <mapping class="com.bsva.entities.SysCisBranchEntity"/>
         <mapping class="com.bsva.entities.MdtCnfgValRuleEntity"/>
-        <!--		<mapping class="com.bsva.entities.MdtSysctrlServicesEntity"/>-->
-        <!--		<mapping class="com.bsva.entities.MdtSysctrlSchedulerEntity"/>-->
-        <!--		<mapping class="com.bsva.entities.MdtSysctrlCompParamEntity"/>-->
-        <!--		<mapping class="com.bsva.entities.MdtSysctrlSysParamEntity"/>-->
+
+
         <!--		<mapping class="com.bsva.entities.MdtOpsAccptFinInstEntity"/>-->
         <!--		<mapping class="com.bsva.entities.MdtOpsAccptPartyIdentEntity"/>-->
         <!--		<mapping class="com.bsva.entities.MdtOpsMdteRequestEntity"/>-->
         <!--		<mapping class="com.bsva.entities.MdtSysctrlCronEntity"/>-->
-        <!--	    <mapping class="com.bsva.entities.MdtSysctrlFileStatusEntity"/>-->
+
         <!--	    <mapping class="com.bsva.entities.MdtCnfgAddressTypeEntity"/>-->
         <!--	    <mapping class="com.bsva.entities.MdtCnfgNamePrefixEntity"/>-->
         <!--	    <mapping class="com.bsva.entities.MdtCnfgDwnldReqTypeEntity"/>	  -->
@@ -89,14 +99,14 @@
         <!--       	-->
         <!--		<mapping class="com.bsva.entities.MdtAcArcStatusHdrsEntity"/>-->
         <!--      	<mapping class="com.bsva.entities.MdtAcArcStatusDetailsEntity"/>-->
-        <!--      	<mapping class="com.bsva.entities.MdtSysctrlSlaTimesEntity"/>-->
+
         <!--      	<mapping class="com.bsva.entities.MdtCnfgSuspensionCodesEntity"/>-->
         <!--      	<mapping class="com.bsva.entities.MdtAcArcConfHdrsEntity"/>-->
         <!--      	<mapping class="com.bsva.entities.MdtAcArcConfDetailsEntity"/>-->
         <!--      	<mapping class="com.bsva.entities.MdtAcArcMndtCountEntity"/>-->
         <!--      	<mapping class="com.bsva.entities.CasSystemBillingCtrlsEntity"/>-->
         <!--      	<mapping class="com.bsva.entities.MdtAcArcDailyBillingEntity"/>-->
-        <!--      	<mapping class="com.bsva.entities.MdtSysctrlSchedulerCronEntity"/> -->
+
         <!--      	<mapping class="com.bsva.entities.MdtAcArcErrorCodesReportEntity"/> -->
         <!--    	<mapping class="com.bsva.entities.MdtAcOpsErrorCodesReportEntity"/> -->
         <!--    	<mapping class="com.bsva.entities.MdtAcArcErrCodesRepSumEntity"/>-->
@@ -106,7 +116,7 @@
         <!--	 	<mapping class="com.bsva.entities.MdtAcOpsMrkoffAcceptDetEntity"/>-->
         <!--	 	<mapping class="com.bsva.entities.MdtAcArcMrkoffGrpHdrEntity"/>-->
         <!--	 	<mapping class="com.bsva.entities.MdtAcArcMrkoffAcceptDetEntity"/>-->
-        <!--		<mapping class="com.bsva.entities.MdtSysctrlFileSizeLimitEntity"/>-->
+
         <!--	 	<mapping class="com.bsva.entities.MdtAcArcTxnsBillingEntity"/>-->
         <!--	 	<mapping class="com.bsva.entities.MdtAcOpsMdteRspTxnsEntity"/>-->
         <!--	 	<mapping class="com.bsva.entities.MdtAcOpsRtTxnsBillEntity"/>-->

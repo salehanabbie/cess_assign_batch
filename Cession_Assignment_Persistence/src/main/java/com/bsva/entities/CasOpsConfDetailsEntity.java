@@ -26,30 +26,30 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "CAS_OPS_CONF_DETAILS",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findAll", query = "SELECT m FROM CasAcOpsConfDetailsEntity m"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findBySystemSeqNo", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByConfHdrSeqNo", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.confHdrSeqNo = :confHdrSeqNo"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByErrorCode", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.errorCode = :errorCode"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByTxnId", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.txnId = :txnId"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByTxnStatus", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.txnStatus = :txnStatus"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByErrorType", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.errorType = :errorType"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByRecordId", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.recordId = :recordId"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByMandateRefNumber", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.mandateRefNumber = :mandateRefNumber"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByInstId", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.instId = :instId"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByProcessStatus", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.processStatus = :processStatus"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByExtractService", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.extractService = :extractService"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByOrgnlMsgType", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.orgnlMsgType = :orgnlMsgType"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByExtractMsgId", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.extractMsgId = :extractMsgId"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByLocalInstrCd", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.localInstrCd = :localInstrCd"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByMsgId", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.msgId = :msgId"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByInFileName", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.inFileName = :inFileName"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByExtractFileName", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.extractFileName = :extractFileName"),
-    @NamedQuery(name = "CasAcOpsConfDetailsEntity.findByExtractProcessStatusOutService", query = "SELECT m FROM CasAcOpsConfDetailsEntity m WHERE m.processStatus = :processStatus and m.extractService = :extractService and m.instId = :memberId")})
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findAll", query = "SELECT m FROM CasOpsConfDetailsEntity m"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findBySystemSeqNo", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByConfHdrSeqNo", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.confHdrSeqNo = :confHdrSeqNo"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByErrorCode", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.errorCode = :errorCode"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByTxnId", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.txnId = :txnId"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByTxnStatus", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.txnStatus = :txnStatus"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByErrorType", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.errorType = :errorType"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByRecordId", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.recordId = :recordId"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByMandateRefNumber", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.mandateRefNumber = :mandateRefNumber"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByInstId", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.instId = :instId"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByProcessStatus", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.processStatus = :processStatus"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByExtractService", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.extractService = :extractService"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByOrgnlMsgType", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.orgnlMsgType = :orgnlMsgType"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByExtractMsgId", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.extractMsgId = :extractMsgId"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByLocalInstrCd", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.localInstrCd = :localInstrCd"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByMsgId", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.msgId = :msgId"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByInFileName", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.inFileName = :inFileName"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByExtractFileName", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.extractFileName = :extractFileName"),
+    @NamedQuery(name = "CasOpsConfDetailsEntity.findByExtractProcessStatusOutService", query = "SELECT m FROM CasOpsConfDetailsEntity m WHERE m.processStatus = :processStatus and m.extractService = :extractService and m.instId = :memberId")})
     
 public class CasOpsConfDetailsEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MANOWNER.MDT_AC_ARC_CONF_DETAILS_SEQ") )
+    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MANOWNER.CAS_OPS_CONF_DETAILS_SEQ") )
     @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)
@@ -379,7 +379,7 @@ public class CasOpsConfDetailsEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CasAcOpsConfDetailsEntity [systemSeqNo=" + systemSeqNo + ", confHdrSeqNo=" + confHdrSeqNo
+		return "CasOpsConfDetailsEntity [systemSeqNo=" + systemSeqNo + ", confHdrSeqNo=" + confHdrSeqNo
 				+ ", errorCode=" + errorCode + ", txnId=" + txnId + ", txnStatus=" + txnStatus + ", errorType="
 				+ errorType + ", recordId=" + recordId + ", mandateRefNumber=" + mandateRefNumber + ", instId=" + instId
 				+ ", processStatus=" + processStatus + ", extractService=" + extractService + ", orgnlMsgType="

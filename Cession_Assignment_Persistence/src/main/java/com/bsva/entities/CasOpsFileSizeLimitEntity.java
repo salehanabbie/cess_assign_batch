@@ -21,8 +21,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasOpsFileSizeLimitEntity.findAll", query = "SELECT m FROM CasOpsFileSizeLimitEntity m"),
-    @NamedQuery(name = "CasOpsFileSizeLimitEntity.findByMemberId", query = "SELECT m FROM CasOpsFileSizeLimitEntity m WHERE m.mdtAcOpsFileSizeLimitPK.memberId = :memberId"),
-    @NamedQuery(name = "CasOpsFileSizeLimitEntity.findBySubService", query = "SELECT m FROM CasOpsFileSizeLimitEntity m WHERE m.mdtAcOpsFileSizeLimitPK.subService = :subService"),
+    @NamedQuery(name = "CasOpsFileSizeLimitEntity.findByMemberId", query = "SELECT m FROM CasOpsFileSizeLimitEntity m WHERE m.casOpsFileSizeLimitPK.memberId = :memberId"),
+    @NamedQuery(name = "CasOpsFileSizeLimitEntity.findBySubService", query = "SELECT m FROM CasOpsFileSizeLimitEntity m WHERE m.casOpsFileSizeLimitPK.subService = :subService"),
     @NamedQuery(name = "CasOpsFileSizeLimitEntity.findByProcessDate", query = "SELECT m FROM CasOpsFileSizeLimitEntity m WHERE m.processDate = :processDate"),
     @NamedQuery(name = "CasOpsFileSizeLimitEntity.findByLimit", query = "SELECT m FROM CasOpsFileSizeLimitEntity m WHERE m.limit = :limit"),
     @NamedQuery(name = "CasOpsFileSizeLimitEntity.findByActiveId", query = "SELECT m FROM CasOpsFileSizeLimitEntity m WHERE m.activeId = :activeId"),

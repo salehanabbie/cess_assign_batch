@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findAll", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o"),
-    @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByProcessDate", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.obsSystemBillingCtrlsPK.processDate = :processDate"),
-    @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findBySystemName", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.obsSystemBillingCtrlsPK.systemName = :systemName"),
+    @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByProcessDate", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.casSystemBillingCtrlsPK.processDate = :processDate"),
+    @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findBySystemName", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.casSystemBillingCtrlsPK.systemName = :systemName"),
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByProcessStatus", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.processStatus = :processStatus"),
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByCreatedBy", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.createdBy = :createdBy"),
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByCreatedDate", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.createdDate = :createdDate"),
@@ -175,7 +175,7 @@ public class CasSystemBillingCtrlsEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ObsSystemBillingCtrlsEntity [obsSystemBillingCtrlsPK="
+		return "ObsSystemBillingCtrlsEntity [casSystemBillingCtrlsPK="
 				+ casSystemBillingCtrlsPK + ", processStatus=" + processStatus
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
 				+ ", modifiedBy=" + modifiedBy + ", modifiedDate="

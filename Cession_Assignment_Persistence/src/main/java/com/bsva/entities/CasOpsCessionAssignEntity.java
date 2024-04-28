@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasOpsCessionAssignEntity.findAll", query = "SELECT m FROM CasOpsCessionAssignEntity m"),
-    @NamedQuery(name = "CasOpsCessionAssignEntity.findByMsgId", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.mdtAcOpsMandateTxnsEntityPK.msgId = :msgId"),
-    @NamedQuery(name = "CasOpsCessionAssignEntity.findByMandateReqTranId", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.mdtAcOpsMandateTxnsEntityPK.mandateReqTranId = :mandateReqTranId"),
+    @NamedQuery(name = "CasOpsCessionAssignEntity.findByMsgId", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.casOpsCessionAssignEntityPK.msgId = :msgId"),
+    @NamedQuery(name = "CasOpsCessionAssignEntity.findByMandateReqTranId", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.casOpsCessionAssignEntityPK.mandateReqTranId = :mandateReqTranId"),
     @NamedQuery(name = "CasOpsCessionAssignEntity.findByCreditorBank", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.creditorBank = :creditorBank"),
     @NamedQuery(name = "CasOpsCessionAssignEntity.findByDebtorBank", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.debtorBank = :debtorBank"),
     @NamedQuery(name = "CasOpsCessionAssignEntity.findByServiceId", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.serviceId = :serviceId"),
@@ -96,7 +96,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CasOpsCessionAssignEntity.findByCreatedDateTruncAndServiceIdCreditor", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.serviceId = :serviceId and TRUNC(m.createdDate) = TO_DATE(:createdDate,'YYYY-MM-DD')"
     																						   + " and (m.processStatus = :processStatus1 OR m.processStatus = :processStatus2) and (m.creditorBank = :memberId)"),
     @NamedQuery(name = "CasOpsCessionAssignEntity.findByMacCode", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.macCode = :macCode"),
-    @NamedQuery(name = "CasOpsCessionAssignEntity.matchingPain012", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.mdtAcOpsMandateTxnsEntityPK.mandateReqTranId = :mandateReqTranId ORDER BY CASE WHEN m.serviceId = 'MANCN' THEN 1 WHEN m.serviceId = 'MANAM' THEN 2 WHEN m.serviceId = 'MANIN' THEN 3 END")})
+    @NamedQuery(name = "CasOpsCessionAssignEntity.matchingPain012", query = "SELECT m FROM CasOpsCessionAssignEntity m WHERE m.casOpsCessionAssignEntityPK.mandateReqTranId = :mandateReqTranId ORDER BY CASE WHEN m.serviceId = 'MANCN' THEN 1 WHEN m.serviceId = 'MANAM' THEN 2 WHEN m.serviceId = 'MANIN' THEN 3 END")})
 
 public class CasOpsCessionAssignEntity implements Serializable {
 
@@ -1269,7 +1269,7 @@ public class CasOpsCessionAssignEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CasOpsCessionAssignEntity [mdtAcOpsMandateTxnsEntityPK=" +
+		return "CasOpsCessionAssignEntity [casOpsCessionAssignEntityPK=" +
             casOpsCessionAssignEntityPK
 				+ ", creditorBank=" + creditorBank + ", debtorBank=" + debtorBank + ", serviceId=" + serviceId
 				+ ", processStatus=" + processStatus + ", inFileName=" + inFileName + ", inFileDate=" + inFileDate

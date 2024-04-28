@@ -23,14 +23,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasOpsRefSeqNrEntity.findAll", query = "SELECT m FROM CasOpsRefSeqNrEntity m"),
-    @NamedQuery(name = "CasOpsRefSeqNrEntity.findByServiceId", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.mdtOpsRefSeqNrPK.serviceId = :serviceId"),
+    @NamedQuery(name = "CasOpsRefSeqNrEntity.findByServiceId", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.casOpsRefSeqNrPK.serviceId = :serviceId"),
     @NamedQuery(name = "CasOpsRefSeqNrEntity.findByLastSeqNr", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.lastSeqNr = :lastSeqNr"),
     @NamedQuery(name = "CasOpsRefSeqNrEntity.findByCreatedBy", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.createdBy = :createdBy"),
     @NamedQuery(name = "CasOpsRefSeqNrEntity.findByCreatedDate", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.createdDate = :createdDate"),
     @NamedQuery(name = "CasOpsRefSeqNrEntity.findByModifiedBy", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.modifiedBy = :modifiedBy"),
     @NamedQuery(name = "CasOpsRefSeqNrEntity.findByModifiedDate", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.modifiedDate = :modifiedDate"),
     @NamedQuery(name = "CasOpsRefSeqNrEntity.findByLastFileNr", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.lastFileNr = :lastFileNr"),
-    @NamedQuery(name = "CasOpsRefSeqNrEntity.findByMemberNo", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.mdtOpsRefSeqNrPK.memberNo = :memberNo")})
+    @NamedQuery(name = "CasOpsRefSeqNrEntity.findByMemberNo", query = "SELECT m FROM CasOpsRefSeqNrEntity m WHERE m.casOpsRefSeqNrPK.memberNo = :memberNo")})
 public class CasOpsRefSeqNrEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

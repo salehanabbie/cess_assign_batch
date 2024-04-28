@@ -78,8 +78,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append("TO_DATE('" + currentDate +
         "','YYYY-MM-DD') - TRUNC(a.CREATED_DATE) AS nrDaysOutstanding, ");
     sb.append("a.MANDATE_REQ_TRAN_ID as mandateReqTransId,a.SERVICE_ID as serviceId ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
     sb.append("WHERE a.PROCESS_STATUS IN ('4','9') ");
     sb.append("AND a.DEBTOR_BANK = '" + memberId + "' ");
     sb.append("AND TRUNC(a.CREATED_DATE) = TO_DATE('" + currentDate + "','YYYY-MM-DD')-1 ");
@@ -90,8 +90,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append("TO_DATE('" + currentDate +
         "','YYYY-MM-DD') - TRUNC(a.CREATED_DATE) AS nrDaysOutstanding, ");
     sb.append("a.MANDATE_REQ_TRAN_ID as mandateReqTransId,a.SERVICE_ID as serviceId ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
     sb.append("WHERE a.PROCESS_STATUS IN ('4','9') ");
     sb.append("AND a.DEBTOR_BANK = '" + memberId + "' ");
     sb.append("AND TRUNC(a.CREATED_DATE) = TO_DATE('" + currentDate + "','YYYY-MM-DD')-2 ");
@@ -105,11 +105,11 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "a.TRANSACTIONIDENTIFIERAMS AS mandateReqTransId,SUBSTR(a.ORIGINALMSGIDAMS,5,5)  AS " +
             "serviceId ");
-    sb.append("FROM MANOWNER.JNL_ACQ a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+    sb.append("FROM CAMOWNER.JNL_ACQ a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
     sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
     sb.append("and a.MSGTYPEAMS = 'pain.009' and b.msgtypeams = 'pain.012' ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ");
     sb.append("ON  a.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
     sb.append(
         "WHERE a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' and a.msgtypeams = 'pain.009' AND  a" +
@@ -127,11 +127,11 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "a.TRANSACTIONIDENTIFIERAMS AS mandateReqTransId,SUBSTR(a.ORIGINALMSGIDAMS,5,5)  AS " +
             "serviceId ");
-    sb.append("FROM MANOWNER.JNL_ACQ a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+    sb.append("FROM CAMOWNER.JNL_ACQ a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
     sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
     sb.append("AND a.MSGTYPEAMS = 'pain.010' AND b.msgtypeams = 'pain.012' ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ");
     sb.append("ON  a.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
     sb.append(
         "WHERE a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' AND a.msgtypeams = 'pain.010' AND  a" +
@@ -149,11 +149,11 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "a.TRANSACTIONIDENTIFIERAMS AS mandateReqTransId,SUBSTR(a.ORIGINALMSGIDAMS,5,5)  AS " +
             "serviceId ");
-    sb.append("FROM MANOWNER.JNL_ACQ a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.JNL_ACQ b ");
+    sb.append("FROM CAMOWNER.JNL_ACQ a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.JNL_ACQ b ");
     sb.append("ON a.TRANSACTIONIDENTIFIERAMS = b.TRANSACTIONIDENTIFIERAMS ");
     sb.append("AND a.MSGTYPEAMS = 'pain.011' AND b.msgtypeams = 'pain.012' ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ");
     sb.append("ON  a.INSTRUCTINGAGENTAMS = c.MEMBER_NO ");
     sb.append(
         "WHERE a.PAYMENTSTATUSGROUPCODEAMS = 'ACCP' AND a.msgtypeams = 'pain.011' AND  a" +
@@ -217,7 +217,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 
     CasSysctrlSysParamEntity casSysctrlSysParamEntity =
         (CasSysctrlSysParamEntity) genericDAO.findByNamedQuery(
-            "MdtSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
+            "CasSysctrlSysParamEntity.findByActiveInd", "activeInd", "Y");
     Date currentDate;
 
     if (casSysctrlSysParamEntity != null && casSysctrlSysParamEntity.getProcessDate() != null) {
@@ -240,10 +240,10 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     //		sb.append("SELECT SUBSTR(a.EXTRACT_MSG_ID,13,6) AS debtorBank,c.MEMBER_NAME  as
     //		debtorName,SUBSTR(a.MSG_ID,13,6) AS creditorBank,b.MEMBER_NAME AS creditorName,a
     //		.SERVICE_ID as serviceId, COUNT(*) AS nrOfTxns ");
-    //		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-    //		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b
+    //		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+    //		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b
     //		.MEMBER_NO ");
-    //		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c
+    //		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c
     //		.MEMBER_NO ");
     //		sb.append("WHERE a.PROCESS_STATUS IN ('4','9') AND SUBSTR(a.EXTRACT_MSG_ID,13,6) =
     //		'"+debtorMember+"' AND a.SERVICE_ID = '"+serviceId+"' ");
@@ -256,9 +256,9 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "SELECT a.DEBTOR_BANK AS debtorBank, c.MEMBER_NAME  as debtorName, a.CREDITOR_BANK AS " +
             "creditorBank,b.MEMBER_NAME AS creditorName,a.SERVICE_ID as serviceId, COUNT(*) AS " +
             "nrOfTxns ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON CREDITOR_BANK = b.MEMBER_NO ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON DEBTOR_BANK = c.MEMBER_NO ");
+    sb.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON DEBTOR_BANK = c.MEMBER_NO ");
     sb.append("WHERE a.PROCESS_STATUS IN ('4','9') AND a.DEBTOR_BANK = '" + debtorMember +
         "' AND a.CREDITOR_BANK = '" + creditorMember + "' ");
     sb.append("AND a.SERVICE_ID = '" + serviceId + "' ");
@@ -326,10 +326,10 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     //		sb.append("SELECT SUBSTR(a.EXTRACT_MSG_ID,13,6) AS debtorBank,c.MEMBER_NAME  as
     //		debtorName,SUBSTR(a.MSG_ID,13,6) AS creditorBank,b.MEMBER_NAME AS creditorName,a
     //		.SERVICE_ID as serviceId, COUNT(*) AS nrOfTxns ");
-    //		sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_MSG a ");
-    //		sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b
+    //		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG a ");
+    //		sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON  SUBSTR(a.MSG_ID,13,6) = b
     //		.MEMBER_NO ");
-    //		sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c
+    //		sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON SUBSTR(a.EXTRACT_MSG_ID,13,6) = c
     //		.MEMBER_NO ");
     //		sb.append("WHERE a.PROCESS_STATUS IN('4','9') AND SUBSTR(a.EXTRACT_MSG_ID,13,6) =
     //		'"+debtorMember+"' AND a.SERVICE_ID = '"+serviceId+"' ");
@@ -342,9 +342,9 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "SELECT a.DEBTOR_BANK AS debtorBank, c.MEMBER_NAME  as debtorName, a.CREDITOR_BANK AS " +
             "creditorBank,b.MEMBER_NAME AS creditorName,a.SERVICE_ID as serviceId, COUNT(*) AS " +
             "nrOfTxns ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON CREDITOR_BANK = b.MEMBER_NO ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON DEBTOR_BANK = c.MEMBER_NO ");
+    sb.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON DEBTOR_BANK = c.MEMBER_NO ");
     sb.append("WHERE a.PROCESS_STATUS IN ('4','9') AND a.DEBTOR_BANK = '" + debtorMember +
         "' AND a.CREDITOR_BANK = '" + creditorMember + "' ");
     sb.append("AND a.SERVICE_ID = '" + serviceId + "' ");
@@ -394,10 +394,10 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 
     //		sb.append("SELECT b.MEMBER_ID,c.MEMBER_ID, a.REJECT_REASON_CODE, COUNT(*) AS
     //		rejectReasonCodeCount ");
-    //		sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
-    //		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a
+    //		sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
+    //		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a
     //		.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
-    //		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a
+    //		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST c ON a.MSG_ID = c.MSG_ID AND a
     //		.MANDATE_REQ_TRAN_ID = c.MANDATE_REQ_TRAN_ID ");
     //		sb.append("WHERE b.FIN_INST_TYPE_ID = 'FI03' AND  c.FIN_INST_TYPE_ID = 'FI04' AND b
     //		.MEMBER_ID = '"+memberId+"' AND c.MEMBER_ID ='"+debtorBankId+"' ");
@@ -408,7 +408,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "SELECT CREDITOR_BANK, DEBTOR_BANK, REJECT_REASON_CODE, COUNT(*) AS rejectReasonCodeCount" +
             " ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS ");
     sb.append(
         "WHERE CREDITOR_BANK = '" + creditorBank + "' AND DEBTOR_BANK ='" + debtorBank + "' ");
     sb.append("AND REJECT_REASON_CODE ='" + reasonCode + "' AND SERVICE_ID ='MANAC' ");
@@ -452,8 +452,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 
     //		sb.append("SELECT b.MEMBER_ID, a.REJECT_REASON_CODE, COUNT(*) AS rejectReasonCodeCount
     //		");
-    //		sb.append("FROM MANOWNER.MDT_AC_ARC_MNDT_MSG a ");
-    //		sb.append("LEFT JOIN MANOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a
+    //		sb.append("FROM CAMOWNER.MDT_AC_ARC_MNDT_MSG a ");
+    //		sb.append("LEFT JOIN CAMOWNER.MDT_AC_ARC_FIN_INST b ON a.MSG_ID = b.MSG_ID AND a
     //		.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
     //		sb.append("WHERE b.FIN_INST_TYPE_ID = 'FI03' AND b.MEMBER_ID = '"+memberId+"' ");
     //		sb.append("AND a.REJECT_REASON_CODE ='"+reasonCode+"' AND a.SERVICE_ID ='MANAC' AND
@@ -462,7 +462,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     //		sb.append("GROUP BY  b.MEMBER_ID,a.REJECT_REASON_CODE ");
 
     sb.append("SELECT CREDITOR_BANK, REJECT_REASON_CODE, COUNT(*) AS rejectReasonCodeCount ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS ");
     sb.append(
         "WHERE CREDITOR_BANK = '" + creditorBank + "' AND REJECT_REASON_CODE ='" + reasonCode +
             "' AND SERVICE_ID ='MANAC' ");
@@ -508,8 +508,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 
     //		sb.append("SELECT b.MEMBER_NAME ,SUBSTR(a.msg_id,13,6), a.AMEND_REASON_CODE,COUNT(*)
     //		AS amendReasonCodeCount ");
-    //		sb.append("FROM  MANOWNER.MDT_AC_ARC_MNDT_MSG a  ");
-    //		sb.append("LEFT JOIN MANOWNER.SYS_CIS_BANK b ON SUBSTR(a.msg_id,13,6)= b.MEMBER_NO ");
+    //		sb.append("FROM  CAMOWNER.MDT_AC_ARC_MNDT_MSG a  ");
+    //		sb.append("LEFT JOIN CAMOWNER.SYS_CIS_BANK b ON SUBSTR(a.msg_id,13,6)= b.MEMBER_NO ");
     //		sb.append("WHERE SUBSTR(a.msg_id,13,6) = '"+memberNo+"' AND a.AMEND_REASON_CODE =
     //		'"+amendmetReasonCode+"'  ");
     //		sb.append("AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('"+firstDate+"','DDMMYYYY') AND
@@ -518,8 +518,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 
     sb.append(
         "SELECT b.MEMBER_NAME, a.CREDITOR_BANK, a.AMEND_REASON, COUNT(*) AS amendReasonCodeCount ");
-    sb.append("FROM  MANOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
-    sb.append("LEFT JOIN MANOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("FROM  CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+    sb.append("LEFT JOIN CAMOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
     sb.append("WHERE a.CREDITOR_BANK = '" + creditorBank + "' AND a.AMEND_REASON = '" +
         amendmetReasonCode + "' AND a.SERVICE_ID ='MANAM' ");
     sb.append(
@@ -569,8 +569,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append("SELECT SUM(amendReasonCodeCount) AS amendReasonCodeCount FROM ");
     sb.append(
         "(SELECT b.MEMBER_NAME ,a.CREDITOR_BANK, a.AMEND_REASON,COUNT(*) AS amendReasonCodeCount ");
-    sb.append("FROM  MANOWNER.MDT_AC_ARC_MANDATE_TXNS a  ");
-    sb.append("LEFT JOIN MANOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("FROM  CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a  ");
+    sb.append("LEFT JOIN CAMOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
     sb.append("WHERE a.AMEND_REASON = '" + amendmetReasonCode + "'  ");
     sb.append(
         "AND TRUNC(a.CREATED_DATE) BETWEEN TO_DATE('" + firstDate + "','DDMMYYYY') AND TO_DATE('" +
@@ -643,7 +643,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
       sb.append(", CANCEL_REASON as reason ");
     }
 
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS ");
 
     if (expiredTxns) {
       sb.append("WHERE SERVICE_ID = '" + service +
@@ -700,7 +700,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
           "SELECT REJECT_REASON_CODE as reason, AUTH_STATUS_IND as authStatus, TO_CHAR" +
               "(CREATED_DATE, 'YYYY-MM-DD') as creationDate ");
     }
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
     sb.append("WHERE MANDATE_REQ_TRAN_ID = '" + mrti + "' AND SERVICE_ID = 'MANAC' ");
 
     String sqlQuery = sb.toString();
@@ -766,10 +766,10 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     //			sb.append("a.ERROR_CODE AS errorCode, 'ACH' AS dataSource, c.CONTRACT_REF AS
     //			contRefNum,c.LOCAL_INSTR_CD AS dbtrAuthReq, c.SEQUENCE_TYPE AS instOcc, c
     //			.CRED_ABB_SHORT_NAME as cdtrAbbShtNm ");
-    //			sb.append("FROM MANOWNER.MDT_AC_ARC_CONF_DETAILS a ");
-    //			sb.append("JOIN MANOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b
+    //			sb.append("FROM CAMOWNER.MDT_AC_ARC_CONF_DETAILS a ");
+    //			sb.append("JOIN CAMOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b
     //			.SYSTEM_SEQ_NO ");
-    //			sb.append("JOIN MANOWNER.MDT_AC_ARC_MANDATE_TXNS c ON c.MANDATE_REQ_TRAN_ID = a
+    //			sb.append("JOIN CAMOWNER.MDT_AC_ARC_MANDATE_TXNS c ON c.MANDATE_REQ_TRAN_ID = a
     //			.TXN_ID ");
     //			sb.append("WHERE TRUNC(a.ARCHIVE_DATE) BETWEEN TO_DATE('"+fromDate+"',
     //			'YYYY-MM-DD') AND TO_DATE('"+toDate+"', 'YYYY-MM-DD') ");
@@ -789,9 +789,9 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
             ".LOCAL_INSTR_CD AS dbtrAuthReq, c.SEQUENCE_TYPE AS instOcc, c.CRED_ABB_SHORT_NAME as" +
             " " +
             "cdtrAbbShtNm ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_CONF_DETAILS a ");
-    sb.append("JOIN MANOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
-    sb.append("JOIN MANOWNER.MDT_AC_ARC_MANDATE_TXNS c ON c.MANDATE_REQ_TRAN_ID = a.TXN_ID ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_CONF_DETAILS a ");
+    sb.append("JOIN CAMOWNER.MDT_AC_ARC_CONF_HDRS b ON a.CONF_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
+    sb.append("JOIN CAMOWNER.MDT_AC_ARC_MANDATE_TXNS c ON c.MANDATE_REQ_TRAN_ID = a.TXN_ID ");
     sb.append("WHERE TRUNC(a.ARCHIVE_DATE) BETWEEN TO_DATE('" + fromDate +
         "', 'YYYY-MM-DD') AND TO_DATE('" + toDate + "', 'YYYY-MM-DD') ");
     sb.append("AND a.ORGNL_MSG_TYPE = '" + serviceNmId +
@@ -844,9 +844,9 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         ",SUBSTR(a.EXTRACT_FILE_NAME,1,33) AS fileName ,'TT2' AS transType ,TO_DATE('" + procDate +
             "','YYYY-MM-DD') - TRUNC(a.CREATED_DATE) AS nrDaysOutstanding ");
     sb.append(",a.MANDATE_REQ_TRAN_ID as mandateReqTransId ,a.SERVICE_ID as serviceId ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c on A.DEBTOR_BANK = c.member_no ");
+    sb.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c on A.DEBTOR_BANK = c.member_no ");
     sb.append("left outer join manowner.jnl_acq d ");
     sb.append(
         "on a.mandate_req_tran_id = d.transactionidentifierams and cancellationreasonams in" +
@@ -1031,8 +1031,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "CASE WHEN a.STATUS = 'LE' THEN a.STATUS||'-PARTIALLY LOADED' ELSE a.STATUS||'-'||b" +
             ".STATUS_DESCRIPTION END AS status ");
-    sb.append("FROM MANOWNER.MDT_OPS_FILE_REG a ");
-    sb.append("JOIN MANOWNER.MDT_SYSCTRL_FILE_STATUS b ON b.STATUS = a.STATUS ");
+    sb.append("FROM CAMOWNER.CAS_OPS_FILE_REG a ");
+    sb.append("JOIN CAMOWNER.CAS_SYSCTRL_FILE_STATUS b ON b.STATUS = a.STATUS ");
     if (direction.equalsIgnoreCase("I")) {
       sb.append("WHERE (SUBSTR(a.FILE_NAME, 4,5) = 'MANDB') ");
     } else {
@@ -1078,9 +1078,9 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
             "dbtrMemberName ,a.debtor_bank as dbtrMemberNo ");
     sb.append(",SUBSTR(a.IN_FILE_NAME,1,33) AS fileName ,'TT2' AS transType ");
     sb.append(",a.MANDATE_REQ_TRAN_ID as mandateReqTransId ,a.SERVICE_ID as serviceId ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c on A.DEBTOR_BANK = c.member_no ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c on A.DEBTOR_BANK = c.member_no ");
     sb.append("WHERE a.PROCESS_STATUS = '8' AND TRUNC(a.ARCHIVE_DATE) = TO_DATE('" + procDate +
         "','YYYY-MM-DD') ");
     sb.append("ORDER BY c.member_name ");
@@ -1143,9 +1143,9 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "(SELECT a.DEBTOR_BANK AS debtorBank,c.MEMBER_NAME  as debtorName,a.CREDITOR_BANK AS " +
             "creditorBank,b.MEMBER_NAME AS creditorName,a.SERVICE_ID as serviceId, COUNT(*) AS " +
             "nrOfDays ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON a.DEBTOR_BANK = c.MEMBER_NO ");
+    sb.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON a.DEBTOR_BANK = c.MEMBER_NO ");
     sb.append("WHERE a.PROCESS_STATUS ='9' AND a.SERVICE_ID = '" + serviceId + "' ");
     sb.append("AND TO_CHAR(a.CREATED_DATE,'ddMMYYYY')= '" + stringDate + "' ");
     sb.append(
@@ -1210,9 +1210,9 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "(SELECT a.DEBTOR_BANK AS debtorBank,c.MEMBER_NAME  as debtorName,a.CREDITOR_BANK AS " +
             "creditorBank,b.MEMBER_NAME AS creditorName,a.SERVICE_ID as serviceId, COUNT(*) AS " +
             "nrOfTxns ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ON a.DEBTOR_BANK = c.MEMBER_NO ");
+    sb.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ON a.DEBTOR_BANK = c.MEMBER_NO ");
     sb.append("WHERE a.PROCESS_STATUS ='9' AND a.SERVICE_ID = '" + serviceId + "' ");
     sb.append("AND TO_CHAR(a.CREATED_DATE,'ddMMYYYY') ='" + stringDate + "' ");
     sb.append(
@@ -1260,10 +1260,10 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
             "creatdte ");
     sb.append(",nvl(d.transactionidentifierams,'NF') as jnlacqmrti ");
     sb.append(",nvl(d.cancellationreasonams,'NF') as canreason ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
-    sb.append("LEFT OUTER JOIN MANOWNER.SYS_CIS_BANK b ");
+    sb.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.SYS_CIS_BANK b ");
     sb.append("ON CREDITOR_BANK = b.MEMBER_NO ");
-    sb.append("INNER JOIN MANOWNER.SYS_CIS_BANK c ");
+    sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c ");
     sb.append("ON DEBTOR_BANK = c.MEMBER_NO ");
     sb.append("AND a.PROCESS_STATUS IN ('4','9') ");
     sb.append("left outer join manowner.jnl_acq d ");
@@ -1340,7 +1340,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append("(select reject_reason_code as RejResCd, ");
     sb.append("substr(msg_id,13,6) as member, ");
     sb.append("sum(case when NVL(reject_reason_code,'NF') = 'NF' then 0 else 1 end) as NrofTxns ");
-    sb.append("from MANOWNER.MDT_AC_ARC_MANDATE_TXNS ");
+    sb.append("from CAMOWNER.MDT_AC_ARC_MANDATE_TXNS ");
 
     if (date != null) {
       sb.append(
@@ -1363,12 +1363,12 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "(select a.reason_code as rescd, A.REASON_CODE_DESCRIPTION as rescddesc, b.member_no,b" +
             ".member_name ");
-    sb.append("from MANOWNER.MDT_CNFG_REASON_CODES a, MANOWNER.SYS_CIS_BANK b ");
+    sb.append("from CAMOWNER.CAS_CNFG_REASON_CODES a, CAMOWNER.SYS_CIS_BANK b ");
     sb.append("union all ");
     sb.append(
         "select a.reject_reason_code as rescd, A.reject_REASON_DESC as rescddesc, b.member_no, b" +
             ".member_name ");
-    sb.append("from MANOWNER.MDT_CNFG_REJECT_REASON_CODES a, MANOWNER.SYS_CIS_BANK b ");
+    sb.append("from CAMOWNER.CAS_CNFG_REJECT_REASON_CODES a, CAMOWNER.SYS_CIS_BANK b ");
     sb.append("where a.reject_reason_code = 'NMTC') ");
     sb.append(
         "select aa.rescd as rescode,aa.rescddesc as mndtRejectionReason,aa.member_no as " +
@@ -1430,8 +1430,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append("sum(case when a.AMEND_REASON = 'MD19' then 1 else 0 end) as unspndMndtWithChngs, ");
     sb.append("sum(case when a.AMEND_REASON = 'MD20' then 1 else 0 end) as unspndUnchgMndt, ");
     sb.append("sum(case when a.AMEND_REASON = 'MD21' then 1 else 0 end) as rsnNotSpcByCust ");
-    sb.append("FROM  MANOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
-    sb.append("LEFT JOIN MANOWNER.SYS_CIS_BANK b ");
+    sb.append("FROM  CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+    sb.append("LEFT JOIN CAMOWNER.SYS_CIS_BANK b ");
     sb.append("on a.creditor_bank = b.MEMBER_NO ");
     sb.append("where service_id = 'MANAM' and trunc(a.created_date) between to_date('" + firstDate +
         "', 'DDMMYYYY') and to_date('" + lastDate + "', 'DDMMYYYY') ");
@@ -1498,7 +1498,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "a.CONTRACT_REF AS contRefNum,b.ACCEPTED_IND as accptind,a.REJECT_REASON_CODE as " +
             "rjctrsnCode,c.ERROR_CODE as confErr,b.LOCAL_INSTR_CD as lclInstr,a.AMEND_REASON as " +
             "reason ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
     sb.append("left join manowner.MDT_AC_ARC_MANDATE_TXNS b ");
     sb.append("on a.MANDATE_REQ_TRAN_ID = b.MANDATE_REQ_TRAN_ID ");
     sb.append("and a.service_id = 'MANAM' and b.service_id = 'MANAC' ");
@@ -1534,10 +1534,10 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "'' as reason,'' as authType,'' as contRefNum,'' as dbtrAuthReq,'' as instOcc,b" +
             ".CR_ABB_SHORT_NAME as cdtrAbbShtNm,'VALIDATION_FAILURE' as status,B.ERROR_CODE as " +
             "errorCode,'ACH' as dataSource ");
-    sb.append("from MANOWNER.MDT_AC_ARC_STATUS_HDRS a ");
-    sb.append("left join MANOWNER.MDT_AC_ARC_STATUS_DETAILS b ");
+    sb.append("from CAMOWNER.MDT_AC_ARC_STATUS_HDRS a ");
+    sb.append("left join CAMOWNER.MDT_AC_ARC_STATUS_DETAILS b ");
     sb.append("on a.SYSTEM_SEQ_NO = b.STATUS_HDR_SEQ_NO ");
-    sb.append("left join MANOWNER.SYS_CIS_BRANCH c ");
+    sb.append("left join CAMOWNER.SYS_CIS_BRANCH c ");
     sb.append("on B.DEBTOR_BRANCH_NO = C.MEMBER_NO ");
     sb.append("where trunc(a.CREATE_DATE_TIME) BETWEEN TO_DATE('" + fromDate +
         "', 'YYYY-MM-DD') AND TO_DATE('" + toDate + "', 'YYYY-MM-DD') ");
@@ -1591,7 +1591,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "WITH TEMPTBL AS (SELECT a.MEMBER_NO AS cr_memno  ,a.MEMBER_NAME AS cr_memname  ,c" +
             ".SERVICE_ID_IN AS inService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a  ,MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a  ,CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NOT NULL) ");
     sb.append("SELECT aa.inService as service, aa.cr_memno AS instId, ");
     sb.append(
@@ -1599,7 +1599,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
             " SUM(NVL(bb.NR_MSGS_REJECTED,0)) as nrOfRjctMsgs ");
     sb.append("FROM TEMPTBL aa ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
+        "LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
             ".inService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE BETWEEN TO_DATE('" + fromDate + "','YYYY-MM-DD') AND TO_DATE('" +
         toDate + "','YYYY-MM-DD') ");
@@ -1641,13 +1641,13 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "WITH TEMPTBL AS (SELECT a.MEMBER_NO AS dr_memno  ,a.MEMBER_NAME AS dr_memname  ,c" +
             ".SERVICE_ID_OUT AS outService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a  ,MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a  ,CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NOT NULL) ");
     sb.append("SELECT aa.outService as service, aa.dr_memno AS instId, ");
     sb.append("SUM(NVL(bb.NR_MSGS_EXTRACTED, 0)) as nrOfExtMsgs ");
     sb.append("FROM TEMPTBL aa ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
+        "LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
             ".outService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE BETWEEN TO_DATE('" + fromDate + "','YYYY-MM-DD') AND TO_DATE('" +
         toDate + "','YYYY-MM-DD') ");
@@ -1687,7 +1687,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "WITH TEMPTBL AS (SELECT a.MEMBER_NO AS dr_memno ,a.MEMBER_NAME AS dr_memname ,c" +
             ".SERVICE_ID_IN AS inService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a ,MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a ,CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NOT NULL) ");
     sb.append("SELECT aa.inService as service, aa.dr_memno AS instId, ");
     sb.append(
@@ -1695,7 +1695,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
             " SUM(NVL(bb.NR_MSGS_REJECTED,0)) as nrOfRjctMsgs ");
     sb.append("FROM TEMPTBL aa ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
+        "LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
             ".inService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE BETWEEN TO_DATE('" + fromDate + "','YYYY-MM-DD') AND TO_DATE('" +
         toDate + "','YYYY-MM-DD') ");
@@ -1738,13 +1738,13 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "WITH TEMPTBL AS (SELECT a.MEMBER_NO AS cr_memno ,a.MEMBER_NAME AS cr_memname ,c" +
             ".SERVICE_ID_OUT AS outService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a  ,MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a  ,CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NOT NULL) ");
     sb.append("SELECT aa.outService as service, aa.cr_memno AS instId, ");
     sb.append("SUM(NVL(bb.NR_MSGS_EXTRACTED, 0)) as nrOfExtMsgs ");
     sb.append("FROM TEMPTBL aa ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
+        "LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
             ".outService = bb.SERVICE_ID  ");
     sb.append("AND bb.PROCESS_DATE BETWEEN TO_DATE('" + fromDate + "','YYYY-MM-DD') AND TO_DATE('" +
         toDate + "','YYYY-MM-DD') ");
@@ -1785,13 +1785,13 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "SELECT a.MEMBER_NO AS cr_memno,a.MEMBER_NAME AS cr_memname,c.SERVICE_ID_OUT AS " +
             "outService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a, ");
-    sb.append("MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a, ");
+    sb.append("CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NULL) ");
     sb.append("SELECT aa.outService as service, aa.cr_memno AS instId, ");
     sb.append("COUNT(bb.SERVICE) AS nrOfMsgs ");
     sb.append("FROM TEMPTBL aa  ");
-    sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
     sb.append("AND bb.ARCHIVE_DATE BETWEEN TO_DATE('" + fromDate + "','YYYY-MM-DD') AND TO_DATE('" +
         toDate + "','YYYY-MM-DD') ");
     sb.append("AND aa.outService = bb.SERVICE ");
@@ -1832,13 +1832,13 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "SELECT a.MEMBER_NO AS dr_memno,a.MEMBER_NAME AS dr_memname,c.SERVICE_ID_OUT AS " +
             "outService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a, ");
-    sb.append("MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a, ");
+    sb.append("CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NULL) ");
     sb.append("SELECT aa.outService as service, aa.dr_memno AS instId, ");
     sb.append("COUNT(bb.SERVICE) AS nrOfMsgs ");
     sb.append("FROM TEMPTBL aa ");
-    sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
     sb.append("AND bb.ARCHIVE_DATE BETWEEN TO_DATE('" + fromDate + "','YYYY-MM-DD') AND TO_DATE('" +
         toDate + "','YYYY-MM-DD') ");
     sb.append("AND aa.outService = bb.SERVICE ");
@@ -1878,7 +1878,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "WITH TEMPTBL AS (SELECT a.MEMBER_NO AS cr_memno  ,a.MEMBER_NAME AS cr_memname  ,c" +
             ".SERVICE_ID_IN AS inService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a  ,MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a  ,CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NOT NULL) ");
     sb.append("SELECT aa.inService as service, aa.cr_memno AS instId, ");
     sb.append(
@@ -1886,7 +1886,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
             " SUM(NVL(bb.NR_MSGS_REJECTED,0)) as nrOfRjctMsgs ");
     sb.append("FROM TEMPTBL aa ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
+        "LEFT OUTER JOIN CAMOWNER.CAS_OPS_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
             ".inService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
     sb.append("WHERE aa.inService IN ('MANIN', 'MANAM', 'MANCN', 'MANRI', 'SRINP') ");
@@ -1927,13 +1927,13 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "WITH TEMPTBL AS (SELECT a.MEMBER_NO AS dr_memno  ,a.MEMBER_NAME AS dr_memname  ,c" +
             ".SERVICE_ID_OUT AS outService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a  ,MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a  ,CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NOT NULL) ");
     sb.append("SELECT aa.outService as service, aa.dr_memno AS instId, ");
     sb.append("SUM(NVL(bb.NR_MSGS_EXTRACTED, 0)) as nrOfExtMsgs ");
     sb.append("FROM TEMPTBL aa ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
+        "LEFT OUTER JOIN CAMOWNER.CAS_OPS_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
             ".outService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
     sb.append("WHERE aa.outService IN ('MANOT', 'MANOM', 'MANCO', 'MANRO', 'SROUT') ");
@@ -1973,7 +1973,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "WITH TEMPTBL AS (SELECT a.MEMBER_NO AS dr_memno ,a.MEMBER_NAME AS dr_memname ,c" +
             ".SERVICE_ID_IN AS inService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a ,MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a ,CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NOT NULL) ");
     sb.append("SELECT aa.inService as service, aa.dr_memno AS instId, ");
     sb.append(
@@ -1981,7 +1981,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
             " SUM(NVL(bb.NR_MSGS_REJECTED,0)) as nrOfRjctMsgs ");
     sb.append("FROM TEMPTBL aa ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
+        "LEFT OUTER JOIN CAMOWNER.CAS_OPS_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
             ".inService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
     sb.append("WHERE aa.inService IN ('ST101', 'MANAC', 'MANRT', 'SPINP') ");
@@ -2022,13 +2022,13 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "WITH TEMPTBL AS (SELECT a.MEMBER_NO AS cr_memno ,a.MEMBER_NAME AS cr_memname ,c" +
             ".SERVICE_ID_OUT AS outService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a  ,MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a  ,CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NOT NULL) ");
     sb.append("SELECT aa.outService as service, aa.cr_memno AS instId, ");
     sb.append("SUM(NVL(bb.NR_MSGS_EXTRACTED, 0)) as nrOfExtMsgs ");
     sb.append("FROM TEMPTBL aa ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
+        "LEFT OUTER JOIN CAMOWNER.CAS_OPS_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
             ".outService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
     sb.append("WHERE aa.outService IN ('ST103', 'MANOC', 'MANRF', 'SPOUT') ");
@@ -2068,13 +2068,13 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "SELECT a.MEMBER_NO AS cr_memno,a.MEMBER_NAME AS cr_memname,c.SERVICE_ID_OUT AS " +
             "outService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a, ");
-    sb.append("MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a, ");
+    sb.append("CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NULL) ");
     sb.append("SELECT aa.outService as service, aa.cr_memno AS instId, ");
     sb.append("COUNT(bb.SERVICE) AS nrOfMsgs ");
     sb.append("FROM TEMPTBL aa  ");
-    sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.CAS_OPS_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
     sb.append(
         "AND substr(bb.CREATE_DATE_TIME,1,10) = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
     sb.append("AND aa.outService = bb.SERVICE ");
@@ -2115,13 +2115,13 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "SELECT a.MEMBER_NO AS dr_memno,a.MEMBER_NAME AS dr_memname,c.SERVICE_ID_OUT AS " +
             "outService ");
-    sb.append("FROM  MANOWNER.SYS_CIS_BANK a, ");
-    sb.append("MANOWNER.MDT_SYSCTRL_SERVICES c ");
+    sb.append("FROM  CAMOWNER.SYS_CIS_BANK a, ");
+    sb.append("CAMOWNER.CAS_SYSCTRL_SERVICES c ");
     sb.append("WHERE c.ACTIVE_IND = 'Y' AND c.SERVICE_ID_IN IS NULL) ");
     sb.append("SELECT aa.outService as service, aa.dr_memno AS instId, ");
     sb.append("COUNT(bb.SERVICE) AS nrOfMsgs ");
     sb.append("FROM TEMPTBL aa ");
-    sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_OPS_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
+    sb.append("LEFT OUTER JOIN CAMOWNER.CAS_OPS_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
     sb.append(
         "AND substr(bb.CREATE_DATE_TIME,1,10) = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
     sb.append("AND aa.outService = bb.SERVICE ");
@@ -2163,7 +2163,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "SELECT DISTINCT(MANDATE_REQ_TRAN_ID) as mrti, ORIGINATOR as originator,TO_CHAR(TRUNC" +
             "(PROCESS_DATE),'YYYY-MM-DD') as processDate,TO_CHAR(DELIVERY_TIME,'HH24:MI:SS') as " +
             "delTime,SUB_SERVICE as serviceId,TXN_TYPE as txnType,FILE_NAME as fileName ");
-    sb.append("from MANOWNER.MDT_AC_ARC_TXNS_BILL_REPORT ");
+    sb.append("from CAMOWNER.MDT_AC_ARC_TXNS_BILL_REPORT ");
 //		2023/04/03 SalehaN - NOT IN statement is expensive when processing in DB
     sb.append(
         "where TXN_TYPE = 'TT2' and (SUB_SERVICE = 'MANIN' OR SUB_SERVICE = 'MANAM' OR " +
@@ -2184,8 +2184,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 //		.ORGNL_MSG_ID, '/'),17,14) || (select TRANSAMISSION_IND from manowner
 //		.MDT_SYSCTRL_COMP_PARAM) || 'D.xml' as fileName  ");
 //		sb.append("        ,NVL(a.TXN_ID,'NF') as mrti  ");
-//		sb.append("FROM MANOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
-//		sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS b ");
+//		sb.append("FROM CAMOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
+//		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS b ");
 //		sb.append("ON B.SYSTEM_SEQ_NO = A.STATUS_HDR_SEQ_NO ");
 //		sb.append("WHERE a.error_type = 'TXN' and a.error_code <> '902205' and NVL(a.TXN_ID,'NF')
 //		<> 'NF' ");
@@ -2201,8 +2201,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 //		.ORGNL_MSG_ID, '/'),17,14) || (select TRANSAMISSION_IND from manowner
 //		.MDT_SYSCTRL_COMP_PARAM) || 'D.xml' as fileName  ");
 //		sb.append("       ,NVL(a.TXN_ID,'NF') as mrti  ");
-//		sb.append("FROM MANOWNER.MDT_AC_ARC_STATUS_DETAILS a  ");
-//		sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS b ON B.SYSTEM_SEQ_NO = A
+//		sb.append("FROM CAMOWNER.MDT_AC_ARC_STATUS_DETAILS a  ");
+//		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS b ON B.SYSTEM_SEQ_NO = A
 //		.STATUS_HDR_SEQ_NO  ");
 //		sb.append("WHERE a.error_type = 'TXN' and a.error_code = '902205' and NVL(a.TXN_ID,'NF')
 //		<> 'NF'  ");
@@ -2218,7 +2218,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 //		sb.append("        ,aa.mrti  ");
 //		sb.append("        ,TO_CHAR(BB.DELIVERY_TIME,'HH24:MI:SS') as delTime  ");
 //		sb.append("from tmptbl1 aa  ");
-//		sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_TXNS_BILLING  bb on aa.fileName = bb
+//		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_TXNS_BILLING  bb on aa.fileName = bb
 //		.file_name  ");
 //		sb.append("UNION ALL  ");
 //		sb.append("SELECT ORIGINATOR AS originator ");
@@ -2231,12 +2231,12 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 //		.mandate_req_tran_id) ");
 //		sb.append("         END as mrti ");
 //		sb.append("       ,TO_CHAR(A.DELIVERY_TIME,'HH24:MI:SS') as delTime  ");
-//		sb.append("FROM MANOWNER.MDT_AC_ARC_TXNS_BILLING a  ");
-//		sb.append("left outer JOIN MANOWNER.MDT_AC_ARC_MANDATE_TXNS b ON a.FILE_NAME = b
+//		sb.append("FROM CAMOWNER.MDT_AC_ARC_TXNS_BILLING a  ");
+//		sb.append("left outer JOIN CAMOWNER.MDT_AC_ARC_MANDATE_TXNS b ON a.FILE_NAME = b
 //		.IN_FILE_NAME  ");
-//		sb.append("left outer JOIN MANOWNER.MDT_AC_ARC_MDTE_REQUEST c ON A.FILE_NAME = c
+//		sb.append("left outer JOIN CAMOWNER.MDT_AC_ARC_MDTE_REQUEST c ON A.FILE_NAME = c
 //		.IN_FILE_NAME  ");
-//		sb.append("left outer JOIN MANOWNER.MDT_AC_OPS_MANDATE_TXNS d ON A.FILE_NAME = d
+//		sb.append("left outer JOIN CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS d ON A.FILE_NAME = d
 //		.IN_FILE_NAME  ");
 //		sb.append("WHERE a.SUB_SERVICE IN ('MANIN','MANAM','MANCN', 'MANRI')  ");
 //		sb.append("and trunc(ACTION_DATE) between TO_DATE('"+fromDate+"','YYYY-MM-DD') and TO_DATE
@@ -2251,8 +2251,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 //		.ORGNL_MSG_ID, '/'),17,14) || (select TRANSAMISSION_IND from manowner
 //		.MDT_SYSCTRL_COMP_PARAM) || 'D.xml' as fileName ");
 //		sb.append(",NVL(a.TXN_ID,'NF') as mrti ");
-//		sb.append("FROM MANOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
-//		sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS b ON B.SYSTEM_SEQ_NO = A
+//		sb.append("FROM CAMOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
+//		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS b ON B.SYSTEM_SEQ_NO = A
 //		.STATUS_HDR_SEQ_NO ");
 //		sb.append("WHERE a.error_type = 'TXN' and a.error_code <> '902205' and NVL(a.TXN_ID,'NF')
 //		<> 'NF' ");
@@ -2266,8 +2266,8 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 //		.ORGNL_MSG_ID, '/'),17,14) || (select TRANSAMISSION_IND from manowner
 //		.MDT_SYSCTRL_COMP_PARAM) || 'D.xml' as fileName ");
 //		sb.append(",NVL(a.TXN_ID,'NF') as mrti ");
-//		sb.append("FROM MANOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
-//		sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS b ON B.SYSTEM_SEQ_NO = A
+//		sb.append("FROM CAMOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
+//		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS b ON B.SYSTEM_SEQ_NO = A
 //		.STATUS_HDR_SEQ_NO ");
 //		sb.append("WHERE a.error_type = 'TXN' and a.error_code = '902205' and NVL(a.TXN_ID,'NF')
 //		<> 'NF' ");
@@ -2283,7 +2283,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 //		sb.append("        ,aa.mrti ");
 //		sb.append("        ,TO_CHAR(BB.DELIVERY_TIME,'HH24:MI:SS') as delTime ");
 //		sb.append("from tmptbl1 aa ");
-//		sb.append("LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_TXNS_BILLING  bb on aa.fileName = bb
+//		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_TXNS_BILLING  bb on aa.fileName = bb
 //		.file_name ");
 //		sb.append("UNION ALL ");
 //		sb.append("SELECT ORIGINATOR AS originator ");
@@ -2294,10 +2294,10 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 //		sb.append("        ,CASE WHEN a.SUB_SERVICE = 'MANRI' THEN nvl(c.MDT_INF_REQ_ID,'NF') ELSE
 //		nvl(b.MANDATE_REQ_TRAN_ID,'NF') END as mrti ");
 //		sb.append("        ,TO_CHAR(A.DELIVERY_TIME,'HH24:MI:SS') as delTime ");
-//		sb.append("FROM MANOWNER.MDT_AC_ARC_TXNS_BILLING a ");
-//		sb.append("left outer JOIN MANOWNER.MDT_AC_ARC_MANDATE_TXNS b ON a.FILE_NAME = b
+//		sb.append("FROM CAMOWNER.MDT_AC_ARC_TXNS_BILLING a ");
+//		sb.append("left outer JOIN CAMOWNER.MDT_AC_ARC_MANDATE_TXNS b ON a.FILE_NAME = b
 //		.IN_FILE_NAME ");
-//		sb.append("left outer JOIN MANOWNER.MDT_AC_ARC_MDTE_REQUEST c ON A.FILE_NAME = c
+//		sb.append("left outer JOIN CAMOWNER.MDT_AC_ARC_MDTE_REQUEST c ON A.FILE_NAME = c
 //		.IN_FILE_NAME ");
 //		sb.append("WHERE a.SUB_SERVICE IN ('MANIN','MANAM','MANCN', 'MANRI') ");
 //		sb.append("AND (nvl(b.MANDATE_REQ_TRAN_ID,'NF') <> 'NF' or nvl(c.MDT_INF_REQ_ID,'NF') <>
@@ -2337,7 +2337,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "(SELECT a.MEMBER_NO AS memberNo ,a.MEMBER_NAME AS memName  ,c.SERVICE_ID_IN AS inService" +
             " ");
     sb.append(
-        "FROM  MANOWNER.SYS_CIS_BANK a ,MANOWNER.MDT_SYSCTRL_SERVICES c WHERE c.SERVICE_ID_IN IS " +
+        "FROM  CAMOWNER.SYS_CIS_BANK a ,CAMOWNER.CAS_SYSCTRL_SERVICES c WHERE c.SERVICE_ID_IN IS " +
             "NOT NULL) ");
     sb.append(",tmptbl2 as ");
     sb.append("(SELECT inst_id as InstId, SERVICE_ID AS service ");
@@ -2369,7 +2369,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         " ,case when NR_OF_MSGS > 20000 then SUM(NVL(nr_of_files,0)) end AS " +
             "NR_OF_FILES_over_20000_TXN ");
-    sb.append("FROM MANOWNER.MDT_AC_OPS_MNDT_COUNT ");
+    sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT ");
     sb.append(
         "WHERE INCOMING = 'Y' AND PROCESS_DATE = TO_DATE('" + processDate + "','YYYY-MM-DD') ");
     sb.append("group by inst_id, SERVICE_ID, NR_OF_MSGS, nr_of_files ");
@@ -2447,9 +2447,9 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "a.MANDATE_REF_NUMBER AS mndtRefNr,a.CR_ABB_SHORT_NAME AS credAbbShrtNm ,a" +
             ".DEBTOR_BRANCH_NO AS drBranchNr ");
-    sb.append("FROM MANOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
+    sb.append("FROM CAMOWNER.MDT_AC_ARC_STATUS_DETAILS a ");
     sb.append(
-        "LEFT OUTER JOIN MANOWNER.MDT_AC_ARC_STATUS_HDRS b ON a.STATUS_HDR_SEQ_NO = b" +
+        "LEFT OUTER JOIN CAMOWNER.MDT_AC_ARC_STATUS_HDRS b ON a.STATUS_HDR_SEQ_NO = b" +
             ".SYSTEM_SEQ_NO ");
     if (frontEnd) {
       sb.append(

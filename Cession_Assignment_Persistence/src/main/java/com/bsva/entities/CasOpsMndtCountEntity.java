@@ -16,14 +16,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasOpsMndtCountEntity.findAll", query = "SELECT m FROM CasOpsMndtCountEntity m"),
-    @NamedQuery(name = "CasOpsMndtCountEntity.findByInstId", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.mdtAcOpsMndtCountPK.instId = :instId"),
-    @NamedQuery(name = "CasOpsMndtCountEntity.findByServiceId", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.mdtAcOpsMndtCountPK.serviceId = :serviceId"),
+    @NamedQuery(name = "CasOpsMndtCountEntity.findByInstId", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.casOpsMndtCountPK.instId = :instId"),
+    @NamedQuery(name = "CasOpsMndtCountEntity.findByServiceId", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.casOpsMndtCountPK.serviceId = :serviceId"),
     @NamedQuery(name = "CasOpsMndtCountEntity.findByNrOfFiles", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.nrOfFiles = :nrOfFiles"),
     @NamedQuery(name = "CasOpsMndtCountEntity.findByNrOfMsgs", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.nrOfMsgs = :nrOfMsgs"),
     @NamedQuery(name = "CasOpsMndtCountEntity.findByProcessDate", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.processDate = :processDate"),
     @NamedQuery(name = "CasOpsMndtCountEntity.findByIncoming", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.incoming = :incoming"),
     @NamedQuery(name = "CasOpsMndtCountEntity.findByOutgoing", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.outgoing = :outgoing"),
-    @NamedQuery(name = "CasOpsMndtCountEntity.findByMsgId", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.mdtAcOpsMndtCountPK.msgId = :msgId"),
+    @NamedQuery(name = "CasOpsMndtCountEntity.findByMsgId", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.casOpsMndtCountPK.msgId = :msgId"),
     @NamedQuery(name = "CasOpsMndtCountEntity.findByNrMsgsRejected", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.nrMsgsRejected = :nrMsgsRejected"),
     @NamedQuery(name = "CasOpsMndtCountEntity.findByFileName", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.fileName = :fileName"),
     @NamedQuery(name = "CasOpsMndtCountEntity.findByFileNameLike2", query = "SELECT m FROM CasOpsMndtCountEntity m WHERE m.fileName LIKE :fileName AND m.fileName LIKE :fileName2"),
@@ -240,7 +240,7 @@ public class CasOpsMndtCountEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CasOpsMndtCountEntity [mdtAcOpsMndtCountPK="
+		return "CasOpsMndtCountEntity [casOpsMndtCountPK="
 				+ casOpsMndtCountPK + ", nrOfFiles=" + nrOfFiles
 				+ ", nrOfMsgs=" + nrOfMsgs + ", processDate=" + processDate
 				+ ", incoming=" + incoming + ", outgoing=" + outgoing

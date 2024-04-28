@@ -259,7 +259,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try {
 			CasCnfgErrorCodesEntity casCnfgErrorCodesEntity = (CasCnfgErrorCodesEntity) genericDAO
-					.findByNamedQuery("MdtCnfgErrorCodesEntity.findByErrorCode", "errorCode", errorCode);
+					.findByNamedQuery("CasCnfgErrorCodesEntity.findByErrorCode", "errorCode", errorCode);
 			if (casCnfgErrorCodesEntity != null) {
 				ErrorCodesLogic errorCodesLogic = new ErrorCodesLogic();
 				errorCodesModel = errorCodesLogic.retrieveErrorCode(casCnfgErrorCodesEntity);
@@ -413,7 +413,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT COUNT(*) AS balanceBrghtForward ");
-		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_MSG ");
+		sb.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS ");
 		sb.append("WHERE (SERVICE_ID ='MANIN' OR SERVICE_ID='MANCN' OR SERVICE_ID='CARIN')");
 
 		String sqlQuery = sb.toString();
@@ -467,7 +467,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT SUM(NR_OF_MSGS)as Outgoing  ");
-		sb.append("FROM CAMOWNER.MDT_OPS_MNDT_COUNT ");
+		sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT ");
 		sb.append(
 				"WHERE OUTGOING ='Y' AND (SERVICE_ID ='MANOT' OR SERVICE_ID='MANOC' OR SERVICE_ID='MANCO'OR SERVICE_ID='MANRO' OR SERVICE_ID='MANRF' OR SERVICE_ID='ST200' OR SERVICE_ID='ST203')");
 
@@ -495,7 +495,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("SELECT SUM(NR_OF_MSGS) as Incoming ");
-		sb.append("FROM CAMOWNER.MDT_OPS_MNDT_COUNT ");
+		sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT ");
 		sb.append(
 				"WHERE INCOMING ='Y' AND (SERVICE_ID ='MANIN' OR SERVICE_ID='MANCN' OR SERVICE_ID='CARIN' OR SERVICE_ID ='RCAIN' OR SERVICE_ID='MANRI' OR SERVICE_ID='MANRT'  OR SERVICE_ID='ST202' OR SERVICE_ID='ST201')");
 
@@ -561,7 +561,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try {
 			casOpsFileRegEntityList = (List<CasOpsFileRegEntity>) genericDAO
-					.findAllByNamedQuery("MdtOpsFileRegEntity.findByInOutInd", "inOutInd", "O");
+					.findAllByNamedQuery("CasOpsFileRegEntity.findByInOutInd", "inOutInd", "O");
 
 			if (casOpsFileRegEntityList.size() > 0) {
 				OpsFileRegLogic opsFileRegLogic = new OpsFileRegLogic();
@@ -592,7 +592,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SERVICE_ID as serviceId,SUM(NR_MSGS_ACCEPTED) as nrMsgsAccepted ");
-		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.CAS_OPS_MNDT_COUNT ");
 		sb.append("WHERE INCOMING ='Y' AND  NR_MSGS_ACCEPTED > 0");
 		sb.append("GROUP BY SERVICE_ID ");
 		String sqlQuery = sb.toString();
@@ -629,7 +629,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SERVICE_ID as serviceId, SUM(NR_OF_MSGS) as nrMsgsExtracted ");
-		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.CAS_OPS_MNDT_COUNT ");
 		sb.append("WHERE OUTGOING ='Y' AND NR_MSGS_EXTRACTED > 0 ");
 		sb.append("GROUP BY SERVICE_ID ");
 
@@ -667,7 +667,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				"SELECT LOCAL_INSTRUMENT_CODE AS localInstrumentCode, LOCAL_INSTRUMENT_DESCRIPTION AS localInstrumentDescription, ACTIVE_IND AS activeInd ");
-		sb.append("FROM CAMOWNER.MDT_CNFG_LOCAL_INSTR_CODES ");
+		sb.append("FROM CAMOWNER.CAS_CNFG_LOCAL_INSTR_CODES ");
 		sb.append("WHERE LOCAL_INSTRUMENT_CODE = '0227' OR LOCAL_INSTRUMENT_CODE = '0228' ");
 
 		String sqlQuery = sb.toString();
@@ -721,7 +721,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				"SELECT LOCAL_INSTRUMENT_CODE AS localInstrumentCode, LOCAL_INSTRUMENT_DESCRIPTION AS localInstrumentDescription, ACTIVE_IND AS activeInd ");
-		sb.append("FROM CAMOWNER.MDT_CNFG_LOCAL_INSTR_CODES ");
+		sb.append("FROM CAMOWNER.CAS_CNFG_LOCAL_INSTR_CODES ");
 		sb.append("WHERE LOCAL_INSTRUMENT_CODE = '0227' OR LOCAL_INSTRUMENT_CODE = '0228' ");
 
 		String sqlQuery = sb.toString();
@@ -751,7 +751,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		SysctrlCompParamModel sysctrlCompParamModel = new SysctrlCompParamModel();
 		try {
 			CasSysctrlCompParamEntity sysctrlCompParamEntity = (CasSysctrlCompParamEntity) genericDAO
-					.findByNamedQuery("MdtSysctrlCompParamEntity.findByCompAbbrevName", "compAbbrevName", "BSV");
+					.findByNamedQuery("CasSysctrlCompParamEntity.findByCompAbbrevName", "compAbbrevName", "BSV");
 			// find(MdtSysctrlCompParamEntity.class, new BigDecimal(3));
 			if (sysctrlCompParamEntity != null) {
 
@@ -774,7 +774,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		OpsCustParamModel sysCustParamModel = new OpsCustParamModel();
 		try {
 			CasOpsCustParamEntity opsCustParamEntity = (CasOpsCustParamEntity) genericDAO
-					.findByNamedQuery("MdtOpsCustParamEntity.findByBicCode", "bicCode", bicCode);
+					.findByNamedQuery("CasOpsCustParamEntity.findByBicCode", "bicCode", bicCode);
 			if (opsCustParamEntity != null) {
 				CustParamLogic customerCustParamLogic = new CustParamLogic();
 				sysCustParamModel = customerCustParamLogic.retrieveOpsCustomerParameter(opsCustParamEntity);
@@ -1045,7 +1045,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		List<CasOpsCustParamEntity> custParamsList = new ArrayList<CasOpsCustParamEntity>();
 
 		try {
-			custParamsList = genericDAO.findAllByNamedQuery("MdtOpsCustParamEntity.findByActiveInd", "activeInd", "Y");
+			custParamsList = genericDAO.findAllByNamedQuery("CasOpsCustParamEntity.findByActiveInd", "activeInd", "Y");
 		} catch (ObjectNotFoundException onfe) {
 			log.debug("No Object Exists on DB");
 		} catch (Exception e) {
@@ -1060,7 +1060,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		CasCnfgErrorCodesEntity casCnfgErrorCodesEntity = new CasCnfgErrorCodesEntity();
 		try {
 			casCnfgErrorCodesEntity = (CasCnfgErrorCodesEntity) genericDAO
-					.findByNamedQuery("MdtCnfgErrorCodesEntity.findByErrorCode", "errorCode", errorCode);
+					.findByNamedQuery("CasCnfgErrorCodesEntity.findByErrorCode", "errorCode", errorCode);
 		} catch (ObjectNotFoundException onfe) {
 			log.debug("No Object Exists on DB");
 		} catch (Exception e) {
@@ -1561,7 +1561,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SERVICE_ID as serviceId,SUM(NR_MSGS_REJECTED) as nrMsgsRejected ");
-		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.CAS_OPS_MNDT_COUNT ");
 		sb.append("WHERE  INCOMING ='Y' AND NR_MSGS_REJECTED > 0 ");
 		sb.append("GROUP BY SERVICE_ID");
 
@@ -1637,7 +1637,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SUM(NR_OF_MSGS) as nrMsgsAccepted ");
-		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.CAS_OPS_MNDT_COUNT ");
 		sb.append("WHERE INCOMING ='Y' ");
 
 		String sqlQuery = sb.toString();
@@ -1682,7 +1682,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SUM(NR_MSGS_REJECTED) as nrMsgsRejected ");
-		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.CAS_OPS_MNDT_COUNT ");
 		//sb.append("WHERE INCOMING ='Y' AND NR_MSGS_REJECTED > 0");
 
 		String sqlQuery = sb.toString();
@@ -1727,7 +1727,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT SUM(NR_MSGS_EXTRACTED) as nrMsgsExtracted ");
-		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sb.append("FROM  CAMOWNER.CAS_OPS_MNDT_COUNT ");
 		//sb.append("WHERE OUTGOING ='Y' AND NR_MSGS_EXTRACTED > ");
 
 		String sqlQuery = sb.toString();
@@ -1771,8 +1771,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		sb.append(
 				"SELECT a.FILE_NAME as fileName, a.INST_ID as instId, a.SERVICE_ID as serviceId, a.NR_OF_MSGS as nrOfMsgs, b.STATUS as status ");
-		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT a ");
-		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_OPS_FILE_REG b ");
+		sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT a ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.CAS_OPS_FILE_REG b ");
 		sb.append("ON a.FILE_NAME = b.FILE_NAME ");
 
 		String sqlQuery = sb.toString();
@@ -1964,7 +1964,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public List<?> retrieveConfStatusDetails(BigDecimal statusHdrSeqNo) {
 
-		List<CasOpsStatusDetailsEntity> casOpsStatusDetailsEntityList = genericDAO.findAllByNamedQuery("MdtAcOpsStatusDetailsEntity.findByStatusHdrSeqNo","statusHdrSeqNo",statusHdrSeqNo);
+		List<CasOpsStatusDetailsEntity> casOpsStatusDetailsEntityList = genericDAO.findAllByNamedQuery("CasOpsStatusDetailsEntity.findByStatusHdrSeqNo","statusHdrSeqNo",statusHdrSeqNo);
 		return casOpsStatusDetailsEntityList;
 	}
 
@@ -1996,7 +1996,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try 
 		{	
-			mdtAcOpsStatusHdrsList = genericDAO.findAllByNamedQuery("MdtAcOpsStatusHdrsEntity.findByProcessStatus", "processStatus", reportProducedStatus);
+			mdtAcOpsStatusHdrsList = genericDAO.findAllByNamedQuery("CasOpsStatusHdrsEntity.findByProcessStatus", "processStatus", reportProducedStatus);
 			log.debug(" mdtAcOpsStatusHdrsList from DB-->"+mdtAcOpsStatusHdrsList);
 		} catch (NullPointerException npe) {
 			log.error("NullPointer exception :" + npe.getMessage());
@@ -2016,7 +2016,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try 
 		{	
-			mdtAcArcConfHdrsList = genericDAO.findAllByNamedQuery("MdtAcArcConfHdrsEntity.findByArchiveDateCleanUp","archiveDate", archiveDate);
+			mdtAcArcConfHdrsList = genericDAO.findAllByNamedQuery("CasArcConfHdrsEntity.findByArchiveDateCleanUp","archiveDate", archiveDate);
 			log.debug("mdtAcArcConfHdrsList --> "+mdtAcArcConfHdrsList);
 		} 
 		catch (NullPointerException npe) {
@@ -2037,7 +2037,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try 
 		{	
-			mdtAcArcConfDtlsList = genericDAO.findAllByNamedQuery("MdtAcArcConfDetailsEntity.findByArchiveDateCleanUp","archiveDate", archiveDate);
+			mdtAcArcConfDtlsList = genericDAO.findAllByNamedQuery("CasArcConfDetailsEntity.findByArchiveDateCleanUp","archiveDate", archiveDate);
 			log.debug("mdtAcArcConfDtlsList --> "+mdtAcArcConfDtlsList);
 		} 
 		catch (NullPointerException npe) {
@@ -2058,7 +2058,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try 
 		{	
-			mdtAcArcStatHdrsList = genericDAO.findAllByNamedQuery("MdtAcArcStatusHdrsEntity.findByArchiveDateCleanUp","archiveDate", archiveDate);
+			mdtAcArcStatHdrsList = genericDAO.findAllByNamedQuery("CasArcStatusHdrsEntity.findByArchiveDateCleanUp","archiveDate", archiveDate);
 			log.debug("mdtAcArcStatHdrsList --> "+mdtAcArcStatHdrsList);
 		} 
 		catch (NullPointerException npe) {
@@ -2079,7 +2079,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try 
 		{	
-			mdtAcArcStatDtlsList = genericDAO.findAllByNamedQuery("MdtAcArcStatusDetailsEntity.findByArchiveDateCleanUp","archiveDate", archiveDate);
+			mdtAcArcStatDtlsList = genericDAO.findAllByNamedQuery("CasArcStatusDetailsEntity.findByArchiveDateCleanUp","archiveDate", archiveDate);
 			log.debug("mdtAcArcStatDtlsList --> "+mdtAcArcStatDtlsList);
 		} 
 		catch (NullPointerException npe) {
@@ -2104,7 +2104,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.debug("generateDuplicateError.crAbbShrtName ---->"+crAbbShrtName);
 		log.debug("generateDuplicateError.mndtRefNo ---->"+mndtRefNo);
 
-		CasOpsStatusHdrsEntity casOpsStatusHdrsEntity = (CasOpsStatusHdrsEntity) genericDAO.findByNamedQuery("MdtAcOpsStatusHdrsEntity.findByOrgnlMsgId","orgnlMsgId", msgId);
+		CasOpsStatusHdrsEntity casOpsStatusHdrsEntity = (CasOpsStatusHdrsEntity) genericDAO.findByNamedQuery("CasOpsStatusHdrsEntity.findByOrgnlMsgId","orgnlMsgId", msgId);
 		log.debug("mdtAcOpsStatusHdrsEntity from Duplicate Error ---->"+ casOpsStatusHdrsEntity);
 
 		if(casOpsStatusHdrsEntity != null)
@@ -2435,7 +2435,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sb = new StringBuffer();
 
 		sb.append("SELECT CREDITOR_BANK as creditorBank, DEBTOR_BANK as debtorBank,SUB_SERVICE as subService,TXN_TYPE as txnType,TXN_STATUS as txnStatus, COUNT(*) AS volume,  ACTION_DATE as actionDate, AUTH_CODE as authCode, RESP_DATE as respDate ");
-		sb.append("FROM CAMOWNER.MDT_AC_OPS_DAILY_BILLING ");
+		sb.append("FROM CAMOWNER.CAS_OPS_DAILY_BILLING ");
 		sb.append("WHERE BILL_EXP_STATUS = 'N' AND (SYSTEM_SEQ_NO > "+currentSeqNo+" AND SYSTEM_SEQ_NO <= "+lastSeqNo+") ");
 		sb.append("GROUP BY CREDITOR_BANK, SUB_SERVICE,TXN_TYPE, DEBTOR_BANK, TXN_STATUS, ACTION_DATE, AUTH_CODE, RESP_DATE ");
 
@@ -2894,7 +2894,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		//		Date currentDate = new Date();
 		Date  date = null;
 
-		CasSysctrlSysParamEntity casSysctrlSysParamEntity = (CasSysctrlSysParamEntity) genericDAO.findByNamedQuery("MdtSysctrlSysParamEntity.findByActiveInd", "activeInd","Y");
+		CasSysctrlSysParamEntity casSysctrlSysParamEntity = (CasSysctrlSysParamEntity) genericDAO.findByNamedQuery("CasSysctrlSysParamEntity.findByActiveInd", "activeInd","Y");
 		Date currentDate;
 
 		if(casSysctrlSysParamEntity != null && casSysctrlSysParamEntity.getProcessDate() != null)
@@ -3150,7 +3150,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 
 		//		sb.append("SELECT SERVICE_ID AS serviceId, SUM(NR_OF_MSGS) AS totalNrOfMsgs, SUM(NR_MSGS_ACCEPTED) AS nrMsgsAccepted, SUM(NR_MSGS_REJECTED) AS nrMsgsRejected ");
-		//		sb.append("FROM  CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		//		sb.append("FROM  CAMOWNER.CAS_OPS_MNDT_COUNT ");
 		//		sb.append(" WHERE INCOMING = 'Y' ");
 		//		sb.append("GROUP BY SERVICE_ID ");
 		//		sb.append("ORDER BY SERVICE_ID ASC ");
@@ -3159,12 +3159,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("Q2.SERVICE_OUT as extServiceId, NVL(Q2.TOTALEXT,0) as nrMsgsExtracted , NVL(Q1.TOTALACCP - NVL(Q2.TOTALEXT,0), 0) as difference ");
 		sb.append("FROM (SELECT a.SERVICE_ID AS SERVICE_IN, SUM(NVL(a.NR_OF_MSGS, 0)) AS TOTALMSGS, SUM(NVL(a.NR_MSGS_ACCEPTED, 0)) AS TOTALACCP ");
 		sb.append(",SUM(NVL(a.NR_MSGS_REJECTED, 0)) AS TOTALREJ, c.SERVICE_ID_OUT AS OPS_SERVICE_OUT ");
-		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT a ");
+		sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT a ");
 		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_OPS_SERVICES c ON c.SERVICE_ID_IN = a.SERVICE_ID WHERE a.INCOMING = 'Y' ");
 		sb.append("GROUP BY a.SERVICE_ID,c.SERVICE_ID_OUT) Q1 ");
 		sb.append("LEFT JOIN ");
 		sb.append("(SELECT b.SERVICE_ID AS SERVICE_OUT, SUM(NVL(b.NR_MSGS_EXTRACTED, 0)) AS TOTALEXT ");
-		sb.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT b WHERE b.OUTGOING = 'Y' ");
+		sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT b WHERE b.OUTGOING = 'Y' ");
 		sb.append("GROUP BY b.SERVICE_ID) Q2 ");
 		sb.append("ON Q1.OPS_SERVICE_OUT = Q2.SERVICE_OUT ");
 		sb.append("GROUP BY Q1.SERVICE_IN, Q1.OPS_SERVICE_OUT, Q2.SERVICE_OUT, Q1.TOTALMSGS, Q1.TOTALACCP, Q1.TOTALREJ, Q2.TOTALEXT ");
@@ -3206,7 +3206,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try 
 		{
-			dailyBillingList = genericDAO.findAllByNamedQuery("MdtAcOpsDailyBillingEntity.findByBillExpStatus", "billExpStatus", "Y");
+			dailyBillingList = genericDAO.findAllByNamedQuery("CasOpsDailyBillingEntity.findByBillExpStatus", "billExpStatus", "Y");
 		} 
 		catch (ObjectNotFoundException onfe) 
 		{
@@ -3766,7 +3766,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 			//			log.info("parameters =====> "+parameters);
 			//			List<MdtAcOpsMndtMsgEntity> painMsgsCheckList = (List<MdtAcOpsMndtMsgEntity>) genericDAO.findByCriteriaUsingTrunc(MdtAcOpsMndtMsgEntity.class, parameters, "CREATED_DATE", "YYYY-MM-DD", strSysDate);
-			List<CasOpsFileRegEntity> fileStatusCheckList = genericDAO.findAllByNQCriteria("MdtOpsFileRegEntity.findByProcessDateTruncService", parameters);
+			List<CasOpsFileRegEntity> fileStatusCheckList = genericDAO.findAllByNQCriteria("CasOpsFileRegEntity.findByProcessDateTruncService", parameters);
 
 			log.debug("fileStatusCheckList =====> "+fileStatusCheckList);
 			log.debug("fileStatusCheckList.size(); =====> "+fileStatusCheckList.size());
@@ -4815,7 +4815,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("COUNT(bb.SERVICE) AS nrOfMsgs ");
 		sb.append("FROM TEMPTBL aa ");
 		if(reportNr.equalsIgnoreCase("MR022")) {
-			sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
+			sb.append("LEFT OUTER JOIN CAMOWNER.CAS_OPS_STATUS_HDRS bb ON aa.cr_memno = bb.INSTG_AGT ");
 		}
 		else
 		{
@@ -4863,7 +4863,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sb.append("COUNT(bb.SERVICE) AS nrOfMsgs ");
 		sb.append("FROM TEMPTBL aa ");
 		if(reportNr.equalsIgnoreCase("MR022")) {
-			sb.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
+			sb.append("LEFT OUTER JOIN CAMOWNER.CAS_OPS_STATUS_HDRS bb ON aa.dr_memno = bb.INSTG_AGT ");
 		}
 		else
 		{
@@ -6497,7 +6497,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sbDlyBill.append(",AUTH_CODE ,TXN_ID ,MNDT_REF_NUM ,EXT_MSG_ID ,RESP_DATE ,ARCHIVE_DATE) ");
 		sbDlyBill.append("SELECT SYSTEM_SEQ_NO ,CREDITOR_BANK ,DEBTOR_BANK ,SUB_SERVICE ,TXN_TYPE ,TXN_STATUS ,CREATED_BY ,CREATED_DATE ,BILL_EXP_STATUS ,ACTION_DATE ");
 		sbDlyBill.append(",AUTH_CODE ,TXN_ID ,MNDT_REF_NUM ,EXT_MSG_ID ,RESP_DATE ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbDlyBill.append("FROM CAMOWNER.MDT_AC_OPS_DAILY_BILLING WHERE BILL_EXP_STATUS = 'Y' ");
+		sbDlyBill.append("FROM CAMOWNER.CAS_OPS_DAILY_BILLING WHERE BILL_EXP_STATUS = 'Y' ");
 
 		try
 		{
@@ -6521,7 +6521,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String dlyBillDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_DAILY_BILLING WHERE BILL_EXP_STATUS = 'Y' ";
+			String dlyBillDel = "DELETE FROM CAMOWNER.CAS_OPS_DAILY_BILLING WHERE BILL_EXP_STATUS = 'Y' ";
 			log.debug("dlyBillDel: " + dlyBillDel);
 			genericDAO.executeNativeSQL(dlyBillDel);
 			dailyBillBool = true;
@@ -6548,12 +6548,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 //		2020/03/26-SALEHAR- REMOVE JOIN TO CONF DETAILS
 //		sbConfHdrs.append("SELECT a.SYSTEM_SEQ_NO ,a.HDR_MSG_ID ,a.CREATE_DATE_TIME ,a.INSTG_AGT ,a.INSTD_AGT ,a.ORGNL_MSG_ID ,a.ORGNL_MSG_NAME ,a.ORGNL_CREATE_DATE_TIME ,a.PROCESS_STATUS ");
 //		sbConfHdrs.append(",a.GROUP_STATUS ,a.SERVICE ,a.GROUP_ERROR ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-//		sbConfHdrs.append("FROM CAMOWNER.MDT_AC_OPS_CONF_HDRS a ");
-//		sbConfHdrs.append("LEFT JOIN CAMOWNER.MDT_AC_OPS_CONF_DETAILS b ON a.SYSTEM_SEQ_NO = b.CONF_HDR_SEQ_NO ");
+//		sbConfHdrs.append("FROM CAMOWNER.CAS_OPS_CONF_HDRS a ");
+//		sbConfHdrs.append("LEFT JOIN CAMOWNER.CAS_OPS_CONF_DETAILS b ON a.SYSTEM_SEQ_NO = b.CONF_HDR_SEQ_NO ");
 //		sbConfHdrs.append("WHERE b.PROCESS_STATUS IN ('4') ");
 		sbConfHdrs.append("SELECT SYSTEM_SEQ_NO ,HDR_MSG_ID ,CREATE_DATE_TIME ,INSTG_AGT ,INSTD_AGT ,ORGNL_MSG_ID ,ORGNL_MSG_NAME ,ORGNL_CREATE_DATE_TIME ,PROCESS_STATUS ");
 		sbConfHdrs.append(",GROUP_STATUS ,SERVICE ,GROUP_ERROR ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbConfHdrs.append("FROM CAMOWNER.MDT_AC_OPS_CONF_HDRS ");
+		sbConfHdrs.append("FROM CAMOWNER.CAS_OPS_CONF_HDRS ");
 		sbConfHdrs.append("WHERE PROCESS_STATUS = 'C' ");
 
 		try
@@ -6577,11 +6577,11 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			{
 				StringBuffer sbDelCHdrs = new StringBuffer();
 //				2020/03/26-SALEHAR- REMOVE JOIN TO CONF DETAILS
-//				sbDelCHdrs.append("delete FROM CAMOWNER.MDT_AC_OPS_CONF_HDRS a ");
+//				sbDelCHdrs.append("delete FROM CAMOWNER.CAS_OPS_CONF_HDRS a ");
 //				sbDelCHdrs.append("where (a.SYSTEM_SEQ_NO) in ");
-//				sbDelCHdrs.append("(select b.CONF_HDR_SEQ_NO FROM CAMOWNER.MDT_AC_OPS_CONF_DETAILS b WHERE b.PROCESS_STATUS = '4') ");
+//				sbDelCHdrs.append("(select b.CONF_HDR_SEQ_NO FROM CAMOWNER.CAS_OPS_CONF_DETAILS b WHERE b.PROCESS_STATUS = '4') ");
 
-				sbDelCHdrs.append("DELETE FROM CAMOWNER.MDT_AC_OPS_CONF_HDRS WHERE PROCESS_STATUS = 'C' ");
+				sbDelCHdrs.append("DELETE FROM CAMOWNER.CAS_OPS_CONF_HDRS WHERE PROCESS_STATUS = 'C' ");
 
 				String delConHdsSQL = sbDelCHdrs.toString();
 				log.debug("delConHdsSQL: " + delConHdsSQL);
@@ -6610,7 +6610,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sbConfDtls.append(",EXTRACT_SERVICE ,ORGNL_MSG_TYPE ,EXTRACT_MSG_ID ,LOCAL_INSTR_CD ,ARCHIVE_DATE,MSG_ID,IN_FILE_NAME,EXTRACT_FILE_NAME) ");
 		sbConfDtls.append("SELECT SYSTEM_SEQ_NO ,CONF_HDR_SEQ_NO ,ERROR_CODE ,TXN_ID ,TXN_STATUS ,ERROR_TYPE ,RECORD_ID ,MANDATE_REF_NUMBER ,INST_ID ,PROCESS_STATUS ");
 		sbConfDtls.append(",EXTRACT_SERVICE ,ORGNL_MSG_TYPE ,EXTRACT_MSG_ID ,LOCAL_INSTR_CD ,TO_DATE('"+archDate+"','YYYY-MM-DD'),MSG_ID,IN_FILE_NAME,EXTRACT_FILE_NAME ");
-		sbConfDtls.append("FROM CAMOWNER.MDT_AC_OPS_CONF_DETAILS a WHERE a.PROCESS_STATUS = '4' ");
+		sbConfDtls.append("FROM CAMOWNER.CAS_OPS_CONF_DETAILS a WHERE a.PROCESS_STATUS = '4' ");
 
 		try
 		{
@@ -6630,7 +6630,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.info("===============DELETING OPS CONF DETAILS===============");
 			try
 			{
-				String delCDtlStr = "DELETE FROM CAMOWNER.MDT_AC_OPS_CONF_DETAILS b WHERE b.PROCESS_STATUS = '4' ";
+				String delCDtlStr = "DELETE FROM CAMOWNER.CAS_OPS_CONF_DETAILS b WHERE b.PROCESS_STATUS = '4' ";
 				log.debug("delCDtlStr: " + delCDtlStr);
 				genericDAO.executeNativeSQL(delCDtlStr);
 				delConfDtls = true;
@@ -6980,8 +6980,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sbStatusDtls.append(",MANDATE_REF_NUMBER ,INST_ID ,PROCESS_STATUS ,DEBTOR_BRANCH_NO ,CR_ABB_SHORT_NAME ,ARCHIVE_DATE)");
 		sbStatusDtls.append("SELECT a.SYSTEM_SEQ_NO ,a.STATUS_HDR_SEQ_NO ,a.ERROR_CODE ,a.TXN_ID ,a.END_TO_END_ID ,a.TXN_STATUS ,a.ERROR_TYPE ,a.RECORD_ID ,a.ORGNL_TXN_SEQ_NO ");
 		sbStatusDtls.append(",a.MANDATE_REF_NUMBER ,a.INST_ID ,a.PROCESS_STATUS ,a.DEBTOR_BRANCH_NO ,a.CR_ABB_SHORT_NAME ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbStatusDtls.append("FROM CAMOWNER.MDT_AC_OPS_STATUS_DETAILS a ");
-		sbStatusDtls.append("LEFT OUTER JOIN CAMOWNER.MDT_AC_OPS_STATUS_HDRS b ON a.STATUS_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
+		sbStatusDtls.append("FROM CAMOWNER.CAS_OPS_STATUS_DETAILS a ");
+		sbStatusDtls.append("LEFT OUTER JOIN CAMOWNER.CAS_OPS_STATUS_HDRS b ON a.STATUS_HDR_SEQ_NO = b.SYSTEM_SEQ_NO ");
 		sbStatusDtls.append("WHERE b.PROCESS_STATUS IN ('7') ");
 
 
@@ -7009,7 +7009,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			sbStatusHdrs.append(",ORGNL_NO_OF_TXNS ,ORGNL_CNTL_SUM ,PROCESS_STATUS ,GROUP_STATUS ,SERVICE ,VET_RUN_NUMBER ,WORKUNIT_REF_NO ,ORGNL_FILE_NAME ,EXTRACT_FILE_NAME ,ARCHIVE_DATE) ");
 			sbStatusHdrs.append("SELECT SYSTEM_SEQ_NO ,HDR_MSG_ID ,CREATE_DATE_TIME ,INSTG_AGT ,INSTD_AGT ,ORGNL_MSG_ID ,ORGNL_MSG_NAME ,ORGNL_CREATE_DATE_TIME "); 
 			sbStatusHdrs.append(",ORGNL_NO_OF_TXNS ,ORGNL_CNTL_SUM ,PROCESS_STATUS ,GROUP_STATUS ,SERVICE ,VET_RUN_NUMBER ,WORKUNIT_REF_NO ,ORGNL_FILE_NAME ,EXTRACT_FILE_NAME ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-			sbStatusHdrs.append("FROM CAMOWNER.MDT_AC_OPS_STATUS_HDRS WHERE PROCESS_STATUS = '7' ");
+			sbStatusHdrs.append("FROM CAMOWNER.CAS_OPS_STATUS_HDRS WHERE PROCESS_STATUS = '7' ");
 
 			try
 			{
@@ -7045,9 +7045,9 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		{
 			StringBuffer sbDelStatusDtls = new StringBuffer();
 
-			sbDelStatusDtls.append("delete FROM CAMOWNER.MDT_AC_OPS_STATUS_DETAILS a ");
+			sbDelStatusDtls.append("delete FROM CAMOWNER.CAS_OPS_STATUS_DETAILS a ");
 			sbDelStatusDtls.append("where (a.STATUS_HDR_SEQ_NO) in ");
-			sbDelStatusDtls.append("(select b.SYSTEM_SEQ_NO FROM CAMOWNER.MDT_AC_OPS_STATUS_HDRS b WHERE b.PROCESS_STATUS = '7') ");
+			sbDelStatusDtls.append("(select b.SYSTEM_SEQ_NO FROM CAMOWNER.CAS_OPS_STATUS_HDRS b WHERE b.PROCESS_STATUS = '7') ");
 
 			String delStatusDtlsSQL = sbDelStatusDtls.toString();
 			log.debug("delStatusDtlsSQL: " + delStatusDtlsSQL);
@@ -7065,7 +7065,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.info("===============DELETING OPS STATUS HDRS===============");
 			try
 			{
-				String delStatusHdrsSQL = "DELETE FROM CAMOWNER.MDT_AC_OPS_STATUS_HDRS WHERE PROCESS_STATUS = '7'";
+				String delStatusHdrsSQL = "DELETE FROM CAMOWNER.CAS_OPS_STATUS_HDRS WHERE PROCESS_STATUS = '7'";
 				log.debug("delStatusHdrsSQL: " + delStatusHdrsSQL);
 				genericDAO.executeNativeSQL(delStatusHdrsSQL);
 				delStatusHdrs = true;
@@ -7098,7 +7098,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sbMndtCounts.append(",FILE_NAME ,NR_MSGS_ACCEPTED ,NR_MSGS_EXTRACTED) ");
 		sbMndtCounts.append("SELECT INST_ID ,SERVICE_ID ,NR_OF_FILES ,NR_OF_MSGS ,PROCESS_DATE ,INCOMING ,OUTGOING ,MSG_ID ,NR_MSGS_REJECTED ");
 		sbMndtCounts.append(",FILE_NAME ,NR_MSGS_ACCEPTED ,NR_MSGS_EXTRACTED ");
-		sbMndtCounts.append("FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT ");
+		sbMndtCounts.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT ");
 
 		try
 		{
@@ -7122,7 +7122,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String mndtCountDel = "DELETE FROM CAMOWNER.MDT_AC_OPS_MNDT_COUNT ";
+			String mndtCountDel = "DELETE FROM CAMOWNER.CAS_OPS_MNDT_COUNT ";
 			log.debug("mndtCountDel: " + mndtCountDel);
 			genericDAO.executeNativeSQL(mndtCountDel);
 			mndtCountBool = true;
@@ -7145,7 +7145,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		sbFileReg.append("INSERT INTO CAMOWNER.MDT_AC_ARC_FILE_REG ");
 		sbFileReg.append("(FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID ,ARCHIVE_DATE) ");
 		sbFileReg.append("SELECT FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbFileReg.append("FROM CAMOWNER.MDT_OPS_FILE_REG ");
+		sbFileReg.append("FROM CAMOWNER.CAS_OPS_FILE_REG ");
 
 		try
 		{
@@ -7169,7 +7169,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String fileRegDel = "DELETE FROM CAMOWNER.MDT_OPS_FILE_REG ";
+			String fileRegDel = "DELETE FROM CAMOWNER.CAS_OPS_FILE_REG ";
 			log.debug("fileRegDel: " + fileRegDel);
 			genericDAO.executeNativeSQL(fileRegDel);
 			fileRegBool = true;
@@ -7812,7 +7812,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	@Override
 	public List<?> retrievetxnsBilingToExport(String nonActInd) {
 	
-		List<CasOpsTxnsBillingEntity> mdtAcOpsTxnsBillingList = genericDAO.findAllByNamedQuery("MdtAcOpsTxnsBillingEntity.findByBillExpStatus","billExpStatus",nonActInd);
+		List<CasOpsTxnsBillingEntity> mdtAcOpsTxnsBillingList = genericDAO.findAllByNamedQuery("CasOpsTxnsBillingEntity.findByBillExpStatus","billExpStatus",nonActInd);
 		return mdtAcOpsTxnsBillingList;
 	}
 

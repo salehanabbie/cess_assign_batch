@@ -29,24 +29,24 @@ import org.hibernate.annotations.Parameter;
 	@Table(name = "CAS_OPS_CONF_HDRS",schema = "CAMOWNER")
 	@XmlRootElement
 	@NamedQueries({
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findAll", query = "SELECT m FROM CasAcOpsConfHdrsEntity m"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findBySystemSeqNo", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByHdrMsgId", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.hdrMsgId = :hdrMsgId"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByCreateDateTime", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.createDateTime = :createDateTime"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByInstgAgt", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.instgAgt = :instgAgt"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByInstdAgt", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.instdAgt = :instdAgt"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByOrgnlMsgId", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.orgnlMsgId = :orgnlMsgId"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByOrgnlMsgName", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.orgnlMsgName = :orgnlMsgName"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByOrgnlCreateDateTime", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.orgnlCreateDateTime = :orgnlCreateDateTime"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByProcessStatus", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.processStatus = :processStatus"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByGroupStatus", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.groupStatus = :groupStatus"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByService", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.service = :service"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByGroupError", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.groupError = :groupError"),
-	    @NamedQuery(name = "CasAcOpsConfHdrsEntity.findByExcessPeriod", query = "SELECT m FROM CasAcOpsConfHdrsEntity m WHERE m.createDateTime <= :createDateTime")})
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findAll", query = "SELECT m FROM CasOpsConfHdrsEntity m"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findBySystemSeqNo", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByHdrMsgId", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.hdrMsgId = :hdrMsgId"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByCreateDateTime", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.createDateTime = :createDateTime"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByInstgAgt", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.instgAgt = :instgAgt"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByInstdAgt", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.instdAgt = :instdAgt"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByOrgnlMsgId", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.orgnlMsgId = :orgnlMsgId"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByOrgnlMsgName", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.orgnlMsgName = :orgnlMsgName"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByOrgnlCreateDateTime", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.orgnlCreateDateTime = :orgnlCreateDateTime"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByProcessStatus", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.processStatus = :processStatus"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByGroupStatus", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.groupStatus = :groupStatus"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByService", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.service = :service"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByGroupError", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.groupError = :groupError"),
+	    @NamedQuery(name = "CasOpsConfHdrsEntity.findByExcessPeriod", query = "SELECT m FROM CasOpsConfHdrsEntity m WHERE m.createDateTime <= :createDateTime")})
 	public class CasOpsConfHdrsEntity implements Serializable {
 
 	    private static final long serialVersionUID = 1L;
-	    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MANOWNER.MDT_AC_OPS_CONF_HDRS_SEQ") )
+	    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "CAMOWNER.CAS_OPS_CONF_HDRS_SEQ") )
 	    @GeneratedValue(generator = "generator")
 	    @Id
 	    @Basic(optional = false)
@@ -305,7 +305,7 @@ import org.hibernate.annotations.Parameter;
 
 		@Override
 		public String toString() {
-			return "CasAcOpsConfHdrsEntity [systemSeqNo=" + systemSeqNo
+			return "CasOpsConfHdrsEntity [systemSeqNo=" + systemSeqNo
 					+ ", hdrMsgId=" + hdrMsgId + ", createDateTime="
 					+ createDateTime + ", instgAgt=" + instgAgt + ", instdAgt="
 					+ instdAgt + ", orgnlMsgId=" + orgnlMsgId

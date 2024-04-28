@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
 	@NamedQuery(name = "CasOpsSotEotCtrlEntity.findAll", query = "SELECT m FROM CasOpsSotEotCtrlEntity m"),
-	@NamedQuery(name = "CasOpsSotEotCtrlEntity.findByServiceId", query = "SELECT m FROM CasOpsSotEotCtrlEntity m WHERE m.mdtAcOpsSotEotCtrlPK.serviceId = :serviceId"),
-	@NamedQuery(name = "CasOpsSotEotCtrlEntity.findByInstId", query = "SELECT m FROM CasOpsSotEotCtrlEntity m WHERE m.mdtAcOpsSotEotCtrlPK.instId = :instId"),
+	@NamedQuery(name = "CasOpsSotEotCtrlEntity.findByServiceId", query = "SELECT m FROM CasOpsSotEotCtrlEntity m WHERE m.casOpsSotEotCtrlPK.serviceId = :serviceId"),
+	@NamedQuery(name = "CasOpsSotEotCtrlEntity.findByInstId", query = "SELECT m FROM CasOpsSotEotCtrlEntity m WHERE m.casOpsSotEotCtrlPK.instId = :instId"),
 	@NamedQuery(name = "CasOpsSotEotCtrlEntity.findBySotOut", query = "SELECT m FROM CasOpsSotEotCtrlEntity m WHERE m.sotOut = :sotOut"),
 	@NamedQuery(name = "CasOpsSotEotCtrlEntity.findByEotOut", query = "SELECT m FROM CasOpsSotEotCtrlEntity m WHERE m.eotOut = :eotOut"),
 	@NamedQuery(name = "CasOpsSotEotCtrlEntity.findBySotIn", query = "SELECT m FROM CasOpsSotEotCtrlEntity m WHERE m.sotIn = :sotIn"),
