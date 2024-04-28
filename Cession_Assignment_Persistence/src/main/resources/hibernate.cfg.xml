@@ -26,6 +26,7 @@
         <mapping class="com.bsva.entities.AudCtrlCompParamEntity"/>
         <mapping class="com.bsva.entities.AudReportsEntity"/>
         <mapping class="com.bsva.entities.AudTrackingEntity"/>
+        <mapping class="com.bsva.entities.AudSystemProcessEntity"/>
         <mapping class="com.bsva.entities.CasCnfgAccountTypeEntity"/>
         <mapping class="com.bsva.entities.CasCnfgAdjustmentCatEntity"/>
         <mapping class="com.bsva.entities.CasCnfgAmendmentCodesEntity"/>
@@ -71,7 +72,7 @@
         <mapping class="com.bsva.entities.CasSysctrlSchedulerEntity"/>
         <mapping class="com.bsva.entities.CasSysctrlSchedulerCronEntity"/>
         <mapping class="com.bsva.entities.CasSysctrlServicesEntity"/>
-        <mapping class="com.bsva.entities.CasSysctrlServicesEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlSysParamEntity"/>
         <mapping class="com.bsva.entities.CasSysctrlSlaTimesEntity"/>
         <mapping class="com.bsva.entities.CisBranchEntity"/>
         <mapping class="com.bsva.entities.CisMemberEntity"/>

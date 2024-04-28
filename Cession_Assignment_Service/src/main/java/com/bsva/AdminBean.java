@@ -1509,10 +1509,10 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
    *
    * List<OpsFileRegModel> opsFileRegModel = new ArrayList<OpsFileRegModel>();
    *
-   * List<MdtOpsFileRegEntity> mdtOpsFileRegList = new
-   * ArrayList<MdtOpsFileRegEntity>();
+   * List<CasOpsFileRegEntity> mdtOpsFileRegList = new
+   * ArrayList<CasOpsFileRegEntity>();
    *
-   * mdtOpsFileRegList = genericDAO.findAll(MdtOpsFileRegEntity.class);
+   * mdtOpsFileRegList = genericDAO.findAll(CasOpsFileRegEntity.class);
    *
    * System.out .println("mdtOpsFileRegList: " +
    * mdtOpsFileRegList.toString());
@@ -3008,12 +3008,12 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       parameters.put("fileName", "%" + fileName + "%");
 
       log.debug("parameters---> " + parameters.toString());
-			/*	mdtOpsFileRegEntityList =(List<MdtOpsFileRegEntity>)genericDAO.findAllByCriteria
-			(MdtOpsFileRegEntity.class, parameters);
+			/*	mdtOpsFileRegEntityList =(List<CasOpsFileRegEntity>)genericDAO.findAllByCriteria
+			(CasOpsFileRegEntity.class, parameters);
 			log.info("---------------mdtOpsFileRegEntityList after findAllByCriteria:
 			------------------" + mdtOpsFileRegEntityList);*/
       casOpsFileRegEntityList =
-          genericDAO.findAllByNQCriteria("MdtOpsFileRegEntity.findByFileNameLike3", parameters);
+          genericDAO.findAllByNQCriteria("CasOpsFileRegEntity.findByFileNameLike3", parameters);
       log.debug(
           "---------------mdtOpsFileRegEntityList after findAllByNQCriteria: ------------------" +
               casOpsFileRegEntityList);
@@ -4181,7 +4181,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewFileStatusFilter(String fileName) {
 
-    //List<MdtOpsFileRegEntity> opsFileRegEntityList = new ArrayList<MdtOpsFileRegEntity>();
+    //List<CasOpsFileRegEntity> opsFileRegEntityList = new ArrayList<CasOpsFileRegEntity>();
     List<OpsFileRegModel> opsFileRegModelList = new ArrayList<OpsFileRegModel>();
 
     try {
@@ -4227,7 +4227,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
       //log.info("parameters---> "+parameters.toString());
       opsFileRegList =
-          genericDAO.findAllByNQCriteria("MdtOpsFileRegEntity.findByFileNameLike2", parameters);
+          genericDAO.findAllByNQCriteria("CasOpsFileRegEntity.findByFileNameLike2", parameters);
       //log.info("---------------opsFileRegList after findAllByCriteria: ------------------" +
       // opsFileRegList);
 
@@ -4263,7 +4263,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
       log.info("parameters---> " + parameters.toString());
       opsFileRegList =
-          genericDAO.findAllByNQCriteria("MdtOpsFileRegEntity.findByFileNameLike1", parameters);
+          genericDAO.findAllByNQCriteria("CasOpsFileRegEntity.findByFileNameLike1", parameters);
       log.info("---------------opsFileRegList after findAllByCriteria: ------------------" +
           opsFileRegList);
 
@@ -5969,7 +5969,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
 
   public List<?> retrieveOpsFileRegbyDerictionCriteria(String direction) {
     List<OpsFileRegModel> fileRegList = new ArrayList<OpsFileRegModel>();
-    //List<MdtOpsFileRegEntity> mdtOpsFileRegEntityList = null;
+    //List<CasOpsFileRegEntity> mdtOpsFileRegEntityList = null;
 
     try {
       List<CasOpsFileRegEntity> casOpsFileRegEntityList =
