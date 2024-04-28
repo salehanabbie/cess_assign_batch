@@ -38,7 +38,7 @@ public class AudSystemProcessEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MANOWNER.AUD_SYSTEM_PROCESS_SEQ") )
+    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "CAMOWNER.AUD_SYSTEM_PROCESS_SEQ") )
     @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)
