@@ -1,15 +1,6 @@
 package com.bsva.authcoll.singletable.validation;
 
 import com.bsva.constants.Constants;
-import com.bsva.entities.CasConfigDataTimeEntity;
-import com.bsva.entities.CasOpsFileRegEntity;
-import com.bsva.entities.CasSysctrlCompParamEntity;
-import com.bsva.entities.CasSysctrlSysParamEntity;
-import com.bsva.entities.CasOpsConfHdrsEntity;
-import com.bsva.entities.CasOpsFileSizeLimitEntity;
-import com.bsva.entities.CasOpsGrpHdrEntity;
-import com.bsva.entities.CasOpsCessionAssignEntity;
-import com.bsva.entities.CasOpsTxnsBillReportEntity;
 import com.bsva.entities.CasCnfgAccountTypeEntity;
 import com.bsva.entities.CasCnfgAdjustmentCatEntity;
 import com.bsva.entities.CasCnfgAmendmentCodesEntity;
@@ -20,8 +11,17 @@ import com.bsva.entities.CasCnfgFrequencyCodesEntity;
 import com.bsva.entities.CasCnfgLocalInstrCodesEntity;
 import com.bsva.entities.CasCnfgReasonCodesEntity;
 import com.bsva.entities.CasCnfgSequenceTypeEntity;
+import com.bsva.entities.CasConfigDataTimeEntity;
+import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsConfHdrsEntity;
 import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsGrpHdrEntity;
 import com.bsva.entities.CasOpsServicesEntity;
+import com.bsva.entities.CasOpsTxnsBillReportEntity;
+import com.bsva.entities.CasSysctrlCompParamEntity;
+import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.entities.SysCisBranchEntity;
 import com.bsva.interfaces.AdminBeanRemote;
@@ -290,33 +290,33 @@ public class Validation_ST {
    * @return
    */
   public boolean validateServiceId(String serviceName, String validService) {
-	  if (serviceName != null && !serviceName.isEmpty()) {
-		  CasOpsServicesEntity opsServEntity = findOpsServices(serviceName);
+    if (serviceName != null && !serviceName.isEmpty()) {
+      CasOpsServicesEntity opsServEntity = findOpsServices(serviceName);
 
-		  if (opsServEntity == null) {
-			  return false;
-		  } else {
-			  if (opsServEntity.getServiceIdIn().equalsIgnoreCase(validService)) {
-				  return true;
-			  } else {
-				  return false;
-			  }
-		  }
-		  //2019-10-06 SalehaR - Use Cached List
-		  //			MdtOpsServicesEntity casOpsServicesEntity = (MdtOpsServicesEntity)
-		  //			valBeanRemote.validateServiceId_002(serviceName);
-		  //			if (casOpsServicesEntity == null)
-		  //				return false;
-		  //			else
-		  //			{
-		  //				if(casOpsServicesEntity.getServiceIdIn().equalsIgnoreCase(validService))
-		  //					return true;
-		  //				else
-		  //					return false;
-		  //			}
-	  } else {
-		  return false;
-	  }
+      if (opsServEntity == null) {
+        return false;
+      } else {
+        if (opsServEntity.getServiceIdIn().equalsIgnoreCase(validService)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      //2019-10-06 SalehaR - Use Cached List
+      //			MdtOpsServicesEntity casOpsServicesEntity = (MdtOpsServicesEntity)
+      //			valBeanRemote.validateServiceId_002(serviceName);
+      //			if (casOpsServicesEntity == null)
+      //				return false;
+      //			else
+      //			{
+      //				if(casOpsServicesEntity.getServiceIdIn().equalsIgnoreCase(validService))
+      //					return true;
+      //				else
+      //					return false;
+      //			}
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -329,30 +329,30 @@ public class Validation_ST {
    */
   public boolean validateBicCode(String bicCode) {
 
-	  if (bicCode != null && !bicCode.isEmpty()) {
-		  SysCisBankEntity cisBankEntity = findCisBanks(bicCode);
+    if (bicCode != null && !bicCode.isEmpty()) {
+      SysCisBankEntity cisBankEntity = findCisBanks(bicCode);
 
-		  if (cisBankEntity == null) {
-			  return false;
-		  } else {
-			  memberNo = cisBankEntity.getMemberNo();
-			  return true;
-		  }
+      if (cisBankEntity == null) {
+        return false;
+      } else {
+        memberNo = cisBankEntity.getMemberNo();
+        return true;
+      }
 
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			/* Get the correct Cis field for bic code */
-		  //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
-		  //			.validateBicCode_003(bicCode,backEndProcess);
-		  //			if (sysCisBankEntity == null)
-		  //				return false;
-		  //			else
-		  //			{
-		  //				memberNo = sysCisBankEntity.getMemberNo();
-		  //				return true;
-		  //			}
-	  } else {
-		  return false;
-	  }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			/* Get the correct Cis field for bic code */
+      //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
+      //			.validateBicCode_003(bicCode,backEndProcess);
+      //			if (sysCisBankEntity == null)
+      //				return false;
+      //			else
+      //			{
+      //				memberNo = sysCisBankEntity.getMemberNo();
+      //				return true;
+      //			}
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -368,7 +368,7 @@ public class Validation_ST {
     log.debug("fileNo: " + fileNo + "--------------------- bicCode: " + memberNo);
     if (fileNo != null && !fileNo.isEmpty() && memberNo != null && !memberNo.isEmpty()) {
       //MdtSysctrlCustParamEntity localEntity = (MdtSysctrlCustParamEntity) valBeanRemote
-		// .validateFileNumberingInMsgId_004(memberNo);
+      // .validateFileNumberingInMsgId_004(memberNo);
       CasOpsCustParamEntity localEntity =
           (CasOpsCustParamEntity) valBeanRemote.validateFileNumberingInMsgId_004(memberNo);
       if (localEntity == null) {
@@ -377,35 +377,18 @@ public class Validation_ST {
       } else {
         log.debug("custEntity in validate File Numbering " + localEntity);
         int msgIdLastFileNo = 0;
-        if (msgType.equalsIgnoreCase("pain.009")) {
-          msgIdLastFileNo = Integer.valueOf(localEntity.getManInitLstSeq());
-          log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
-        }
 
         if (msgType.equalsIgnoreCase("pain.010")) {
-          msgIdLastFileNo = Integer.valueOf(localEntity.getManAmdLstSeq());
+          msgIdLastFileNo = Integer.valueOf(localEntity.getCasaAmdXsdNs());
           log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
         }
 
-        if (msgType.equalsIgnoreCase("pain.011")) {
-          msgIdLastFileNo = Integer.valueOf(localEntity.getManCanLstSeq());
-          log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
-        }
-
-        if (msgType.equalsIgnoreCase("case.001")) {
-          msgIdLastFileNo = Integer.valueOf(localEntity.getManReqLstSeq());
-          log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
-        }
         if (msgType.equalsIgnoreCase("pain.012")) {
-          msgIdLastFileNo = Integer.valueOf(localEntity.getManAccpLstSeq());
+          msgIdLastFileNo = Integer.valueOf(localEntity.getCasaAccpLstSeq());
           log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
         }
         if (msgType.equalsIgnoreCase("pacs.002")) {
-          msgIdLastFileNo = Integer.valueOf(localEntity.getManConfirmLstSeq());
-          log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
-        }
-        if (msgType.equalsIgnoreCase("case.002")) {
-          msgIdLastFileNo = Integer.valueOf(localEntity.getManRespLstSeq());
+          msgIdLastFileNo = Integer.valueOf(localEntity.getCasaConfirmLstSeq());
           log.debug("msgIdLastFileNo: " + msgIdLastFileNo);
         }
 
@@ -420,21 +403,13 @@ public class Validation_ST {
           if (currentFileNo == 000001) {
             //						msgIdLastFileNo = ++msgIdLastFileNo;
             String lastSeqNr = String.format("%06d", newFileNo);
-			  if (msgType.equalsIgnoreCase("pain.009")) {
-				  localEntity.setManInitLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("pain.010")) {
-				  localEntity.setManAmdLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("pain.011")) {
-				  localEntity.setManCanLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("case.001")) {
-				  localEntity.setManReqLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("pain.012")) {
-				  localEntity.setManAccpLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("pacs.002")) {
-				  localEntity.setManConfirmLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("case.002")) {
-				  localEntity.setManRespLstSeq(lastSeqNr);
-			  }
+            if (msgType.equalsIgnoreCase("pain.010")) {
+              localEntity.setCasaAmdLstSeq(lastSeqNr);
+            } else if (msgType.equalsIgnoreCase("pain.012")) {
+              localEntity.setCasaAccpLstSeq(lastSeqNr);
+            } else if (msgType.equalsIgnoreCase("pacs.002")) {
+              localEntity.setCasaConfirmLstSeq(lastSeqNr);
+            }
 
             log.debug("custEntity from Validation of Input SeqNo before update: " + localEntity);
             boolean updateLastSeqNr =
@@ -449,21 +424,13 @@ public class Validation_ST {
             //						msgIdLastFileNo = ++msgIdLastFileNo;
             String lastSeqNr = String.format("%06d", newFileNo);
 
-			  if (msgType.equalsIgnoreCase("pain.009")) {
-				  localEntity.setManInitLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("pain.010")) {
-				  localEntity.setManAmdLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("pain.011")) {
-				  localEntity.setManCanLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("case.001")) {
-				  localEntity.setManReqLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("pain.012")) {
-				  localEntity.setManAccpLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("pacs.002")) {
-				  localEntity.setManConfirmLstSeq(lastSeqNr);
-			  } else if (msgType.equalsIgnoreCase("case.002")) {
-				  localEntity.setManRespLstSeq(lastSeqNr);
-			  }
+            if (msgType.equalsIgnoreCase("pain.010")) {
+              localEntity.setCasaAmdLstSeq(lastSeqNr);
+            } else if (msgType.equalsIgnoreCase("pain.012")) {
+              localEntity.setCasaAccpLstSeq(lastSeqNr);
+            } else if (msgType.equalsIgnoreCase("pacs.002")) {
+              localEntity.setCasaConfirmLstSeq(lastSeqNr);
+            }
 
 
             log.debug("custEntity from Validation of Input SeqNo before update: " + localEntity);
@@ -539,11 +506,11 @@ public class Validation_ST {
       try {
         Date crDate = sdf.parse(creationDate);
         Date processingDate;
-		  if (casSysctrlSysParamEntity != null) {
-			  processingDate = casSysctrlSysParamEntity.getProcessDate();
-		  } else {
-			  processingDate = new Date();
-		  }
+        if (casSysctrlSysParamEntity != null) {
+          processingDate = casSysctrlSysParamEntity.getProcessDate();
+        } else {
+          processingDate = new Date();
+        }
 
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -556,11 +523,11 @@ public class Validation_ST {
         log.debug("convCrDate: " + convCrDate);
         log.debug("convPrDate: " + convPrDate);
 
-		  if (convCrDate.after(convPrDate)) {
-			  return false;
-		  } else {
-			  return true;
-		  }
+        if (convCrDate.after(convPrDate)) {
+          return false;
+        } else {
+          return true;
+        }
       } catch (ParseException pe) {
         return false;
       }
@@ -577,28 +544,28 @@ public class Validation_ST {
    */
   public boolean validateMemberNo(String memberNo) {
     log.debug("memberNo-->: " + memberNo);
-	  if (memberNo != null && !memberNo.isEmpty()) {
-		  SysCisBankEntity sysCisBankEntity = findCisBanks(memberNo);
+    if (memberNo != null && !memberNo.isEmpty()) {
+      SysCisBankEntity sysCisBankEntity = findCisBanks(memberNo);
 
-		  if (sysCisBankEntity == null) {
-			  return false;
-		  } else {
-			  if (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y")) {
-				  return true;
-			  } else {
-				  return false;
-			  }
-		  }
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
-		  //			.validateCreditorBank(memberNo);
-		  //			if (sysCisBankEntity == null)
-		  //				return false;
-		  //			else
-		  //				return true;
-	  } else {
-		  return false;
-	  }
+      if (sysCisBankEntity == null) {
+        return false;
+      } else {
+        if (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y")) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
+      //			.validateCreditorBank(memberNo);
+      //			if (sysCisBankEntity == null)
+      //				return false;
+      //			else
+      //				return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -606,16 +573,16 @@ public class Validation_ST {
    * @return
    */
   public boolean validateTrackingIndicator(String trackingInd) {
-	  if (trackingInd != null && !trackingInd.isEmpty()) {
-		  String trimTrackingInd = trackingInd.trim();
-		  if (trimTrackingInd.equalsIgnoreCase("T") || trimTrackingInd.equalsIgnoreCase("F")) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (trackingInd != null && !trackingInd.isEmpty()) {
+      String trimTrackingInd = trackingInd.trim();
+      if (trimTrackingInd.equalsIgnoreCase("T") || trimTrackingInd.equalsIgnoreCase("F")) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -623,30 +590,30 @@ public class Validation_ST {
    * @return
    */
   public boolean validateRejectReasonCode(String reasonCode) {
-	  if (reasonCode != null && !reasonCode.isEmpty()) {
-		  String trimmedReasonCode = reasonCode.trim();
+    if (reasonCode != null && !reasonCode.isEmpty()) {
+      String trimmedReasonCode = reasonCode.trim();
 
-		  CasCnfgReasonCodesEntity reasonCodesEntity = findReasonCodes(trimmedReasonCode);
-		  if (reasonCodesEntity == null) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgReasonCodesEntity localEntity = (MdtCnfgReasonCodesEntity)
-		  //			valBeanRemote.validateRejectReasonCode(trimmedReasonCode);
-		  //			if (localEntity != null)
-		  //			{
-		  //				if(localEntity.getActiveInd().equalsIgnoreCase("Y"))
-		  //					return true;
-		  //				else
-		  //					return false;
-		  //			}
-		  //			else
-		  //				return false;
-	  } else {
-		  return false;
-	  }
+      CasCnfgReasonCodesEntity reasonCodesEntity = findReasonCodes(trimmedReasonCode);
+      if (reasonCodesEntity == null) {
+        return false;
+      } else {
+        return true;
+      }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			MdtCnfgReasonCodesEntity localEntity = (MdtCnfgReasonCodesEntity)
+      //			valBeanRemote.validateRejectReasonCode(trimmedReasonCode);
+      //			if (localEntity != null)
+      //			{
+      //				if(localEntity.getActiveInd().equalsIgnoreCase("Y"))
+      //					return true;
+      //				else
+      //					return false;
+      //			}
+      //			else
+      //				return false;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -657,28 +624,28 @@ public class Validation_ST {
   public boolean validateAmendReasonCode(String amendReason) {
     String trimAmendReason = amendReason.trim();
 
-	  if (trimAmendReason != null && !trimAmendReason.isEmpty() && trimAmendReason.length() != 0) {
-		  CasCnfgAmendmentCodesEntity amendCodesEntity = findAmendmentCodes(trimAmendReason);
-		  if (amendCodesEntity == null) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgAmendmentCodesEntity amendCodesEntity = (MdtCnfgAmendmentCodesEntity)
-		  //			valBeanRemote.validateAmendReasonCode(trimAmendReason);
-		  //			if(amendCodesEntity != null)
-		  //			{
-		  //				if(amendCodesEntity.getActiveInd().equalsIgnoreCase("Y"))
-		  //					return true;
-		  //				else
-		  //					return false;
-		  //			}
-		  //			else
-		  //				return false;
-	  } else {
-		  return false;
-	  }
+    if (trimAmendReason != null && !trimAmendReason.isEmpty() && trimAmendReason.length() != 0) {
+      CasCnfgAmendmentCodesEntity amendCodesEntity = findAmendmentCodes(trimAmendReason);
+      if (amendCodesEntity == null) {
+        return false;
+      } else {
+        return true;
+      }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			MdtCnfgAmendmentCodesEntity amendCodesEntity = (MdtCnfgAmendmentCodesEntity)
+      //			valBeanRemote.validateAmendReasonCode(trimAmendReason);
+      //			if(amendCodesEntity != null)
+      //			{
+      //				if(amendCodesEntity.getActiveInd().equalsIgnoreCase("Y"))
+      //					return true;
+      //				else
+      //					return false;
+      //			}
+      //			else
+      //				return false;
+    } else {
+      return false;
+    }
   }
 
 
@@ -691,14 +658,12 @@ public class Validation_ST {
         if (authCode.equalsIgnoreCase("0231") || authCode.equalsIgnoreCase("0232") ||
             authCode.equalsIgnoreCase("0233") || authCode.equalsIgnoreCase("0234")) {
           return true;
-        } else
-        {
+        } else {
           return false;
         }
       }
       return false;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -709,32 +674,32 @@ public class Validation_ST {
    * @return
    */
   public boolean validateInstallmentOccurrence(String seqCode) {
-	  if (seqCode != null && !seqCode.isEmpty()) {
-		  String trimmedSeqCode = seqCode.trim();
+    if (seqCode != null && !seqCode.isEmpty()) {
+      String trimmedSeqCode = seqCode.trim();
 
-		  CasCnfgSequenceTypeEntity seqTypeEntity = findSequenceTypes(seqCode);
-		  if (seqTypeEntity == null) {
-			  return false;
-		  } else {
-			  return true;
-		  }
+      CasCnfgSequenceTypeEntity seqTypeEntity = findSequenceTypes(seqCode);
+      if (seqTypeEntity == null) {
+        return false;
+      } else {
+        return true;
+      }
 
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgSequenceTypeEntity localEntity = (MdtCnfgSequenceTypeEntity)
-		  //			valBeanRemote.validateInstallmentOccurrence_013(trimmedSeqCode);
-		  //
-		  //			if (localEntity != null)
-		  //			{
-		  //				if(localEntity.getActiveInd().equalsIgnoreCase("Y"))
-		  //					return true;
-		  //				else
-		  //					return false;
-		  //			}
-		  //			else
-		  //				return false;
-	  } else {
-		  return false;
-	  }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			MdtCnfgSequenceTypeEntity localEntity = (MdtCnfgSequenceTypeEntity)
+      //			valBeanRemote.validateInstallmentOccurrence_013(trimmedSeqCode);
+      //
+      //			if (localEntity != null)
+      //			{
+      //				if(localEntity.getActiveInd().equalsIgnoreCase("Y"))
+      //					return true;
+      //				else
+      //					return false;
+      //			}
+      //			else
+      //				return false;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -743,27 +708,27 @@ public class Validation_ST {
    * @return
    */
   public boolean validateInstallmentFrequency(String freqCode) {
-	  if (freqCode != null && !freqCode.isEmpty()) {
-		  String trimmedFreqCode = freqCode.trim();
-		  CasCnfgFrequencyCodesEntity frequencyCodeEntity = findFrequencyCodes(freqCode);
+    if (freqCode != null && !freqCode.isEmpty()) {
+      String trimmedFreqCode = freqCode.trim();
+      CasCnfgFrequencyCodesEntity frequencyCodeEntity = findFrequencyCodes(freqCode);
 
-		  if (frequencyCodeEntity != null) {
-			  return true;
-		  } else {
-			  return false;
-		  }
+      if (frequencyCodeEntity != null) {
+        return true;
+      } else {
+        return false;
+      }
 
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgFrequencyCodesEntity localEntity = (MdtCnfgFrequencyCodesEntity)
-		  //			valBeanRemote.validateInstallmentFrequency_014(trimmedFreqCode);
-		  //
-		  //			if (localEntity != null)
-		  //				return true;
-		  //			else
-		  //				return false;
-	  } else {
-		  return false;
-	  }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			MdtCnfgFrequencyCodesEntity localEntity = (MdtCnfgFrequencyCodesEntity)
+      //			valBeanRemote.validateInstallmentFrequency_014(trimmedFreqCode);
+      //
+      //			if (localEntity != null)
+      //				return true;
+      //			else
+      //				return false;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -781,21 +746,21 @@ public class Validation_ST {
       String formatDate = sdf.format(dateToBeVal);
       Date formatteDateToBeVal = sdf.parse(formatDate);
 
-		if (casSysctrlSysParamEntity != null) {
-			procDate = casSysctrlSysParamEntity.getProcessDate();
-		} else {
-			procDate = new Date();
-		}
+      if (casSysctrlSysParamEntity != null) {
+        procDate = casSysctrlSysParamEntity.getProcessDate();
+      } else {
+        procDate = new Date();
+      }
 
 
       String formatCurrDate = sdf.format(procDate);
       Date currentDate = sdf.parse(formatCurrDate);
       log.debug("validDate: " + formatDate);
-		if (formatteDateToBeVal.after(currentDate)) {
-			return true;
-		} else {
-			return false;
-		}
+      if (formatteDateToBeVal.after(currentDate)) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (ParseException pe) {
       return false;
     }
@@ -808,15 +773,15 @@ public class Validation_ST {
    */
   public boolean validateInstallmentAmount(Double amount) {
     log.debug("amount: " + amount);
-	  if (amount != null) {
-		  if (amount > 0) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (amount != null) {
+      if (amount > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -828,11 +793,11 @@ public class Validation_ST {
     try {
       Double amt = Double.parseDouble(amount);
 
-		if (amt > 0) {
-			return true;
-		} else {
-			return false;
-		}
+      if (amt > 0) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (NumberFormatException nfex) {
       return false;
     }
@@ -845,19 +810,19 @@ public class Validation_ST {
    * @return
    */
   public boolean validateFinalCollAmount(Integer finalAmt, String debitValueType) {
-	  if (debitValueType != null && !debitValueType.isEmpty()) {
-		  if (debitValueType.equals("FIXED")) {
-			  if (finalAmt > 0) {
-				  return true;
-			  } else {
-				  return false;
-			  }
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (debitValueType != null && !debitValueType.isEmpty()) {
+      if (debitValueType.equals("FIXED")) {
+        if (finalAmt > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
 
@@ -868,19 +833,19 @@ public class Validation_ST {
    * @return
    */
   public boolean validateNumberOfInstallments(Integer noOfInstallments, String debitValueType) {
-	  if (debitValueType != null && !debitValueType.isEmpty()) {
-		  if (debitValueType.equals("FIXED")) {
-			  if (noOfInstallments > 0) {
-				  return true;
-			  } else {
-				  return false;
-			  }
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (debitValueType != null && !debitValueType.isEmpty()) {
+      if (debitValueType.equals("FIXED")) {
+        if (noOfInstallments > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
 
@@ -894,44 +859,44 @@ public class Validation_ST {
     //		2018-06-14 SALEHAR -
     //		DecimalFormat df = new DecimalFormat("#################0.00;-#");
 
-	  if (maxAmount != null && instAmt != null) {
-		  BigDecimal rate = new BigDecimal("1.5");
-		  BigDecimal installmentAmt = new BigDecimal(instAmt);
-		  BigDecimal maxAmt = new BigDecimal(maxAmount);
+    if (maxAmount != null && instAmt != null) {
+      BigDecimal rate = new BigDecimal("1.5");
+      BigDecimal installmentAmt = new BigDecimal(instAmt);
+      BigDecimal maxAmt = new BigDecimal(maxAmount);
 
-		  BigDecimal maximumAttainableAmt = installmentAmt.multiply(rate);
-		  BigDecimal roundedValue = maximumAttainableAmt.setScale(2, BigDecimal.ROUND_HALF_UP);
+      BigDecimal maximumAttainableAmt = installmentAmt.multiply(rate);
+      BigDecimal roundedValue = maximumAttainableAmt.setScale(2, BigDecimal.ROUND_HALF_UP);
 
 
-		  //			log.debug("*********rate----------->"+rate);
-		  //			log.debug("*********installmentAmt----------->"+installmentAmt);
-		  //			log.debug("*********maxAmt----------->"+maxAmt);
-		  //			log.debug("*********maximumAttainableAmt----------->"+maximumAttainableAmt);
-		  //			log.debug("*********roundedValue----------->"+roundedValue);
+      //			log.debug("*********rate----------->"+rate);
+      //			log.debug("*********installmentAmt----------->"+installmentAmt);
+      //			log.debug("*********maxAmt----------->"+maxAmt);
+      //			log.debug("*********maximumAttainableAmt----------->"+maximumAttainableAmt);
+      //			log.debug("*********roundedValue----------->"+roundedValue);
 
-		  if (maxAmt.compareTo(roundedValue) <= 0) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-		  //Old Code - 2018-06-14 Removed by SALEHAR
-		  //			String value = df.format(maximumAttainableAmt);
-		  //			log.info("value ===> "+value);
-		  //			BigDecimal dValue = new BigDecimal(value);
-		  //
-		  //			log.info("*********maxAmout----------->"+maxAmout);
-		  //			log.info("*********installmentAmt----------->"+installmentAmt);
-		  //			log.info("*********maximumAttainableAmt----------->"+maximumAttainableAmt);
-		  //			log.info("*********dValue----------->"+dValue);
-		  //
-		  //			if(maxAmoutB.compareTo(dValue) <= 0)
-		  //				return true;
-		  //			else
-		  //				return false;
+      if (maxAmt.compareTo(roundedValue) <= 0) {
+        return true;
+      } else {
+        return false;
+      }
+      //Old Code - 2018-06-14 Removed by SALEHAR
+      //			String value = df.format(maximumAttainableAmt);
+      //			log.info("value ===> "+value);
+      //			BigDecimal dValue = new BigDecimal(value);
+      //
+      //			log.info("*********maxAmout----------->"+maxAmout);
+      //			log.info("*********installmentAmt----------->"+installmentAmt);
+      //			log.info("*********maximumAttainableAmt----------->"+maximumAttainableAmt);
+      //			log.info("*********dValue----------->"+dValue);
+      //
+      //			if(maxAmoutB.compareTo(dValue) <= 0)
+      //				return true;
+      //			else
+      //				return false;
 
-	  } else {
-		  return true;
-	  }
+    } else {
+      return true;
+    }
 
   }
 
@@ -944,19 +909,19 @@ public class Validation_ST {
    */
   public boolean validateAgentExists_Sadc(String bicCode) {
     log.debug("bicCode: " + bicCode);
-	  if (bicCode != null && !bicCode.isEmpty()) {
-		  //log.debug("In the validateAgentExists_025_029_Sadc..before valRemote.....");
-		  SysCisBankEntity sysCisBankEntity =
-				  (SysCisBankEntity) valBeanRemote.validateBicCode_003(bicCode, backEndProcess);
-		  log.debug("cisEntity: " + sysCisBankEntity);
-		  if (sysCisBankEntity == null) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (bicCode != null && !bicCode.isEmpty()) {
+      //log.debug("In the validateAgentExists_025_029_Sadc..before valRemote.....");
+      SysCisBankEntity sysCisBankEntity =
+          (SysCisBankEntity) valBeanRemote.validateBicCode_003(bicCode, backEndProcess);
+      log.debug("cisEntity: " + sysCisBankEntity);
+      if (sysCisBankEntity == null) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
 
@@ -1008,37 +973,37 @@ public class Validation_ST {
         int collDay = Integer.valueOf(trimmedCollDay);
 
         if (frequenyCode.equalsIgnoreCase("WEEK")) {
-			if (collDay >= 1 && collDay <= 7) {
-				checkCollDate = true;
-			} else {
-				checkCollDate = false;
-			}
+          if (collDay >= 1 && collDay <= 7) {
+            checkCollDate = true;
+          } else {
+            checkCollDate = false;
+          }
         }
 
 
         if (frequenyCode.equalsIgnoreCase("ADHO")) {
-			if ((collDay >= 1 && collDay <= 14) || collDay == 99) {
-				checkCollDate = true;
-			} else {
-				checkCollDate = false;
-			}
+          if ((collDay >= 1 && collDay <= 14) || collDay == 99) {
+            checkCollDate = true;
+          } else {
+            checkCollDate = false;
+          }
         }
 
         if (frequenyCode.equalsIgnoreCase("FRTN")) {
-			if (collDay >= 1 && collDay <= 14) {
-				checkCollDate = true;
-			} else {
-				checkCollDate = false;
-			}
+          if (collDay >= 1 && collDay <= 14) {
+            checkCollDate = true;
+          } else {
+            checkCollDate = false;
+          }
         }
 
         if (frequenyCode.equalsIgnoreCase("MNTH") || frequenyCode.equalsIgnoreCase("QURT") ||
             frequenyCode.equalsIgnoreCase("MIAN") || frequenyCode.equalsIgnoreCase("YEAR")) {
-			if ((collDay >= 1 && collDay <= 30) || collDay == 99) {
-				checkCollDate = true;
-			} else {
-				checkCollDate = false;
-			}
+          if ((collDay >= 1 && collDay <= 30) || collDay == 99) {
+            checkCollDate = true;
+          } else {
+            checkCollDate = false;
+          }
         }
       } catch (NumberFormatException nfe) {
         //Do Error Handling Here
@@ -1062,12 +1027,12 @@ public class Validation_ST {
       return false;
     } else {
       String trimCreditorName = creditorName.trim();
-		if (trimCreditorName == null || trimCreditorName.isEmpty() ||
-				trimCreditorName.length() == 0) {
-			return false;
-		} else {
-			return true;
-		}
+      if (trimCreditorName == null || trimCreditorName.isEmpty() ||
+          trimCreditorName.length() == 0) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 
@@ -1081,24 +1046,24 @@ public class Validation_ST {
   public boolean validateUltimateCreditor(String ultCreditor, String creditor) {
     log.debug("ultCr: " + ultCreditor);
     log.debug("creditor: " + creditor);
-	  if (ultCreditor != null && !ultCreditor.isEmpty() && creditor != null &&
-			  !creditor.isEmpty()) {
-		  String trimUltCdtr = ultCreditor.trim();
-		  String trimCred = creditor.trim();
+    if (ultCreditor != null && !ultCreditor.isEmpty() && creditor != null &&
+        !creditor.isEmpty()) {
+      String trimUltCdtr = ultCreditor.trim();
+      String trimCred = creditor.trim();
 
-		  if ((trimUltCdtr == null || trimUltCdtr.isEmpty() || trimUltCdtr.length() == 0) &&
-				  (trimCred == null || trimCred.isEmpty() || trimCred.length() == 0)) {
-			  return false;
-		  } else {
-			  if (ultCreditor.equalsIgnoreCase(creditor)) {
-				  return false;
-			  } else {
-				  return true;
-			  }
-		  }
-	  } else {
-		  return true;
-	  }
+      if ((trimUltCdtr == null || trimUltCdtr.isEmpty() || trimUltCdtr.length() == 0) &&
+          (trimCred == null || trimCred.isEmpty() || trimCred.length() == 0)) {
+        return false;
+      } else {
+        if (ultCreditor.equalsIgnoreCase(creditor)) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    } else {
+      return true;
+    }
   }
 
   /**
@@ -1108,16 +1073,16 @@ public class Validation_ST {
    */
   public boolean validateDebtorName(String debtorName) {
 
-	  if (debtorName != null && !debtorName.isEmpty()) {
-		  String trimmedDname = debtorName.trim();
-		  if (trimmedDname.trim() == null || trimmedDname.isEmpty() || trimmedDname.length() == 0) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (debtorName != null && !debtorName.isEmpty()) {
+      String trimmedDname = debtorName.trim();
+      if (trimmedDname.trim() == null || trimmedDname.isEmpty() || trimmedDname.length() == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -1127,15 +1092,15 @@ public class Validation_ST {
    */
   public boolean validateUltimateDebtor(String ultDebtor, String debtor) {
     String trimmedUltDebt = ultDebtor.trim();
-	  if (trimmedUltDebt == null || trimmedUltDebt.isEmpty() || trimmedUltDebt.length() == 0) {
-		  return false;
-	  } else {
-		  if (ultDebtor.equalsIgnoreCase(debtor)) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-	  }
+    if (trimmedUltDebt == null || trimmedUltDebt.isEmpty() || trimmedUltDebt.length() == 0) {
+      return false;
+    } else {
+      if (ultDebtor.equalsIgnoreCase(debtor)) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   }
 
   /**
@@ -1144,16 +1109,16 @@ public class Validation_ST {
    * @return
    */
   public boolean validateContractReference(String contractRef) {
-	  if (contractRef != null && !contractRef.isEmpty()) {
-		  String cntrRef = contractRef.trim();
-		  if (cntrRef == null || cntrRef.isEmpty() || cntrRef.length() == 0) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (contractRef != null && !contractRef.isEmpty()) {
+      String cntrRef = contractRef.trim();
+      if (cntrRef == null || cntrRef.isEmpty() || cntrRef.length() == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -1170,11 +1135,11 @@ public class Validation_ST {
       String formatCurrDate = sdf.format(processingDate);
       Date currentDate = sdf.parse(formatCurrDate);
 
-		if (formatteDateToBeVal.before(currentDate) || formatteDateToBeVal.equals(currentDate)) {
-			return false;
-		} else {
-			return true;
-		}
+      if (formatteDateToBeVal.before(currentDate) || formatteDateToBeVal.equals(currentDate)) {
+        return false;
+      } else {
+        return true;
+      }
     } catch (ParseException pe) {
       return false;
     }
@@ -1206,11 +1171,11 @@ public class Validation_ST {
       log.debug("Load Date: " + loadDate);
       log.debug("threedate: " + threedate);
 
-		if (formattedFirstCollDate.before(formatted3LoadedDate)) {
-			return false;
-		} else {
-			return true;
-		}
+      if (formattedFirstCollDate.before(formatted3LoadedDate)) {
+        return false;
+      } else {
+        return true;
+      }
     } catch (ParseException pe) {
       return false;
     }
@@ -1227,13 +1192,13 @@ public class Validation_ST {
   //		if(origMandReqId != null && !origMandReqId.isEmpty())
   //		{
   //			originalMandateRegisterEntity = (MdtOpsMandateRegisterEntity) valBeanRemote
-	//			.retrieveOriginalMandate(origMandReqId);
+  //			.retrieveOriginalMandate(origMandReqId);
   //
   //			if(originalMandateRegisterEntity != null)
   //			{
   //				originalMandatePartyInfoList = (List<MdtOpsPartyIdentEntity>) valBeanRemote
-	//				.retrieveOriginalPartyIdentification(originalMandateRegisterEntity
-	//				.getMandateReqId());
+  //				.retrieveOriginalPartyIdentification(originalMandateRegisterEntity
+  //				.getMandateReqId());
   //				return true;
   //			}
   //			else
@@ -1259,7 +1224,7 @@ public class Validation_ST {
   //			{
   //				log.debug("In the MdtOpsMandateRegisterEntity section.......====>>>>>");
   //				originalMandateRegisterEntity = (MdtOpsMandateRegisterEntity) valBeanRemote
-	//				.retrieveOriginalMandate(origMandReqId);
+  //				.retrieveOriginalMandate(origMandReqId);
   //				if(originalMandateRegisterEntity != null)
   //				{
   //					if(originalMandateRegisterEntity.getActiveInd().equalsIgnoreCase("Y"))
@@ -1274,7 +1239,7 @@ public class Validation_ST {
   //			{
   //				log.debug("In the MdtAcOpsMndtMsgEntity section.......====>>>>>");
   //				MdtAcOpsMndtMsgEntity casOpsMndtMsgEntity = (MdtAcOpsMndtMsgEntity)
-	//				beanRemote.retrieveAcMandate(msgId, origMandReqId);
+  //				beanRemote.retrieveAcMandate(msgId, origMandReqId);
   //
   //				if(casOpsMndtMsgEntity != null)
   //				{
@@ -1299,15 +1264,15 @@ public class Validation_ST {
    * @return
    */
   public boolean validateAmendOrigFrequency(String amendFreq, String origFreq) {
-	  if (amendFreq != null && !amendFreq.isEmpty() && origFreq != null && !origFreq.isEmpty()) {
-		  if (amendFreq.equalsIgnoreCase(origFreq)) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (amendFreq != null && !amendFreq.isEmpty() && origFreq != null && !origFreq.isEmpty()) {
+      if (amendFreq.equalsIgnoreCase(origFreq)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -1320,16 +1285,16 @@ public class Validation_ST {
     String origFmDate = sdf.format(origFromdate);
 
 
-	  if (amendFmDate != null && !amendFmDate.isEmpty() && origFmDate != null &&
-			  !origFmDate.isEmpty()) {
-		  if (amendFmDate.equalsIgnoreCase(origFmDate)) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (amendFmDate != null && !amendFmDate.isEmpty() && origFmDate != null &&
+        !origFmDate.isEmpty()) {
+      if (amendFmDate.equalsIgnoreCase(origFmDate)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -1341,15 +1306,15 @@ public class Validation_ST {
     String amdToDt = sdf.format(amendToDate);
     String orgToDt = sdf.format(origToDate);
 
-	  if (amdToDt != null && !amdToDt.isEmpty() && orgToDt != null && !orgToDt.isEmpty()) {
-		  if (amdToDt.equalsIgnoreCase(orgToDt)) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (amdToDt != null && !amdToDt.isEmpty() && orgToDt != null && !orgToDt.isEmpty()) {
+      if (amdToDt.equalsIgnoreCase(orgToDt)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -1361,17 +1326,17 @@ public class Validation_ST {
   public boolean validateAmendOrigMaxAmt(int amendMaxAmt, int origMaxAmt) {
     log.debug("amendMaxAmt: " + amendMaxAmt);
     log.debug("origMaxAmt: " + origMaxAmt);
-	  if (amendMaxAmt != 0 && origMaxAmt != 0) {
-		  boolean s = amendMaxAmt == origMaxAmt;
-		  log.debug("s: - " + s);
-		  if (amendMaxAmt == origMaxAmt) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (amendMaxAmt != 0 && origMaxAmt != 0) {
+      boolean s = amendMaxAmt == origMaxAmt;
+      log.debug("s: - " + s);
+      if (amendMaxAmt == origMaxAmt) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   /*
@@ -1395,7 +1360,7 @@ public class Validation_ST {
         //log.debug("return matcher.find();  ===> "+ matcher.find());
         findMatch = matcher.find();
         //return msgId.matches( "[A-Za-z0-9]{3}/[A-Za-z0-9]{5}/[A-Za-z0-9]{8,
-		  // 11}/[A-Za-z0-9]{1}/[0-9]{8}/[0-9]{1,4}/[A-Za-z0-9]{1}" );
+        // 11}/[A-Za-z0-9]{1}/[0-9]{8}/[0-9]{1,4}/[A-Za-z0-9]{1}" );
       }
     } catch (Exception e) {
       log.error("Exception in validateMsgId : " + e);
@@ -1476,12 +1441,12 @@ public class Validation_ST {
       String strToDate = sdf.format(toDate);
       Date formatToDate = sdf.parse(strToDate);
 
-		if ((finalDate.equals(toDate) || finalDate.before(toDate)) &&
-				(finalDate.equals(formatFromDate) || finalDate.after(formatFromDate))) {
-			return true;
-		} else {
-			return false;
-		}
+      if ((finalDate.equals(toDate) || finalDate.before(toDate)) &&
+          (finalDate.equals(formatFromDate) || finalDate.after(formatFromDate))) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (ParseException pe) {
       return false;
     }
@@ -1494,15 +1459,15 @@ public class Validation_ST {
    * @return
    */
   public boolean validateCollAmountIsLessThanMaxAmount(Double collAmt, Double maxAmt) {
-	  if (collAmt != 0 && maxAmt != 0) {
-		  if (collAmt <= maxAmt) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (collAmt != 0 && maxAmt != 0) {
+      if (collAmt <= maxAmt) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -1513,27 +1478,27 @@ public class Validation_ST {
   public boolean validateAmendOrigCountryCode(String amendCtryCode, String origCntryCode,
                                               String party) {
     if (party == "CREDITOR" || party == "DEBTOR") {
-		if (amendCtryCode != null && !amendCtryCode.isEmpty() && origCntryCode != null &&
-				!origCntryCode.isEmpty()) {
-			if (amendCtryCode.equalsIgnoreCase(origCntryCode)) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
+      if (amendCtryCode != null && !amendCtryCode.isEmpty() && origCntryCode != null &&
+          !origCntryCode.isEmpty()) {
+        if (amendCtryCode.equalsIgnoreCase(origCntryCode)) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     } else {
-		if (amendCtryCode != null && !amendCtryCode.isEmpty() && origCntryCode != null &&
-				!origCntryCode.isEmpty()) {
-			if (amendCtryCode.equalsIgnoreCase(origCntryCode)) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return true;
-		}
+      if (amendCtryCode != null && !amendCtryCode.isEmpty() && origCntryCode != null &&
+          !origCntryCode.isEmpty()) {
+        if (amendCtryCode.equalsIgnoreCase(origCntryCode)) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
     }
   }
 
@@ -1544,126 +1509,126 @@ public class Validation_ST {
    * @return
    */
   public boolean validateDebtorBranchNo(String branchCode, String memberType) {
-	  if (branchCode != null && !branchCode.isEmpty() && branchCode.length() == 6) {
-		  //			SysCisBranchEntity sysCisBranchEntity = findCisBranches(branchCode);
-		  SysCisBranchEntity sysCisBranchEntity = findDebtorCISBranches(branchCode);
-		  if (sysCisBranchEntity == null) {
-			  return false;
-		  } else {
-			  branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
-			  return true;
+    if (branchCode != null && !branchCode.isEmpty() && branchCode.length() == 6) {
+      //			SysCisBranchEntity sysCisBranchEntity = findCisBranches(branchCode);
+      SysCisBranchEntity sysCisBranchEntity = findDebtorCISBranches(branchCode);
+      if (sysCisBranchEntity == null) {
+        return false;
+      } else {
+        branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
+        return true;
 
-			  //				if(sysCisBranchEntity.getAcDebtor().equalsIgnoreCase("Y")){
-			  //					if(memberType.equalsIgnoreCase("Debtor"))
-			  //						branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
-			  //					else
-			  //						branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
-			  //					return true;
-			  //				}else {
-			  //					return false;
-			  //				}
-		  }
+        //				if(sysCisBranchEntity.getAcDebtor().equalsIgnoreCase("Y")){
+        //					if(memberType.equalsIgnoreCase("Debtor"))
+        //						branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
+        //					else
+        //						branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
+        //					return true;
+        //				}else {
+        //					return false;
+        //				}
+      }
 
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			log.debug("branch code: "+branchCode);
-		  //			SysCisBranchEntity sysCisBranchEntity = (SysCisBranchEntity) valBeanRemote
-		  //			.validateDebtorBranchNo(branchCode,"Y");
-		  //			log.debug("sysCisBranchEntity: "+sysCisBranchEntity);
-		  //			if(sysCisBranchEntity == null)
-		  //				return false;
-		  //			else
-		  //			{
-		  //				if(memberType.equalsIgnoreCase("Debtor"))
-		  //					branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
-		  //				else
-		  //					branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
-		  //				return true;
-		  //			}
-	  } else {
-		  return false;
-	  }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			log.debug("branch code: "+branchCode);
+      //			SysCisBranchEntity sysCisBranchEntity = (SysCisBranchEntity) valBeanRemote
+      //			.validateDebtorBranchNo(branchCode,"Y");
+      //			log.debug("sysCisBranchEntity: "+sysCisBranchEntity);
+      //			if(sysCisBranchEntity == null)
+      //				return false;
+      //			else
+      //			{
+      //				if(memberType.equalsIgnoreCase("Debtor"))
+      //					branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
+      //				else
+      //					branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
+      //				return true;
+      //			}
+    } else {
+      return false;
+    }
   }
 
   public boolean validateCreditorBranchNo(String branchCode, String memberType) {
-	  if (branchCode != null && !branchCode.isEmpty() && branchCode.length() == 6) {
-		  //			SysCisBranchEntity sysCisBranchEntity = findCisBranches(branchCode);
-		  SysCisBranchEntity sysCisBranchEntity = findCreditorCISBranches(branchCode);
-		  if (sysCisBranchEntity == null) {
-			  return false;
-		  } else {
-			  branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
-			  return true;
-			  //				if(sysCisBranchEntity.getAcCreditor().equalsIgnoreCase("Y")){
-			  //					if(memberType.equalsIgnoreCase("Debtor"))
-			  //						branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
-			  //					else
-			  //						branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
-			  //					return true;
-			  //				}else {
-			  //					return false;
-			  //				}
-		  }
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			log.debug("branch code: "+branchCode);
-		  //			SysCisBranchEntity sysCisBranchEntity = (SysCisBranchEntity) valBeanRemote
-		  //			.validateCreditorBranchNo(branchCode,"Y");
-		  //			log.debug("sysCisBranchEntity: "+sysCisBranchEntity);
-		  //			if(sysCisBranchEntity == null)
-		  //				return false;
-		  //			else
-		  //			{
-		  //				if(memberType.equalsIgnoreCase("Debtor"))
-		  //					branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
-		  //				else
-		  //					branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
-		  //				return true;
-		  //			}
-	  } else {
-		  return false;
-	  }
+    if (branchCode != null && !branchCode.isEmpty() && branchCode.length() == 6) {
+      //			SysCisBranchEntity sysCisBranchEntity = findCisBranches(branchCode);
+      SysCisBranchEntity sysCisBranchEntity = findCreditorCISBranches(branchCode);
+      if (sysCisBranchEntity == null) {
+        return false;
+      } else {
+        branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
+        return true;
+        //				if(sysCisBranchEntity.getAcCreditor().equalsIgnoreCase("Y")){
+        //					if(memberType.equalsIgnoreCase("Debtor"))
+        //						branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
+        //					else
+        //						branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
+        //					return true;
+        //				}else {
+        //					return false;
+        //				}
+      }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			log.debug("branch code: "+branchCode);
+      //			SysCisBranchEntity sysCisBranchEntity = (SysCisBranchEntity) valBeanRemote
+      //			.validateCreditorBranchNo(branchCode,"Y");
+      //			log.debug("sysCisBranchEntity: "+sysCisBranchEntity);
+      //			if(sysCisBranchEntity == null)
+      //				return false;
+      //			else
+      //			{
+      //				if(memberType.equalsIgnoreCase("Debtor"))
+      //					branchmemberIdDebtorVal = sysCisBranchEntity.getMemberNo();
+      //				else
+      //					branchmemberIdCreditorVal = sysCisBranchEntity.getMemberNo();
+      //				return true;
+      //			}
+    } else {
+      return false;
+    }
   }
 
   public boolean validateDebitValueType(String debitValueType) {
-	  if (debitValueType != null && !debitValueType.isEmpty()) {
-		  log.debug("debitValueType: " + debitValueType);
+    if (debitValueType != null && !debitValueType.isEmpty()) {
+      log.debug("debitValueType: " + debitValueType);
 
-		  if (debitValueType.equalsIgnoreCase("USAGE_BASED")) {
-			  debitValueType = "USAGE BASED";
-		  }
+      if (debitValueType.equalsIgnoreCase("USAGE_BASED")) {
+        debitValueType = "USAGE BASED";
+      }
 
-		  CasCnfgDebitValueTypeEntity debitValueTypeEntity = findDebitValTypes(debitValueType);
-		  if (debitValueTypeEntity == null) {
-			  return false;
-		  } else {
-			  return true;
-		  }
+      CasCnfgDebitValueTypeEntity debitValueTypeEntity = findDebitValTypes(debitValueType);
+      if (debitValueTypeEntity == null) {
+        return false;
+      } else {
+        return true;
+      }
 
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgDebitValueTypeEntity debitValueTypeEntity =
-		  //			(MdtCnfgDebitValueTypeEntity) valBeanRemote.validateDebitValueType
-		  //			(debitValueType);
-		  //			log.debug("debitValueTypeEntity: "+debitValueTypeEntity);
-		  //			if(debitValueTypeEntity == null)
-		  //				return false;
-		  //			else
-		  //				return true;
-	  } else {
-		  return false;
-	  }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			MdtCnfgDebitValueTypeEntity debitValueTypeEntity =
+      //			(MdtCnfgDebitValueTypeEntity) valBeanRemote.validateDebitValueType
+      //			(debitValueType);
+      //			log.debug("debitValueTypeEntity: "+debitValueTypeEntity);
+      //			if(debitValueTypeEntity == null)
+      //				return false;
+      //			else
+      //				return true;
+    } else {
+      return false;
+    }
   }
 
   public boolean validateDateAdjRuleInd(String adjRuleInd) {
     log.debug("adjRuleInd: " + adjRuleInd);
-	  if (adjRuleInd != null && !adjRuleInd.isEmpty()) {
-		  String trimAdjRuleInd = adjRuleInd.trim();
-		  if (trimAdjRuleInd.equalsIgnoreCase("Y") || trimAdjRuleInd.equalsIgnoreCase("N")) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (adjRuleInd != null && !adjRuleInd.isEmpty()) {
+      String trimAdjRuleInd = adjRuleInd.trim();
+      if (trimAdjRuleInd.equalsIgnoreCase("Y") || trimAdjRuleInd.equalsIgnoreCase("N")) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
 
@@ -1672,54 +1637,54 @@ public class Validation_ST {
    * @return
    */
   public boolean validateAdjustCategory(String adjCategory) {
-	  if (adjCategory != null) {
-		  String trimmedAdjCat = adjCategory.trim();
-		  log.debug("trimmedAdjCat: " + trimmedAdjCat);
+    if (adjCategory != null) {
+      String trimmedAdjCat = adjCategory.trim();
+      log.debug("trimmedAdjCat: " + trimmedAdjCat);
 
-		  CasCnfgAdjustmentCatEntity adjustmentCatEntity = findAdjustmentCat(adjCategory);
-		  if (adjustmentCatEntity == null) {
-			  return false;
-		  } else {
-			  return true;
-		  }
+      CasCnfgAdjustmentCatEntity adjustmentCatEntity = findAdjustmentCat(adjCategory);
+      if (adjustmentCatEntity == null) {
+        return false;
+      } else {
+        return true;
+      }
 
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgAdjustmentCatEntity adjustmentCatEntity = (MdtCnfgAdjustmentCatEntity)
-		  //			valBeanRemote.validateAdjCategory(trimmedAdjCat);
-		  //			log.debug("adjustmentCatEntity: "+adjustmentCatEntity);
-		  //			if(adjustmentCatEntity == null)
-		  //				return false;
-		  //			else
-		  //				return true;
-	  } else {
-		  return false;
-	  }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			MdtCnfgAdjustmentCatEntity adjustmentCatEntity = (MdtCnfgAdjustmentCatEntity)
+      //			valBeanRemote.validateAdjCategory(trimmedAdjCat);
+      //			log.debug("adjustmentCatEntity: "+adjustmentCatEntity);
+      //			if(adjustmentCatEntity == null)
+      //				return false;
+      //			else
+      //				return true;
+    } else {
+      return false;
+    }
   }
 
 
   public boolean validatePacs002StatusCode(String statusCode) {
-	  if (statusCode != null && !statusCode.isEmpty()) {
-		  if (statusCode.equalsIgnoreCase("ACCP") || statusCode.equalsIgnoreCase("RJCT") ||
-				  statusCode.equalsIgnoreCase("PART")) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (statusCode != null && !statusCode.isEmpty()) {
+      if (statusCode.equalsIgnoreCase("ACCP") || statusCode.equalsIgnoreCase("RJCT") ||
+          statusCode.equalsIgnoreCase("PART")) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   public boolean validatePacs002TranStatus(String statusCode) {
-	  if (statusCode != null && !statusCode.isEmpty()) {
-		  if (statusCode.equalsIgnoreCase("ACCP") || statusCode.equalsIgnoreCase("RJCT")) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (statusCode != null && !statusCode.isEmpty()) {
+      if (statusCode.equalsIgnoreCase("ACCP") || statusCode.equalsIgnoreCase("RJCT")) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
 	/*public MdtAcOpsMndtMsgEntity matchPain012(String origMandReqId, String origMndtReqTransId)
@@ -1778,44 +1743,46 @@ public class Validation_ST {
 
       if (matchedMap.size() > 0) {
         if (matchedMap.containsKey("CARIN")) {
-          log.info("<<<<<<<<--------" + origMndtReqTransId + " has been matched to CARIN------------------>>");
+          log.info("<<<<<<<<--------" + origMndtReqTransId +
+              " has been matched to CARIN------------------>>");
           casOpsCessAssignTxnsEntityOriginal = matchedMap.get("CARIN");
         } else if (matchedMap.containsKey("MANIN")) {
-          log.info("<<<<<<<<--------" + origMndtReqTransId + " has been matched to MANIN------------------>>");
+          log.info("<<<<<<<<--------" + origMndtReqTransId +
+              " has been matched to MANIN------------------>>");
           casOpsCessAssignTxnsEntityOriginal = matchedMap.get("MANIN");
         }
       }
 
       //			matchedMandate = (MdtAcOpsMandateTxnsEntity) fileProcBeanRemote
-		//			.matchPain012ToOrigMandate(origMndtReqTransId,"MANCN");
+      //			.matchPain012ToOrigMandate(origMndtReqTransId,"MANCN");
       //
       //			if(matchedMandate != null)
       //			{
       //				log.info("<<<<<<<<--------"+origMndtReqTransId+" has been matched to
-		//				MANCN------------------>>");
+      //				MANCN------------------>>");
       //				casOpsCessAssignTxnsEntityOriginal = matchedMandate;
       //			}
       //			else
       //			{
       //				matchedMandate = (MdtAcOpsMandateTxnsEntity) fileProcBeanRemote
-		//				.matchPain012ToOrigMandate(origMndtReqTransId, "CARIN");
+      //				.matchPain012ToOrigMandate(origMndtReqTransId, "CARIN");
       //
       //				if(matchedMandate != null)
       //				{
       //					log.info("<<<<<<<<--------"+origMndtReqTransId+" has been matched to
-		//					CARIN------------------>>");
+      //					CARIN------------------>>");
       //					casOpsCessAssignTxnsEntityOriginal = matchedMandate;
       //				}
       //				else
       //				{
       //					matchedMandate = (MdtAcOpsMandateTxnsEntity) fileProcBeanRemote
-		//					.matchPain012ToOrigMandate(origMndtReqTransId, "MANIN");
+      //					.matchPain012ToOrigMandate(origMndtReqTransId, "MANIN");
       //
       //					if(matchedMandate != null )
       //					{
       //
       //						log.info("<<<<<<<<--------"+origMndtReqTransId+" has been matched
-		//						to MANIN ------------------>>");
+      //						to MANIN ------------------>>");
       //						casOpsCessAssignTxnsEntityOriginal = matchedMandate;
       //					}
       //
@@ -1829,43 +1796,43 @@ public class Validation_ST {
     //2016-11-12 - Matching changes -- Allow for Pain.012 before Pacs.002
     //		String processStatus = "9";
     //		if (origMandReqId != null && !origMandReqId.isEmpty() &&  origMndtReqTransId != null
-	  //		&& !origMndtReqTransId.isEmpty())
+    //		&& !origMndtReqTransId.isEmpty())
     //		{
     //			casOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
     //			casOpsMndtMsgEntityOriginal = (MdtAcOpsMndtMsgEntity) valBeanRemote
-	  //			.matchOriginalMandate(origMandReqId, origMndtReqTransId,"MANCN",
-	  //			processStatus);
+    //			.matchOriginalMandate(origMandReqId, origMndtReqTransId,"MANCN",
+    //			processStatus);
     //
     //			if(casOpsMndtMsgEntityOriginal != null)
     //			{
     //				log.debug("<<<<<<<<--------"+origMandReqId+" has been matched to
-	  //				MANCN------------------>>");
+    //				MANCN------------------>>");
     //				return true;
     //			}
     //			else
     //			{
     //				casOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
     //				casOpsMndtMsgEntityOriginal = (MdtAcOpsMndtMsgEntity) valBeanRemote
-	  //				.matchOriginalMandate(origMandReqId, origMndtReqTransId, "CARIN",
-	  //				processStatus);
+    //				.matchOriginalMandate(origMandReqId, origMndtReqTransId, "CARIN",
+    //				processStatus);
     //
     //				if(casOpsMndtMsgEntityOriginal != null)
     //				{
     //					log.debug("<<<<<<<<--------"+origMandReqId+" has been matched to
-	  //					CARIN------------------>>");
+    //					CARIN------------------>>");
     //					return true;
     //				}
     //				else
     //				{
     //					casOpsMndtMsgEntityOriginal = new MdtAcOpsMndtMsgEntity();
     //					casOpsMndtMsgEntityOriginal = (MdtAcOpsMndtMsgEntity) valBeanRemote
-	  //					.matchOriginalMandate(origMandReqId, origMndtReqTransId, "MANIN",
-	  //					processStatus);
+    //					.matchOriginalMandate(origMandReqId, origMndtReqTransId, "MANIN",
+    //					processStatus);
     //
     //					if(casOpsMndtMsgEntityOriginal != null)
     //					{
     //						log.debug("<<<<<<<<--------"+origMandReqId+" has been matched to
-	  //						MANIN------------------>>");
+    //						MANIN------------------>>");
     //						return true;
     //					}
     //					else
@@ -1900,71 +1867,71 @@ public class Validation_ST {
   }
 
   public boolean validateAuthenticationType(String authType) {
-	  if (authType != null) {
-		  String trimmedAuthType = authType.trim();
-		  CasCnfgAuthTypeEntity cnfgAuthTypeEntity = findAuthTypes(trimmedAuthType);
+    if (authType != null) {
+      String trimmedAuthType = authType.trim();
+      CasCnfgAuthTypeEntity cnfgAuthTypeEntity = findAuthTypes(trimmedAuthType);
 
-		  if (cnfgAuthTypeEntity == null) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgAuthTypeEntity localEntity = (MdtCnfgAuthTypeEntity) valBeanRemote
-		  //			.validateAuthType(trimmedAuthType);
-		  //
-		  //			if (localEntity != null)
-		  //			{
-		  //				if(localEntity.getActiveInd().equalsIgnoreCase("Y"))
-		  //					return true;
-		  //				else
-		  //					return false;
-		  //			}
-		  //			else
-		  //				return false;
-	  } else {
-		  return false;
-	  }
+      if (cnfgAuthTypeEntity == null) {
+        return false;
+      } else {
+        return true;
+      }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			MdtCnfgAuthTypeEntity localEntity = (MdtCnfgAuthTypeEntity) valBeanRemote
+      //			.validateAuthType(trimmedAuthType);
+      //
+      //			if (localEntity != null)
+      //			{
+      //				if(localEntity.getActiveInd().equalsIgnoreCase("Y"))
+      //					return true;
+      //				else
+      //					return false;
+      //			}
+      //			else
+      //				return false;
+    } else {
+      return false;
+    }
   }
 
   public boolean validateAuthstatusInd_029(String authenticationInd) {
-	  if (authenticationInd != null) {
-		  if (authenticationInd.equalsIgnoreCase("NAUT") ||
-				  authenticationInd.equalsIgnoreCase("NRSP") ||
-				  authenticationInd.equalsIgnoreCase("AAUT")) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (authenticationInd != null) {
+      if (authenticationInd.equalsIgnoreCase("NAUT") ||
+          authenticationInd.equalsIgnoreCase("NRSP") ||
+          authenticationInd.equalsIgnoreCase("AAUT")) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
 
   public boolean validateAuthenticationInd(String authenticationInd) {
-	  if (authenticationInd != null) {
-		  if (authenticationInd.equalsIgnoreCase("NAUT") ||
-				  authenticationInd.equalsIgnoreCase("NRSP")) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (authenticationInd != null) {
+      if (authenticationInd.equalsIgnoreCase("NAUT") ||
+          authenticationInd.equalsIgnoreCase("NRSP")) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   public boolean validateAuthId(String authInd) {
-	  if (authInd != null) {
-		  if (authInd.equalsIgnoreCase("AAUT")) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (authInd != null) {
+      if (authInd.equalsIgnoreCase("AAUT")) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   public boolean isDateValid(String date, String dateFormat) {
@@ -1980,38 +1947,38 @@ public class Validation_ST {
 
   public boolean validateBankNo(String bankNo) {
     log.debug("bankNo-->: " + bankNo);
-	  if (bankNo != null && !bankNo.isEmpty()) {
-		  //SalehaR 20151105 - Append a 21 infront to check member. Email sent to LL on
-		  // 20151105@13h12 to follow up
-		  bankNo = "21" + bankNo;
-		  SysCisBankEntity sysCisBankEntity = findCisBanks(bankNo);
+    if (bankNo != null && !bankNo.isEmpty()) {
+      //SalehaR 20151105 - Append a 21 infront to check member. Email sent to LL on
+      // 20151105@13h12 to follow up
+      bankNo = "21" + bankNo;
+      SysCisBankEntity sysCisBankEntity = findCisBanks(bankNo);
 
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
-		  //			.validateMemberNo(bankNo);
-		  if (sysCisBankEntity == null) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
+      //			.validateMemberNo(bankNo);
+      if (sysCisBankEntity == null) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
 
   public boolean validateCreditorAbbName(String id) {
-	  if (id != null && !id.isEmpty()) {
-		  String trimId = id.trim();
+    if (id != null && !id.isEmpty()) {
+      String trimId = id.trim();
 
-		  if (trimId == null || trimId.isEmpty() || trimId.length() == 0) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+      if (trimId == null || trimId.isEmpty() || trimId.length() == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
   public boolean validateMandateReqTranId(String mrti) {
@@ -2051,7 +2018,7 @@ public class Validation_ST {
   //		{
   //			String trimmedEntryClass = entryClass.trim();
   //			MdtCnfgEntryClassesEntity localEntity = (MdtCnfgEntryClassesEntity) valBeanRemote
-	//			.validateEntryClasses(trimmedEntryClass);
+  //			.validateEntryClasses(trimmedEntryClass);
   //
   //			if (localEntity != null)
   //				return true;
@@ -2063,20 +2030,20 @@ public class Validation_ST {
   //	}
 
   public boolean validateAccountType(String accountType) {
-	  if (accountType != null && !accountType.isEmpty()) {
-		  String trimmedAccType = accountType.trim();
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgAccountTypeEntity localEntity = (MdtCnfgAccountTypeEntity)
-		  //			valBeanRemote.validateAccountType(trimmedAccType.toUpperCase());
-		  CasCnfgAccountTypeEntity accTypeEntity = findAccountTypes(trimmedAccType);
-		  if (accTypeEntity != null) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (accountType != null && !accountType.isEmpty()) {
+      String trimmedAccType = accountType.trim();
+      //			2019-10-06 SalehaR - Use Cached List
+      //			MdtCnfgAccountTypeEntity localEntity = (MdtCnfgAccountTypeEntity)
+      //			valBeanRemote.validateAccountType(trimmedAccType.toUpperCase());
+      CasCnfgAccountTypeEntity accTypeEntity = findAccountTypes(trimmedAccType);
+      if (accTypeEntity != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   //2019-09-11 SalehaR - Removed for single table structure
@@ -2099,9 +2066,9 @@ public class Validation_ST {
   //		drAgentEntity=null;
   //
   //		List<MdtAcOpsPartyIdentEntity> partyIdList, initPartyList = new
-	//		ArrayList<MdtAcOpsPartyIdentEntity>();
+  //		ArrayList<MdtAcOpsPartyIdentEntity>();
   //		List<MdtAcOpsCashAccountEntity> cashAccList = new
-	//		ArrayList<MdtAcOpsCashAccountEntity>();
+  //		ArrayList<MdtAcOpsCashAccountEntity>();
   //		List<MdtAcOpsFinInstEntity> finInstList = new ArrayList<MdtAcOpsFinInstEntity>();
   //
   //		log.debug("msgId--> "+msgId);
@@ -2109,19 +2076,19 @@ public class Validation_ST {
   //
   //		/*Original Mandate*/
   //		origMandate = (MdtAcOpsMndtMsgEntity) beanRemote.retrieveAcMandate(msgId,
-	//		mandateReqTranId);
+  //		mandateReqTranId);
   //
   //
   //		/*Party Identification*/
   //		partyIdList = (List<MdtAcOpsPartyIdentEntity>) beanRemote
-	//		.retrieveAcPartyIdentification(msgId, mandateReqTranId);
+  //		.retrieveAcPartyIdentification(msgId, mandateReqTranId);
   //
   //		if(partyIdList != null && partyIdList.size() > 0)
   //		{
   //			for (MdtAcOpsPartyIdentEntity localPartyEntity : partyIdList)
   //			{
   //				String partyId = localPartyEntity.getMdtAcOpsPartyIdentPK()
-	//				.getPartyIdentTypeId();
+  //				.getPartyIdentTypeId();
   //				log.debug("partyId: "+partyId);
   //
   //				if(partyId != null)
@@ -2178,13 +2145,13 @@ public class Validation_ST {
   //
   //		/*Cash Account*/
   //		cashAccList = (List<MdtAcOpsCashAccountEntity>) beanRemote.retrieveAcCashAccount
-	//		(msgId, mandateReqTranId);
+  //		(msgId, mandateReqTranId);
   //		if( cashAccList != null && cashAccList.size() > 0)
   //		{
   //			for (MdtAcOpsCashAccountEntity localCashAccEntity : cashAccList)
   //			{
   //				String partyId = localCashAccEntity.getMdtAcOpsCashAccountPK()
-	//				.getPartyIdentTypeId();
+  //				.getPartyIdentTypeId();
   //
   //				if(partyId.equalsIgnoreCase("PI02"))
   //				{
@@ -2203,7 +2170,7 @@ public class Validation_ST {
   //
   //		/*Financial Institution*/
   //		finInstList = (List<MdtAcOpsFinInstEntity>) beanRemote.retrieveAcFinInst(msgId,
-	//		mandateReqTranId);
+  //		mandateReqTranId);
   //		if(finInstList != null && finInstList.size() > 0)
   //		{
   //			for (MdtAcOpsFinInstEntity localFinInstList : finInstList)
@@ -2240,11 +2207,11 @@ public class Validation_ST {
   //
   //		/*Ops Ref Doc*/
   //		opsRefDocEntity = (MdtAcOpsRefDocEntity) beanRemote.retrieveAcOpsRefDoc(msgId,
-	//		mandateReqTranId);
+  //		mandateReqTranId);
   //
   //		/*Ops Supplementary Data*/
   //		opsSupplDataEntity = (MdtAcOpsSupplDataEntity)  beanRemote.retrieveAcOpsSupplData
-	//		(msgId, mandateReqTranId);
+  //		(msgId, mandateReqTranId);
   //
   //		if(origMandate != null)
   //			log.debug("origMandate: "+origMandate.toString());
@@ -2267,19 +2234,19 @@ public class Validation_ST {
   //	}
 
   public boolean validateErrorCodes(String errorCode) {
-	  if (errorCode != null && !errorCode.isEmpty()) {
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			MdtCnfgErrorCodesEntity localEntity = (MdtCnfgErrorCodesEntity) valBeanRemote
-		  //			.validateErrorCodes(errorCode);
-		  CasCnfgErrorCodesEntity localEntity = findErrorCodes(errorCode);
-		  if (localEntity != null) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (errorCode != null && !errorCode.isEmpty()) {
+      //			2019-10-06 SalehaR - Use Cached List
+      //			MdtCnfgErrorCodesEntity localEntity = (MdtCnfgErrorCodesEntity) valBeanRemote
+      //			.validateErrorCodes(errorCode);
+      CasCnfgErrorCodesEntity localEntity = findErrorCodes(errorCode);
+      if (localEntity != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -2287,16 +2254,16 @@ public class Validation_ST {
    *              Rule 012.999
    */
   public boolean validateRule999(String value) {
-	  if (value != null || !value.isEmpty()) {
-		  String trimValue = value.trim();
-		  if (trimValue == null || trimValue.isEmpty() || trimValue.length() == 0) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (value != null || !value.isEmpty()) {
+      String trimValue = value.trim();
+      if (trimValue == null || trimValue.isEmpty() || trimValue.length() == 0) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -2304,15 +2271,15 @@ public class Validation_ST {
    *                 Rule 012.51
    */
   public boolean validateCurrency(String currency) {
-	  if (currency != null) {
-		  if (currency.equalsIgnoreCase("ZAR")) {
-			  return true;
-		  } else {
-			  return false;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (currency != null) {
+      if (currency.equalsIgnoreCase("ZAR")) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   public boolean validateMndtReqTranIdUnique(String mrti) {
@@ -2370,19 +2337,19 @@ public class Validation_ST {
    */
   public boolean validateCisMemberNo(String memberNo) {
     log.debug("memberNo-->: " + memberNo);
-	  if (memberNo != null && !memberNo.isEmpty()) {
-		  SysCisBankEntity sysCisBankEntity = findCisBanks(memberNo);
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
-		  //			.validateSysCisBankDetails(memberNo);
-		  if (sysCisBankEntity == null) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (memberNo != null && !memberNo.isEmpty()) {
+      SysCisBankEntity sysCisBankEntity = findCisBanks(memberNo);
+      //			2019-10-06 SalehaR - Use Cached List
+      //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
+      //			.validateSysCisBankDetails(memberNo);
+      if (sysCisBankEntity == null) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
   public boolean validateGrpStatus(String grpStatus) {
@@ -2390,12 +2357,12 @@ public class Validation_ST {
     if (grpStatus != null && !grpStatus.isEmpty()) {
       grpStatus.trim();
 
-		if (grpStatus.equalsIgnoreCase("ACCP") || grpStatus.equalsIgnoreCase("PART") ||
-				grpStatus.equalsIgnoreCase("RJCT")) {
-			return true;
-		} else {
-			return false;
-		}
+      if (grpStatus.equalsIgnoreCase("ACCP") || grpStatus.equalsIgnoreCase("PART") ||
+          grpStatus.equalsIgnoreCase("RJCT")) {
+        return true;
+      } else {
+        return false;
+      }
 
     }
     return false;
@@ -2406,12 +2373,12 @@ public class Validation_ST {
     if (tranStatus != null && !tranStatus.isEmpty()) {
       tranStatus.trim();
 
-		if (tranStatus.equalsIgnoreCase("ACCP") || tranStatus.equalsIgnoreCase("PDNG") ||
-				tranStatus.equalsIgnoreCase("RJCT")) {
-			return true;
-		} else {
-			return false;
-		}
+      if (tranStatus.equalsIgnoreCase("ACCP") || tranStatus.equalsIgnoreCase("PDNG") ||
+          tranStatus.equalsIgnoreCase("RJCT")) {
+        return true;
+      } else {
+        return false;
+      }
 
     }
     return false;
@@ -2419,68 +2386,68 @@ public class Validation_ST {
 
   public boolean validateCreditorBank(String creditorBank) {
     log.debug("creditorBank-->: " + creditorBank);
-	  if (creditorBank != null && !creditorBank.isEmpty()) {
-		  SysCisBankEntity sysCisBankEntity = findCisBanks(creditorBank);
-		  if (sysCisBankEntity == null) {
-			  return false;
-		  } else {
-			  if (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y")) {
-				  return true;
-			  } else {
-				  return false;
-			  }
-		  }
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
-		  //			.validateCreditorBank(creditorBank);
-		  //			if(sysCisBankEntity == null)
-		  //				return false;
-		  //			else
-		  //				return true;
-	  } else {
-		  return false;
-	  }
+    if (creditorBank != null && !creditorBank.isEmpty()) {
+      SysCisBankEntity sysCisBankEntity = findCisBanks(creditorBank);
+      if (sysCisBankEntity == null) {
+        return false;
+      } else {
+        if (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y")) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
+      //			.validateCreditorBank(creditorBank);
+      //			if(sysCisBankEntity == null)
+      //				return false;
+      //			else
+      //				return true;
+    } else {
+      return false;
+    }
   }
 
   public boolean validateDebtorBank(String debtorBank) {
     log.debug("debtorBank-->: " + debtorBank);
-	  if (debtorBank != null && !debtorBank.isEmpty()) {
-		  SysCisBankEntity sysCisBankEntity = findCisBanks(debtorBank);
-		  if (sysCisBankEntity == null) {
-			  return false;
-		  } else {
-			  if (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y")) {
-				  return true;
-			  } else {
-				  return false;
-			  }
-		  }
-		  //			2019-10-06 SalehaR - Use Cached List
-		  //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
-		  //			.validateDebtorBank(debtorBank);
-		  //			if(sysCisBankEntity == null)
-		  //				return false;
-		  //			else
-		  //				return true;
-	  } else {
-		  return false;
-	  }
+    if (debtorBank != null && !debtorBank.isEmpty()) {
+      SysCisBankEntity sysCisBankEntity = findCisBanks(debtorBank);
+      if (sysCisBankEntity == null) {
+        return false;
+      } else {
+        if (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y")) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      //			2019-10-06 SalehaR - Use Cached List
+      //			SysCisBankEntity sysCisBankEntity = (SysCisBankEntity) valBeanRemote
+      //			.validateDebtorBank(debtorBank);
+      //			if(sysCisBankEntity == null)
+      //				return false;
+      //			else
+      //				return true;
+    } else {
+      return false;
+    }
   }
 
 
   public boolean validatePacs002MsgId(String msgId) {
-	  if (msgId != null && !msgId.isEmpty()) {
-		  List<CasOpsConfHdrsEntity> casOpsConfHdrsList =
-				  (List<CasOpsConfHdrsEntity>) valBeanRemote.validatePacs002MsgId(msgId);
-		  log.debug("the message id is *******************************************" + msgId);
-		  if (casOpsConfHdrsList != null & casOpsConfHdrsList.size() > 0) {
-			  return false;
-		  } else {
-			  return true;
-		  }
-	  } else {
-		  return false;
-	  }
+    if (msgId != null && !msgId.isEmpty()) {
+      List<CasOpsConfHdrsEntity> casOpsConfHdrsList =
+          (List<CasOpsConfHdrsEntity>) valBeanRemote.validatePacs002MsgId(msgId);
+      log.debug("the message id is *******************************************" + msgId);
+      if (casOpsConfHdrsList != null & casOpsConfHdrsList.size() > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 
   public boolean isValidProcessingDate(String date, String dateFormat) {
@@ -2491,11 +2458,11 @@ public class Validation_ST {
       try {
         Date crDate = sdf.parse(date);
         Date processingDate;
-		  if (casSysctrlSysParamEntity != null) {
-			  processingDate = casSysctrlSysParamEntity.getProcessDate();
-		  } else {
-			  processingDate = new Date();
-		  }
+        if (casSysctrlSysParamEntity != null) {
+          processingDate = casSysctrlSysParamEntity.getProcessDate();
+        } else {
+          processingDate = new Date();
+        }
 
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -2508,11 +2475,11 @@ public class Validation_ST {
         log.debug("convCrDate: " + convCrDate);
         log.debug("convPrDate: " + convPrDate);
 
-		  if (convCrDate.equals(convPrDate)) {
-			  return true;
-		  } else {
-			  return false;
-		  }
+        if (convCrDate.equals(convPrDate)) {
+          return true;
+        } else {
+          return false;
+        }
       } catch (ParseException pe) {
         return false;
       }
@@ -2759,25 +2726,25 @@ public class Validation_ST {
 
   public boolean validateFileSizeLimit(String serviceName, String memberNo,
                                        Integer inwardFileSize) {
-	  if (memberNo != null && !memberNo.isEmpty() ||
-			  serviceName != null && !serviceName.isEmpty() ||
-			  inwardFileSize > 0) {
-		  CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity =
-				  findFileSizeLimt(serviceName, memberNo, inwardFileSize);
+    if (memberNo != null && !memberNo.isEmpty() ||
+        serviceName != null && !serviceName.isEmpty() ||
+        inwardFileSize > 0) {
+      CasOpsFileSizeLimitEntity casOpsFileSizeLimitEntity =
+          findFileSizeLimt(serviceName, memberNo, inwardFileSize);
 
-		  if (casOpsFileSizeLimitEntity == null) {
-			  return false;
-		  } else {
+      if (casOpsFileSizeLimitEntity == null) {
+        return false;
+      } else {
 
-			  if (inwardFileSize <= Integer.valueOf(casOpsFileSizeLimitEntity.getLimit())) {
-				  return true;
-			  } else {
-				  return false;
-			  }
-		  }
-	  } else {
-		  return false;
-	  }
+        if (inwardFileSize <= Integer.valueOf(casOpsFileSizeLimitEntity.getLimit())) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return false;
+    }
   }
 
 

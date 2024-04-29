@@ -11,7 +11,7 @@ import com.bsva.entities.CasOpsSotEotCtrlEntity;
 import com.bsva.entities.CasOpsCustParamEntity;
 import com.bsva.entities.CasOpsServicesEntity;
 import com.bsva.entities.CasOpsSlaTimesEntity;
-import com.bsva.entities.CasSystemBillingCtrlsEntity;
+import com.bsva.entities.ObsSystemBillingCtrlsEntity;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.QuartzSchedulerBeanRemote;
@@ -436,13 +436,13 @@ public class EndOfDayLogic {
 
 
                       //update Billing Cntrls table
-                      CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity =
-                          (CasSystemBillingCtrlsEntity) adminBeanRemote.retrieveBillingCtrls(
+                      ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity =
+                          (ObsSystemBillingCtrlsEntity) adminBeanRemote.retrieveBillingCtrls(
                               casSysctrlSysParamEntity.getProcessDate());
-                      casSystemBillingCtrlsEntity.setProcessStatus("C");
-                      casSystemBillingCtrlsEntity.setModifiedBy("MANOWNER");
-                      casSystemBillingCtrlsEntity.setModifiedDate(new Date());
-                      adminBeanRemote.updateBillingCtrl(casSystemBillingCtrlsEntity);
+                      obsSystemBillingCtrlsEntity.setProcessStatus("C");
+                      obsSystemBillingCtrlsEntity.setModifiedBy("CAMOWNER");
+                      obsSystemBillingCtrlsEntity.setModifiedDate(new Date());
+                      adminBeanRemote.updateBillingCtrl(obsSystemBillingCtrlsEntity);
 
                       eodCheck = true;
                     } else {

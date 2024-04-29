@@ -26,8 +26,8 @@ import com.bsva.entities.CasOpsRepSeqNrEntity;
 import com.bsva.entities.CasOpsRepSeqNrPK;
 import com.bsva.entities.CasOpsServicesEntity;
 import com.bsva.entities.CasOpsSlaTimesEntity;
-import com.bsva.entities.CasSystemBillingCtrlsEntity;
-import com.bsva.entities.CasSystemBillingCtrlsPK;
+import com.bsva.entities.ObsSystemBillingCtrlsEntity;
+import com.bsva.entities.ObsSystemBillingCtrlsPK;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.interfaces.QuartzSchedulerBeanRemote;
@@ -66,7 +66,7 @@ public class StartOfDayLogic {
   private static AdminBeanRemote adminBeanRemote;
   private static QuartzSchedulerBeanRemote quartzSchedulerBeanRemote;
   private static ServiceBeanRemote serviceBeanRemote;
-  private String systemName = "MANOWNER";
+  private String systemName = "CAMOWNER";
   List<CasSysctrlCustParamEntity> sysCntrlCustList = new ArrayList<CasSysctrlCustParamEntity>();
   FileWatcher fileWatcher = new FileWatcher();
   Date processingDate = null;
@@ -88,10 +88,8 @@ public class StartOfDayLogic {
   String responsePeriodVal;
   List<CasSysctrlServicesEntity> sysCntrlServicesList = null;
   String activeInd, nonActiveInd;
-  String manotServ, manomServ, mancoServ, manocServ, st103Serv, manroServ, manrfServ, spoutServ,
-      sroutServ, mandcServ;
-  String st100Serv, st102Serv, st104Serv, st105Serv, st106Serv, st007Serv, st008Serv, st994Serv,
-      iamport, itemLimit, transactionLimit;
+  String carotServ, rcaotServ, st203Serv;
+  String st200Serv, st202Serv, st204Serv, st105Serv, iamport, transactionLimit;
   String archiveday;
 
 
@@ -101,20 +99,19 @@ public class StartOfDayLogic {
       this.activeInd = propertyUtil.getPropValue("ActiveInd");
 
       this.nonActiveInd = propertyUtil.getPropValue("NonActiveInd");
-      this.manomServ = propertyUtil.getPropValue("Output.Pain010");
-      this.manocServ = propertyUtil.getPropValue("Output.Pain012");
-      this.st103Serv = propertyUtil.getPropValue("Output.Pacs002");
+      this.carotServ = propertyUtil.getPropValue("Output.Pain010");
+      this.rcaotServ = propertyUtil.getPropValue("Output.Pain012");
+      this.st203Serv = propertyUtil.getPropValue("Output.Pacs002");
 
-      this.st100Serv = propertyUtil.getPropValue("StatusRep.ST100");
-      this.st102Serv = propertyUtil.getPropValue("StatusRep.ST102");
-      this.st104Serv = propertyUtil.getPropValue("StatusRep.ST104");
+      this.st200Serv = propertyUtil.getPropValue("StatusRep.ST200");
+      this.st202Serv = propertyUtil.getPropValue("StatusRep.ST202");
+      this.st204Serv = propertyUtil.getPropValue("StatusRep.ST204");
       archiveday = propertyUtil.getPropValue("RESPONSE.PERIOD");
       iamport = propertyUtil.getPropValue("MDT.IAM_PORT");
-      itemLimit = propertyUtil.getPropValue("AC.MIGRATION.ITEM.LIMIT");
       transactionLimit = propertyUtil.getPropValue("AC.FILE.TRANSACTION.LIMIT");
 
     } catch (Exception e) {
-      log.error(" StartOfDayLogic - Could not find MandateMessageCommons.properties in classpath");
+      log.error(" StartOfDayLogic - Could not find CessionAssignProperties.properties in classpath");
     }
 
   }
@@ -237,9 +234,6 @@ public class StartOfDayLogic {
           servSaved = populatesOpsServices();
           populateCisMembersToCustParamSaved = populateCisMembersToCustParam();
           custParSaved = populateOpsCustomerParameters();
-//					Not needed for C&A
-//					opsCronTimeSaved=populatesOpsCronTable(); 
-//					acOpsPublicHolidayPouplated =populatePublicHoliday();
           refLastSeq = populateOpsRefSeqNr();
           opsSlaTimesSaved = populatesOpsSlaTimesTable();
           populateOpsScheduler = populateOpsScheduler();
@@ -257,6 +251,7 @@ public class StartOfDayLogic {
           if (billingCtrlsEntity != null) {
             billingCtrlsEntity.setBillingWindow(Short.valueOf("0"));
             serviceBeanRemote.saveBillingCntrl(billingCtrlsEntity);
+            log.info("CasOpsBillingCtrls populated");
           }
 
           //Call the config data method - Constructor calls the method.
@@ -330,33 +325,21 @@ public class StartOfDayLogic {
         for (CasSysctrlCustParamEntity syscntrCustEntity : sysCntrlCustList) {
           CasOpsCustParamEntity opsEntity = new CasOpsCustParamEntity();
           opsEntity.setInstId(syscntrCustEntity.getInstId());
-          opsEntity.setManInitXsdNs(syscntrCustEntity.getManInitXsdNs());
-          opsEntity.setManInitLstSeq(seqNo);
-          opsEntity.setManInitLastFileNr(seqNo);
-          opsEntity.setManAmdXsdNs(syscntrCustEntity.getManAmdXsdNs());
-          opsEntity.setManAmdLstSeq(seqNo);
-          opsEntity.setManAmdLastFileNr(seqNo);
-          opsEntity.setManCanXsdNs(syscntrCustEntity.getManCanXsdNs());
-          opsEntity.setManCanLstSeq(seqNo);
-          opsEntity.setManCanLastFileNr(seqNo);
-          opsEntity.setManAccpXsdNs(syscntrCustEntity.getManAccpXsdNs());
-          opsEntity.setManAccpLstSeq(seqNo);
-          opsEntity.setManAccpLastFileNr(seqNo);
+          opsEntity.setCasaAmdXsdNs(syscntrCustEntity.getCasaAmdXsdNs());
+          opsEntity.setCasaAmdLstSeq(seqNo);
+          opsEntity.setCasaAmdLastFileNr(seqNo);
+          opsEntity.setCasaAccpXsdNs(syscntrCustEntity.getCasaAccpXsdNs());
+          opsEntity.setCasaAccpLstSeq(seqNo);
+          opsEntity.setCasaAccpLastFileNr(seqNo);
           opsEntity.setActiveInd(syscntrCustEntity.getActiveInd());
           opsEntity.setCreatedBy(systemName);
           opsEntity.setCreatedDate(new Date());
-          opsEntity.setManRespXsdNs(syscntrCustEntity.getMdteRespXsdNs());
-          opsEntity.setManReqXsdNs(syscntrCustEntity.getMdteReqXsdNs());
-          opsEntity.setManReqLastFileNr(seqNo);
-          opsEntity.setManReqLstSeq(seqNo);
-          opsEntity.setManRespLastFileNr(seqNo);
-          opsEntity.setManRespLstSeq(seqNo);
-          opsEntity.setManStatusRepXsdNs(syscntrCustEntity.getManStatusRepXsdNs());
-          opsEntity.setManStatusRepLstSeq(seqNo);
-          opsEntity.setManStatusRepLastFileNr(seqNo);
-          opsEntity.setManConfirmXsdNs(syscntrCustEntity.getManConfirmXsdNs());
-          opsEntity.setManConfirmLstSeq(seqNo);
-          opsEntity.setManConfirmLstFileNr(seqNo);
+          opsEntity.setCasaStatusRepXsdNs(syscntrCustEntity.getCasaStatusRepXsdNs());
+          opsEntity.setCasaStatusRepLstSeq(seqNo);
+          opsEntity.setCasaStatusRepLastFileNr(seqNo);
+          opsEntity.setCasaConfirmXsdNs(syscntrCustEntity.getCasaConfirmXsdNs());
+          opsEntity.setCasaConfirmLstSeq(seqNo);
+          opsEntity.setCasaConfirmLstFileNr(seqNo);
 
           saved = adminBeanRemote.createOpsCustParameters(opsEntity);
         }
@@ -422,7 +405,7 @@ public class StartOfDayLogic {
     }
 
     //casSysParamEntity.setProcessDate(currDate);
-    casSysParamEntity.setSysName("MANDATES");
+    casSysParamEntity.setSysName("CESS_ASSIGN");
     casSysParamEntity.setDefCurr("ZAR");
     short inactiveDuration = 1;
     BigInteger archivePeriod = new BigInteger(archivePeriodVal);
@@ -444,7 +427,6 @@ public class StartOfDayLogic {
     casSysParamEntity.setCisDwnldDate(currDate);
     casSysParamEntity.setResponsePeriod(Short.valueOf(responsePeriodVal));
     casSysParamEntity.setIamPort(Short.valueOf(iamport));
-    casSysParamEntity.setItemLimit(new BigInteger(itemLimit));
     casSysParamEntity.setFileTransactionLimit(new BigInteger(transactionLimit));
 
 
@@ -884,20 +866,19 @@ public class StartOfDayLogic {
 
   public boolean populateBillingCntrlInfo() {
     boolean saved = false;
+    ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity = new ObsSystemBillingCtrlsEntity();
+    ObsSystemBillingCtrlsPK obsSystemBillingCtrlsPK = new ObsSystemBillingCtrlsPK();
 
-    CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity = new CasSystemBillingCtrlsEntity();
-    CasSystemBillingCtrlsPK casSystemBillingCtrlsPK = new CasSystemBillingCtrlsPK();
+    obsSystemBillingCtrlsPK.setProcessDate(currDate);
+    obsSystemBillingCtrlsPK.setSystemName("CESSION_ASSIGN");
+    obsSystemBillingCtrlsEntity.setObsSystemBillingCtrlsPK(obsSystemBillingCtrlsPK);
+    obsSystemBillingCtrlsEntity.setProcessStatus("A");
+    obsSystemBillingCtrlsEntity.setCreatedBy(systemName);
+    obsSystemBillingCtrlsEntity.setModifiedBy(systemName);
+    obsSystemBillingCtrlsEntity.setCreatedDate(new Date());
+    obsSystemBillingCtrlsEntity.setModifiedDate(new Date());
 
-    casSystemBillingCtrlsPK.setProcessDate(currDate);
-    casSystemBillingCtrlsPK.setSystemName("MANDATES");
-    casSystemBillingCtrlsEntity.setObsSystemBillingCtrlsPK(casSystemBillingCtrlsPK);
-    casSystemBillingCtrlsEntity.setProcessStatus("A");
-    casSystemBillingCtrlsEntity.setCreatedBy(systemName);
-    casSystemBillingCtrlsEntity.setModifiedBy(systemName);
-    casSystemBillingCtrlsEntity.setCreatedDate(new Date());
-    casSystemBillingCtrlsEntity.setModifiedDate(new Date());
-
-    saved = adminBeanRemote.createBillingCtrls(casSystemBillingCtrlsEntity);
+    saved = adminBeanRemote.createBillingCtrls(obsSystemBillingCtrlsEntity);
     log.info("OBS BillingCntrl SAVED---> " + saved);
 
     return saved;
@@ -1150,23 +1131,18 @@ public class StartOfDayLogic {
           log.info("outService ==> " + outService);
 
           //Output Debtor Services
-          if (outService.equalsIgnoreCase(manotServ) || outService.equalsIgnoreCase(manomServ) ||
-              outService.equalsIgnoreCase(mancoServ) ||
-              outService.equalsIgnoreCase(manroServ) || outService.equalsIgnoreCase(sroutServ) ||
-              outService.equalsIgnoreCase(st102Serv) ||
-              outService.equalsIgnoreCase(st104Serv) || outService.equalsIgnoreCase(st106Serv) ||
-              outService.equalsIgnoreCase(st008Serv) ||
-              outService.equalsIgnoreCase(st994Serv)) {
+          if (outService.equalsIgnoreCase(carotServ) ||
+              outService.equalsIgnoreCase(st202Serv) ||
+              outService.equalsIgnoreCase(st204Serv)) {
             if (sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y")) {
               generateSOT(memberId, outService);
             }
           }
 
           //Output Creditor Services
-          if (outService.equalsIgnoreCase(manocServ) || outService.equalsIgnoreCase(st103Serv) ||
-              outService.equalsIgnoreCase(manrfServ) || outService.equalsIgnoreCase(spoutServ) ||
-              outService.equalsIgnoreCase(st100Serv) || outService.equalsIgnoreCase(st105Serv) ||
-              outService.equalsIgnoreCase(st007Serv) || outService.equalsIgnoreCase(mandcServ)) {
+          if (outService.equalsIgnoreCase(st200Serv) ||
+              outService.equalsIgnoreCase(st203Serv) ||
+              outService.equalsIgnoreCase(rcaotServ)) {
             if (sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y")) {
               generateSOT(memberId, outService);
             }
@@ -1230,7 +1206,7 @@ public class StartOfDayLogic {
 
 
   private static void createNewTempFolder() throws IOException {
-    File files = new File("/home/opsjava/Delivery/Mandates/Output/temp");
+    File files = new File("/home/opsjava/Delivery/Cession_Assign/Output/temp");
     if (!files.exists()) {
       if (files.mkdir()) {
         log.info("A temporary  folder has been created succesfully ");
@@ -1243,7 +1219,7 @@ public class StartOfDayLogic {
   }
 
   private static void createNewProcessingFolder() throws IOException {
-    File files = new File("/home/opsjava/Delivery/Mandates/Input/Processing");
+    File files = new File("/home/opsjava/Delivery/Cession_Assign/Input/Processing");
 
     if (!files.exists()) {
 		if (files.mkdir()) {
@@ -1255,7 +1231,7 @@ public class StartOfDayLogic {
   }
 
   private static void createArchiveOutPutFolder() throws IOException {
-    File files = new File("/home/opsjava/Delivery/Mandates/Archive/Output");
+    File files = new File("/home/opsjava/Delivery/Cession_Assign/Archive/Output");
 
     if (!files.exists()) {
 		if (files.mkdir()) {
@@ -1268,7 +1244,7 @@ public class StartOfDayLogic {
 
 
   private static void createArchiveInPutFolder() throws IOException {
-    File files = new File("/home/opsjava/Delivery/Mandates/Archive/Input");
+    File files = new File("/home/opsjava/Delivery/Cession_Assign/Archive/Input");
 
     if (!files.exists()) {
 		if (files.mkdir()) {

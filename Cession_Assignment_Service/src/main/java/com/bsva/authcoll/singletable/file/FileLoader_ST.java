@@ -98,7 +98,7 @@ public class FileLoader_ST implements Serializable {
             log.debug("FILE TYPE IS CARIN");
             String namespace = null;
             if (casOpsCustParamEntity != null) {
-              namespace = casOpsCustParamEntity.getManAmdXsdNs();
+              namespace = casOpsCustParamEntity.getCasaAmdXsdNs();
             } else {
               namespace = "iso.std.iso._20022.tech.xsd.pain_010_001";
             }
@@ -119,7 +119,7 @@ public class FileLoader_ST implements Serializable {
             log.debug("FILE TYPE IS ST201");
             String namespace = null;
             if (casOpsCustParamEntity != null) {
-              namespace = casOpsCustParamEntity.getManStatusRepXsdNs();
+              namespace = casOpsCustParamEntity.getCasaStatusRepXsdNs();
             } else {
               namespace = "iso:std:iso:20022:tech:xsd:pacs.002.001";
             }
@@ -143,7 +143,7 @@ public class FileLoader_ST implements Serializable {
             log.debug("FILE TYPE IS RCAIN");
             String namespace = null;
             if (casOpsCustParamEntity != null) {
-              namespace = casOpsCustParamEntity.getManAccpXsdNs();
+              namespace = casOpsCustParamEntity.getCasaAccpXsdNs();
             } else {
               namespace = "iso.std.iso._20022.tech.xsd.pain_012_001";
             }

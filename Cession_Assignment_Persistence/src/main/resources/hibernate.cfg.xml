@@ -82,6 +82,7 @@
         <mapping class="com.bsva.entities.SysCisBankEntity"/>
         <mapping class="com.bsva.entities.SysCisBranchEntity"/>
         <mapping class="com.bsva.entities.MdtCnfgValRuleEntity"/>
+        <mapping class="com.bsva.entities.ObsSystemBillingCtrlsEntity"/>
 
 
         <!--		<mapping class="com.bsva.entities.MdtOpsAccptFinInstEntity"/>-->

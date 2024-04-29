@@ -541,25 +541,17 @@ public class WebAdminTranslator {
       WebCustomerParametersModel webCustomerParametersModel) {
     CustomerParametersModel custParamModel = new CustomerParametersModel();
 
-    custParamModel.setManAmdXsdNs(webCustomerParametersModel.getManAmdXsdNs());
-    custParamModel.setManCanXsdNs(webCustomerParametersModel.getManCanXsdNs());
-    custParamModel.setManAccpXsdNs(webCustomerParametersModel.getManAccpXsdNs());
+    custParamModel.setCasaAmdXsdNs(webCustomerParametersModel.getCasaAmdXsdNs());
+    custParamModel.setCasaAccpXsdNs(webCustomerParametersModel.getCasaAccpXsdNs());
     custParamModel.setActiveInd(webCustomerParametersModel.getActiveInd());
     custParamModel.setInstId(webCustomerParametersModel.getInstId());
-    custParamModel.setManInitXsdNs(webCustomerParametersModel.getManInitXsdNs());
-    custParamModel.setMdtReqIdReuseInd(webCustomerParametersModel.getMdtReqIdReuseInd());
-    custParamModel.setMdteReqXsdNs(webCustomerParametersModel.getMdteReqXsdNs());
-    custParamModel.setMdteRespXsdNs(webCustomerParametersModel.getMdteRespXsdNs());
-    custParamModel.setManStatusRepXsdNs(webCustomerParametersModel.getManStatusRepXsdNs());
-    custParamModel.setManConfirmXsdNs(webCustomerParametersModel.getManConfirmXsdNs());
+    custParamModel.setCasaStatusRepXsdNs(webCustomerParametersModel.getCasaStatusRepXsdNs());
+    custParamModel.setCasaConfirmXsdNs(webCustomerParametersModel.getCasaConfirmXsdNs());
     custParamModel.setProcessDay(webCustomerParametersModel.getProcessDay());
     custParamModel.setCreatedBy(webCustomerParametersModel.getCreatedBy());
     custParamModel.setCreatedDate(webCustomerParametersModel.getCreatedDate());
     custParamModel.setModifiedBy(webCustomerParametersModel.getModifiedBy());
     custParamModel.setModifiedDate(webCustomerParametersModel.getModifiedDate());
-    custParamModel.setCisDwnldDate(webCustomerParametersModel.getCisDwnldDate());
-    custParamModel.setCisDwnldInd(webCustomerParametersModel.getCisDwnldInd());
-
 
     return custParamModel;
   }
@@ -568,24 +560,17 @@ public class WebAdminTranslator {
       CustomerParametersModel customerParametersModel) {
     WebCustomerParametersModel webcustParamModel = new WebCustomerParametersModel();
 
-    webcustParamModel.setManAmdXsdNs(customerParametersModel.getManAmdXsdNs());
-    webcustParamModel.setManCanXsdNs(customerParametersModel.getManCanXsdNs());
-    webcustParamModel.setManAccpXsdNs(customerParametersModel.getManAccpXsdNs());
+    webcustParamModel.setCasaAmdXsdNs(customerParametersModel.getCasaAmdXsdNs());
+    webcustParamModel.setCasaAccpXsdNs(customerParametersModel.getCasaAccpXsdNs());
     webcustParamModel.setActiveInd(customerParametersModel.getActiveInd());
     webcustParamModel.setInstId(customerParametersModel.getInstId());
-    webcustParamModel.setManInitXsdNs(customerParametersModel.getManInitXsdNs());
-    webcustParamModel.setMdtReqIdReuseInd(customerParametersModel.getMdtReqIdReuseInd());
-    webcustParamModel.setMdteReqXsdNs(customerParametersModel.getMdteReqXsdNs());
-    webcustParamModel.setMdteRespXsdNs(customerParametersModel.getMdteRespXsdNs());
-    webcustParamModel.setManStatusRepXsdNs(customerParametersModel.getManStatusRepXsdNs());
-    webcustParamModel.setManConfirmXsdNs(customerParametersModel.getManConfirmXsdNs());
+    webcustParamModel.setCasaStatusRepXsdNs(customerParametersModel.getCasaStatusRepXsdNs());
+    webcustParamModel.setCasaConfirmXsdNs(customerParametersModel.getCasaConfirmXsdNs());
     webcustParamModel.setProcessDay(customerParametersModel.getProcessDay());
     webcustParamModel.setCreatedBy(customerParametersModel.getCreatedBy());
     webcustParamModel.setCreatedDate(customerParametersModel.getCreatedDate());
     webcustParamModel.setModifiedBy(customerParametersModel.getModifiedBy());
     webcustParamModel.setModifiedDate(customerParametersModel.getModifiedDate());
-    webcustParamModel.setCisDwnldDate(customerParametersModel.getCisDwnldDate());
-    webcustParamModel.setCisDwnldInd(customerParametersModel.getCisDwnldInd());
 
 
     return webcustParamModel;
@@ -1701,37 +1686,22 @@ public class WebAdminTranslator {
     WebOpsCustomerParameters webOpsCustomerParameters = new WebOpsCustomerParameters();
 
     webOpsCustomerParameters.setActiveInd(OpsCustParamModel.getActiveInd());
-    webOpsCustomerParameters.setManAccpLstSeq(OpsCustParamModel.getManAccpLstSeq());
+    webOpsCustomerParameters.setCasaAccpLstSeq(OpsCustParamModel.getCasaAccpLstSeq());
     webOpsCustomerParameters.setInstId(OpsCustParamModel.getInstId());
     webOpsCustomerParameters.setCreatedBy(OpsCustParamModel.getCreatedBy());
     webOpsCustomerParameters.setCreatedDate(OpsCustParamModel.getCreatedDate());
-    webOpsCustomerParameters.setManAccpLastFileNr(OpsCustParamModel.getManAccpLastFileNr());
-    webOpsCustomerParameters.setManAccpLastFileNr(OpsCustParamModel.getManAccpLastFileNr());
-    webOpsCustomerParameters.setManAccpXsdNs(OpsCustParamModel.getManAccpXsdNs());
-    webOpsCustomerParameters.setManAmdLastFileNr(OpsCustParamModel.getManAmdLastFileNr());
-    webOpsCustomerParameters.setManAmdLstSeq(OpsCustParamModel.getManAmdLstSeq());
-    webOpsCustomerParameters.setManAmdXsdNs(OpsCustParamModel.getManAmdXsdNs());
-    webOpsCustomerParameters.setManCanLastFileNr(OpsCustParamModel.getManCanLastFileNr());
-    webOpsCustomerParameters.setManCanLstSeq(OpsCustParamModel.getManCanLstSeq());
-    webOpsCustomerParameters.setManCanXsdNs(OpsCustParamModel.getManCanXsdNs());
-    webOpsCustomerParameters.setMdtReqIdReuseInd(OpsCustParamModel.getMdtReqIdReuseInd());
-    webOpsCustomerParameters.setManInitLastFileNr(OpsCustParamModel.getManInitLastFileNr());
-    webOpsCustomerParameters.setManInitLstSeq(OpsCustParamModel.getManInitLstSeq());
-    webOpsCustomerParameters.setManInitXsdNs(OpsCustParamModel.getManInitXsdNs());
-    webOpsCustomerParameters.setMdtReqIdReuseInd(OpsCustParamModel.getMdtReqIdReuseInd());
-    webOpsCustomerParameters.setManStatusRepLastFileNr(
-        OpsCustParamModel.getManStatusRepLastFileNr());
-    webOpsCustomerParameters.setManStatusRepLstSeq(OpsCustParamModel.getManStatusRepLstSeq());
-    webOpsCustomerParameters.setManStatusRepXsdNs(OpsCustParamModel.getManStatusRepXsdNs());
-    webOpsCustomerParameters.setManConfirmXsdNs(OpsCustParamModel.getManConfirmXsdNs());
-    webOpsCustomerParameters.setManConfirmLstSeq(OpsCustParamModel.getManConfirmLstSeq());
-    webOpsCustomerParameters.setManConfirmLstFileNr(OpsCustParamModel.getManConfirmLstFileNr());
-    webOpsCustomerParameters.setManReqXsdNs(OpsCustParamModel.getManReqXsdNs());
-    webOpsCustomerParameters.setManReqLastFileNr(OpsCustParamModel.getManReqLastFileNr());
-    webOpsCustomerParameters.setManReqLstSeq(OpsCustParamModel.getManReqLstSeq());
-    webOpsCustomerParameters.setManRespXsdNs(OpsCustParamModel.getManRespXsdNs());
-    webOpsCustomerParameters.setManRespLstSeq(OpsCustParamModel.getManRespLstSeq());
-    webOpsCustomerParameters.setManRespLastFileNr(OpsCustParamModel.getManRespLastFileNr());
+    webOpsCustomerParameters.setCasaAccpLastFileNr(OpsCustParamModel.getCasaAccpLastFileNr());
+    webOpsCustomerParameters.setCasaAccpLastFileNr(OpsCustParamModel.getCasaAccpLastFileNr());
+    webOpsCustomerParameters.setCasaAccpXsdNs(OpsCustParamModel.getCasaAccpXsdNs());
+    webOpsCustomerParameters.setCasaAmdLastFileNr(OpsCustParamModel.getCasaAmdLastFileNr());
+    webOpsCustomerParameters.setCasaAmdLstSeq(OpsCustParamModel.getCasaAmdLstSeq());
+    webOpsCustomerParameters.setCasaAmdXsdNs(OpsCustParamModel.getCasaAmdXsdNs());
+    webOpsCustomerParameters.setCasaStatusRepLastFileNr(OpsCustParamModel.getCasaStatusRepLastFileNr());
+    webOpsCustomerParameters.setCasaStatusRepLstSeq(OpsCustParamModel.getCasaStatusRepLstSeq());
+    webOpsCustomerParameters.setCasaStatusRepXsdNs(OpsCustParamModel.getCasaStatusRepXsdNs());
+    webOpsCustomerParameters.setCasaConfirmXsdNs(OpsCustParamModel.getCasaConfirmXsdNs());
+    webOpsCustomerParameters.setCasaConfirmLstSeq(OpsCustParamModel.getCasaConfirmLstSeq());
+    webOpsCustomerParameters.setCasaConfirmLstFileNr(OpsCustParamModel.getCasaConfirmLstFileNr());
 
     return webOpsCustomerParameters;
 
@@ -1746,33 +1716,20 @@ public class WebAdminTranslator {
     opsCustParamModel.setInstId(webOpsCustomerParameters.getInstId());
     opsCustParamModel.setCreatedBy(webOpsCustomerParameters.getCreatedBy());
     opsCustParamModel.setCreatedDate(webOpsCustomerParameters.getCreatedDate());
-    opsCustParamModel.setManAccpLastFileNr(webOpsCustomerParameters.getManAccpLastFileNr());
-    opsCustParamModel.setManAccpLastFileNr(webOpsCustomerParameters.getManAccpLastFileNr());
-    opsCustParamModel.setManAccpLstSeq(webOpsCustomerParameters.getManAccpLstSeq());
-    opsCustParamModel.setManAccpXsdNs(webOpsCustomerParameters.getManAccpXsdNs());
-    opsCustParamModel.setManAmdLastFileNr(webOpsCustomerParameters.getManAmdLastFileNr());
-    opsCustParamModel.setManAmdLstSeq(webOpsCustomerParameters.getManAmdLstSeq());
-    opsCustParamModel.setManAmdXsdNs(webOpsCustomerParameters.getManAmdXsdNs());
-    opsCustParamModel.setManCanLastFileNr(webOpsCustomerParameters.getManCanLastFileNr());
-    opsCustParamModel.setManCanLstSeq(webOpsCustomerParameters.getManCanLstSeq());
-    opsCustParamModel.setManCanXsdNs(webOpsCustomerParameters.getManCanXsdNs());
-    opsCustParamModel.setManInitLastFileNr(webOpsCustomerParameters.getManInitLastFileNr());
-    opsCustParamModel.setManInitLstSeq(webOpsCustomerParameters.getManInitLstSeq());
-    opsCustParamModel.setManInitXsdNs(webOpsCustomerParameters.getManInitXsdNs());
-    opsCustParamModel.setMdtReqIdReuseInd(webOpsCustomerParameters.getMdtReqIdReuseInd());
-    opsCustParamModel.setManStatusRepLastFileNr(
-        webOpsCustomerParameters.getManStatusRepLastFileNr());
-    opsCustParamModel.setManStatusRepLstSeq(webOpsCustomerParameters.getManStatusRepLstSeq());
-    opsCustParamModel.setManStatusRepXsdNs(webOpsCustomerParameters.getManStatusRepXsdNs());
-    opsCustParamModel.setManConfirmXsdNs(webOpsCustomerParameters.getManConfirmXsdNs());
-    opsCustParamModel.setManConfirmLstSeq(webOpsCustomerParameters.getManConfirmLstSeq());
-    opsCustParamModel.setManConfirmLstFileNr(webOpsCustomerParameters.getManConfirmLstFileNr());
-    opsCustParamModel.setManReqXsdNs(webOpsCustomerParameters.getManReqXsdNs());
-    opsCustParamModel.setManReqLastFileNr(webOpsCustomerParameters.getManReqLastFileNr());
-    opsCustParamModel.setManReqLstSeq(webOpsCustomerParameters.getManReqLstSeq());
-    opsCustParamModel.setManRespXsdNs(webOpsCustomerParameters.getManRespXsdNs());
-    opsCustParamModel.setManRespLstSeq(webOpsCustomerParameters.getManRespLstSeq());
-    opsCustParamModel.setManRespLastFileNr(webOpsCustomerParameters.getManRespLastFileNr());
+    opsCustParamModel.setCasaAccpLastFileNr(webOpsCustomerParameters.getCasaAccpLastFileNr());
+    opsCustParamModel.setCasaAccpLastFileNr(webOpsCustomerParameters.getCasaAccpLastFileNr());
+    opsCustParamModel.setCasaAccpLstSeq(webOpsCustomerParameters.getCasaAccpLstSeq());
+    opsCustParamModel.setCasaAccpXsdNs(webOpsCustomerParameters.getCasaAccpXsdNs());
+    opsCustParamModel.setCasaAmdLastFileNr(webOpsCustomerParameters.getCasaAmdLastFileNr());
+    opsCustParamModel.setCasaAmdLstSeq(webOpsCustomerParameters.getCasaAmdLstSeq());
+    opsCustParamModel.setCasaAmdXsdNs(webOpsCustomerParameters.getCasaAmdXsdNs());
+    opsCustParamModel.setCasaStatusRepLastFileNr(
+        webOpsCustomerParameters.getCasaStatusRepLastFileNr());
+    opsCustParamModel.setCasaStatusRepLstSeq(webOpsCustomerParameters.getCasaStatusRepLstSeq());
+    opsCustParamModel.setCasaStatusRepXsdNs(webOpsCustomerParameters.getCasaStatusRepXsdNs());
+    opsCustParamModel.setCasaConfirmXsdNs(webOpsCustomerParameters.getCasaConfirmXsdNs());
+    opsCustParamModel.setCasaConfirmLstSeq(webOpsCustomerParameters.getCasaConfirmLstSeq());
+    opsCustParamModel.setCasaConfirmLstFileNr(webOpsCustomerParameters.getCasaConfirmLstFileNr());
 
     return opsCustParamModel;
   }
@@ -1781,30 +1738,30 @@ public class WebAdminTranslator {
 //		(QuerybyMandateModel querybyMandateModel)
 //		{
 //			WebQuerybyMandateModel webQuerybyMandateModel = new WebQuerybyMandateModel();
-//			
+//
 //			webQuerybyMandateModel.setMandateReqTranId(querybyMandateModel.getMandateReqTranId());
 //			webQuerybyMandateModel.setMandateRefNr(querybyMandateModel.getMandateRefNr());
 //			webQuerybyMandateModel.setCreditorName(querybyMandateModel.getCreditorName());
 //			webQuerybyMandateModel.setDebtorName(querybyMandateModel.getDebtorName());
 //			webQuerybyMandateModel.setFirstCollDate(querybyMandateModel.getFirstCollDate());
 //			webQuerybyMandateModel.setCollAmount(querybyMandateModel.getCollAmount());
-//			
-//			
+//
+//
 //			return webQuerybyMandateModel;
-//			
+//
 //		}
 //		public QuerybyMandateModel translateWebQuerybyMandateModelToCommonsModel
 //		(WebQuerybyMandateModel  webQuerybyMandateModel)
 //		{
 //			QuerybyMandateModel querybyMandateModel = new QuerybyMandateModel();
-//			
+//
 //			querybyMandateModel.setMandateReqTranId(webQuerybyMandateModel.getMandateReqTranId());
 //			querybyMandateModel.setMandateRefNr(webQuerybyMandateModel.getMandateRefNr());
 //			querybyMandateModel.setCreditorName(webQuerybyMandateModel.getCreditorName());
 //			querybyMandateModel.setDebtorName(webQuerybyMandateModel.getDebtorName());
 //			querybyMandateModel.setFirstCollDate(webQuerybyMandateModel.getFirstCollDate());
 //			querybyMandateModel.setCollAmount(webQuerybyMandateModel.getCollAmount());
-//			
+//
 //			return querybyMandateModel;
 //			
 //		}

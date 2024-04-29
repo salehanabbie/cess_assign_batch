@@ -26,7 +26,7 @@ public class CasOpsProcessControlsEntity implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PROCESS_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date processDate;
     @Size(max = 1)
     @Column(name = "CIS_DOWNLOAD_IND")

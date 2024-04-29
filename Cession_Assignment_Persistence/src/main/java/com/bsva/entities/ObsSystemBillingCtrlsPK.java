@@ -4,9 +4,9 @@ package com.bsva.entities;
  * @author SalehaR
  *
  */
+
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
  * @author SalehaR
  */
 @Embeddable
-public class CasSystemBillingCtrlsPK implements Serializable {
+public class ObsSystemBillingCtrlsPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
@@ -33,10 +33,10 @@ public class CasSystemBillingCtrlsPK implements Serializable {
     @Column(name = "SYSTEM_NAME")
     private String systemName;
 
-    public CasSystemBillingCtrlsPK() {
+    public ObsSystemBillingCtrlsPK() {
     }
 
-    public CasSystemBillingCtrlsPK(Date processDate, String systemName) {
+    public ObsSystemBillingCtrlsPK(Date processDate, String systemName) {
         this.processDate = processDate;
         this.systemName = systemName;
     }
@@ -76,7 +76,7 @@ public class CasSystemBillingCtrlsPK implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CasSystemBillingCtrlsPK other = (CasSystemBillingCtrlsPK) obj;
+		ObsSystemBillingCtrlsPK other = (ObsSystemBillingCtrlsPK) obj;
 		if (processDate == null) {
 			if (other.processDate != null)
 				return false;

@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author SalehaR
  */
 @Entity
-@Table(name = "CAS_CNFG_ERROR_CODES",schema = "CASOWNER")
+@Table(name = "CAS_CNFG_ERROR_CODES",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasCnfgErrorCodesEntity.findAll", query = "SELECT m FROM CasCnfgErrorCodesEntity m"),

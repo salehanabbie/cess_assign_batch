@@ -1186,12 +1186,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.debug("serviceId: " + serviceId);
 
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
-			parameters.put("mdtAcOpsSotEotCtrlPK.instId", memberNo);
-			parameters.put("mdtAcOpsSotEotCtrlPK.serviceId", serviceId);
+			parameters.put("casOpsSotEotCtrlPK.instId", memberNo);
+			parameters.put("casOpsSotEotCtrlPK.serviceId", serviceId);
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
 			casOpsSotEotCtrlEntity = (CasOpsSotEotCtrlEntity) genericDAO
 					.findByCriteria(CasOpsSotEotCtrlEntity.class, parameters);
-			log.debug("---------------MdtAcOpsSotEotCtrlEntity after findByCriteria: ------------------"
+			log.debug("---------------CasOpsSotEotCtrlEntity after findByCriteria: ------------------"
 					+ casOpsSotEotCtrlEntity);
 		} catch (ObjectNotFoundException onfe) {
 			log.debug("No Object Exists on DB");

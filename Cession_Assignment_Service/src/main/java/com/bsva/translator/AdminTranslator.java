@@ -13,7 +13,6 @@ import com.bsva.commons.model.AuditTrackingModel;
 import com.bsva.commons.model.CisBranchModel;
 import com.bsva.commons.model.CisMemberModel;
 import com.bsva.commons.model.CnfgAuthTypeModel;
-import com.bsva.commons.model.CnfgRejectReasonCodesModel;
 import com.bsva.commons.model.CompParamModel;
 import com.bsva.commons.model.ConfgErrorCodesModel;
 import com.bsva.commons.model.ConfgSeverityCodesModel;
@@ -31,7 +30,6 @@ import com.bsva.commons.model.MandatesCountCommonsModel;
 import com.bsva.commons.model.MdtSysCtrlSysParamModel;
 import com.bsva.commons.model.OpsCustParamModel;
 import com.bsva.commons.model.OpsFileRegModel;
-import com.bsva.commons.model.OpsProcessControlCommonsModel;
 import com.bsva.commons.model.OpsProcessControlModel;
 import com.bsva.commons.model.OpsRefSeqNumberCommonsModel;
 import com.bsva.commons.model.OpsSlaTimesCommonsModel;
@@ -46,7 +44,6 @@ import com.bsva.commons.model.SchedulerCronModel;
 import com.bsva.commons.model.SequenceTypesModel;
 import com.bsva.commons.model.ServicesModel;
 import com.bsva.commons.model.SeverityCodesModel;
-import com.bsva.commons.model.StatusReasonCodesModel;
 import com.bsva.commons.model.SysCisBankModel;
 import com.bsva.commons.model.SysCisBranchModel;
 import com.bsva.commons.model.SysCtrlFileSizeLimitModel;
@@ -58,6 +55,37 @@ import com.bsva.commons.model.TransCtrlMsgModel;
 import com.bsva.entities.AudReportsEntity;
 import com.bsva.entities.AudSystemProcessEntity;
 import com.bsva.entities.AudTrackingEntity;
+import com.bsva.entities.CasCnfgAccountTypeEntity;
+import com.bsva.entities.CasCnfgAdjustmentCatEntity;
+import com.bsva.entities.CasCnfgAmendmentCodesEntity;
+import com.bsva.entities.CasCnfgAuthTypeEntity;
+import com.bsva.entities.CasCnfgCurrencyCodesEntity;
+import com.bsva.entities.CasCnfgDebitValueTypeEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
+import com.bsva.entities.CasCnfgFrequencyCodesEntity;
+import com.bsva.entities.CasCnfgLocalInstrCodesEntity;
+import com.bsva.entities.CasCnfgReasonCodesEntity;
+import com.bsva.entities.CasCnfgReportNamesEntity;
+import com.bsva.entities.CasCnfgSequenceTypeEntity;
+import com.bsva.entities.CasCnfgSeverityCodesEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsDailyBillingEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
+import com.bsva.entities.CasOpsFileSizeLimitEntity;
+import com.bsva.entities.CasOpsFileSizeLimitPK;
+import com.bsva.entities.CasOpsMndtCountEntity;
+import com.bsva.entities.CasOpsMndtCountPK;
+import com.bsva.entities.CasOpsProcessControlsEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
+import com.bsva.entities.CasOpsRefSeqNrPK;
+import com.bsva.entities.CasOpsSchedulerEntity;
+import com.bsva.entities.CasOpsServicesEntity;
+import com.bsva.entities.CasOpsSlaTimesEntity;
+import com.bsva.entities.CasOpsSotEotCtrlEntity;
+import com.bsva.entities.CasOpsSotEotCtrlPK;
+import com.bsva.entities.CasOpsStatusDetailsEntity;
+import com.bsva.entities.CasOpsStatusHdrsEntity;
+import com.bsva.entities.CasOpsTransCtrlMsgEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlCustParamEntity;
 import com.bsva.entities.CasSysctrlFileSizeLimitEntity;
@@ -74,37 +102,6 @@ import com.bsva.entities.CisMemberEntity;
 import com.bsva.entities.IamSessionEntity;
 import com.bsva.entities.IncSotEotEntityModel;
 import com.bsva.entities.MdtAcArcDailyBillingEntity;
-import com.bsva.entities.CasOpsDailyBillingEntity;
-import com.bsva.entities.CasOpsFileSizeLimitEntity;
-import com.bsva.entities.CasOpsFileSizeLimitPK;
-import com.bsva.entities.CasOpsMndtCountEntity;
-import com.bsva.entities.CasOpsMndtCountPK;
-import com.bsva.entities.CasOpsProcessControlsEntity;
-import com.bsva.entities.CasOpsSchedulerEntity;
-import com.bsva.entities.CasOpsSotEotCtrlEntity;
-import com.bsva.entities.CasOpsSotEotCtrlPK;
-import com.bsva.entities.CasOpsStatusDetailsEntity;
-import com.bsva.entities.CasOpsStatusHdrsEntity;
-import com.bsva.entities.CasOpsTransCtrlMsgEntity;
-import com.bsva.entities.CasCnfgAccountTypeEntity;
-import com.bsva.entities.CasCnfgAdjustmentCatEntity;
-import com.bsva.entities.CasCnfgAmendmentCodesEntity;
-import com.bsva.entities.CasCnfgAuthTypeEntity;
-import com.bsva.entities.CasCnfgCurrencyCodesEntity;
-import com.bsva.entities.CasCnfgDebitValueTypeEntity;
-import com.bsva.entities.CasCnfgErrorCodesEntity;
-import com.bsva.entities.CasCnfgFrequencyCodesEntity;
-import com.bsva.entities.CasCnfgLocalInstrCodesEntity;
-import com.bsva.entities.CasCnfgReasonCodesEntity;
-import com.bsva.entities.CasCnfgReportNamesEntity;
-import com.bsva.entities.CasCnfgSequenceTypeEntity;
-import com.bsva.entities.CasCnfgSeverityCodesEntity;
-import com.bsva.entities.CasOpsCustParamEntity;
-import com.bsva.entities.CasOpsFileRegEntity;
-import com.bsva.entities.CasOpsRefSeqNrEntity;
-import com.bsva.entities.CasOpsRefSeqNrPK;
-import com.bsva.entities.CasOpsServicesEntity;
-import com.bsva.entities.CasOpsSlaTimesEntity;
 import com.bsva.entities.OutSotEotEntityModel;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.entities.SysCisBranchEntity;
@@ -568,24 +565,17 @@ public class AdminTranslator {
       CasSysctrlCustParamEntity custParamEntity) {
     CustomerParametersModel custParamModel = new CustomerParametersModel();
 
-    custParamModel.setManAmdXsdNs(custParamEntity.getManAmdXsdNs());
-    custParamModel.setManCanXsdNs(custParamEntity.getManCanXsdNs());
-    custParamModel.setManAccpXsdNs(custParamEntity.getManAccpXsdNs());
+    custParamModel.setCasaAmdXsdNs(custParamEntity.getCasaAmdXsdNs());
+    custParamModel.setCasaAccpXsdNs(custParamEntity.getCasaAccpXsdNs());
     custParamModel.setActiveInd(custParamEntity.getActiveInd());
     custParamModel.setInstId(custParamEntity.getInstId());
-    custParamModel.setManInitXsdNs(custParamEntity.getManInitXsdNs());
-    custParamModel.setMdtReqIdReuseInd(custParamEntity.getMdtReqIdReuseInd());
-    custParamModel.setMdteReqXsdNs(custParamEntity.getMdteReqXsdNs());
-    custParamModel.setMdteRespXsdNs(custParamEntity.getMdteRespXsdNs());
-    custParamModel.setManStatusRepXsdNs(custParamEntity.getManStatusRepXsdNs());
-    custParamModel.setManConfirmXsdNs(custParamEntity.getManConfirmXsdNs());
+    custParamModel.setCasaStatusRepXsdNs(custParamEntity.getCasaStatusRepXsdNs());
+    custParamModel.setCasaConfirmXsdNs(custParamEntity.getCasaConfirmXsdNs());
     custParamModel.setProcessDay(custParamEntity.getProcessDay());
     custParamModel.setCreatedBy(custParamEntity.getCreatedBy());
     custParamModel.setCreatedDate(custParamEntity.getCreatedDate());
     custParamModel.setModifiedBy(custParamEntity.getModifiedBy());
     custParamModel.setModifiedDate(custParamEntity.getModifiedDate());
-    custParamModel.setCisDwnldDate(custParamEntity.getCisDwnldDate());
-    custParamModel.setCisDwnldInd(custParamEntity.getCisDwnldInd());
     return custParamModel;
   }
 
@@ -596,11 +586,9 @@ public class AdminTranslator {
 
     custParamModel.setActiveInd(custParamEntity.getActiveInd());
     custParamModel.setInstId(custParamEntity.getInstId());
-    custParamModel.setManInitXsdNs(custParamEntity.getManInitXsdNs());
-    custParamModel.setManAmdXsdNs(custParamEntity.getManAmdXsdNs());
-    custParamModel.setManCanXsdNs(custParamEntity.getManCanXsdNs());
-    custParamModel.setManAccpXsdNs(custParamEntity.getManAccpXsdNs());
-    custParamModel.setManStatusRepXsdNs(custParamEntity.getManStatusRepXsdNs());
+    custParamModel.setCasaAmdXsdNs(custParamEntity.getCasaAmdXsdNs());
+    custParamModel.setCasaAccpXsdNs(custParamEntity.getCasaAccpXsdNs());
+    custParamModel.setCasaStatusRepXsdNs(custParamEntity.getCasaStatusRepXsdNs());
 
     return custParamModel;
   }
@@ -612,24 +600,17 @@ public class AdminTranslator {
 
     CasSysctrlCustParamEntity custParamEntity = new CasSysctrlCustParamEntity();
 
-    custParamEntity.setManAmdXsdNs(custParamModel.getManAmdXsdNs());
-    custParamEntity.setManCanXsdNs(custParamModel.getManCanXsdNs());
-    custParamEntity.setManAccpXsdNs(custParamModel.getManAccpXsdNs());
+    custParamEntity.setCasaAmdXsdNs(custParamModel.getCasaAmdXsdNs());
+    custParamEntity.setCasaAccpXsdNs(custParamModel.getCasaAccpXsdNs());
     custParamEntity.setActiveInd(custParamModel.getActiveInd());
     custParamEntity.setInstId(custParamModel.getInstId());
-    custParamEntity.setManInitXsdNs(custParamModel.getManInitXsdNs());
-    custParamEntity.setMdtReqIdReuseInd(custParamModel.getMdtReqIdReuseInd());
-    custParamEntity.setMdteReqXsdNs(custParamModel.getMdteReqXsdNs());
-    custParamEntity.setMdteRespXsdNs(custParamModel.getMdteRespXsdNs());
-    custParamEntity.setManStatusRepXsdNs(custParamModel.getManStatusRepXsdNs());
-    custParamEntity.setManConfirmXsdNs(custParamModel.getManConfirmXsdNs());
+    custParamEntity.setCasaStatusRepXsdNs(custParamModel.getCasaStatusRepXsdNs());
+    custParamEntity.setCasaConfirmXsdNs(custParamModel.getCasaConfirmXsdNs());
     custParamEntity.setProcessDay(custParamModel.getProcessDay());
     custParamEntity.setCreatedBy(custParamModel.getCreatedBy());
     custParamEntity.setCreatedDate(custParamModel.getCreatedDate());
     custParamEntity.setModifiedBy(custParamModel.getModifiedBy());
     custParamEntity.setModifiedDate(custParamModel.getModifiedDate());
-    custParamEntity.setCisDwnldDate(custParamModel.getCisDwnldDate());
-    custParamEntity.setCisDwnldInd(custParamModel.getCisDwnldInd());
 
     return custParamEntity;
   }
@@ -780,34 +761,22 @@ public class AdminTranslator {
 
 
     opsCustParaModel.setActiveInd(localEntity.getActiveInd());
-    opsCustParaModel.setManAccpLstSeq(localEntity.getManAccpLstSeq());
+    opsCustParaModel.setCasaAccpLstSeq(localEntity.getCasaAccpLstSeq());
     opsCustParaModel.setInstId(localEntity.getInstId());
     opsCustParaModel.setCreatedBy(localEntity.getCreatedBy());
     opsCustParaModel.setCreatedDate(localEntity.getCreatedDate());
-    opsCustParaModel.setManAccpLastFileNr(localEntity.getManAccpLastFileNr());
-    opsCustParaModel.setManAccpLastFileNr(localEntity.getManAccpLastFileNr());
-    opsCustParaModel.setManAccpXsdNs(localEntity.getManAccpXsdNs());
-    opsCustParaModel.setManAmdLastFileNr(localEntity.getManAmdLastFileNr());
-    opsCustParaModel.setManAmdLstSeq(localEntity.getManAmdLstSeq());
-    opsCustParaModel.setManAmdXsdNs(localEntity.getManAmdXsdNs());
-    opsCustParaModel.setManCanLastFileNr(localEntity.getManCanLastFileNr());
-    opsCustParaModel.setManCanLstSeq(localEntity.getManCanLstSeq());
-    opsCustParaModel.setManCanXsdNs(localEntity.getManCanXsdNs());
-    opsCustParaModel.setManInitLastFileNr(localEntity.getManInitLastFileNr());
-    opsCustParaModel.setManInitLstSeq(localEntity.getManInitLstSeq());
-    opsCustParaModel.setManInitXsdNs(localEntity.getManInitXsdNs());
-    opsCustParaModel.setManStatusRepLastFileNr(localEntity.getManStatusRepLastFileNr());
-    opsCustParaModel.setManStatusRepLstSeq(localEntity.getManStatusRepLstSeq());
-    opsCustParaModel.setManStatusRepXsdNs(localEntity.getManStatusRepXsdNs());
-    opsCustParaModel.setManConfirmXsdNs(localEntity.getManConfirmXsdNs());
-    opsCustParaModel.setManConfirmLstSeq(localEntity.getManConfirmLstSeq());
-    opsCustParaModel.setManConfirmLstFileNr(localEntity.getManConfirmLstFileNr());
-    opsCustParaModel.setManReqXsdNs(localEntity.getManReqXsdNs());
-    opsCustParaModel.setManReqLastFileNr(localEntity.getManReqLastFileNr());
-    opsCustParaModel.setManReqLstSeq(localEntity.getManReqLstSeq());
-    opsCustParaModel.setManRespXsdNs(localEntity.getManRespXsdNs());
-    opsCustParaModel.setManRespLstSeq(localEntity.getManRespLstSeq());
-    opsCustParaModel.setManRespLastFileNr(localEntity.getManRespLastFileNr());
+    opsCustParaModel.setCasaAccpLastFileNr(localEntity.getCasaAccpLastFileNr());
+    opsCustParaModel.setCasaAccpLastFileNr(localEntity.getCasaAccpLastFileNr());
+    opsCustParaModel.setCasaAccpXsdNs(localEntity.getCasaAccpXsdNs());
+    opsCustParaModel.setCasaAmdLastFileNr(localEntity.getCasaAmdLastFileNr());
+    opsCustParaModel.setCasaAmdLstSeq(localEntity.getCasaAmdLstSeq());
+    opsCustParaModel.setCasaAmdXsdNs(localEntity.getCasaAmdXsdNs());
+    opsCustParaModel.setCasaStatusRepLastFileNr(localEntity.getCasaStatusRepLastFileNr());
+    opsCustParaModel.setCasaStatusRepLstSeq(localEntity.getCasaStatusRepLstSeq());
+    opsCustParaModel.setCasaStatusRepXsdNs(localEntity.getCasaStatusRepXsdNs());
+    opsCustParaModel.setCasaConfirmXsdNs(localEntity.getCasaConfirmXsdNs());
+    opsCustParaModel.setCasaConfirmLstSeq(localEntity.getCasaConfirmLstSeq());
+    opsCustParaModel.setCasaConfirmLstFileNr(localEntity.getCasaConfirmLstFileNr());
 
     return opsCustParaModel;
 
@@ -819,34 +788,22 @@ public class AdminTranslator {
 
 
     casOpsCustParamEntity.setActiveInd(opsCustParaModel.getActiveInd());
-    casOpsCustParamEntity.setManAccpLstSeq(opsCustParaModel.getManAccpLstSeq());
+    casOpsCustParamEntity.setCasaAccpLstSeq(opsCustParaModel.getCasaAccpLstSeq());
     casOpsCustParamEntity.setInstId(opsCustParaModel.getInstId());
     casOpsCustParamEntity.setCreatedBy(opsCustParaModel.getCreatedBy());
     casOpsCustParamEntity.setCreatedDate(opsCustParaModel.getCreatedDate());
-    casOpsCustParamEntity.setManAccpLastFileNr(opsCustParaModel.getManAccpLastFileNr());
-    casOpsCustParamEntity.setManAccpLastFileNr(opsCustParaModel.getManAccpLastFileNr());
-    casOpsCustParamEntity.setManAccpXsdNs(opsCustParaModel.getManAccpXsdNs());
-    casOpsCustParamEntity.setManAmdLastFileNr(opsCustParaModel.getManAmdLastFileNr());
-    casOpsCustParamEntity.setManAmdLstSeq(opsCustParaModel.getManAmdLstSeq());
-    casOpsCustParamEntity.setManAmdXsdNs(opsCustParaModel.getManAmdXsdNs());
-    casOpsCustParamEntity.setManCanLastFileNr(opsCustParaModel.getManCanLastFileNr());
-    casOpsCustParamEntity.setManCanLstSeq(opsCustParaModel.getManCanLstSeq());
-    casOpsCustParamEntity.setManCanXsdNs(opsCustParaModel.getManCanXsdNs());
-    casOpsCustParamEntity.setManInitLastFileNr(opsCustParaModel.getManInitLastFileNr());
-    casOpsCustParamEntity.setManInitLstSeq(opsCustParaModel.getManInitLstSeq());
-    casOpsCustParamEntity.setManInitXsdNs(opsCustParaModel.getManInitXsdNs());
-    casOpsCustParamEntity.setManStatusRepLastFileNr(opsCustParaModel.getManStatusRepLastFileNr());
-    casOpsCustParamEntity.setManStatusRepLstSeq(opsCustParaModel.getManStatusRepLstSeq());
-    casOpsCustParamEntity.setManStatusRepXsdNs(opsCustParaModel.getManStatusRepXsdNs());
-    casOpsCustParamEntity.setManConfirmXsdNs(opsCustParaModel.getManConfirmXsdNs());
-    casOpsCustParamEntity.setManConfirmLstSeq(opsCustParaModel.getManConfirmLstSeq());
-    casOpsCustParamEntity.setManConfirmLstFileNr(opsCustParaModel.getManConfirmLstFileNr());
-    casOpsCustParamEntity.setManReqXsdNs(opsCustParaModel.getManReqXsdNs());
-    casOpsCustParamEntity.setManReqLastFileNr(opsCustParaModel.getManReqLastFileNr());
-    casOpsCustParamEntity.setManReqLstSeq(opsCustParaModel.getManReqLstSeq());
-    casOpsCustParamEntity.setManRespXsdNs(opsCustParaModel.getManRespXsdNs());
-    casOpsCustParamEntity.setManRespLstSeq(opsCustParaModel.getManRespLstSeq());
-    casOpsCustParamEntity.setManRespLastFileNr(opsCustParaModel.getManRespLastFileNr());
+    casOpsCustParamEntity.setCasaAccpLastFileNr(opsCustParaModel.getCasaAccpLastFileNr());
+    casOpsCustParamEntity.setCasaAccpLastFileNr(opsCustParaModel.getCasaAccpLastFileNr());
+    casOpsCustParamEntity.setCasaAccpXsdNs(opsCustParaModel.getCasaAccpXsdNs());
+    casOpsCustParamEntity.setCasaAmdLastFileNr(opsCustParaModel.getCasaAmdLastFileNr());
+    casOpsCustParamEntity.setCasaAmdLstSeq(opsCustParaModel.getCasaAmdLstSeq());
+    casOpsCustParamEntity.setCasaAmdXsdNs(opsCustParaModel.getCasaAmdXsdNs());
+    casOpsCustParamEntity.setCasaStatusRepLastFileNr(opsCustParaModel.getCasaStatusRepLastFileNr());
+    casOpsCustParamEntity.setCasaStatusRepLstSeq(opsCustParaModel.getCasaStatusRepLstSeq());
+    casOpsCustParamEntity.setCasaStatusRepXsdNs(opsCustParaModel.getCasaStatusRepXsdNs());
+    casOpsCustParamEntity.setCasaConfirmXsdNs(opsCustParaModel.getCasaConfirmXsdNs());
+    casOpsCustParamEntity.setCasaConfirmLstSeq(opsCustParaModel.getCasaConfirmLstSeq());
+    casOpsCustParamEntity.setCasaConfirmLstFileNr(opsCustParaModel.getCasaConfirmLstFileNr());
 
     return casOpsCustParamEntity;
   }
@@ -1534,10 +1491,12 @@ public class AdminTranslator {
     opsRefSeqNumberCommonsModel.setCreatedDate(casOpsRefSeqNrEntity.getCreatedDate());
     opsRefSeqNumberCommonsModel.setLastFileNr(casOpsRefSeqNrEntity.getLastFileNr());
     opsRefSeqNumberCommonsModel.setLastSeqNr(casOpsRefSeqNrEntity.getLastSeqNr());
-    opsRefSeqNumberCommonsModel.setMemberNo(casOpsRefSeqNrEntity.getCasOpsRefSeqNrPK().getMemberNo());
+    opsRefSeqNumberCommonsModel.setMemberNo(
+        casOpsRefSeqNrEntity.getCasOpsRefSeqNrPK().getMemberNo());
     opsRefSeqNumberCommonsModel.setModifiedBy(casOpsRefSeqNrEntity.getModifiedBy());
     opsRefSeqNumberCommonsModel.setModifiedDate(casOpsRefSeqNrEntity.getModifiedDate());
-    opsRefSeqNumberCommonsModel.setServiceId(casOpsRefSeqNrEntity.getCasOpsRefSeqNrPK().getServiceId());
+    opsRefSeqNumberCommonsModel.setServiceId(
+        casOpsRefSeqNrEntity.getCasOpsRefSeqNrPK().getServiceId());
     return opsRefSeqNumberCommonsModel;
 
   }

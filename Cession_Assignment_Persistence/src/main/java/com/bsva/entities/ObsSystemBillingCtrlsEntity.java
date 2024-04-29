@@ -22,18 +22,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findAll", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o"),
-    @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByProcessDate", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.casSystemBillingCtrlsPK.processDate = :processDate"),
-    @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findBySystemName", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.casSystemBillingCtrlsPK.systemName = :systemName"),
+    @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByProcessDate", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.obsSystemBillingCtrlsPK.processDate = :processDate"),
+    @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findBySystemName", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.obsSystemBillingCtrlsPK.systemName = :systemName"),
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByProcessStatus", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.processStatus = :processStatus"),
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByCreatedBy", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.createdBy = :createdBy"),
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByCreatedDate", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.createdDate = :createdDate"),
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByModifiedBy", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.modifiedBy = :modifiedBy"),
     @NamedQuery(name = "ObsSystemBillingCtrlsEntity.findByModifiedDate", query = "SELECT o FROM ObsSystemBillingCtrlsEntity o WHERE o.modifiedDate = :modifiedDate")})
-public class CasSystemBillingCtrlsEntity implements Serializable {
+public class ObsSystemBillingCtrlsEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected CasSystemBillingCtrlsPK casSystemBillingCtrlsPK;
+    protected ObsSystemBillingCtrlsPK obsSystemBillingCtrlsPK;
     @Size(max = 1)
     @Column(name = "PROCESS_STATUS")
     private String processStatus;
@@ -50,23 +50,23 @@ public class CasSystemBillingCtrlsEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
 
-    public CasSystemBillingCtrlsEntity() {
+    public ObsSystemBillingCtrlsEntity() {
     }
 
-    public CasSystemBillingCtrlsEntity(CasSystemBillingCtrlsPK casSystemBillingCtrlsPK) {
-        this.casSystemBillingCtrlsPK = casSystemBillingCtrlsPK;
+    public ObsSystemBillingCtrlsEntity(ObsSystemBillingCtrlsPK obsSystemBillingCtrlsPK) {
+        this.obsSystemBillingCtrlsPK = obsSystemBillingCtrlsPK;
     }
 
-    public CasSystemBillingCtrlsEntity(Date processDate, String systemName) {
-        this.casSystemBillingCtrlsPK = new CasSystemBillingCtrlsPK(processDate, systemName);
+    public ObsSystemBillingCtrlsEntity(Date processDate, String systemName) {
+        this.obsSystemBillingCtrlsPK = new ObsSystemBillingCtrlsPK(processDate, systemName);
     }
 
-    public CasSystemBillingCtrlsPK getObsSystemBillingCtrlsPK() {
-        return casSystemBillingCtrlsPK;
+    public ObsSystemBillingCtrlsPK getObsSystemBillingCtrlsPK() {
+        return obsSystemBillingCtrlsPK;
     }
 
-    public void setObsSystemBillingCtrlsPK(CasSystemBillingCtrlsPK casSystemBillingCtrlsPK) {
-        this.casSystemBillingCtrlsPK = casSystemBillingCtrlsPK;
+    public void setObsSystemBillingCtrlsPK(ObsSystemBillingCtrlsPK obsSystemBillingCtrlsPK) {
+        this.obsSystemBillingCtrlsPK = obsSystemBillingCtrlsPK;
     }
 
     public String getProcessStatus() {
@@ -123,8 +123,8 @@ public class CasSystemBillingCtrlsEntity implements Serializable {
 				+ ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
 		result = prime
 				* result
-				+ ((casSystemBillingCtrlsPK == null) ? 0
-						: casSystemBillingCtrlsPK.hashCode());
+				+ ((obsSystemBillingCtrlsPK == null) ? 0
+						: obsSystemBillingCtrlsPK.hashCode());
 		result = prime * result
 				+ ((processStatus == null) ? 0 : processStatus.hashCode());
 		return result;
@@ -138,7 +138,7 @@ public class CasSystemBillingCtrlsEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CasSystemBillingCtrlsEntity other = (CasSystemBillingCtrlsEntity) obj;
+		ObsSystemBillingCtrlsEntity other = (ObsSystemBillingCtrlsEntity) obj;
 		if (createdBy == null) {
 			if (other.createdBy != null)
 				return false;
@@ -159,11 +159,11 @@ public class CasSystemBillingCtrlsEntity implements Serializable {
 				return false;
 		} else if (!modifiedDate.equals(other.modifiedDate))
 			return false;
-		if (casSystemBillingCtrlsPK == null) {
-			if (other.casSystemBillingCtrlsPK != null)
+		if (obsSystemBillingCtrlsPK == null) {
+			if (other.obsSystemBillingCtrlsPK != null)
 				return false;
-		} else if (!casSystemBillingCtrlsPK
-				.equals(other.casSystemBillingCtrlsPK))
+		} else if (!obsSystemBillingCtrlsPK
+				.equals(other.obsSystemBillingCtrlsPK))
 			return false;
 		if (processStatus == null) {
 			if (other.processStatus != null)
@@ -175,8 +175,8 @@ public class CasSystemBillingCtrlsEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ObsSystemBillingCtrlsEntity [casSystemBillingCtrlsPK="
-				+ casSystemBillingCtrlsPK + ", processStatus=" + processStatus
+		return "ObsSystemBillingCtrlsEntity [obsSystemBillingCtrlsPK="
+				+ obsSystemBillingCtrlsPK + ", processStatus=" + processStatus
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
 				+ ", modifiedBy=" + modifiedBy + ", modifiedDate="
 				+ modifiedDate + "]";

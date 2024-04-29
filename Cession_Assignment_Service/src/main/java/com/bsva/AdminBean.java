@@ -150,7 +150,6 @@ import com.bsva.entities.CasSysctrlSchedulerEntity;
 import com.bsva.entities.CasSysctrlServicesEntity;
 import com.bsva.entities.CasSysctrlSlaTimesEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
-import com.bsva.entities.CasSystemBillingCtrlsEntity;
 import com.bsva.entities.CisMemberEntity;
 import com.bsva.entities.CreditorBankEntityModel;
 import com.bsva.entities.DebtorBankEntityModel;
@@ -164,6 +163,8 @@ import com.bsva.entities.MandateResponseOutstandingPerBankEntityModel;
 import com.bsva.entities.MandatesCountCommonsModelEntity;
 import com.bsva.entities.MdtAcArcDailyBillingEntity;
 import com.bsva.entities.MndtSummaryTotalsEntityModel;
+import com.bsva.entities.ObsSystemBillingCtrlsEntity;
+import com.bsva.entities.ObsSystemBillingCtrlsPK;
 import com.bsva.entities.OutSotEotEntityModel;
 import com.bsva.entities.OutstandingResponsesDebtorModelEntity;
 import com.bsva.entities.OutstandingResponsesModelEntity;
@@ -277,21 +278,20 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   @Override
   public List<?> viewAllSchedulers() {
     List<SchedulerCommonsModel> allSchedulerList = new ArrayList<SchedulerCommonsModel>();
-    List<CasSysctrlSchedulerEntity> allMdtSysctrlSchedulerEntityList =
+    List<CasSysctrlSchedulerEntity>  allCasSysctrlSchedulerEntities =
         new ArrayList<CasSysctrlSchedulerEntity>();
 
     //		allMdtSysctrlSchedulerEntityList = genericDAO.findAll(MdtSysctrlSchedulerEntity.class);
-    allMdtSysctrlSchedulerEntityList =
+    allCasSysctrlSchedulerEntities =
         genericDAO.findAllOrdered(CasSysctrlSchedulerEntity.class, "schedulerKey ASC ");
 
-    log.debug("The entity list has the following information ##############" +
-        allMdtSysctrlSchedulerEntityList);
-    if (allMdtSysctrlSchedulerEntityList.size() > 0) {
+    log.info("SysCntrlSchedulerList is: " + allCasSysctrlSchedulerEntities);
+    if (allCasSysctrlSchedulerEntities.size() > 0) {
       SchedulerScreenLogic schedulerScreenLogic = new SchedulerScreenLogic();
       allSchedulerList =
-          schedulerScreenLogic.retrieveAllSchedulers(allMdtSysctrlSchedulerEntityList);
+          schedulerScreenLogic.retrieveAllSchedulers(allCasSysctrlSchedulerEntities);
 
-      log.debug(
+      log.info(
           "The commons model list has this information %%%%%%%%%%%%%%%%%%%%%%" + allSchedulerList);
     }
 
@@ -5586,13 +5586,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     return mndtDailyTransList;
   }
 
-
+  @Override
   public boolean createBillingCtrls(Object obj) {
     try {
-      if (obj instanceof CasSystemBillingCtrlsEntity) {
-        CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity = (CasSystemBillingCtrlsEntity) obj;
+      if (obj instanceof ObsSystemBillingCtrlsEntity) {
+        ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity = (ObsSystemBillingCtrlsEntity) obj;
 
-        genericDAO.save(casSystemBillingCtrlsEntity);
+        genericDAO.save(obsSystemBillingCtrlsEntity);
 
         return true;
       } else {
@@ -5608,15 +5608,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   }
 
   public Object retrieveBillingCtrls(Date processDate) {
-    CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity = new CasSystemBillingCtrlsEntity();
+    ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity = new ObsSystemBillingCtrlsEntity();
 
     try {
       HashMap<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("obsSystemBillingCtrlsPK.processDate", processDate);
-      parameters.put("obsSystemBillingCtrlsPK.systemName", "MANDATES");
+      parameters.put("obsSystemBillingCtrlsPK.systemName", "CESSION_ASSIGN");
 
-      casSystemBillingCtrlsEntity =
-          (CasSystemBillingCtrlsEntity) genericDAO.findByCriteria(CasSystemBillingCtrlsEntity.class,
+      obsSystemBillingCtrlsEntity =
+          (ObsSystemBillingCtrlsEntity) genericDAO.findByCriteria(ObsSystemBillingCtrlsEntity.class,
               parameters);
     } catch (ObjectNotFoundException onfe) {
       log.debug("No Object Exists on DB");
@@ -5625,15 +5625,15 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       e.printStackTrace();
     }
 
-    return casSystemBillingCtrlsEntity;
+    return obsSystemBillingCtrlsEntity;
   }
 
   @Override
   public boolean updateBillingCtrl(Object obj) {
     try {
-      if (obj instanceof CasSystemBillingCtrlsEntity) {
-        CasSystemBillingCtrlsEntity casSystemBillingCtrlsEntity = (CasSystemBillingCtrlsEntity) obj;
-        genericDAO.saveOrUpdate(casSystemBillingCtrlsEntity);
+      if (obj instanceof ObsSystemBillingCtrlsEntity) {
+        ObsSystemBillingCtrlsEntity obsSystemBillingCtrlsEntity = (ObsSystemBillingCtrlsEntity) obj;
+        genericDAO.saveOrUpdate(obsSystemBillingCtrlsEntity);
 
         return true;
       } else {
