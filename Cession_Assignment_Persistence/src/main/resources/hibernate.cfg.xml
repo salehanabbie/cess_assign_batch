@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- This will change to the JNDI. I have kept the connection details here
+            for the test cases. We will Abstract this at a later stage -->
+        <property name="connection.datasource">
+            java:jboss/datasources/CessAssignDS
+        </property>
+        <!-- <property name="connection.url">jdbc:oracle:thin:@172.16.161.105:1521:ONED</property>
+            <property name="connection.username">MANOWNER</property> <property name="connection.password">MANOWNER</property>
+            <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property> -->
+        <!-- <property name="dialect">org.hibernate.dialect.MySQLDialect</property> -->
+        <!-- <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property> -->
+        <property name="show_sql">false</property>
+        <property name="format_sql">true</property>
+        <property name="hbm2ddl.auto">none</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="hibernate.jdbc.use_get_generated_keys">true</property>
+        <property name="hibernate.jdbc.batch_size">500</property>
+        <property name="hibernate.order_inserts">true</property>
+        <property name="hibernate.order_updates">true</property>
+        <property name="hibernate.jdbc.batch_versioned_data">true</property>
+
+        <mapping class="com.bsva.entities.AudCtrlCompParamEntity"/>
+        <mapping class="com.bsva.entities.AudReportsEntity"/>
+        <mapping class="com.bsva.entities.AudTrackingEntity"/>
+        <mapping class="com.bsva.entities.AudSystemProcessEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgAccountTypeEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgAdjustmentCatEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgAmendmentCodesEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgAuthTypeEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgCurrencyCodesEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgDebitValueTypeEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgErrorCodesEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgFrequencyCodesEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgLocalInstrCodesEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgReasonCodesEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgReportNamesEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgSequenceTypeEntity"/>
+        <mapping class="com.bsva.entities.CasCnfgSeverityCodesEntity"/>
+        <mapping class="com.bsva.entities.CasConfigDataTimeEntity"/>
+        <mapping class="com.bsva.entities.CasOpsBillingCtrlsEntity"/>
+        <mapping class="com.bsva.entities.CasOpsCessionAssignEntity"/>
+        <mapping class="com.bsva.entities.CasOpsConfHdrsEntity"/>
+        <mapping class="com.bsva.entities.CasOpsConfDetailsEntity"/>
+        <mapping class="com.bsva.entities.CasOpsCustParamEntity"/>
+        <mapping class="com.bsva.entities.CasOpsDailyBillingEntity"/>
+        <mapping class="com.bsva.entities.CasOpsFileRegEntity"/>
+        <mapping class="com.bsva.entities.CasOpsFileSizeLimitEntity"/>
+        <mapping class="com.bsva.entities.CasOpsGrpHdrEntity"/>
+        <mapping class="com.bsva.entities.CasOpsLastExtractTimesEntity"/>
+        <mapping class="com.bsva.entities.CasOpsMndtCountEntity"/>
+        <mapping class="com.bsva.entities.CasOpsProcessControlsEntity"/>
+        <mapping class="com.bsva.entities.CasOpsRefSeqNrEntity"/>
+        <mapping class="com.bsva.entities.CasOpsRepSeqNrEntity"/>
+        <mapping class="com.bsva.entities.CasOpsSchedulerEntity"/>
+        <mapping class="com.bsva.entities.CasOpsServicesEntity"/>
+        <mapping class="com.bsva.entities.CasOpsSlaTimesEntity"/>
+        <mapping class="com.bsva.entities.CasOpsSotEotCtrlEntity"/>
+        <mapping class="com.bsva.entities.CasOpsStatusHdrsEntity"/>
+        <mapping class="com.bsva.entities.CasOpsStatusDetailsEntity"/>
+        <mapping class="com.bsva.entities.CasOpsTransCtrlMsgEntity"/>
+        <mapping class="com.bsva.entities.CasOpsTxnsBillingEntity"/>
+        <mapping class="com.bsva.entities.CasOpsTxnsBillReportEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlCompParamEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlCustParamEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlFileSizeLimitEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlFileStatusEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlProcessStatusEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlSchedulerEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlSchedulerCronEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlServicesEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlSysParamEntity"/>
+        <mapping class="com.bsva.entities.CasSysctrlSlaTimesEntity"/>
+        <mapping class="com.bsva.entities.CisBranchEntity"/>
+        <mapping class="com.bsva.entities.CisMemberEntity"/>
+        <mapping class="com.bsva.entities.IamSessionEntity"/>
+        <mapping class="com.bsva.entities.ObsBillingStagingEntity"/>
+        <mapping class="com.bsva.entities.ObsTxnsBillStagingEntity"/>
+        <mapping class="com.bsva.entities.SysCisBankEntity"/>
+        <mapping class="com.bsva.entities.SysCisBranchEntity"/>
+        <mapping class="com.bsva.entities.MdtCnfgValRuleEntity"/>
+        <mapping class="com.bsva.entities.ObsSystemBillingCtrlsEntity"/>
+
+
+        <!--		<mapping class="com.bsva.entities.MdtOpsAccptFinInstEntity"/>-->
+        <!--		<mapping class="com.bsva.entities.MdtOpsAccptPartyIdentEntity"/>-->
+        <!--		<mapping class="com.bsva.entities.MdtOpsMdteRequestEntity"/>-->
+        <!--		<mapping class="com.bsva.entities.MdtSysctrlCronEntity"/>-->
+
+        <!--	    <mapping class="com.bsva.entities.MdtCnfgAddressTypeEntity"/>-->
+        <!--	    <mapping class="com.bsva.entities.MdtCnfgNamePrefixEntity"/>-->
+        <!--	    <mapping class="com.bsva.entities.MdtCnfgDwnldReqTypeEntity"/>	  -->
+        <!--	    <mapping class="com.bsva.entities.MdtCnfgRejectReasonCodesEntity"/>-->
+        <!--	    <mapping class="com.bsva.entities.MdtCnfgRejectReasonCodesEntity"/>-->
+        <!--		<mapping class="com.bsva.entities.MdtSysctrlProcessStatusEntity"/>-->
+        <!--        <mapping class="com.bsva.entities.MdtCnfgStatusReasonCodesEntity"/>-->
+        <!--        <mapping class="com.bsva.entities.MdtCnfgCancellationCodesEntity"/>-->
+        <!--       	-->
+        <!--		<mapping class="com.bsva.entities.MdtAcArcStatusHdrsEntity"/>-->
+        <!--      	<mapping class="com.bsva.entities.MdtAcArcStatusDetailsEntity"/>-->
+
+        <!--      	<mapping class="com.bsva.entities.MdtCnfgSuspensionCodesEntity"/>-->
+        <!--      	<mapping class="com.bsva.entities.MdtAcArcConfHdrsEntity"/>-->
+        <!--      	<mapping class="com.bsva.entities.MdtAcArcConfDetailsEntity"/>-->
+        <!--      	<mapping class="com.bsva.entities.MdtAcArcMndtCountEntity"/>-->
+        <!--      	<mapping class="com.bsva.entities.CasSystemBillingCtrlsEntity"/>-->
+        <!--      	<mapping class="com.bsva.entities.MdtAcArcDailyBillingEntity"/>-->
+
+        <!--      	<mapping class="com.bsva.entities.MdtAcArcErrorCodesReportEntity"/> -->
+        <!--    	<mapping class="com.bsva.entities.MdtAcOpsErrorCodesReportEntity"/> -->
+        <!--    	<mapping class="com.bsva.entities.MdtAcArcErrCodesRepSumEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcArcFileRegEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcArcMandateTxnsEntity" />-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcOpsMrkoffGrpHdrEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcOpsMrkoffAcceptDetEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcArcMrkoffGrpHdrEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcArcMrkoffAcceptDetEntity"/>-->
+
+        <!--	 	<mapping class="com.bsva.entities.MdtAcArcTxnsBillingEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcOpsMdteRspTxnsEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcOpsRtTxnsBillEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcArcRtTxnsBillEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcConfigDataTimeEntity"/>-->
+        <!--	 	<mapping class="com.bsva.entities.MdtAcArcTxnsBillReportEntity"/>-->
+    </session-factory>
+</hibernate-configuration>  

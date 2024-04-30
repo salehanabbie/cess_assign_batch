@@ -1,7 +1,0 @@
-/target/
-.classpath
-.gitignore
-.project
-.settings/
-src/main/java/bsva/
-src/main/java/iso/
