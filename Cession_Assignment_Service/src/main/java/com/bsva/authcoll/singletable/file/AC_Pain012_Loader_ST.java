@@ -725,7 +725,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 //				This join method can only be used on JAVA 8
 //				joinResult = String.join(",", accpList);
 				joinResult = StringUtils.join(accpList,",");
-				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESSION_ASSIGN_TXNS SET PROCESS_STATUS = 'M' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS SET PROCESS_STATUS = 'M' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
 				fileProcessBeanRemote.bulkUpdateBySQL(sqlQuery);
 			}	        
 		}
@@ -740,7 +740,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 //				This join method can only be used on JAVA 8
 //				joinResult = String.join(",", rjctList);
 				joinResult = StringUtils.join(rjctList,",");
-				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESSION_ASSIGN_TXNS SET PROCESS_STATUS = 'R' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS SET PROCESS_STATUS = 'R' WHERE MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
 				fileProcessBeanRemote.bulkUpdateBySQL(sqlQuery);
 			}	        
 		}

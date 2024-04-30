@@ -91,13 +91,13 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
   String stsHdrInstgAgt = null;
   //Populate Error Codes Report Data
   public String debtorBank = null;
-  String creditorBank = null, ultCreditor = null, abbShortName = null, manamService = null;
+  String creditorBank = null, ultCreditor = null, abbShortName = null, carinService = null;
 
   public AC_Pain010_Validation_ST(String fileName) {
     this.fileName = fileName;
     try {
       propertyUtil = new PropertyUtil();
-      this.manamService = propertyUtil.getPropValue("Input.Pain010");
+      this.carinService = propertyUtil.getPropValue("Input.Pain010");
       fileSizeLimitStr = propertyUtil.getPropValue("AC.FILE.TRANSACTION.LIMIT");
       //			log.info("fileSizeLimit ==> "+fileSizeLimitStr);
       fileSizeLimit = Integer.valueOf(fileSizeLimitStr);
@@ -105,7 +105,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
       log.error(
           "AC_Pain010_Validation_ST - Could not find MandateMessageCommons.properties in " +
 				  "classpath");
-      manamService = "CARIN";
+      carinService = "CARIN";
       fileSizeLimit = 50000;
     }
 
@@ -363,7 +363,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
       }
       //This is an optional field
 
-      if (!validateFileSizeLimit(manamService, instgAgt, inwardFileSize)) {
+      if (!validateFileSizeLimit(carinService, instgAgt, inwardFileSize)) {
         generateStatusErrorDetailsList("902206", null, hdrErrorType);
         grpHdrSeverity++;
         log.info("******************validateFileSizeLimit - Failed.******************");
@@ -2265,7 +2265,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
 
     //Populate Txn Bill Report Data
     CasOpsTxnsBillReportEntity opsTxnsBillReportEntity =
-        (CasOpsTxnsBillReportEntity) generateTxnsReportData(creditorBank, txnId, manamService,
+        (CasOpsTxnsBillReportEntity) generateTxnsReportData(creditorBank, txnId, carinService,
             fileName);
     if (opsTxnsBillReportEntity != null) {
       opsTxnsBillReportList.add(opsTxnsBillReportEntity);

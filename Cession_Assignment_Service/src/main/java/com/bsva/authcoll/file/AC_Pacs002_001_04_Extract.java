@@ -184,7 +184,7 @@ public class AC_Pacs002_001_04_Extract {
 						//						log.info("~~~EXT SERVICE = "+extractService);
 						// List<String> txnIdList = new ArrayList<String>();
 						txnIdList = (List<String>) beanRemote.retrieveDistinctConfDetails(destInstId, extractService);
-						log.info("txnIdList ==> "+txnIdList);
+//						log.info("txnIdList ==> "+txnIdList);
 
 						if(txnIdList != null && txnIdList.size() > 0)
 						{

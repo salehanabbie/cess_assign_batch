@@ -109,7 +109,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		catch (Exception e) 
 		{
 			log.error("AC_Pain012_Validation_ST - Could not find MandateMessageCommons.properties in classpath");	
-			manacService = "MANAC";
+			manacService = "RCAIN";
 			fileSizeLimit = 50000;
 		}
 
@@ -243,7 +243,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 			//____________________________Validate Service Id _rule 012_002_____________________________________//
 			/*serviceId = "TEST";*/
-			if(!validateServiceId(serviceId, "MANAC"))
+			if(!validateServiceId(serviceId, "RCAIN"))
 			{
 				generateStatusErrorDetailsList("901045", null, hdrErrorType);
 				grpHdrSeverity++;
@@ -1482,7 +1482,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 				if(mandate.getDbtr().getId().getPrvtId().getOthr().get(0) != null && mandate.getDbtr().getId().getPrvtId().getOthr().get(0).getId() != null && debtorEntity != null && debtorEntity.getId() != null)
 				{
 					log.debug("File DEBTOR ID----> "+debtorEntity.getId());
-					log.debug("MANAC DEBTOR ID----> "+mandate.getDbtr().getId().getPrvtId().getOthr().get(0).getId());
+					log.debug("RCAIN DEBTOR ID----> "+mandate.getDbtr().getId().getPrvtId().getOthr().get(0).getId());
 
 					if(mandate.getDbtr().getId().getPrvtId().getOthr().get(0).getId().trim().equalsIgnoreCase(debtorEntity.getId().trim()))
 					{
@@ -2155,7 +2155,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 
 		SimpleDateFormat sdfFileDate = new SimpleDateFormat("yyyyMMdd");
 		String achId,  creationDate, fileSeqNo,  msgId = null;
-		String outgoingService = "ST104";
+		String outgoingService = "ST204";
 
 		CasOpsCustParamEntity casOpsCustParamEntity = (CasOpsCustParamEntity) valBeanRemote.retrieveOpsCustomerParameters(instId, backEndProcess);
 
@@ -2299,7 +2299,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		else
 			opsStatusHdrsEntity.setProcessStatus("6");
 		opsStatusHdrsEntity.setGroupStatus(groupStatus);
-		opsStatusHdrsEntity.setService("ST104");
+		opsStatusHdrsEntity.setService("ST204");
 		opsStatusHdrsEntity.setOrgnlFileName(fileName);
 
 		hdrSystemSeqNo = valBeanRemote.saveOpsStatusHdrs(opsStatusHdrsEntity);

@@ -6,14 +6,7 @@ package com.bsva.commons.model;
  */
 public enum Services {
 
-	MANIN,
-	MANAM,
-	MANCN,
-	MANIR,
-	MANDR,
-	STMAN,
-	STMDF,
-	ST012,
-	STMVF,
-	STAVF;
+	CARIN,
+	ST201,
+	RCAIN;
 }

@@ -338,7 +338,7 @@ public class AC_Pain012_Extract_ST {
 				String joinResult = null;
 
 				joinResult = StringUtils.join(mrtiToUpdateList,",");
-				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESSION_ASSIGN_TXNS SET  PROCESS_STATUS = '"+processStatus+"',EXTRACT_MSG_ID = '"+extractMsgId+"', "
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS SET  PROCESS_STATUS = '"+processStatus+"',EXTRACT_MSG_ID = '"+extractMsgId+"', "
 						+ " EXTRACT_FILE_NAME ='"+extractFileName+"' , MODIFIED_DATE =  TO_DATE('"+modifiedDate+"','yyyy/MM/dd HH24:MI:SS')  WHERE SERVICE_ID = '"+inwardService+"' AND  MANDATE_REQ_TRAN_ID IN ("+joinResult+")");
 				log.debug("SQL query---->" +sqlQuery);
 
