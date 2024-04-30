@@ -59,7 +59,7 @@ public class EndOfTransmissionExtract
 	String fileName = null, achMemberId = null, destMemberId = null, serviceName = null,  achLiveTestInd = null, fileType = null;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
-	CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
+	CasSysctrlCompParamEntity casSysctrlCompParamEntity = null;
 	CasSysctrlSysParamEntity casSysctrlSysParamEntity;
     Document document ;
 	List<CasOpsSotEotCtrlEntity>sotEotCtrlList;
@@ -68,7 +68,7 @@ public class EndOfTransmissionExtract
 	String msgRef = "EOT";
 	String achInstId = "210000";
 	String backEndProcess = "BACKEND";
-	private String eotSchema = "/home/opsjava/Delivery/Mandates/Schema/eot.001.001.02.xsd";
+	private String eotSchema = "/home/opsjava/Delivery/Cession_Assign/Schema/eot.001.001.02.xsd";
 	String testLiveIndProp = null;
 	
 	public EndOfTransmissionExtract(String destMemberId, String serviceName, String fileType)
@@ -94,7 +94,7 @@ public class EndOfTransmissionExtract
 		log.debug("********************GENERATING EOT FILE******************");
 		casSysctrlSysParamEntity = new CasSysctrlSysParamEntity();
 		casSysctrlSysParamEntity = (CasSysctrlSysParamEntity) adminBeanRemote.retrieveActiveSysParameter();
-		log.debug("EOT - mdtSysctrlSysParamEntity in FileExtract: "+casSysctrlSysParamEntity);
+		log.debug("EOT - casSysctrlSysParamEntity in FileExtract: "+casSysctrlSysParamEntity);
 
 		boolean saved ;
 		
@@ -123,12 +123,12 @@ public class EndOfTransmissionExtract
 					controlMessage.setPrcDte(getGregorianDateWithoutTime(procDate));
 					
 					//Retrieve FndCompanyParameters
-					mdtSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
+					casSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
 					
-					if(mdtSysctrlCompParamEntity != null)
+					if(casSysctrlCompParamEntity != null)
 					{
-						achMemberId = mdtSysctrlCompParamEntity.getAchInstId();
-						achLiveTestInd = mdtSysctrlCompParamEntity.getTransamissionInd();
+						achMemberId = casSysctrlCompParamEntity.getAchInstId();
+						achLiveTestInd = casSysctrlCompParamEntity.getTransamissionInd();
 					}
 					else
 					{
@@ -150,7 +150,7 @@ public class EndOfTransmissionExtract
 
 					if(achLiveTestInd != null)
 					{
-						controlMessage.setTestLive(TestLiveIndicator.fromValue(mdtSysctrlCompParamEntity.getTransamissionInd()));
+						controlMessage.setTestLive(TestLiveIndicator.fromValue(casSysctrlCompParamEntity.getTransamissionInd()));
 					}
 					else
 					{
@@ -165,8 +165,7 @@ public class EndOfTransmissionExtract
 					if(sotEotCtrlList != null &&  sotEotCtrlList.size() >0)
 					{
 						log.debug("sotEotCtrlList---------->"+sotEotCtrlList);
-						if(serviceName.equalsIgnoreCase("MANOT")||serviceName.equalsIgnoreCase("MANOM")||serviceName.equalsIgnoreCase("MANCO")||serviceName.equalsIgnoreCase("MANOC" )|| serviceName.equalsIgnoreCase("MANRO")||
-							serviceName.equalsIgnoreCase("MANRF")||serviceName.equalsIgnoreCase("ST103")||serviceName.equalsIgnoreCase("SROUT")||serviceName.equalsIgnoreCase("SPOUT")||serviceName.equalsIgnoreCase("MANDC"))
+						if(serviceName.equalsIgnoreCase("CAROT")||serviceName.equalsIgnoreCase("ST203")||serviceName.equalsIgnoreCase("RCAOT"))
 						{
 
 							List<MandatesCountCommonsModelEntity> mdtlist;
@@ -185,7 +184,7 @@ public class EndOfTransmissionExtract
 										nrOfMsgs = mandatesCountCommonsModelEntity.getNrOfMsgs();
 								}
 								
-								if(serviceName.equalsIgnoreCase("ST103")||serviceName.equalsIgnoreCase("SROUT")||serviceName.equalsIgnoreCase("SPOUT"))
+								if(serviceName.equalsIgnoreCase("ST203"))
 								{
 									controlMessage.setNmbrRcds(String.valueOf("0"));
 								}
@@ -206,8 +205,7 @@ public class EndOfTransmissionExtract
 						else
 						{
 							// Generate Number of Files for Status Reports
-							if(serviceName.equalsIgnoreCase("ST100") ||serviceName.equalsIgnoreCase("ST102")||serviceName.equalsIgnoreCase("ST104")||serviceName.equalsIgnoreCase("ST105")||
-							   serviceName.equalsIgnoreCase("ST106")||serviceName.equalsIgnoreCase("ST007")||serviceName.equalsIgnoreCase("ST008")||serviceName.equalsIgnoreCase("ST994"))
+							if(serviceName.equalsIgnoreCase("ST200") ||serviceName.equalsIgnoreCase("ST202")||serviceName.equalsIgnoreCase("ST204"))
 							{
 								List<StatusReportEotModelEntity> statusReportEotList;
 								statusReportEotList = (List<StatusReportEotModelEntity>) adminBeanRemote.retrieveStatusReport(destMemberId, serviceName);
@@ -296,12 +294,12 @@ public class EndOfTransmissionExtract
 					controlMessage.setPrcDte(getGregorianDateWithoutTime(procDate));
 					
 					//Retrieve FndCompanyParameters
-					mdtSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
+					casSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
 					
-					if(mdtSysctrlCompParamEntity != null)
+					if(casSysctrlCompParamEntity != null)
 					{
-						achMemberId = mdtSysctrlCompParamEntity.getAchInstId();
-						achLiveTestInd = mdtSysctrlCompParamEntity.getTransamissionInd();
+						achMemberId = casSysctrlCompParamEntity.getAchInstId();
+						achLiveTestInd = casSysctrlCompParamEntity.getTransamissionInd();
 					}
 					else
 					{
@@ -324,7 +322,7 @@ public class EndOfTransmissionExtract
 					
 
 					if(achLiveTestInd != null)
-						controlMessage.setTestLive(TestLiveIndicator.fromValue(mdtSysctrlCompParamEntity.getTransamissionInd()));
+						controlMessage.setTestLive(TestLiveIndicator.fromValue(casSysctrlCompParamEntity.getTransamissionInd()));
 					else
 						controlMessage.setTestLive(TestLiveIndicator.fromValue(testLiveIndProp));
 
@@ -337,8 +335,7 @@ public class EndOfTransmissionExtract
 					if(sotEotCtrlList != null &&  sotEotCtrlList.size() >0)
 					{
 						log.debug("sotEotCtrlList---------->"+sotEotCtrlList);
-					if(serviceName.equalsIgnoreCase("MANOT")||serviceName.equalsIgnoreCase("MANOM")||serviceName.equalsIgnoreCase("MANCO")||serviceName.equalsIgnoreCase("MANOC" )||serviceName.equalsIgnoreCase("MANRO")||serviceName.equalsIgnoreCase("MANRF")||
-							serviceName.equalsIgnoreCase("ST103")||serviceName.equalsIgnoreCase("SROUT")||serviceName.equalsIgnoreCase("SPOUT")||serviceName.equalsIgnoreCase("MANDC"))
+					if(serviceName.equalsIgnoreCase("CAROT")||serviceName.equalsIgnoreCase("ST203")||serviceName.equalsIgnoreCase("RCAOT"))
 					{
 						List<MandatesCountCommonsModelEntity> mdtlist;
 						mdtlist = (List<MandatesCountCommonsModelEntity>) adminBeanRemote.retrieveOpsCount(destMemberId, serviceName);
@@ -359,7 +356,7 @@ public class EndOfTransmissionExtract
 									nrOfMsgs = mandatesCountCommonsModelEntity.getNrOfMsgs();
 								
 							}
-							if(serviceName.equalsIgnoreCase("ST103")||serviceName.equalsIgnoreCase("SROUT")||serviceName.equalsIgnoreCase("SPOUT"))
+							if(serviceName.equalsIgnoreCase("ST203"))
 							{
 								controlMessage.setNmbrRcds(String.valueOf("0"));
 							}
@@ -375,8 +372,7 @@ public class EndOfTransmissionExtract
 					else{
 						// Generate Number of Files for Status Reports
 
-						if(serviceName.equalsIgnoreCase("ST100") ||serviceName.equalsIgnoreCase("ST102")||serviceName.equalsIgnoreCase("ST104")||serviceName.equalsIgnoreCase("ST105")||
-						   serviceName.equalsIgnoreCase("ST106")||serviceName.equalsIgnoreCase("ST007")||serviceName.equalsIgnoreCase("ST008")||serviceName.equalsIgnoreCase("ST994"))
+						if(serviceName.equalsIgnoreCase("ST200") ||serviceName.equalsIgnoreCase("ST202")||serviceName.equalsIgnoreCase("ST204"))
 						{
 						List<StatusReportEotModelEntity> statusReportEotList;
 						statusReportEotList = (List<StatusReportEotModelEntity>) adminBeanRemote.retrieveStatusReport(destMemberId, serviceName);
@@ -435,10 +431,10 @@ public class EndOfTransmissionExtract
 		{
 			    String outFileName = createFileName(fileType); 
 	
-//				String out ="/home/jboss/Mandates/Output/Delivery/EOT/"+outFileName+".xml";
-//				File f = new File("/home/jboss/Mandates/Output/Delivery/EOT/" + outFileName +".xml");  
-			    String out ="/home/opsjava/Delivery/Mandates/Output/temp/"+outFileName+".xml";
-				File f = new File("/home/opsjava/Delivery/Mandates/Output/temp/" + outFileName +".xml")  ;  
+//				String out ="/home/jboss/Cession_Assign/Output/Delivery/EOT/"+outFileName+".xml";
+//				File f = new File("/home/jboss/Cession_Assign/Output/Delivery/EOT/" + outFileName +".xml");  
+			    String out ="/home/opsjava/Delivery/Cession_Assign/Output/temp/"+outFileName+".xml";
+				File f = new File("/home/opsjava/Delivery/Cession_Assign/Output/temp/" + outFileName +".xml")  ;  
 				
 				SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 				Schema schema = sf.newSchema(new File(eotSchema));
@@ -479,10 +475,10 @@ public class EndOfTransmissionExtract
 		
 		try
 		{	
-				if(mdtSysctrlCompParamEntity != null)
+				if(casSysctrlCompParamEntity != null)
 				{
-					achId = mdtSysctrlCompParamEntity.getAchId();
-					testLiveInd = mdtSysctrlCompParamEntity.getTransamissionInd();
+					achId = casSysctrlCompParamEntity.getAchId();
+					testLiveInd = casSysctrlCompParamEntity.getTransamissionInd();
 				}
 				else
 				{
@@ -498,8 +494,8 @@ public class EndOfTransmissionExtract
 			}
 			catch (Exception e) 
 		    {
-					log.error("<S"
-							+ "EOT> Exception generating fileName for EOT file : " + e.getMessage());
+					log.error("<EOT> Exception generating fileName for EOT file : " + e.getMessage());
+
 					e.printStackTrace();
 			}
 
@@ -539,8 +535,8 @@ public class EndOfTransmissionExtract
 
 	public  void copyFile(String fileName) throws IOException 
 	{
-		File tmpFile = new File("/home/opsjava/Delivery/Mandates/Output/" + fileName +".xml");
-		String outputFile = "/home/opsjava/Delivery/Mandates/Output/temp/" + fileName +".xml";
+		File tmpFile = new File("/home/opsjava/Delivery/Cession_Assign/Output/" + fileName +".xml");
+		String outputFile = "/home/opsjava/Delivery/Cession_Assign/Output/temp/" + fileName +".xml";
 		FileOutputStream fos = new FileOutputStream(tmpFile);
 		Path source = Paths.get(outputFile);
 		Files.copy(source, fos);

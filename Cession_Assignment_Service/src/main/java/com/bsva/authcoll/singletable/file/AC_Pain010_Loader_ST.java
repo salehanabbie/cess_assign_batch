@@ -67,7 +67,7 @@ public class AC_Pain010_Loader_ST {
 	String fileName;
 
 	AC_Pain010_Validation_ST ac_Pain010_Validation_ST;
-	private CasOpsGrpHdrEntity mdtAcOpsAmendGrpHdrEntity=null;
+	private CasOpsGrpHdrEntity casOpsGrpHdrEntity =null;
 	private CasOpsCessionAssignEntity casOpsCessionAssignEntity =null;
 
 	private List<MandateAmendment3> underLyingMandates;
@@ -152,7 +152,7 @@ public class AC_Pain010_Loader_ST {
 			todaysDate = new Date();
 
 			// _______________________Mandate Models initialization_______________________
-			mdtAcOpsAmendGrpHdrEntity = new CasOpsGrpHdrEntity();
+			casOpsGrpHdrEntity = new CasOpsGrpHdrEntity();
 			casOpsCessionAssignEntity =new CasOpsCessionAssignEntity();
 
 			// _______________________XSD Lists_______________________
@@ -173,11 +173,13 @@ public class AC_Pain010_Loader_ST {
 			//			 grpHdrSeverity = 1;
 			if(grpHdrSeverity == 0)
 			{
-				mdtAcOpsAmendGrpHdrEntity.setCreateDateTime(getCovertDateTime(document.getMndtAmdmntReq().getGrpHdr().getCreDtTm()));
-				mdtAcOpsAmendGrpHdrEntity.setCreatedBy(systemName);
-				mdtAcOpsAmendGrpHdrEntity.setMsgId(document.getMndtAmdmntReq().getGrpHdr().getMsgId().trim());
-
-				grpHdrCreated = beanRemote.createMdtAcOpsGrpHdrEntity(mdtAcOpsAmendGrpHdrEntity);
+				casOpsGrpHdrEntity = new CasOpsGrpHdrEntity();
+				casOpsGrpHdrEntity.setCreateDateTime(getCovertDateTime(document.getMndtAmdmntReq().getGrpHdr().getCreDtTm()));
+				casOpsGrpHdrEntity.setCreatedBy(systemName);
+				casOpsGrpHdrEntity.setMsgId(document.getMndtAmdmntReq().getGrpHdr().getMsgId().trim());
+				log.info("casOpsGrpHdrEntity: "+casOpsGrpHdrEntity);
+				grpHdrCreated = true;
+//				grpHdrCreated = beanRemote.createCasOpsGrpHdr(casOpsGrpHdrEntity);
 			}
 			else
 			{
@@ -686,26 +688,26 @@ public class AC_Pain010_Loader_ST {
 		int nrOfFile =1;
 		int nrOfMsgsInFile = underLyingMandates.size();
 
-		CasOpsMndtCountEntity mdtOpsMndtCountEntity = new CasOpsMndtCountEntity();
-		CasOpsMndtCountPK mdtOpsMndtCountPk = new CasOpsMndtCountPK();
+		CasOpsMndtCountEntity casOpsMndtCountEntity = new CasOpsMndtCountEntity();
+		CasOpsMndtCountPK casOpsMndtCountPk = new CasOpsMndtCountPK();
 
 		if(document!= null && document.getMndtAmdmntReq()!=null && document.getMndtAmdmntReq().getGrpHdr() != null && document.getMndtAmdmntReq().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setMsgId(document.getMndtAmdmntReq().getGrpHdr().getMsgId());
-		mdtOpsMndtCountPk.setServiceId("CARIN");
+			casOpsMndtCountPk.setMsgId(document.getMndtAmdmntReq().getGrpHdr().getMsgId());
+		casOpsMndtCountPk.setServiceId("CARIN");
 		if(document!= null && document.getMndtAmdmntReq()!=null && document.getMndtAmdmntReq().getGrpHdr() != null && document.getMndtAmdmntReq().getGrpHdr().getMsgId()!=null)
-			mdtOpsMndtCountPk.setInstId(document.getMndtAmdmntReq().getGrpHdr().getMsgId().toString().substring(12, 18));
-		mdtOpsMndtCountEntity.setNrOfMsgs(nrOfMsgsInFile);
-		mdtOpsMndtCountEntity.setNrOfFiles(nrOfFile);
-		mdtOpsMndtCountEntity.setIncoming("Y");
-		mdtOpsMndtCountEntity.setProcessDate(todaysDate);
-		mdtOpsMndtCountEntity.setOutgoing("N");
-		mdtOpsMndtCountEntity.setCasOpsMndtCountPK(mdtOpsMndtCountPk);
-		mdtOpsMndtCountEntity.setNrMsgsAccepted(acceptCount);
-		mdtOpsMndtCountEntity.setNrMsgsRejected(rejectedCount);
-		mdtOpsMndtCountEntity.setNrMsgsExtracted(0);
-		mdtOpsMndtCountEntity.setFileName(fileName.substring(0,37).trim());
-
-		saved = valBeanRemote.saveOpsMndtCount(mdtOpsMndtCountEntity);
+			casOpsMndtCountPk.setInstId(document.getMndtAmdmntReq().getGrpHdr().getMsgId().toString().substring(12, 18));
+		casOpsMndtCountEntity.setNrOfMsgs(nrOfMsgsInFile);
+		casOpsMndtCountEntity.setNrOfFiles(nrOfFile);
+		casOpsMndtCountEntity.setIncoming("Y");
+		casOpsMndtCountEntity.setProcessDate(todaysDate);
+		casOpsMndtCountEntity.setOutgoing("N");
+		casOpsMndtCountEntity.setCasOpsMndtCountPK(casOpsMndtCountPk);
+		casOpsMndtCountEntity.setNrMsgsAccepted(acceptCount);
+		casOpsMndtCountEntity.setNrMsgsRejected(rejectedCount);
+		casOpsMndtCountEntity.setNrMsgsExtracted(0);
+		casOpsMndtCountEntity.setFileName(fileName.substring(0,37).trim());
+		log.info("casOpsMndtCountEntity: "+casOpsMndtCountEntity);
+		saved = valBeanRemote.saveOpsMndtCount(casOpsMndtCountEntity);
 
 		if (saved) {
 			log.debug("MdtOpsCountTable has been updated");

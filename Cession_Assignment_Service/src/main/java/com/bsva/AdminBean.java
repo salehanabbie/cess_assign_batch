@@ -2064,9 +2064,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     }
   }
 
-
   @Override
-
   public boolean createCustParameters(Object obj) {
     if (obj instanceof CasSysctrlCustParamEntity) {
       CasSysctrlCustParamEntity casSysctrlCustParamEntity = (CasSysctrlCustParamEntity) obj;

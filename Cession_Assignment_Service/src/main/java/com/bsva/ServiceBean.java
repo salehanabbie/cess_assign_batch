@@ -147,20 +147,21 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	}
 
 	@Override
-	public boolean createMdtAcOpsGrpHdrEntity(Object obj) {
+	public boolean createCasOpsGrpHdr(Object obj) {
 		try {
 
 			if (obj instanceof CasOpsGrpHdrEntity) {
-				CasOpsGrpHdrEntity mdtAcOpsAmendGrpHdrEntity = (CasOpsGrpHdrEntity) obj;
-				genericDAO.saveOrUpdate(mdtAcOpsAmendGrpHdrEntity);
+				CasOpsGrpHdrEntity casOpsGrpHdrEntity = (CasOpsGrpHdrEntity) obj;
+				log.info("Service Bean: casOpsGrpHdrEntity: "+casOpsGrpHdrEntity);
+				genericDAO.save(casOpsGrpHdrEntity);
 
 				return true;
 			} else {
-				log.error("Unable to convert type to MdtAcOpsGrpHdrEntity.");
+				log.error("Unable to convert type to CasOpsGrpHdrEntity.");
 				return false;
 			}
 		} catch (Exception e) {
-			log.error("Error on createmdtAcOpsAmendGrpHdrEntity: " + e.getMessage());
+			log.error("Error on createCasOpsGrpHdr: " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}

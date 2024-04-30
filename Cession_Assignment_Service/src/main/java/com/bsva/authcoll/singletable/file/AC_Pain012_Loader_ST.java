@@ -179,11 +179,10 @@ public class AC_Pain012_Loader_ST implements Serializable {
 			if(grpHdrSeverity == 0)
 			{
 				casOpsGrphdrEntity.setCreateDateTime(getCovertDateTime(document.getMndtAccptncRpt().getGrpHdr().getCreDtTm()));
-
 				casOpsGrphdrEntity.setCreatedBy(systemName);
 				casOpsGrphdrEntity.setMsgId(document.getMndtAccptncRpt().getGrpHdr().getMsgId().trim());
 
-				grpHdrCreated = beanRemote.createMdtAcOpsGrpHdrEntity(casOpsGrphdrEntity);
+				grpHdrCreated = beanRemote.createCasOpsGrpHdr(casOpsGrphdrEntity);
 			}
 			else
 			{

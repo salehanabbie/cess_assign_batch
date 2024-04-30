@@ -15,7 +15,7 @@ public interface ServiceBeanLocal {
 
   public List<?> retrieveAllMandatesCount();
 
-  public boolean createMdtAcOpsGrpHdrEntity(Object obj);
+  public boolean createCasOpsGrpHdr(Object obj);
 
   public List<?> getSysctrlCompParam();
 

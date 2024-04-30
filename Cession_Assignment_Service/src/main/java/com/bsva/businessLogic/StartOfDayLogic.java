@@ -276,18 +276,22 @@ public class StartOfDayLogic {
           log.info("acOpsSotEotSaved === " + acOpsSotEotSaved);
           log.info("servSaved === " + servSaved);
           log.info("custParSaved === " + custParSaved);
-          log.info("acOpsPublicHolidayPouplated === " + acOpsPublicHolidayPouplated);
           log.info("refLastSeq === " + refLastSeq);
           log.info("populateOpsScheduler === " + populateOpsScheduler);
           log.info("populateReportSeqNr === " + populateReportSeqNr);
           log.info("populateOpsLastExtractTime ===" + populateOpsLastExtractTime);
           log.info("populateFileSizeLimit ===" + populateFileSizeLimit);
-          if (sysParamSaved && /*populateCustParamSaved &&*/ acOpsSotEotSaved && servSaved &&
-              custParSaved && acOpsPublicHolidayPouplated && refLastSeq && populateOpsScheduler
-              && populateReportSeqNr/*&&opsCronTimeSaved*/ && populateOpsLastExtractTime) {
+          log.info("sodCheck ===" + sodCheck);
+          if (sysParamSaved &&  acOpsSotEotSaved && servSaved && custParSaved && refLastSeq && populateOpsScheduler
+              && populateReportSeqNr&& populateFileSizeLimit && populateOpsLastExtractTime) {
             sodCheck = true;
             feedbackMsg = "Start of day has run successfully !";
             log.info("Start of day has run successfully !");
+          }
+          else{
+            sodCheck = false;
+            feedbackMsg = "Start of day NOT successful !";
+            log.info("Start of day NOT successful !");
           }
         }
       }
@@ -502,6 +506,11 @@ public class StartOfDayLogic {
           casOpsSlaTimesEntity.setEndTime(casSysctrlSlaTimesEntity.getEndTime());
           casOpsSlaTimesEntity.setService(casSysctrlSlaTimesEntity.getService());
           casOpsSlaTimesEntity.setStartTime(casSysctrlSlaTimesEntity.getStartTime());
+          casOpsSlaTimesEntity.setCreatedBy(systemName);
+          casOpsSlaTimesEntity.setCreatedDate(new Date());
+          casOpsSlaTimesEntity.setModifiedBy(systemName);
+          casOpsSlaTimesEntity.setModifiedDate(new Date());
+
           saved = adminBeanRemote.createOpsSlaTimes(casOpsSlaTimesEntity);
           log.debug("After saving we have the following data " + casOpsSlaTimesEntity);
         }
@@ -892,6 +901,7 @@ public class StartOfDayLogic {
         new ArrayList<CasCnfgReportNamesEntity>();// list
     reportNamesList = (List<CasCnfgReportNamesEntity>) adminBeanRemote.retrieveActiveReportNr();
     log.debug("reportNamesList --> " + reportNamesList);
+
     List<CasOpsRepSeqNrEntity> opsReportSeqNrList = new ArrayList<CasOpsRepSeqNrEntity>();
     opsReportSeqNrList = (List<CasOpsRepSeqNrEntity>) adminBeanRemote.retrieveOpsReportSeqNr();
     log.debug("opsReportSeqNrList --> " + opsReportSeqNrList);

@@ -11,8 +11,7 @@ public interface ServiceBeanRemote {
 	public List<?> retrieveOutGoingNrOfFiles ();
 	public List<?> retrieveIncomingNrOfFiles ();
 	public List<?> retrieveAllMandatesCount();
-
-	public boolean createMdtAcOpsGrpHdrEntity(Object obj);
+	public boolean createCasOpsGrpHdr(Object obj);
 
 	public List<?> getSysctrlCompParam();
 

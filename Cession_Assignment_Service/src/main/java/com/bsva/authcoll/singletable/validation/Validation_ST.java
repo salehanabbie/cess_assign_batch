@@ -458,15 +458,8 @@ public class Validation_ST {
     if (msgId != null && !msgId.isEmpty()) {
       log.debug("The File Msg id is ############" + msgId);
 
-      log.debug("###################################################################");
-      log.debug("casSysctrlSysParamEntity.getSysType() : " +
-          casSysctrlSysParamEntity.getSysType());
-      String sysTypeTmp = casSysctrlSysParamEntity.getSysType().trim();
-      log.debug("casSysctrlSysParamEntity.getSysType().length is : " + sysTypeTmp.length());
-
       List<CasOpsCessionAssignEntity> mandateTxnList =
-          (List<CasOpsCessionAssignEntity>) fileProcBeanRemote.
-              validateOriginalMsgId(msgId);
+          (List<CasOpsCessionAssignEntity>) fileProcBeanRemote.validateOriginalMsgId(msgId);
       log.debug("the message id is *******" + msgId);
 
       //				log.debug("the list has the following info"+mandateTxnList.toString());

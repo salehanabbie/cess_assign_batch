@@ -49,7 +49,7 @@ import org.hibernate.annotations.Parameter;
 //    @NamedQuery(name = "OpsStatusHdrsEntity.findByVetRunNumber", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.vetRunNumber = :vetRunNumber"),
 //    @NamedQuery(name = "OpsStatusHdrsEntity.findByWorkunitRefNo", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.workunitRefNo = :workunitRefNo")})
 @Entity
-@Table(name = "CASOPS_STATUS_HDRS",schema = "CAMOWNER")
+@Table(name = "CAS_OPS_STATUS_HDRS",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CasOpsStatusHdrsEntity.findAll", query = "SELECT m FROM CasOpsStatusHdrsEntity m"),

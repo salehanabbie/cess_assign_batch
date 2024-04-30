@@ -1582,8 +1582,10 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
 			  boolAchId = true;
 		  }
 
-		  if (lclInstCd.trim().equalsIgnoreCase("0227") ||
-				  lclInstCd.trim().equalsIgnoreCase("0226")) {
+		  if (lclInstCd.trim().equalsIgnoreCase("0231") ||
+              lclInstCd.trim().equalsIgnoreCase("0232") ||
+              lclInstCd.trim().equalsIgnoreCase("0233") ||
+              lclInstCd.trim().equalsIgnoreCase("0234")) {
 			  boolLclInst = true;
 		  }
 

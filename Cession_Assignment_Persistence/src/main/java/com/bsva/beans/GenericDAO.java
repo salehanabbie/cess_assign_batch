@@ -187,9 +187,9 @@ public class GenericDAO implements GenericDAORemote, GenericDAOLocal {
 		{
 			// System.out.println("In the saveReturnId method ~~~~~~~~~~~~~~~~"+ bigId);
 			startOperation();
-			//System.out.println("***********saveReturnId---after startoperation----session: "+session+"------tx: "+tx+"**************");
+//			System.out.println("***********saveReturnId---after startoperation----session: "+session+"------tx: "+tx+"**************");
 			bigId = (BigDecimal) session.save(obj);
-			//System.out.println("bigId: "+ bigId);
+//			System.out.println("bigId: "+ bigId);
 			/*session.save(obj);
              id = (Long) session.save(obj);*/
 			tx.commit();

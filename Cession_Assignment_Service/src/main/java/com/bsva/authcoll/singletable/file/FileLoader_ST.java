@@ -105,8 +105,7 @@ public class FileLoader_ST implements Serializable {
             boolean result = updateFileOpsReg(namespace, casOpsFileRegEntity);
 
             if (result == true) {
-              log.info("*************Loading & Validating File " + fileName +
-                  "*************************");
+              log.info("*************Loading & Validating File " + fileName + "*************************");
               acPain010_Loader_ST = new AC_Pain010_Loader_ST(pathFile + fileName, fileName);
             } //result
             else {

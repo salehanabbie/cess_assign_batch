@@ -50,13 +50,15 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 
 	public List<?> validateOriginalMsgId(String msgId)
 	{
-		List<CasOpsCessionAssignEntity> mdtTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("CasOpsCessAssignTxnsEntity.findByMsgId", "msgId",msgId);
+		log.info("msgId: "+msgId);
+		List<CasOpsCessionAssignEntity> mdtTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("CasOpsCessionAssignEntity.findByMsgId", "msgId",msgId);
+		log.info("mdtTxnList: "+mdtTxnList);
 		return mdtTxnList;
 	}
 
 	public List<?> validateMndtReqTranIdUnique(String mrti)
 	{
-		List<CasOpsCessionAssignEntity> mandateTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("CasOpsCessAssignTxnsEntity.findByMandateReqTranId", "mandateReqTranId",mrti);
+		List<CasOpsCessionAssignEntity> mandateTxnList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("CasOpsCessionAssignEntity.findByMandateReqTranId", "mandateReqTranId",mrti);
 		return mandateTxnList;
 	}
 
@@ -74,10 +76,10 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 
 			log.debug("---------------sparameters: ------------------"+ parameters.toString());
 			//			2019/10/04-SalehaR-Remove ProcessStatus from check	
-			//		    mdtAcOpsMandateTxnsEntity = (CasOpsCessAssignTxnsEntity) genericDAO.findByCriteriaIN(CasOpsCessAssignTxnsEntity.class, parameters, "processStatus",Arrays.asList(extractStatus, responseRecStatus, rejectedStatus, matchedStatus));
+			//		    mdtAcOpsMandateTxnsEntity = (CasOpsCessionAssignEntity) genericDAO.findByCriteriaIN(CasOpsCessionAssignEntity.class, parameters, "processStatus",Arrays.asList(extractStatus, responseRecStatus, rejectedStatus, matchedStatus));
 			casOpsCessionAssignEntity = (CasOpsCessionAssignEntity) genericDAO.findByCriteria(
 					CasOpsCessionAssignEntity.class, parameters);
-			log.debug("---------------CasOpsCessAssignTxnsEntity after findByCriteria: ------------------"+
+			log.debug("---------------CasOpsCessionAssignEntity after findByCriteria: ------------------"+
 					casOpsCessionAssignEntity);
 		} 
 		catch (ObjectNotFoundException onfe) 
@@ -116,14 +118,14 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			//			parameters.put("serviceId", messageType);
 			//			parameters.put("processStatus",extractStatus);
 			//			log.debug("---------------sparameters: ------------------"+ parameters.toString());
-			//			mdtAcOpsMandateTxnsEntity = (CasOpsCessAssignTxnsEntity) genericDAO.findByCriteria(CasOpsCessAssignTxnsEntity.class, parameters);
-			//			log.debug("---------------CasOpsCessAssignTxnsEntity after findByCriteria: ------------------"+ mdtAcOpsMandateTxnsEntity);
+			//			mdtAcOpsMandateTxnsEntity = (CasOpsCessionAssignEntity) genericDAO.findByCriteria(CasOpsCessionAssignEntity.class, parameters);
+			//			log.debug("---------------CasOpsCessionAssignEntity after findByCriteria: ------------------"+ mdtAcOpsMandateTxnsEntity);
 			//
 			//			if(mdtAcOpsMandateTxnsEntity == null)
 			//			{
 			//				log.debug("Arrays.asList(extractStatus, matchedStatus, rejectedStatus) --->"+Arrays.asList(extractStatus, matchedStatus, rejectedStatus));
-			//				mdtAcOpsMandateTxnsEntity = (CasOpsCessAssignTxnsEntity) genericDAO.findByCriteriaIN(CasOpsCessAssignTxnsEntity.class, parameters, "processStatus",Arrays.asList(matchedStatus, rejectedStatus, responseRecStatus));
-			//				log.debug("---------------CasOpsCessAssignTxnsEntity after findByCriteriaIN: ------------------"+ mdtAcOpsMandateTxnsEntity);
+			//				mdtAcOpsMandateTxnsEntity = (CasOpsCessionAssignEntity) genericDAO.findByCriteriaIN(CasOpsCessionAssignEntity.class, parameters, "processStatus",Arrays.asList(matchedStatus, rejectedStatus, responseRecStatus));
+			//				log.debug("---------------CasOpsCessionAssignEntity after findByCriteriaIN: ------------------"+ mdtAcOpsMandateTxnsEntity);
 			//			}		
 		} 
 		catch (ObjectNotFoundException onfe) 
@@ -162,7 +164,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 					isLoaded = true;
 				}
 			} else {
-				log.error("Unable to convert type to CasOpsCessAssignTxnsEntity.");
+				log.error("Unable to convert type to CasOpsCessionAssignEntity.");
 				isLoaded = false;
 			}
 		} catch (Exception e) {
@@ -262,7 +264,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 				genericDAO.saveOrUpdate(casOpsCessionAssignEntity);
 				updated = true;
 			} else {
-				log.error("Unable to convert type to CasOpsCessAssignTxnsEntity.");
+				log.error("Unable to convert type to CasOpsCessionAssignEntity.");
 				updated = false;
 			}
 		} catch (Exception e) {
@@ -618,9 +620,9 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			List<CasOpsCessionAssignEntity> painMsgsCheckList = null;
 
 			if(serviceID.equalsIgnoreCase("RCAIN")) {
-				painMsgsCheckList = genericDAO.findAllByNQCriteria("CasOpsCessAssignTxnsEntity.findByCreatedDateTruncAndServiceIdCreditor", parameters);
+				painMsgsCheckList = genericDAO.findAllByNQCriteria("CasOpsCessionAssignEntity.findByCreatedDateTruncAndServiceIdCreditor", parameters);
 			} else {
-				painMsgsCheckList = genericDAO.findAllByNQCriteria("CasOpsCessAssignTxnsEntity.findByCreatedDateTruncAndServiceIdDebtor", parameters);	
+				painMsgsCheckList = genericDAO.findAllByNQCriteria("CasOpsCessionAssignEntity.findByCreatedDateTruncAndServiceIdDebtor", parameters);	
 			}
 
 			if(painMsgsCheckList != null && painMsgsCheckList.size() > 0) {
@@ -741,7 +743,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		
 		try 
 		{
-			matchedList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("CasOpsCessAssignTxnsEntity.matchingPain012", "mandateReqTranId",manReqTransId);
+			matchedList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByNamedQuery("CasOpsCessionAssignEntity.matchingPain012", "mandateReqTranId",manReqTransId);
 			if(matchedList != null && matchedList.size() > 0)
 			{
 				if(matchedList.size() > 1) {

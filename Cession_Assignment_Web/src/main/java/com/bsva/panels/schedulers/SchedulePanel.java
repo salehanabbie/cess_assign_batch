@@ -196,7 +196,7 @@ public class SchedulePanel extends Panel implements Serializable {
               controller.saveSystemAuditInfo(audSystemProcessModel);
 
               boolean sodCheck = controller.runStartofDayManually();
-//							log.info("sodCheck: "+sodCheck);
+			  log.info("[SchedulePanel] sodCheck: "+sodCheck);
               if (sodCheck) {
                 info(controller.feedbackMsg);
                 //info("Start of Day ran successfully...!");

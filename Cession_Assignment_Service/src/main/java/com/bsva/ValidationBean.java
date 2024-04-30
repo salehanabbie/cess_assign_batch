@@ -580,8 +580,9 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 			if(obj instanceof CasOpsStatusHdrsEntity)
 			{
 				CasOpsStatusHdrsEntity localEntity = (CasOpsStatusHdrsEntity) obj;
-				log.debug("localEntity=====>>>>: "+ localEntity);
+//				log.info("localEntity=====>>>>: "+ localEntity);
 				sysSeqNo = genericDAO.saveReturnId(localEntity);
+//				log.info("sysSeqNo: "+sysSeqNo);
 				//genericDAO.save(localEntity);
 			}
 		}
@@ -711,7 +712,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 			{
 				CasOpsMndtCountEntity localEntity = (CasOpsMndtCountEntity) obj;
 				log.debug("Writing to MdtOpsMndtCountEntity table.... "+localEntity);
-				genericDAO.save(localEntity);
+				genericDAO.saveOrUpdate(localEntity);
 				saved = true;
 			}
 			else

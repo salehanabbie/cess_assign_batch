@@ -54,7 +54,7 @@ public class StartOfTransmissionExtract
 	String fileName = null, achMemberId = null, destMemberId = null,serviceName = null,  achLiveTestInd = null, fileType = null;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
-	CasSysctrlCompParamEntity mdtSysctrlCompParamEntity = null;
+	CasSysctrlCompParamEntity casSysctrlCompParamEntity = null;
 	CasSysctrlSysParamEntity casSysctrlSysParamEntity;
 
 	Document document;
@@ -62,7 +62,7 @@ public class StartOfTransmissionExtract
 	String msgRef = "SOT";
 	String achInstId = "210000";
 	String backEndProcess = "BACKEND";
-	private String sotSchema = "/home/opsjava/Delivery/Mandates/Schema/sot.001.001.02.xsd";
+	private String sotSchema = "/home/opsjava/Delivery/Cession_Assign/Schema/sot.001.001.02.xsd";
 	SimpleDateFormat sdfFileDate = new SimpleDateFormat("yyyyMMdd");
 	String testLiveIndProp = null;
 	
@@ -80,7 +80,7 @@ public class StartOfTransmissionExtract
 			this.testLiveIndProp = propertyUtil.getPropValue("TestLiveInd");
 			//log.info("Test Live Indicator Property: "+testLiveIndProp);
 		}catch (Exception e) {
-			log.error("StartOfTransmissionExtract - Could not find MandateMessageCommons.properties in classpath");
+			log.error("StartOfTransmissionExtract - Could not find CessionAssignment.properties in classpath");
 		}
 	}
 	
@@ -116,13 +116,13 @@ public class StartOfTransmissionExtract
 					controlMessage.setPrcDte(getGregorianDateWithoutTime(procDate));
 					
 					//Retrieve FndCompanyParameters
-					mdtSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
+					casSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
 					
 					
-					if(mdtSysctrlCompParamEntity != null)
+					if(casSysctrlCompParamEntity != null)
 					{
-						achMemberId = mdtSysctrlCompParamEntity.getAchInstId();
-						achLiveTestInd = mdtSysctrlCompParamEntity.getTransamissionInd();
+						achMemberId = casSysctrlCompParamEntity.getAchInstId();
+						achLiveTestInd = casSysctrlCompParamEntity.getTransamissionInd();
 					}
 					else
 					{
@@ -144,7 +144,7 @@ public class StartOfTransmissionExtract
 					controlMessage.setMsgTp(MessageReference.SOT);
 					
 					if(achLiveTestInd != null)
-						controlMessage.setTestLive(TestLiveIndicator.fromValue(mdtSysctrlCompParamEntity.getTransamissionInd()));
+						controlMessage.setTestLive(TestLiveIndicator.fromValue(casSysctrlCompParamEntity.getTransamissionInd()));
 					else
 						controlMessage.setTestLive(TestLiveIndicator.fromValue(testLiveIndProp));
 					
@@ -190,12 +190,12 @@ public class StartOfTransmissionExtract
 					controlMessage.setPrcDte(getGregorianDateWithoutTime(procDate));
 					
 					//Retrieve FndCompanyParameters
-					mdtSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
+					casSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
 					
-					if(mdtSysctrlCompParamEntity != null)
+					if(casSysctrlCompParamEntity != null)
 					{
-						achMemberId = mdtSysctrlCompParamEntity.getAchInstId();
-						achLiveTestInd = mdtSysctrlCompParamEntity.getTransamissionInd();
+						achMemberId = casSysctrlCompParamEntity.getAchInstId();
+						achLiveTestInd = casSysctrlCompParamEntity.getTransamissionInd();
 					}
 					else
 					{
@@ -216,7 +216,7 @@ public class StartOfTransmissionExtract
 					controlMessage.setMsgTp(MessageReference.SOT);
 					
 					if(achLiveTestInd != null)
-						controlMessage.setTestLive(TestLiveIndicator.fromValue(mdtSysctrlCompParamEntity.getTransamissionInd()));
+						controlMessage.setTestLive(TestLiveIndicator.fromValue(casSysctrlCompParamEntity.getTransamissionInd()));
 					else
 						controlMessage.setTestLive(TestLiveIndicator.fromValue(testLiveIndProp));
 					
@@ -252,10 +252,10 @@ public class StartOfTransmissionExtract
 		{
 			    String outFileName = createFileName(fileType); 
 	
-//				String out ="/home/jboss/Mandates/Output/Delivery/SOT/"+outFileName+".xml";
-//				File f = new File("/home/jboss/Mandates/Output/Delivery/SOT/" + outFileName +".xml")  ;  
-			    String out ="/home/opsjava/Delivery/Mandates/Output/temp/"+outFileName+".xml";
-				File f = new File("/home/opsjava/Delivery/Mandates/Output/temp/" + outFileName +".xml")  ;  
+//				String out ="/home/jboss/Cession_Assign/Output/Delivery/SOT/"+outFileName+".xml";
+//				File f = new File("/home/jboss/Cession_Assign/Output/Delivery/SOT/" + outFileName +".xml")  ;  
+			    String out ="/home/opsjava/Delivery/Cession_Assign/Output/temp/"+outFileName+".xml";
+				File f = new File("/home/opsjava/Delivery/Cession_Assign/Output/temp/" + outFileName +".xml")  ;
 		          JAXBContext jaxbContext = JAXBContext.newInstance(Document.class);
 		          Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 		
@@ -289,10 +289,10 @@ public class StartOfTransmissionExtract
 		
 		try
 		{	
-				if(mdtSysctrlCompParamEntity != null)
+				if(casSysctrlCompParamEntity != null)
 				{
-					achId = mdtSysctrlCompParamEntity.getAchId();
-					testLiveInd = mdtSysctrlCompParamEntity.getTransamissionInd();
+					achId = casSysctrlCompParamEntity.getAchId();
+					testLiveInd = casSysctrlCompParamEntity.getTransamissionInd();
 				}
 				else
 				{
@@ -364,8 +364,8 @@ public class StartOfTransmissionExtract
 	public  void copyFile(String fileName) throws IOException 
 	{
 		log.debug("Copying "+fileName+"from temp  to output directory...");
-		File tmpFile = new File("/home/opsjava/Delivery/Mandates/Output/" + fileName +".xml");
-		String outputFile = "/home/opsjava/Delivery/Mandates/Output/temp/" + fileName +".xml";
+		File tmpFile = new File("/home/opsjava/Delivery/Cession_Assign/Output/" + fileName +".xml");
+		String outputFile = "/home/opsjava/Delivery/Cession_Assign/Output/temp/" + fileName +".xml";
 		FileOutputStream fos = new FileOutputStream(tmpFile);
 		Path source = Paths.get(outputFile);
 		Files.copy(source, fos);
