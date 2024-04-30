@@ -87,7 +87,7 @@ public interface ValidationBeanLocal {
 
   public Object validateExternalStatusReasonCode(String statusReasonCode);
 
-  public boolean saveOpsMndtCount(Object obj);
+//  public boolean saveOpsMndtCount(Object obj);
 
   public Object validateAccountType(String accountType);
 
@@ -159,5 +159,5 @@ public interface ValidationBeanLocal {
   public List<?> retrieveFileSizeLimit(String destInstId);
 
   public List<?> retriveOutgoingService(String serviceId);
-
+  public boolean saveMdtOpsMndtCount(Object obj);
 }

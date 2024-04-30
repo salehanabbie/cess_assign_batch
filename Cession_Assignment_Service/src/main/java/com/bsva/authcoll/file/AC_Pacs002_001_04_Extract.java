@@ -765,7 +765,7 @@ public class AC_Pacs002_001_04_Extract {
 		casOpsMndtCountEntity.setCasOpsMndtCountPK(casOpsMndtCountPk);
 		casOpsMndtCountEntity.setFileName(outFileName);
 
-		saved = valBeanRemote.saveOpsMndtCount(casOpsMndtCountEntity);
+		saved = valBeanRemote.saveMdtOpsMndtCount(casOpsMndtCountEntity);
 
 		log.debug("WRITING Count Record IN THE AC_Pacs002FileExtract"+casOpsMndtCountEntity);
 

@@ -703,16 +703,16 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 	}
 
 	@Override
-	public boolean saveOpsMndtCount(Object obj) {
+	public boolean saveMdtOpsMndtCount(Object obj) {
 		boolean saved = false;
 		try
 		{
-			log.debug("In the MdtOpsMndtCountEntity Persistence Layer ... ");
+			log.debug("In the CasOpsMndtCountEntity Persistence Layer ... ");
 			if(obj instanceof CasOpsMndtCountEntity)
 			{
 				CasOpsMndtCountEntity localEntity = (CasOpsMndtCountEntity) obj;
-				log.debug("Writing to MdtOpsMndtCountEntity table.... "+localEntity);
-				genericDAO.saveOrUpdate(localEntity);
+				log.debug("Writing to CasOpsMndtCountEntity table.... "+localEntity);
+				genericDAO.save(localEntity);
 				saved = true;
 			}
 			else
@@ -720,7 +720,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 		}
 		catch(Exception e)
 		{
-			log.error("Error on MdtOpsMndtCountEntity"+e.getMessage());
+			log.error("Error on CasOpsMndtCountEntity"+e.getMessage());
 			e.printStackTrace();
 			saved = false;
 		}

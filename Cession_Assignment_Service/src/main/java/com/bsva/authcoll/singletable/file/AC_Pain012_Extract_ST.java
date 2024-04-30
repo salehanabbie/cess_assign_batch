@@ -1005,7 +1005,7 @@ public class AC_Pain012_Extract_ST {
 		casOpsMndtCountEntity.setCasOpsMndtCountPK(casOpsMndtCountPk);
 		casOpsMndtCountEntity.setFileName(outFileName);
 
-		saved = valBeanRemote.saveOpsMndtCount(casOpsMndtCountEntity);
+		saved = valBeanRemote.saveMdtOpsMndtCount(casOpsMndtCountEntity);
 
 		if (saved) {
 			log.debug("OpsCountTable has been updated");

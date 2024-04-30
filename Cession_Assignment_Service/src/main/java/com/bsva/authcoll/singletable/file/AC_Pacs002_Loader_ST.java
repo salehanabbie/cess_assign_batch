@@ -496,7 +496,7 @@ public class AC_Pacs002_Loader_ST implements Serializable
 		mdtOpsMndtCountEntity.setNrMsgsExtracted(0);
 		mdtOpsMndtCountEntity.setFileName(fileName.substring(0,37).trim());
 
-		saved = valBeanRemote.saveOpsMndtCount(mdtOpsMndtCountEntity);
+		saved = valBeanRemote.saveMdtOpsMndtCount(mdtOpsMndtCountEntity);
 
 		log.debug("WRITING mdtOpsMndtCountEntity IN THE AC_Pacs002 FileLoader"+mdtOpsMndtCountEntity);
 

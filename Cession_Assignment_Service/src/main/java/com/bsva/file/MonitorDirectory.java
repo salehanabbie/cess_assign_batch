@@ -80,8 +80,8 @@ public class MonitorDirectory {
       log.info("PROCESS PATH FROM PROPERTIES: " + processPath);
     } catch (Exception ex) {
       log.error("MonitorDirectory - Could not find MandateMessageCommons.properties in classpath");
-      inputPath = "/home/opsjava/Delivery/Mandates/Input/";
-      processPath = "/home/opsjava/Delivery/Mandates/Input/Processing/";
+      inputPath = "/home/opsjava/Delivery/Cession_Assign/Input/";
+      processPath = "/home/opsjava/Delivery/Cession_Assign/Input/Processing/";
     }
 
     try {
@@ -89,8 +89,8 @@ public class MonitorDirectory {
       log.info("Start Watch");
 
 //			2019/10/14 SalehaR-Read paths from Properties 
-//			pathIncomingFile = Paths.get("/home/opsjava/Delivery/Mandates/Input/");
-//			pathProcessingFile = Paths.get("/home/opsjava/Delivery/Mandates/Input/Processing/");
+//			pathIncomingFile = Paths.get("/home/opsjava/Delivery/Cession_Assign/Input/");
+//			pathProcessingFile = Paths.get("/home/opsjava/Delivery/Cession_Assign/Input/Processing/");
       pathIncomingFile = Paths.get(inputPath);
       pathProcessingFile = Paths.get(processPath);
       watchService = FileSystems.getDefault().newWatchService();

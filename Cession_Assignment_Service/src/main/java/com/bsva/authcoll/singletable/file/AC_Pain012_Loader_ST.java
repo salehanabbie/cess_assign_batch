@@ -814,7 +814,7 @@ public class AC_Pain012_Loader_ST implements Serializable {
 		casOpsMndtCountEntity.setNrMsgsExtracted(0);
 		casOpsMndtCountEntity.setFileName(fileName);
 
-		saved = valBeanRemote.saveOpsMndtCount(casOpsMndtCountEntity);
+		saved = valBeanRemote.saveMdtOpsMndtCount(casOpsMndtCountEntity);
 		if (saved) {
 			log.debug("OpsCountTable has been updated");
 		} else {

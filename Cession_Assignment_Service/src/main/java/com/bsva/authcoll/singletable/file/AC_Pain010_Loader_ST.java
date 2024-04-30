@@ -707,7 +707,7 @@ public class AC_Pain010_Loader_ST {
 		casOpsMndtCountEntity.setNrMsgsExtracted(0);
 		casOpsMndtCountEntity.setFileName(fileName.substring(0,37).trim());
 		log.info("casOpsMndtCountEntity: "+casOpsMndtCountEntity);
-		saved = valBeanRemote.saveOpsMndtCount(casOpsMndtCountEntity);
+		saved = valBeanRemote.saveMdtOpsMndtCount(casOpsMndtCountEntity);
 
 		if (saved) {
 			log.debug("MdtOpsCountTable has been updated");

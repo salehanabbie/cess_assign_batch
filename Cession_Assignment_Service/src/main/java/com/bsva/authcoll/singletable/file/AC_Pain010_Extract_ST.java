@@ -1067,7 +1067,7 @@ public class AC_Pain010_Extract_ST {
 			e.printStackTrace();
 		}
 
-		saved = valBeanRemote.saveOpsMndtCount(casMndtCountEntity);
+		saved = valBeanRemote.saveMdtOpsMndtCount(casMndtCountEntity);
 		if (saved) {
 			log.debug("casCountTable has been updated");
 
