@@ -178,8 +178,8 @@ public class AC_Pain010_Loader_ST {
 				casOpsGrpHdrEntity.setCreatedBy(systemName);
 				casOpsGrpHdrEntity.setMsgId(document.getMndtAmdmntReq().getGrpHdr().getMsgId().trim());
 				log.info("casOpsGrpHdrEntity: "+casOpsGrpHdrEntity);
-				grpHdrCreated = true;
-//				grpHdrCreated = beanRemote.createCasOpsGrpHdr(casOpsGrpHdrEntity);
+//				grpHdrCreated = true;
+				grpHdrCreated = beanRemote.createCasOpsGrpHdr(casOpsGrpHdrEntity);
 			}
 			else
 			{

@@ -4839,8 +4839,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     List<CasOpsSotEotCtrlEntity> opsSotEotCtrlList = new ArrayList<CasOpsSotEotCtrlEntity>();
     try {
       HashMap<String, Object> parameters = new HashMap<String, Object>();
-      parameters.put("mdtAcOpsSotEotCtrlPK.instId", destMemberId);
-      parameters.put("mdtAcOpsSotEotCtrlPK.serviceId", serviceName);
+      parameters.put("casOpsSotEotCtrlPK.instId", destMemberId);
+      parameters.put("casOpsSotEotCtrlPK.serviceId", serviceName);
       parameters.put("sotOut", eotOutInd);
       log.debug("eot parameters:--------->" + parameters.toString());
 

@@ -1085,7 +1085,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			// statusHdrsList = (List<OpsStatusHdrsEntity>)
 			// genericDAO.findAllByCriteria(OpsStatusHdrsEntity.class,
 			// parameters, true);
-			statusHdrsList = genericDAO.findAllByNQCriteria("MdtAcOpsStatusHdrsEntity.findByIN", parameters);
+			statusHdrsList = genericDAO.findAllByNQCriteria("CasOpsStatusHdrsEntity.findByIN", parameters);
 			log.debug("---------------statusHdrsList after findAllByCriteria: ------------------" + statusHdrsList);
 		} catch (NullPointerException npe) {
 			log.error("NullPointer exception :" + npe.getMessage());
@@ -1106,7 +1106,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try {
 			//SalehaR - 2016/02/20 - Scheduler not extracting by service
-			//			statusHdrsList = genericDAO.findAllByNamedQuery("MdtAcOpsStatusHdrsEntity.findByProcessStatus", "processStatus", status);
+			//			statusHdrsList = genericDAO.findAllByNamedQuery("CasOpsStatusHdrsEntity.findByProcessStatus", "processStatus", status);
 
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("service", pacs002Service);
@@ -1167,7 +1167,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 				return true;
 			} else {
-				log.error("Unable to convert type to MdtAcOpsStatusHdrsEntity.");
+				log.error("Unable to convert type to CasOpsStatusHdrsEntity.");
 				return false;
 			}
 		} catch (Exception e) {
@@ -7763,7 +7763,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("service", service);
 			parameters.put("memberId", memberId);
 
-			List<CasOpsStatusHdrsEntity> statusRptCheckList = (List<CasOpsStatusHdrsEntity>) genericDAO.findAllByNQCriteria("MdtAcOpsStatusHdrsEntity.findByProStatusAndService",parameters);
+			List<CasOpsStatusHdrsEntity> statusRptCheckList = (List<CasOpsStatusHdrsEntity>) genericDAO.findAllByNQCriteria("CasOpsStatusHdrsEntity.findByProStatusAndService",parameters);
 			log.debug("statusRptCheckList.size(); =====> "+statusRptCheckList.size());
 			if(statusRptCheckList != null && statusRptCheckList.size() > 0)
 				statusRptsCheck = false;

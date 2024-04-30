@@ -1092,8 +1092,8 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
 
     try {
       casOpsSchedulerEntity = (CasOpsSchedulerEntity) genericDAO.findByNamedQuery(
-          "MdtAcOpsSchedulerEntity.findBySchedulerName", "schedulerName", schedulerName);
-      log.debug("mdtAcOpsSchedulerEntity from DB: " + casOpsSchedulerEntity);
+          "CasOpsSchedulerEntity.findBySchedulerName", "schedulerName", schedulerName);
+      log.debug("casOpsSchedulerEntity from DB: " + casOpsSchedulerEntity);
       if (casOpsSchedulerEntity != null) {
         if (activeInd != null) {
           casOpsSchedulerEntity.setActiveInd(activeInd);
@@ -1129,7 +1129,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
       CasSysctrlSchedulerCronEntity casSysctrlSchedulerCronEntity =
           new CasSysctrlSchedulerCronEntity();
       casSysctrlSchedulerCronEntity = (CasSysctrlSchedulerCronEntity) genericDAO.findByNamedQuery(
-          "MdtSysctrlSchedulerCronEntity.findBySchedulerCronInterval", "schedulerCronInterval",
+          "CasSysctrlSchedulerCronEntity.findBySchedulerCronInterval", "schedulerCronInterval",
           cronRptInterval);
 
       if (casSysctrlSchedulerCronEntity != null) {

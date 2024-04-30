@@ -71,7 +71,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 
 			if(manReqTransId != null && !manReqTransId.isEmpty())
-				parameters.put("mdtAcOpsMandateTxnsEntityPK.mandateReqTranId", manReqTransId);
+				parameters.put("casOpsCessionAssignEntityPK.mandateReqTranId", manReqTransId);
 			parameters.put("serviceId", messageType);
 
 			log.debug("---------------sparameters: ------------------"+ parameters.toString());
@@ -105,7 +105,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
 
 			if(mndtReqTranId != null && !mndtReqTranId.isEmpty())
-				parameters.put("mdtAcOpsMandateTxnsEntityPK.mandateReqTranId", mndtReqTranId);
+				parameters.put("casOpsCessionAssignEntityPK.mandateReqTranId", mndtReqTranId);
 
 			parameters.put("serviceId", messageType);
 			log.debug("---------------sparameters: ------------------"+ parameters.toString());
@@ -1039,8 +1039,8 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		try
 		{
 			HashMap<String, Object> parameters = new HashMap<String, Object>();
-			parameters.put("mdtAcOpsFileSizeLimitPK.subService", outgoingService);
-			parameters.put("mdtAcOpsFileSizeLimitPK.memberId", destInstId);
+			parameters.put("casOpsFileSizeLimitPK.subService", outgoingService);
+			parameters.put("casOpsFileSizeLimitPK.memberId", destInstId);
 
 			casOpsFileSizeLimitEntity =  (CasOpsFileSizeLimitEntity)genericDAO.findByCriteria(
 					CasOpsFileSizeLimitEntity.class, parameters);
