@@ -1118,7 +1118,7 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 		List<CasOpsConfHdrsEntity> mdtAcOpsConfHdrsList = null;
 		try
 		{
-			mdtAcOpsConfHdrsList = (List<CasOpsConfHdrsEntity>) genericDAO.findAllByNamedQuery("CassOpsConfHdrsEntity.findByHdrMsgId", "hdrMsgId",msgId);
+			mdtAcOpsConfHdrsList = (List<CasOpsConfHdrsEntity>) genericDAO.findAllByNamedQuery("CasOpsConfHdrsEntity.findByHdrMsgId", "hdrMsgId",msgId);
 		}
 		catch(Exception ex)
 		{

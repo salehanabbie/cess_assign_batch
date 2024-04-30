@@ -2,14 +2,14 @@
 package com.bsva.authcoll.singletable.validation;
 
 import com.bsva.PropertyUtil;
-import com.bsva.entities.CasOpsFileRegEntity;
-import com.bsva.entities.CasSysctrlCompParamEntity;
+import com.bsva.entities.CasCnfgErrorCodesEntity;
 import com.bsva.entities.CasOpsCessionAssignEntity;
+import com.bsva.entities.CasOpsCustParamEntity;
+import com.bsva.entities.CasOpsFileRegEntity;
+import com.bsva.entities.CasOpsRefSeqNrEntity;
 import com.bsva.entities.CasOpsStatusDetailsEntity;
 import com.bsva.entities.CasOpsStatusHdrsEntity;
-import com.bsva.entities.CasCnfgErrorCodesEntity;
-import com.bsva.entities.CasOpsCustParamEntity;
-import com.bsva.entities.CasOpsRefSeqNrEntity;
+import com.bsva.entities.CasSysctrlCompParamEntity;
 import iso.std.iso._20022.tech.xsd.pacs_002_001.FIToFIPaymentStatusReportV04;
 import iso.std.iso._20022.tech.xsd.pacs_002_001.GroupHeader53;
 import iso.std.iso._20022.tech.xsd.pacs_002_001.OriginalGroupHeader1;
@@ -98,7 +98,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     } catch (Exception e) {
       log.error(
           "AC_Pacs002_Validation_ST - Could not find MandateMessageCommons.properties in " +
-				  "classpath");
+              "classpath");
       st201Service = "ST201";
       fileSizeLimit = 50000;
     }
@@ -222,7 +222,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate Service Id _rule
-		// 009_002_____________________________________//
+      // 009_002_____________________________________//
       if (!validateServiceId(serviceId, "ST201")) {
         grpHdrSeverity++;
         generateStatusErrorDetailsList("901045", null, hdrErrorType);
@@ -233,7 +233,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate MsgId Creation Date
-		// Time_Rule009_007_____________________________________//
+      // Time_Rule009_007_____________________________________//
 //			if(!isDateValid(msgCreationDate, "yyyyMMdd"))
 //			{
 //				grpHdrSeverity++;
@@ -249,7 +249,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
 //			}
 
       //____________________________Validate MsgId Creation Date
-		// Time_____________________________________//
+      // Time_____________________________________//
       if (!isValidProcessingDate(msgCreationDate, "yyyyMMdd")) {
         generateStatusErrorDetailsList("902009", null, hdrErrorType);
         grpHdrSeverity++;
@@ -260,7 +260,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate Message Id Uniqueness_Rule009_006
-		// _____________________________________//
+      // _____________________________________//
       if (!validatePacs002MsgId(msgId)) {
         grpHdrSeverity++;
         generateStatusErrorDetailsList("901005", null, hdrErrorType);
@@ -272,7 +272,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate Instructing Agent_Rule009_010
-		// _____________________________________//
+      // _____________________________________//
       if (!validateDebtorBank(
           groupHeader.getInstgAgt().getFinInstnId().getClrSysMmbId().getMmbId())) {
         grpHdrSeverity++;
@@ -284,7 +284,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate Instructed Agent_Rule rjct
-		// .016______________________________________//
+      // .016______________________________________//
       if (groupHeader.getInstdAgt() != null && groupHeader.getInstdAgt().getFinInstnId() != null &&
           groupHeader.getInstdAgt().getFinInstnId().getClrSysMmbId() != null &&
           groupHeader.getInstdAgt().getFinInstnId().getClrSysMmbId().getMmbId() != null) {
@@ -292,11 +292,11 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
         String achInstId;
 
         log.debug("the achI d is ******" + casSysctrlCompParamEntity.getAchId());
-		  if (casSysctrlCompParamEntity != null) {
-			  achInstId = casSysctrlCompParamEntity.getAchInstId();
-		  } else {
-			  achInstId = "210000";
-		  }
+        if (casSysctrlCompParamEntity != null) {
+          achInstId = casSysctrlCompParamEntity.getAchInstId();
+        } else {
+          achInstId = "210000";
+        }
 
         if (!instdAgt.equalsIgnoreCase(achInstId)) {
           generateStatusErrorDetailsList("901079", null, hdrErrorType);
@@ -315,7 +315,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate Original Message Id -
-		// Rjct999_____________________________________//
+      // Rjct999_____________________________________//
       if (origGrpInfStats.getOrgnlMsgId() != null) {
         if (validateRule999(origGrpInfStats.getOrgnlMsgId().toString())) {
           log.debug("******************validateOrgnlMsgId_002.999 - Passed.******************");
@@ -332,25 +332,15 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate Original Message Type - Rjct
-		// 012_____________________________________//
+      // 012_____________________________________//
       if (origGrpInfStats.getOrgnlMsgNmId() != null) {
         orgnlMsgNameId = origGrpInfStats.getOrgnlMsgNmId().trim();
         boolean msgNmId = false;
         messageType = null;
 
-        if (orgnlMsgNameId.equalsIgnoreCase("pain.009")) {
+        if (orgnlMsgNameId.equalsIgnoreCase("pain.010")) {
           msgNmId = true;
-          messageType = "MANIN";
-        } else {
-          if (orgnlMsgNameId.equalsIgnoreCase("pain.010")) {
-            msgNmId = true;
-            messageType = "MANAM";
-          } else {
-            if (orgnlMsgNameId.equalsIgnoreCase("pain.011")) {
-              msgNmId = true;
-              messageType = "MANCN";
-            }
-          }
+          messageType = "CARIN";
         }
 
         if (msgNmId == true) {
@@ -368,7 +358,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Original Creation Date and
-		// time_999_____________________________________//
+      // time_999_____________________________________//
       if (origGrpInfStats.getOrgnlCreDtTm() != null) {
         if (validateRule999(origGrpInfStats.getOrgnlCreDtTm().toString())) {
           log.debug("******************validateOrgnlCreDtTm_002.999 - Passed.******************");
@@ -385,7 +375,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate Transaction
-		// Status_013_____________________________________//
+      // Status_013_____________________________________//
       if (origGrpInfStats.getGrpSts() != null) {
         if (!validatePacs002StatusCode(origGrpInfStats.getGrpSts().toString())) {
           grpHdrSeverity++;
@@ -427,7 +417,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       }
 
       //____________________________Validate Group Status_002
-		// .999_____________________________________//
+      // .999_____________________________________//
       if (origGrpInfStats.getStsRsnInf() != null && origGrpInfStats.getStsRsnInf().size() > 0) {
         if (origGrpInfStats.getStsRsnInf().get(0) != null &&
             origGrpInfStats.getStsRsnInf().get(0).getRsn() != null &&
@@ -539,12 +529,13 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
 
     //		valStartTime = System.nanoTime();
     //____________________________Validate Mandate Request Transaction Identifier
-	  // .015_____________________________________//
+    // .015_____________________________________//
     if (orgnlTxnId != null) {
       CasOpsCessionAssignEntity matchedMandate = matchPacs002ToOrigMandate(orgnlTxnId, messageType);
+      log.info("matchedMandate: " + matchedMandate);
       if (matchedMandate != null) {
         String processStatus = matchedMandate.getProcessStatus();
-        log.debug("PROCESS STATUS =====>>>> " + processStatus);
+        log.info("PROCESS STATUS =====>>>> " + processStatus);
 
         if (processStatus.equalsIgnoreCase(extractStatus)) {
           mandateSeverity = mandateSeverity + 0;
@@ -555,14 +546,14 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
             generateStatusErrorDetailsList("902028", orgnlTxnId, txnErrorType);
             log.info(
                 "******************validateMandateReqTrn_015 -- Mandate Previously Matched - " +
-						"Failed.******************");
+                    "Failed.******************");
           } else {
             if (processStatus.equalsIgnoreCase(rejectedStatus)) {
               mandateSeverity++;
               generateStatusErrorDetailsList("902028", orgnlTxnId, txnErrorType);
               log.info(
                   "******************validateMandateReqTrn_015 -- Mandate Previously Rejected - " +
-						  "Failed.******************");
+                      "Failed.******************");
             } else {
               if (processStatus.equalsIgnoreCase(responseRecStatus)) {
                 //Duplicate
@@ -570,13 +561,13 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
                 generateStatusErrorDetailsList("902028", orgnlTxnId, txnErrorType);
                 log.info(
                     "******************validateMandateReqTrn_015 -- Duplicate - Mandate Already " +
-							"Responded on- Failed.******************");
+                        "Responded on- Failed.******************");
               } else {
                 mandateSeverity++;
                 generateStatusErrorDetailsList("901144", orgnlTxnId, txnErrorType);
                 log.info(
                     "******************validateMandateReqTrn_015___None of the statuses Match - " +
-							"Failed.******************");
+                        "Failed.******************");
               }
             }
           }
@@ -597,10 +588,10 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     //		valEndTime = System.nanoTime();
     //		valDur = (valEndTime - valStartTime) / 1000000;
     //		log.info("015_Txn Matching "+DurationFormatUtils.formatDuration(valDur, "HH:mm:ss.S")
-	  //		+" milliseconds. ");
+    //		+" milliseconds. ");
     //		valStartTime = System.nanoTime();
     //____________________________Validate Transaction
-	  // Status_013_____________________________________//
+    // Status_013_____________________________________//
 
     if (paymentTransaction33 != null && paymentTransaction33.getTxSts() != null) {
       if (!validateRule999(paymentTransaction33.getTxSts().value())) {
@@ -623,7 +614,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       //			{
       //				mandateSeverity = mandateSeverity+0;
       //				log.debug("******************validateTransactionStatusCode.013 - Passed
-		//				.******************");
+      //				.******************");
       //			}
     } else {
       mandateSeverity++;
@@ -633,7 +624,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     //		valEndTime = System.nanoTime();
     //		valDur = (valEndTime - valStartTime) / 1000000;
     //		log.info("rjct.999 txn Status "+DurationFormatUtils.formatDuration(valDur, "HH:mm:ss
-	  //		.S")+" milliseconds. ");
+    //		.S")+" milliseconds. ");
     //		valStartTime = System.nanoTime();
 
 
@@ -642,7 +633,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     if (paymentTransaction33.getStsRsnInf() != null &&
         paymentTransaction33.getStsRsnInf().size() > 0) {
       for (StatusReasonInformation9 statusReasonInformation9 :
-			  paymentTransaction33.getStsRsnInf()) {
+          paymentTransaction33.getStsRsnInf()) {
         if (statusReasonInformation9.getRsn() != null &&
             statusReasonInformation9.getRsn().getPrtry() != null) {
           if (!validateErrorCodes(statusReasonInformation9.getRsn().getPrtry().toString())) {
@@ -669,7 +660,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     //		valEndTime = System.nanoTime();
     //		valDur = (valEndTime - valStartTime) / 1000000;
     //		log.info("validateRejReason_014 Duration "+DurationFormatUtils.formatDuration(valDur,
-	  //		"HH:mm:ss.S")+" milliseconds. ");
+    //		"HH:mm:ss.S")+" milliseconds. ");
     //		valStartTime = System.nanoTime();
 
     if (mandateSeverity == 0) {
@@ -697,11 +688,11 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
     opsStatusHdrsEntity.setOrgnlMsgId(groupHeader53.getMsgId());
     opsStatusHdrsEntity.setOrgnlMsgName("pacs.002");
     opsStatusHdrsEntity.setOrgnlCreateDateTime(getCovertDateTime(groupHeader53.getCreDtTm()));
-	  if (groupStatus.equalsIgnoreCase("ACCP")) {
-		  opsStatusHdrsEntity.setProcessStatus("1");
-	  } else {
-		  opsStatusHdrsEntity.setProcessStatus("6");
-	  }
+    if (groupStatus.equalsIgnoreCase("ACCP")) {
+      opsStatusHdrsEntity.setProcessStatus("1");
+    } else {
+      opsStatusHdrsEntity.setProcessStatus("6");
+    }
     opsStatusHdrsEntity.setGroupStatus(groupStatus);
     opsStatusHdrsEntity.setService("ST202");
     opsStatusHdrsEntity.setOrgnlFileName(fileName);
@@ -769,12 +760,12 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       casOpsRefSeqNrEntity =
           (CasOpsRefSeqNrEntity) valBeanRemote.retrieveRefSeqNr(outgoingService, instId);
 
-		if (casOpsRefSeqNrEntity != null) {
-			lastSeqNoUsed = Integer.valueOf(casOpsRefSeqNrEntity.getLastSeqNr());
-			lastSeqNoUsed++;
-		} else {
-			lastSeqNoUsed = 1;
-		}
+      if (casOpsRefSeqNrEntity != null) {
+        lastSeqNoUsed = Integer.valueOf(casOpsRefSeqNrEntity.getLastSeqNr());
+        lastSeqNoUsed++;
+      } else {
+        lastSeqNoUsed = 1;
+      }
 
       log.debug("lastSeqNoUsed---->: " + lastSeqNoUsed);
       fileSeqNo = String.format("%06d", lastSeqNoUsed);

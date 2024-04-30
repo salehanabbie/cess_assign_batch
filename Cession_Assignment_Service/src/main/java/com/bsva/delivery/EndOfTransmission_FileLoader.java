@@ -39,7 +39,7 @@ public class EndOfTransmission_FileLoader implements Serializable {
 	PropertyUtil propertyUtil;
 	private static final long serialVersionUID = 1L;
 	public static Logger log = Logger.getLogger(EndOfTransmission_FileLoader.class);
-	public static String systemName = "MANOWNER";
+	public static String systemName = "CAMOWNER";
 	public static Date todaysDate;
 	public static AdminBeanRemote adminBeanRemote;
 	public static ServiceBeanRemote beanRemote;

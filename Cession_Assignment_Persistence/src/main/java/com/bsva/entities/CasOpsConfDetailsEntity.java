@@ -49,7 +49,7 @@ import org.hibernate.annotations.Parameter;
 public class CasOpsConfDetailsEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MANOWNER.CAS_OPS_CONF_DETAILS_SEQ") )
+    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "CAMOWNER.CAS_OPS_CONF_DETAILS_SEQ") )
     @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)

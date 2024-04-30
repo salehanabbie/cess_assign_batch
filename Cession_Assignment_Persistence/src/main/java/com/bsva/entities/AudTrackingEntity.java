@@ -44,7 +44,7 @@ import org.hibernate.annotations.Parameter;
 public class AudTrackingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MANOWNER.AUD_TRACKING_SEQ") )
+    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "CAMOWNER.AUD_TRACKING_SEQ") )
     @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)

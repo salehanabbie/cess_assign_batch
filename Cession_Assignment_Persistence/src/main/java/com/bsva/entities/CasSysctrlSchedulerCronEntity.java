@@ -35,7 +35,7 @@ import org.hibernate.annotations.Parameter;
 public class CasSysctrlSchedulerCronEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MANOWNER.MDT_SYSCTRL_SCHEDULER_CRON_SEQ"))
+    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "CAMOWNER.CAS_SYSCTRL_SCHEDULER_CRON_SEQ"))
     @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)

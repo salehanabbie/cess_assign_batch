@@ -176,7 +176,7 @@ public class BillingExport implements Serializable {
 //						joinResult = String.join(",", accpList);
             joinResult = StringUtils.join(accpList, ",");
             String sqlQuery = new String(
-                "UPDATE MANOWNER.MDT_AC_OPS_DAILY_BILLING SET BILL_EXP_STATUS = 'Y' WHERE " +
+                "UPDATE CAMOWNER.CAS_OPS_DAILY_BILLING SET BILL_EXP_STATUS = 'Y' WHERE " +
 						"SYSTEM_SEQ_NO IN (" +
                     joinResult + ")");
             fileProcessBeanRemote.bulkUpdateBySQL(sqlQuery);
@@ -256,7 +256,7 @@ public class BillingExport implements Serializable {
 //						joinResult = String.join(",", accpList);
             joinResult = StringUtils.join(accpList, ",");
             String sqlQuery = new String(
-                "UPDATE MANOWNER.MDT_AC_OPS_TXNS_BILLING SET BILL_EXP_STATUS = 'Y' WHERE " +
+                "UPDATE CAMOWNER.CAS_OPS_TXNS_BILLING SET BILL_EXP_STATUS = 'Y' WHERE " +
 						"SYSTEM_SEQ_NO IN (" +
                     joinResult + ")");
             fileProcessBeanRemote.bulkUpdateBySQL(sqlQuery);

@@ -1726,8 +1726,7 @@ public class Validation_ST {
 
   public CasOpsCessionAssignEntity matchPain012(String origMndtReqTransId) {
     List<CasOpsCessionAssignEntity> matchedList = new ArrayList<CasOpsCessionAssignEntity>();
-    TreeMap<String, CasOpsCessionAssignEntity> matchedMap =
-        new TreeMap<String, CasOpsCessionAssignEntity>();
+    TreeMap<String, CasOpsCessionAssignEntity> matchedMap = new TreeMap<String, CasOpsCessionAssignEntity>();
 
     casOpsCessAssignTxnsEntityOriginal = null;
     //		MdtAcOpsMandateTxnsEntity matchedMandate= null;
@@ -1736,13 +1735,8 @@ public class Validation_ST {
 
       if (matchedMap.size() > 0) {
         if (matchedMap.containsKey("CARIN")) {
-          log.info("<<<<<<<<--------" + origMndtReqTransId +
-              " has been matched to CARIN------------------>>");
+          log.info("<<<<<<<<--------" + origMndtReqTransId + " has been matched to CARIN------------------>>");
           casOpsCessAssignTxnsEntityOriginal = matchedMap.get("CARIN");
-        } else if (matchedMap.containsKey("MANIN")) {
-          log.info("<<<<<<<<--------" + origMndtReqTransId +
-              " has been matched to MANIN------------------>>");
-          casOpsCessAssignTxnsEntityOriginal = matchedMap.get("MANIN");
         }
       }
 
@@ -1841,21 +1835,20 @@ public class Validation_ST {
 
   public CasOpsCessionAssignEntity matchPacs002ToOrigMandate(String mandateReqTranId,
                                                              String messageType) {
-    //		log.debug("XXXXXX*******LOOKING FOR MATCH FOR ST101******XXXXXXX");
-    //		log.debug("mandateReqTranId: "+mandateReqTranId);
-    //		log.debug("messageType: "+messageType);
+//    		log.info("XXXXXX*******LOOKING FOR MATCH FOR ST101******XXXXXXX");
+//    		log.info("mandateReqTranId: "+mandateReqTranId);
+//    		log.info("messageType: "+messageType);
 
     CasOpsCessionAssignEntity matchedMandate = null;
     if (mandateReqTranId != null && !mandateReqTranId.isEmpty() && messageType != null &&
         !messageType.isEmpty()) {
       matchedMandate =
-          (CasOpsCessionAssignEntity) fileProcBeanRemote.matchPacs002ToOrigMandate(mandateReqTranId,
-              messageType);
+          (CasOpsCessionAssignEntity) fileProcBeanRemote.matchPacs002ToOrigMandate(mandateReqTranId, messageType);
       if (matchedMandate != null) {
         casOpsCessAssignTxnsEntityOriginal = matchedMandate;
       }
     }
-
+log.info("Validation_ST matchedMandate: "+matchedMandate);
     return matchedMandate;
   }
 

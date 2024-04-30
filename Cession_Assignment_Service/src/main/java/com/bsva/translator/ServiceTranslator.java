@@ -491,7 +491,7 @@ public class ServiceTranslator {
 		  billingStagingEntity.setVolume(intBillModel.getVolume());
 	  }
 
-    billingStagingEntity.setService("MANDATES");
+    billingStagingEntity.setService("CESS_ASSIGN");
 
 	  if (intBillModel.getSubService() != null) {
 		  billingStagingEntity.setSubService(intBillModel.getSubService());
@@ -505,12 +505,12 @@ public class ServiceTranslator {
 		  billingStagingEntity.setTrxnStatus(intBillModel.getTxnStatus());
 	  }
 
-    billingStagingEntity.setCreatedBy("MANOWNER");
+    billingStagingEntity.setCreatedBy("CAMOWNER");
     billingStagingEntity.setCreatedDate(new Date());
 
     billingStagingEntity.setTrackingCode("0");
     billingStagingEntity.setAuthInd("N");
-    billingStagingEntity.setSystemName("MANDATES");
+    billingStagingEntity.setSystemName("CESS_ASSIGN");
     billingStagingEntity.setStatus("I");
     billingStagingEntity.setBillingWindow(windowNo);
 
@@ -679,9 +679,9 @@ public class ServiceTranslator {
     obsTxnsBillStagingEntity.setVolume(casOpsTxnsBillingEntity.getVolume());
     obsTxnsBillStagingEntity.setFilename(
         casOpsTxnsBillingEntity.getCasOpsTxnsBillingPK().getFileName());
-    obsTxnsBillStagingEntity.setCreatedBy("MANOWNER");
+    obsTxnsBillStagingEntity.setCreatedBy("CAMOWNER");
     obsTxnsBillStagingEntity.setCreatedDate(new Date());
-    obsTxnsBillStagingEntity.setModifiedBy("MANOWNER");
+    obsTxnsBillStagingEntity.setModifiedBy("CAMOWNER");
     obsTxnsBillStagingEntity.setModifiedDate(new Date());
 
     return obsTxnsBillStagingEntity;

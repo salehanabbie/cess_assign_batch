@@ -58,7 +58,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
   private static AdminBeanRemote adminBeanRemote;
   boolean unschedulePain010 = false, unshedulePain009 = false, unschedulePain011 = false,
       unscheduleEndofDay = false, unschedulePacs = false, unschedulePain012 = false;
-  private String systemName = "MANOWNER";
+  private String systemName = "CAMOWNER";
 
   @Inject
   private JobFactory cdiJobFactory;
@@ -384,44 +384,44 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
   //start delayed jobs ........ in a case where manual intervention is required
 
   public boolean startPain010() {
-    boolean manomChk = false;
+    boolean carotChk = false;
     if (scheduler != null) {
       try {
         //				scheduler.triggerJob(job4Key);
         log.info("Trying to start pain010 scheduler--->");
         scheduler.scheduleJob(pain010Job, pain010Trigger);
-        boolean saved = updateOpsSchedulerDetails("MANOM", null, "Y");
+        boolean saved = updateOpsSchedulerDetails("CAROT", null, "Y");
         if (saved) {
-          manomChk = true;
+          carotChk = true;
         }
       } catch (SchedulerException e) {
         log.error("An error occurred whilst trying to start/resume scheduler", e.getMessage());
         e.printStackTrace();
-        manomChk = false;
+        carotChk = false;
       }
     }
-    return manomChk;
+    return carotChk;
   }
 
 
   public boolean startPain012() {
-    boolean manocChk = false;
+    boolean rcaotChk = false;
     if (scheduler != null) {
       try {
         //				scheduler.triggerJob(job6Key);
         log.info("Trying to start pain012 scheduler--->");
         scheduler.scheduleJob(pain012Job, pain012Trigger);
-        boolean saved = updateOpsSchedulerDetails("MANOC", null, "Y");
+        boolean saved = updateOpsSchedulerDetails("RCAOT", null, "Y");
         if (saved) {
-          manocChk = true;
+          rcaotChk = true;
         }
       } catch (SchedulerException e) {
         log.error("An error occurred whilst trying to start/resume scheduler", e.getMessage());
         e.printStackTrace();
-        manocChk = false;
+        rcaotChk = false;
       }
     }
-    return manocChk;
+    return rcaotChk;
   }
 
 
@@ -432,7 +432,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
         //				scheduler.triggerJob(job9Key);
         log.info("Trying to start pacs002 scheduler--->");
         scheduler.scheduleJob(pacs002ExtJob, pacs002Trigger);
-        boolean saved = updateOpsSchedulerDetails("ST103", null, "Y");
+        boolean saved = updateOpsSchedulerDetails("ST203", null, "Y");
         if (saved) {
           pacs002Chk = true;
         }
@@ -446,63 +446,63 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
   }
 
   public boolean startST100() {
-    boolean st100SchChk = false;
+    boolean st200SchChk = false;
     if (scheduler != null) {
       try {
         //				scheduler.triggerJob(jobKey11);
         log.info("Trying to start ST100 scheduler--->");
         scheduler.scheduleJob(st100Job, st100Trigger);
-        boolean saved = updateOpsSchedulerDetails("ST100", null, "Y");
+        boolean saved = updateOpsSchedulerDetails("ST200", null, "Y");
         if (saved) {
-          st100SchChk = true;
+          st200SchChk = true;
         }
       } catch (SchedulerException e) {
         log.error("An error occurred whilst trying to start/resume scheduler", e.getMessage());
         e.printStackTrace();
-        st100SchChk = false;
+        st200SchChk = false;
       }
     }
-    return st100SchChk;
+    return st200SchChk;
   }
 
   public boolean startST102() {
-    boolean st102Chk = false;
+    boolean st202Chk = false;
     if (scheduler != null) {
       try {
         //				scheduler.triggerJob(jobKey12);
         log.info("Trying to start ST102 scheduler--->");
         scheduler.scheduleJob(st102Job, st102Trigger);
-        boolean saved = updateOpsSchedulerDetails("ST102", null, "Y");
+        boolean saved = updateOpsSchedulerDetails("ST202", null, "Y");
         if (saved) {
-          st102Chk = true;
+          st202Chk = true;
         }
       } catch (SchedulerException e) {
         log.error("An error occurred whilst trying to start/resume scheduler", e.getMessage());
         e.printStackTrace();
-        st102Chk = false;
+        st202Chk = false;
       }
     }
-    return st102Chk;
+    return st202Chk;
   }
 
   public boolean startST104() {
-    boolean st104Chk = false;
+    boolean st204Chk = false;
     if (scheduler != null) {
       try {
         //				scheduler.triggerJob(jobKey13);
         log.info("Trying to start ST104 scheduler--->");
         scheduler.scheduleJob(st104Job, st104Trigger);
-        boolean saved = updateOpsSchedulerDetails("ST104", null, "Y");
+        boolean saved = updateOpsSchedulerDetails("ST204", null, "Y");
         if (saved) {
-          st104Chk = true;
+          st204Chk = true;
         }
       } catch (SchedulerException e) {
         log.error("An error occurred whilst trying to start/resume scheduler", e.getMessage());
         e.printStackTrace();
-        st104Chk = false;
+        st204Chk = false;
       }
     }
-    return st104Chk;
+    return st204Chk;
   }
 
   public boolean startBilling() {
@@ -738,7 +738,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
       pain010Trigger =
           oldTrigger.withSchedule(CronScheduleBuilder.cronSchedule(rescheduleCron)).build();
       scheduler.rescheduleJob(pain010TK, pain010Trigger);
-      boolean saved = updateOpsSchedulerDetails("MANOM", cronTime, "Y");
+      boolean saved = updateOpsSchedulerDetails("CAROT", cronTime, "Y");
       if (saved) {
         reschPain010 = true;
       }
@@ -759,7 +759,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
           oldTrigger.withSchedule(CronScheduleBuilder.cronSchedule(rescheduleCron)).build();
       scheduler.rescheduleJob(pain012TK, pain012Trigger);
 
-      boolean saved = updateOpsSchedulerDetails("MANOC", cronTime, "Y");
+      boolean saved = updateOpsSchedulerDetails("RCAOT", cronTime, "Y");
       if (saved) {
         reschPain012 = true;
       }
@@ -780,7 +780,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
           oldTrigger.withSchedule(CronScheduleBuilder.cronSchedule(rescheduleCron)).build();
       scheduler.rescheduleJob(pacs002TK, pacs002Trigger);
 
-      boolean saved = updateOpsSchedulerDetails("ST103", cronTime, "Y");
+      boolean saved = updateOpsSchedulerDetails("ST203", cronTime, "Y");
       if (saved) {
         reschPacs002 = true;
       }
@@ -926,7 +926,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
     if (scheduler != null) {
       try {
         pain010Stop = scheduler.unscheduleJob(pain010TK);
-        boolean saved = updateOpsSchedulerDetails("MANOM", null, "N");
+        boolean saved = updateOpsSchedulerDetails("CAROT", null, "N");
         if (saved) {
           pain010Stop = true;
         }
@@ -944,7 +944,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
     if (scheduler != null) {
       try {
         pain012Stop = scheduler.unscheduleJob(pain012TK);
-        boolean saved = updateOpsSchedulerDetails("MANOC", null, "N");
+        boolean saved = updateOpsSchedulerDetails("RCAOT", null, "N");
         if (saved) {
           pain012Stop = true;
         }
@@ -962,7 +962,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
     if (scheduler != null) {
       try {
         pacs002Stop = scheduler.unscheduleJob(pacs002TK);
-        boolean saved = updateOpsSchedulerDetails("ST103", null, "N");
+        boolean saved = updateOpsSchedulerDetails("ST203", null, "N");
         if (saved) {
           pacs002Stop = true;
         }

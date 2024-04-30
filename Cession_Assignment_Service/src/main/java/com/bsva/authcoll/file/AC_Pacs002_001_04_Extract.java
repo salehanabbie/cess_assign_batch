@@ -105,7 +105,8 @@ public class AC_Pacs002_001_04_Extract {
 
 	private String pacs002Schema = "/home/opsjava/Delivery/Cession_Assign/Schema/pacs.002.001.04.xsd";
 	private String urn = "urn:iso:std:iso:20022:tech:xsd:pacs.002.001.04";
-	private String outgoingService = "ST103";
+	private String outgoingService = "ST203";
+	private String extractService = "pain.010";
 	private Document pacsDocument;
 	String outFileName,tableOutFileName;
 	int nrOfMsgs = 0;
@@ -118,7 +119,7 @@ public class AC_Pacs002_001_04_Extract {
 	List<CasOpsConfDetailsEntity> orgnConfDetailTxnList = null;
 	List<String>extOrigMRTIList=  null;
 
-	List<String> extractServiceList = new ArrayList<String>();
+//	List<String> extractServiceList = new ArrayList<String>();
 	Date procDate = null;
 	long startTime, endTime, duration;
 	String testLiveIndProp = null;
@@ -131,10 +132,8 @@ public class AC_Pacs002_001_04_Extract {
 		contextAdminBeanCheck();
 		contextValidationBeanCheck();
 		contextFileProcBeanCheck();
-		extractServiceList.clear();
-		extractServiceList.add("pain.009");
-		extractServiceList.add("pain.010");
-		extractServiceList.add("pain.011");
+//		extractServiceList.clear();
+//		extractServiceList.add("pain.010");
 		//		extractServiceList.add("camt.055");
 		
 		try{
@@ -143,14 +142,14 @@ public class AC_Pacs002_001_04_Extract {
 			//log.info("Test Live Indicator Property: "+testLiveIndProp);
 
 		}catch (Exception e) {
-			log.error("AC_Pacs002_001_04_Extract - Could not find MandateMessageCommons.properties in classpath");
+			log.error("AC_Pacs002_001_04_Extract - Could not find CessionAssignment.properties in classpath");
 		}
 
 	}
 
 	public void generatePacs002Report() throws Exception
 	{
-		log.debug("Extracting Pacs 002 File (ST103)");
+		log.debug("Extracting Pacs 002 File (ST203)");
 
 		casSysctrlCompParamEntity = (CasSysctrlCompParamEntity) valBeanRemote.retrieveCompanyParameters(backEndProcess);
 		log.debug("casSysctrlCompParamEntity in FileExtract: "+casSysctrlCompParamEntity);
@@ -180,12 +179,12 @@ public class AC_Pacs002_001_04_Extract {
 				if(sysCisBankList.size() > 0)
 				{
 
-					for (String extractService : extractServiceList) 
-					{
+//					for (String extractService : extractServiceList)
+//					{
 						//						log.info("~~~EXT SERVICE = "+extractService);
 						// List<String> txnIdList = new ArrayList<String>();
 						txnIdList = (List<String>) beanRemote.retrieveDistinctConfDetails(destInstId, extractService);
-						log.debug("txnIdList ==> "+txnIdList);					
+						log.info("txnIdList ==> "+txnIdList);
 
 						if(txnIdList != null && txnIdList.size() > 0)
 						{
@@ -213,7 +212,7 @@ public class AC_Pacs002_001_04_Extract {
 									nrOfMsgs = chunk.size();
 									try
 									{
-										log.info("********EXTRACTING PACS002(ST103) file for "+destInstId+"********");
+										log.info("********EXTRACTING PACS002(ST203) file for "+destInstId+"********");
 										accpTxns = 0; rejTxns = 0;
 										FIToFIPaymentStatusReportV04 fiToFiPmtStsRep04;
 
@@ -312,7 +311,7 @@ public class AC_Pacs002_001_04_Extract {
 									}//end of try
 									catch (Exception e) 
 									{
-										log.error("**** Exception Creating Pacs 002 Extract File (ST103) **** : " + e);
+										log.error("**** Exception Creating Pacs 002 Extract File (ST203) **** : " + e);
 										e.printStackTrace();
 										e.getCause();
 										throw new Exception(e);
@@ -320,9 +319,9 @@ public class AC_Pacs002_001_04_Extract {
 								}
 							}
 							else
-								log.debug("**** No Entry In Ops Status Report Details --- PACS 002 File (ST103) will not be produced ---");
+								log.debug("**** No Entry In Ops Status Report Details --- PACS 002 File (ST203) will not be produced ---");
 						}
-					}	
+//					}
 				}
 
 			}
@@ -392,7 +391,7 @@ public class AC_Pacs002_001_04_Extract {
 		log.debug("In the generateMsgId()" );
 		SimpleDateFormat sdfFileDate = new SimpleDateFormat("yyyyMMdd");
 		String achId, creationDate, fileSeqNo, liveTestInd, msgId = null;
-		outgoingService = "ST103";
+		outgoingService = "ST203";
 		try
 		{
 
@@ -435,7 +434,7 @@ public class AC_Pacs002_001_04_Extract {
 			msgId = achId+"/"+outgoingService+"/"+"00"+instId+"/"+creationDate+"/"+fileSeqNo;
 		}
 		catch (Exception e) {
-			log.error("**** Exception generating ST103 MsgId **** : " + e);
+			log.error("**** Exception generating ST203 MsgId **** : " + e);
 			e.printStackTrace();
 			e.getCause();
 		}
@@ -480,7 +479,7 @@ public class AC_Pacs002_001_04_Extract {
 		}
 		catch (Exception e) 
 		{
-			log.error("**** Exception generating ST103 FileName **** : " + e);
+			log.error("**** Exception generating ST203 FileName **** : " + e);
 			e.printStackTrace();
 			e.getCause();
 		}
@@ -802,7 +801,7 @@ public class AC_Pacs002_001_04_Extract {
 
 		try
 		{
-			log.info("==================== BULK UPDATE ST103 TXNS ====================");
+			log.info("==================== BULK UPDATE ST203 TXNS ====================");
 			fileProcessBeanRemote.bulkUpdateMandates(orgnConfDetailTxnList);
 			bulkUpdateViaSQL();
 		}
@@ -834,7 +833,7 @@ public class AC_Pacs002_001_04_Extract {
 		
 		if(extOrigMRTIList != null && extOrigMRTIList.size() > 0)
 		{
-			log.info("XXXXX BULK UPDATE ST103 MANDATE XXXXX");
+			log.info("XXXXX BULK UPDATE ST203 MANDATE XXXXX");
 			List<List<String>> partitionList = ListUtils.partition(extOrigMRTIList, targetSize);
 			log.info("Original Mandate partition List size: "+partitionList.size());
 
@@ -842,7 +841,7 @@ public class AC_Pacs002_001_04_Extract {
 				String joinResult = null;
 
 				joinResult = StringUtils.join(mrtiToUpdateList,",");
-				String sqlQuery = new String("UPDATE MANOWNER.MDT_AC_OPS_CONF_DETAILS SET  PROCESS_STATUS = '"+extractedStatus+"',EXTRACT_MSG_ID = '"+extractMsgId+"',EXTRACT_FILE_NAME ='"+extractFileName+"'  WHERE TXN_ID IN ("+joinResult+")");
+				String sqlQuery = new String("UPDATE CAMOWNER.CAS_OPS_CONF_DETAILS SET  PROCESS_STATUS = '"+extractedStatus+"',EXTRACT_MSG_ID = '"+extractMsgId+"',EXTRACT_FILE_NAME ='"+extractFileName+"'  WHERE TXN_ID IN ("+joinResult+")");
 				log.debug("SQL query---->" +sqlQuery);
 
 				fileProcessBeanRemote.bulkUpdateBySQL(sqlQuery);

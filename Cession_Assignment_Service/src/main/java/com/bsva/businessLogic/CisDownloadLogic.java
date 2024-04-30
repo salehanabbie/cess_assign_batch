@@ -33,7 +33,7 @@ public class CisDownloadLogic {
   public static AdminBeanRemote adminBeanRemote;
   public static ServiceBeanRemote serviceBeanRemote;
   public static CisServiceBean cisServiceBean;
-  private String systemName = "MANOWNER";
+  private String systemName = "CAMOWNER";
   private String memberNo;
   Date processingDate;
   SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");

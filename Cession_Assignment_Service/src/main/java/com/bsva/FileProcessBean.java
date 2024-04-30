@@ -111,7 +111,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			log.debug("---------------sparameters: ------------------"+ parameters.toString());
 			casOpsCessionAssignEntity = (CasOpsCessionAssignEntity) genericDAO.findByCriteria(
 					CasOpsCessionAssignEntity.class, parameters);
-			log.debug("---------------mdtAcOpsMndtMsgEntity after findByCriteria: ------------------"+
+			log.debug("---------------casOpsCessionAssignEntity after findByCriteria: ------------------"+
 					casOpsCessionAssignEntity);
 
 			//			2019/10/04-SalehaR-Remove ProcessStatus from check		
@@ -722,7 +722,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		boolean dupl = false;
 		try
 		{
-			String sql = "SELECT COUNT(*) FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS WHERE MANDATE_REQ_TRAN_ID = '"+mrti+"' HAVING COUNT(*) > 0 ";
+			String sql = "SELECT COUNT(*) FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS WHERE MANDATE_REQ_TRAN_ID = '"+mrti+"' HAVING COUNT(*) > 0 ";
 			dupl = genericDAO.findDuplicates(sql);
 			if(dupl)
 				log.info("DUPLICATE RESULT = "+dupl);
