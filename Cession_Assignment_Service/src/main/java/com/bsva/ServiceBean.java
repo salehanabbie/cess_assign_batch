@@ -2361,7 +2361,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		dailyBillingInfoList = (List<CasOpsDailyBillingEntity>) genericDAO.findAllByOrderCriteria(
 				CasOpsDailyBillingEntity.class, parameters, true, "systemSeqNo");
-		log.debug("Daily Billing Info List ==> "+dailyBillingInfoList);
+		log.info("Daily Billing Info List ==> "+dailyBillingInfoList);
 
 		//		2017-07-10 SalehaR - Move this to the billing export code
 		//		if(dailyBillingInfoList != null && dailyBillingInfoList.size() > 0)
@@ -6493,7 +6493,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbDlyBill = new StringBuffer();
 
-		sbDlyBill.append("INSERT INTO CAMOWNER.MDT_AC_ARC_DAILY_BILLING ");
+		sbDlyBill.append("INSERT INTO CAMOWNER.CAS_ARC_DAILY_BILLING ");
 		sbDlyBill.append("(SYSTEM_SEQ_NO ,CREDITOR_BANK ,DEBTOR_BANK ,SUB_SERVICE ,TXN_TYPE ,TXN_STATUS ,CREATED_BY ,CREATED_DATE ,BILL_EXP_STATUS ,ACTION_DATE ");
 		sbDlyBill.append(",AUTH_CODE ,TXN_ID ,MNDT_REF_NUM ,EXT_MSG_ID ,RESP_DATE ,ARCHIVE_DATE) ");
 		sbDlyBill.append("SELECT SYSTEM_SEQ_NO ,CREDITOR_BANK ,DEBTOR_BANK ,SUB_SERVICE ,TXN_TYPE ,TXN_STATUS ,CREATED_BY ,CREATED_DATE ,BILL_EXP_STATUS ,ACTION_DATE ");
@@ -6540,10 +6540,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	{
 		boolean confHdrsBool = false, delConfHdrs = false;
 
-		log.info("===============ARCHIVING CONFIRMATION HDRS===============");
+		log.info("===============ARCHIVING CAMOWNER.CAS_ARC_CONF_HDRS ===============");
 		StringBuffer sbConfHdrs = new StringBuffer();
 
-		sbConfHdrs.append("INSERT INTO CAMOWNER.MDT_AC_ARC_CONF_HDRS ");
+		sbConfHdrs.append("INSERT INTO CAMOWNER.CAS_ARC_CONF_HDRS ");
 		sbConfHdrs.append("(SYSTEM_SEQ_NO ,HDR_MSG_ID ,CREATE_DATE_TIME ,INSTG_AGT ,INSTD_AGT ,ORGNL_MSG_ID ,ORGNL_MSG_NAME ,ORGNL_CREATE_DATE_TIME ,PROCESS_STATUS ");
 		sbConfHdrs.append(",GROUP_STATUS ,SERVICE ,GROUP_ERROR ,ARCHIVE_DATE) ");
 //		2020/03/26-SALEHAR- REMOVE JOIN TO CONF DETAILS
@@ -6573,7 +6573,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		if(confHdrsBool)
 		{
-			log.info("===============DELETING OPS CONF HDRS===============");
+			log.info("===============DELETING CAMOWNER.CAS_ARC_CONF_HDRS===============");
 			try
 			{
 				StringBuffer sbDelCHdrs = new StringBuffer();
@@ -6603,10 +6603,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 	{
 		boolean confDtlsBool = false, delConfDtls = false;
 
-		log.info("===============ARCHIVING CONFIRMATION DETAILS===============");
+		log.info("===============ARCHIVING CAMOWNER.CAS_ARC_CONF_DETAILS DETAILS===============");
 		StringBuffer sbConfDtls = new StringBuffer();
 		
-		sbConfDtls.append("INSERT INTO CAMOWNER.MDT_AC_ARC_CONF_DETAILS ");
+		sbConfDtls.append("INSERT INTO CAMOWNER.CAS_ARC_CONF_DETAILS ");
 		sbConfDtls.append("(SYSTEM_SEQ_NO ,CONF_HDR_SEQ_NO ,ERROR_CODE ,TXN_ID ,TXN_STATUS ,ERROR_TYPE ,RECORD_ID ,MANDATE_REF_NUMBER ,INST_ID ,PROCESS_STATUS ");
 		sbConfDtls.append(",EXTRACT_SERVICE ,ORGNL_MSG_TYPE ,EXTRACT_MSG_ID ,LOCAL_INSTR_CD ,ARCHIVE_DATE,MSG_ID,IN_FILE_NAME,EXTRACT_FILE_NAME) ");
 		sbConfDtls.append("SELECT SYSTEM_SEQ_NO ,CONF_HDR_SEQ_NO ,ERROR_CODE ,TXN_ID ,TXN_STATUS ,ERROR_TYPE ,RECORD_ID ,MANDATE_REF_NUMBER ,INST_ID ,PROCESS_STATUS ");
@@ -6628,7 +6628,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		}
 
 		if(confDtlsBool) {
-			log.info("===============DELETING OPS CONF DETAILS===============");
+			log.info("===============DELETING CAMOWNER.CAS_ARC_CONF_DETAILS===============");
 			try
 			{
 				String delCDtlStr = "DELETE FROM CAMOWNER.CAS_OPS_CONF_DETAILS b WHERE b.PROCESS_STATUS = '4' ";
@@ -6976,7 +6976,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		log.info("===============ARCHIVING STATUS DETAILS===============");
 		StringBuffer sbStatusDtls = new StringBuffer();
 
-		sbStatusDtls.append("INSERT INTO CAMOWNER.MDT_AC_ARC_STATUS_DETAILS ");
+		sbStatusDtls.append("INSERT INTO CAMOWNER.CAS_ARC_STATUS_DETAILS ");
 		sbStatusDtls.append("(SYSTEM_SEQ_NO ,STATUS_HDR_SEQ_NO ,ERROR_CODE ,TXN_ID ,END_TO_END_ID ,TXN_STATUS ,ERROR_TYPE ,RECORD_ID ,ORGNL_TXN_SEQ_NO "); 
 		sbStatusDtls.append(",MANDATE_REF_NUMBER ,INST_ID ,PROCESS_STATUS ,DEBTOR_BRANCH_NO ,CR_ABB_SHORT_NAME ,ARCHIVE_DATE)");
 		sbStatusDtls.append("SELECT a.SYSTEM_SEQ_NO ,a.STATUS_HDR_SEQ_NO ,a.ERROR_CODE ,a.TXN_ID ,a.END_TO_END_ID ,a.TXN_STATUS ,a.ERROR_TYPE ,a.RECORD_ID ,a.ORGNL_TXN_SEQ_NO ");
@@ -7005,7 +7005,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			log.info("===============ARCHIVING STATUS HEADERS===============");
 			StringBuffer sbStatusHdrs = new StringBuffer();
 
-			sbStatusHdrs.append("INSERT INTO CAMOWNER.MDT_AC_ARC_STATUS_HDRS ");
+			sbStatusHdrs.append("INSERT INTO CAMOWNER.CAS_ARC_STATUS_HDRS ");
 			sbStatusHdrs.append("(SYSTEM_SEQ_NO ,HDR_MSG_ID ,CREATE_DATE_TIME ,INSTG_AGT ,INSTD_AGT ,ORGNL_MSG_ID ,ORGNL_MSG_NAME ,ORGNL_CREATE_DATE_TIME "); 
 			sbStatusHdrs.append(",ORGNL_NO_OF_TXNS ,ORGNL_CNTL_SUM ,PROCESS_STATUS ,GROUP_STATUS ,SERVICE ,VET_RUN_NUMBER ,WORKUNIT_REF_NO ,ORGNL_FILE_NAME ,EXTRACT_FILE_NAME ,ARCHIVE_DATE) ");
 			sbStatusHdrs.append("SELECT SYSTEM_SEQ_NO ,HDR_MSG_ID ,CREATE_DATE_TIME ,INSTG_AGT ,INSTD_AGT ,ORGNL_MSG_ID ,ORGNL_MSG_NAME ,ORGNL_CREATE_DATE_TIME "); 
@@ -7094,7 +7094,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbMndtCounts = new StringBuffer();
 
-		sbMndtCounts.append("INSERT INTO CAMOWNER.MDT_AC_ARC_MNDT_COUNT ");
+		sbMndtCounts.append("INSERT INTO CAMOWNER.CAS_ARC_MNDT_COUNT ");
 		sbMndtCounts.append("(INST_ID ,SERVICE_ID ,NR_OF_FILES ,NR_OF_MSGS ,PROCESS_DATE ,INCOMING ,OUTGOING ,MSG_ID ,NR_MSGS_REJECTED ");
 		sbMndtCounts.append(",FILE_NAME ,NR_MSGS_ACCEPTED ,NR_MSGS_EXTRACTED) ");
 		sbMndtCounts.append("SELECT INST_ID ,SERVICE_ID ,NR_OF_FILES ,NR_OF_MSGS ,PROCESS_DATE ,INCOMING ,OUTGOING ,MSG_ID ,NR_MSGS_REJECTED ");
@@ -7143,7 +7143,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbFileReg = new StringBuffer();
 
-		sbFileReg.append("INSERT INTO CAMOWNER.MDT_AC_ARC_FILE_REG ");
+		sbFileReg.append("INSERT INTO CAMOWNER.CAS_ARC_FILE_REG ");
 		sbFileReg.append("(FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID ,ARCHIVE_DATE) ");
 		sbFileReg.append("SELECT FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
 		sbFileReg.append("FROM CAMOWNER.CAS_OPS_FILE_REG ");
@@ -7870,12 +7870,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbTnxsBill = new StringBuffer();
 
-		sbTnxsBill.append("INSERT INTO CAMOWNER.MDT_AC_ARC_TXNS_BILLING ");
+		sbTnxsBill.append("INSERT INTO CAMOWNER.CAS_ARC_TXNS_BILLING ");
 		sbTnxsBill.append("(SYSTEM_SEQ_NO ,ORIGINATOR ,SERVICE ,SUB_SERVICE ,TXN_TYPE ,TXN_STATUS ,FILE_NAME ,STATUS ,VOLUME ,BILL_EXP_STATUS ");
 		sbTnxsBill.append(",SYSTEM_NAME ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,ACTION_DATE ,RESP_DATE ,ARCHIVE_DATE) ");
 		sbTnxsBill.append("SELECT SYSTEM_SEQ_NO ,ORIGINATOR ,SERVICE ,SUB_SERVICE ,TXN_TYPE ,TXN_STATUS ,FILE_NAME ,STATUS ,VOLUME ,BILL_EXP_STATUS ");
 		sbTnxsBill.append(",SYSTEM_NAME ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,ACTION_DATE ,RESP_DATE ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbTnxsBill.append("FROM CAMOWNER.MDT_AC_OPS_TXNS_BILLING WHERE BILL_EXP_STATUS = 'Y' ");
+		sbTnxsBill.append("FROM CAMOWNER.CAS_OPS_TXNS_BILLING WHERE BILL_EXP_STATUS = 'Y' ");
 
 		try
 		{
@@ -7886,7 +7886,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on Archive Daily Billing:- "+ex.getMessage());
+			log.error("Error on Archive Txn Billing:- "+ex.getMessage());
 			ex.printStackTrace();
 			txnsBillBool = false;
 		}
@@ -7899,7 +7899,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String opsTxnsDelete = "DELETE FROM CAMOWNER.MDT_AC_OPS_TXNS_BILLING WHERE BILL_EXP_STATUS = 'Y' ";
+			String opsTxnsDelete = "DELETE FROM CAMOWNER.CAS_OPS_TXNS_BILLING WHERE BILL_EXP_STATUS = 'Y' ";
 			log.debug("dlyBillDel: " + opsTxnsDelete);
 			genericDAO.executeNativeSQL(opsTxnsDelete);
 			opsTxnBillBool = true;
@@ -7999,10 +7999,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sbTxnDataBool = new StringBuffer();
 
-		sbTxnDataBool.append("INSERT INTO CAMOWNER.MDT_AC_ARC_TXNS_BILL_REPORT ");
+		sbTxnDataBool.append("INSERT INTO CAMOWNER.CAS_ARC_TXNS_BILL_REPORT ");
 		sbTxnDataBool.append("(SYSTEM_SEQ_NO ,ORIGINATOR ,SUB_SERVICE ,TXN_TYPE ,FILE_NAME ,PROCESS_DATE ,DELIVERY_TIME ,MANDATE_REQ_TRAN_ID ,TXN_STATUS ,ARCHIVE_DATE) ");
 		sbTxnDataBool.append("SELECT SYSTEM_SEQ_NO ,ORIGINATOR ,SUB_SERVICE ,TXN_TYPE ,FILE_NAME ,PROCESS_DATE ,DELIVERY_TIME ,MANDATE_REQ_TRAN_ID ,TXN_STATUS ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbTxnDataBool.append("FROM CAMOWNER.MDT_AC_OPS_TXNS_BILL_REPORT ");
+		sbTxnDataBool.append("FROM CAMOWNER.CAS_OPS_TXNS_BILL_REPORT ");
 
 		try
 		{
@@ -8026,7 +8026,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		try
 		{
-			String txnBilDelSQL = "DELETE FROM CAMOWNER.MDT_AC_OPS_TXNS_BILL_REPORT";
+			String txnBilDelSQL = "DELETE FROM CAMOWNER.CAS_OPS_TXNS_BILL_REPORT";
 			genericDAO.executeNativeSQL(txnBilDelSQL);
 			txnBilDel = true;
 		}

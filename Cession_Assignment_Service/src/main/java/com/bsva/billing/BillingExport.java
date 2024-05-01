@@ -78,7 +78,7 @@ public class BillingExport implements Serializable {
       //			tt2Unsucc = propertyUtil.getPropValue("AC.Bill.TxnUnSucc");
       nonActInd = propertyUtil.getPropValue("NonActiveInd");
     } catch (Exception e) {
-      log.error("BillingExport - Could not find MandateMessageCommons.properties in classpath");
+      log.error("BillingExport - Could not find CessionAssignment.properties in classpath");
     }
 
     //System Date
@@ -103,12 +103,10 @@ public class BillingExport implements Serializable {
     //		log.info("lastBillSeqNo DATA ==> "+lastBillSeqNo);
 
     dailyBillingListToExport = new ArrayList<CasOpsDailyBillingEntity>();
-    dailyBillingListToExport =
-        (List<CasOpsDailyBillingEntity>) beanRemote.retrieveDailyBillingInterCngInfo();
+    dailyBillingListToExport = (List<CasOpsDailyBillingEntity>) beanRemote.retrieveDailyBillingInterCngInfo();
 
     if (dailyBillingListToExport != null && dailyBillingListToExport.size() > 0) {
-      CasOpsDailyBillingEntity acOpsDailyBillingEntity =
-          dailyBillingListToExport.get(dailyBillingListToExport.size() - 1);
+      CasOpsDailyBillingEntity acOpsDailyBillingEntity = dailyBillingListToExport.get(dailyBillingListToExport.size() - 1);
       lastBillSeqNo = acOpsDailyBillingEntity.getSystemSeqNo();
     }
 
@@ -120,12 +118,11 @@ public class BillingExport implements Serializable {
     List<InterchgBillingDataModel> intChgBillingList = new ArrayList<InterchgBillingDataModel>();
     String currentSeqNo = String.valueOf(billCntrlEntity.getCurrentSeqNo());
     String lastSeqNo = String.valueOf(billCntrlEntity.getLastSeqNo());
-    log.info("currentSeqNo==> " + currentSeqNo);
-    log.info("lastSeqNo==> " + lastSeqNo);
+    log.info("[INT_BILL] currentSeqNo==> " + currentSeqNo);
+    log.info("[INT_BILL] lastSeqNo==> " + lastSeqNo);
 
     intChgBillingList =
-        (List<InterchgBillingDataModel>) beanRemote.retrieveInterchangeBillingData(currentSeqNo,
-            lastBillSeqNo.toString());
+        (List<InterchgBillingDataModel>) beanRemote.retrieveInterchangeBillingData(currentSeqNo, lastBillSeqNo.toString());
     //		log.debug("intChgBillingList DATA ==> "+intChgBillingList);
     //		log.debug("intChgBillingList DATA.SIZE ==> "+intChgBillingList.size());
 
@@ -136,9 +133,7 @@ public class BillingExport implements Serializable {
 
       for (InterchgBillingDataModel interchgBillingDataModel : intChgBillingList) {
         //Translate billing to obs staging billing
-        ObsBillingStagingEntity obsBillingStagingEntity =
-            new ServiceTranslator().translateIntchgBillingModelToObsBillingStaging(
-                interchgBillingDataModel, windowNo);
+        ObsBillingStagingEntity obsBillingStagingEntity = new ServiceTranslator().translateIntchgBillingModelToObsBillingStaging(interchgBillingDataModel, windowNo);
         obsBillingStagingList.add(obsBillingStagingEntity);
       }
 
@@ -299,6 +294,7 @@ public class BillingExport implements Serializable {
 
     try {
       log.info("====================BULK INSERT INTERCHANGE BILLING DATA====================");
+      log.info("bulkList: "+bulkList);
       fileProcessBeanRemote.bulkSaveMandates(bulkList);
     } catch (Exception e) {
       log.error("Error on saveBulkInterchangeBilling: " + e.getMessage());

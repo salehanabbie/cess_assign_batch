@@ -65,9 +65,8 @@ public class EndOfDayLogic {
   public String feedbackMsg;
   boolean eodCheck = false;
   String activeInd, nonActiveInd;
-  String manotServ, manomServ, mancoServ, manocServ, st103Serv, manroServ, manrfServ, spoutServ,
-      sroutServ;
-  String st100Serv, st102Serv, st104Serv, st105Serv, st106Serv, st007Serv, st008Serv;
+  String carotServ, rcaotServ, st203Serv;
+  String st200Serv, st202Serv, st204Serv, st105Serv;
   String eodProcess, mdtLoadType;
   String loggedInUser = null;
   String INPUT_FILE_PATH = null, PROCESS_FILE_PATH = null, OUTPUT_FILE_PATH = null, TEMP_FILE_PATH =
@@ -84,22 +83,12 @@ public class EndOfDayLogic {
       propertyUtil = new PropertyUtil();
       this.activeInd = propertyUtil.getPropValue("ActiveInd");
       this.nonActiveInd = propertyUtil.getPropValue("NonActiveInd");
-      this.manotServ = propertyUtil.getPropValue("Output.Pain009");
-      this.manomServ = propertyUtil.getPropValue("Output.Pain010");
-      this.mancoServ = propertyUtil.getPropValue("Output.Pain011");
-      this.manocServ = propertyUtil.getPropValue("Output.Pain012");
-      this.st103Serv = propertyUtil.getPropValue("Output.Pacs002");
-      this.manroServ = propertyUtil.getPropValue("Output.Mdte001");
-      this.manrfServ = propertyUtil.getPropValue("Output.Mdte002");
-      this.spoutServ = propertyUtil.getPropValue("Output.Camt055");
-      this.sroutServ = propertyUtil.getPropValue("Output.Pacs002Resp");
-      this.st100Serv = propertyUtil.getPropValue("StatusRep.ST100");
-      this.st102Serv = propertyUtil.getPropValue("StatusRep.ST102");
-      this.st104Serv = propertyUtil.getPropValue("StatusRep.ST104");
-      this.st105Serv = propertyUtil.getPropValue("StatusRep.ST105");
-      this.st106Serv = propertyUtil.getPropValue("StatusRep.ST106");
-      this.st007Serv = propertyUtil.getPropValue("StatusRep.ST007");
-      this.st008Serv = propertyUtil.getPropValue("StatusRep.ST008");
+      this.carotServ = propertyUtil.getPropValue("Output.Pain010");
+      this.rcaotServ = propertyUtil.getPropValue("Output.Pain012");
+      this.st203Serv = propertyUtil.getPropValue("Output.Pacs002");
+      this.st200Serv = propertyUtil.getPropValue("StatusRep.ST200");
+      this.st202Serv = propertyUtil.getPropValue("StatusRep.ST202");
+      this.st204Serv = propertyUtil.getPropValue("StatusRep.ST204");
       this.eodProcess = propertyUtil.getPropValue("AUD.SYSPROCESS.EOD");
       this.mdtLoadType = propertyUtil.getPropValue("MDT.LOAD.TYPE");
       INPUT_FILE_PATH = propertyUtil.getPropValue("IncomingFile.In");
@@ -110,7 +99,7 @@ public class EndOfDayLogic {
       ARCHIVE_OUTPUT_PATH = propertyUtil.getPropValue("Archive.Output");
       ARCHIVE_OOPT_PATH = propertyUtil.getPropValue("Archive.Oopt");
     } catch (Exception e) {
-      log.error(" EndOfDayLogic - Could not find MandateMessageCommons.properties in classpath");
+      log.error(" EndOfDayLogic - Could not find CessionAssignment.properties in classpath");
     }
   }
 
@@ -159,14 +148,11 @@ public class EndOfDayLogic {
         //Checking EOD SLA Time
         if (userDate.after(eodTime) && userDate.before(endTime)) {
           //Check if no txns are sitting on '3' or 'L'
-          txnsToExtract =
-              beanRemote.eodCheckIfAllFilesAreExtracted(casSysctrlSysParamEntity.getProcessDate(),
-                  mdtLoadType);
+          txnsToExtract = beanRemote.eodCheckIfAllFilesAreExtracted(casSysctrlSysParamEntity.getProcessDate(), mdtLoadType);
           log.debug("txnsToExtract frin Service Bean ==> " + txnsToExtract);
           if (txnsToExtract) {
             //Scheduler Check
-            List<CasOpsSchedulerEntity> opsSchedulersList =
-                new ArrayList<CasOpsSchedulerEntity>();
+            List<CasOpsSchedulerEntity> opsSchedulersList = new ArrayList<CasOpsSchedulerEntity>();
             opsSchedulersList = adminBeanRemote.retrieveOpsScheduler();
             boolean activeSch = false;
             if (opsSchedulersList != null && opsSchedulersList.size() > 0) {
@@ -238,12 +224,12 @@ public class EndOfDayLogic {
 
 									//Output Debtor Services
 									if(outService.equalsIgnoreCase(manotServ) || outService
-									.equalsIgnoreCase(manomServ) || outService.equalsIgnoreCase
+									.equalsIgnoreCase(carotServ) || outService.equalsIgnoreCase
 									(mancoServ) ||
 											outService.equalsIgnoreCase(manroServ) || outService
 											.equalsIgnoreCase(sroutServ) || outService
-											.equalsIgnoreCase(st102Serv) ||
-											outService.equalsIgnoreCase(st104Serv) || outService
+											.equalsIgnoreCase(st202Serv) ||
+											outService.equalsIgnoreCase(st204Serv) || outService
 											.equalsIgnoreCase(st106Serv) || outService
 											.equalsIgnoreCase(st008Serv))
 									{
@@ -255,10 +241,10 @@ public class EndOfDayLogic {
 
 
 									//Output Creditor Services
-									if(outService.equalsIgnoreCase(manocServ) || outService
-									.equalsIgnoreCase(st103Serv) || outService.equalsIgnoreCase
+									if(outService.equalsIgnoreCase(rcaotServ) || outService
+									.equalsIgnoreCase(st203Serv) || outService.equalsIgnoreCase
 									(manrfServ) || outService.equalsIgnoreCase(spoutServ) ||
-											outService.equalsIgnoreCase(st100Serv) || outService
+											outService.equalsIgnoreCase(st200Serv) || outService
 											.equalsIgnoreCase(st105Serv) || outService
 											.equalsIgnoreCase(st007Serv))
 									{
@@ -283,8 +269,7 @@ public class EndOfDayLogic {
               List<SysCisBankEntity> sysCisBankList = new ArrayList<SysCisBankEntity>();
               sysCisBankList = adminBeanRemote.retrieveSysCisBank();
 
-              if (sysCisBankList != null && sysCisBankList.size() > 0 &&
-                  sysCntrlServicesList != null && sysCntrlServicesList.size() > 0) {
+              if (sysCisBankList != null && sysCisBankList.size() > 0 && sysCntrlServicesList != null && sysCntrlServicesList.size() > 0) {
                 for (SysCisBankEntity sysCisBankEntity : sysCisBankList) {
                   String memberId = sysCisBankEntity.getMemberNo();
                   //									log.info("MEMBER NO ===> "+memberId);
@@ -292,11 +277,9 @@ public class EndOfDayLogic {
                     String outService = servicesEntity.getServiceIdOut();
                     //										log.info("outService ===>
                     //										"+outService);
-                    CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity =
-                        new CasOpsSotEotCtrlEntity();
+                    CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
                     casOpsSotEotCtrlEntity =
-                        (CasOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(memberId,
-                            outService);
+                        (CasOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(memberId, outService);
                     //										log.info("SOT/EOT CTRL CHECK ==>
                     //										"+mdtAcOpsSotEotCtrlEntity);
                     if (casOpsSotEotCtrlEntity != null) {
@@ -393,26 +376,23 @@ public class EndOfDayLogic {
                     }
                     if (allMonthlyReportsRun) {
                       log.info("<<---------TRUNCATING TABLES---------->");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_OPS_SERVICES");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_OPS_CUST_PARAM");
-                      //adminBeanRemote.truncateTable("MANOWNER.MDT_OPS_FILE_REG");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_OPS_REF_SEQ_NR");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_AC_OPS_PROCESS_CONTROLS");
-                      adminBeanRemote.truncateTable("MANOWNER.SYS_CIS_BANK");
-                      adminBeanRemote.truncateTable("MANOWNER.SYS_CIS_BRANCH");
-                      adminBeanRemote.truncateTable("MANOWNER.SYS_CIS_BRANCH_CDV_PARAMETERS");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_AC_OPS_STATUS_HDRS");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_AC_OPS_STATUS_DETAILS");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_AC_OPS_MNDT_COUNT");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_AC_OPS_SOT_EOT_CTRL");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_AC_OPS_PUBHOL");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_OPS_CRON");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_OPS_SLA_TIMES");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_AC_OPS_SCHEDULER");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_AC_OPS_TRANS_CTRL_MSG");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_OPS_REP_SEQ_NR");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_OPS_LAST_EXTRACT_TIMES");
-                      adminBeanRemote.truncateTable("MANOWNER.MDT_AC_OPS_FILE_SIZE_LIMIT");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_SERVICES");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_CUST_PARAM");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_REF_SEQ_NR");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_AC_OPS_PROCESS_CONTROLS");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_SOT_EOT_CTRL");
+                      adminBeanRemote.truncateTable("CAMOWNER.MDT_OPS_CRON");
+                      adminBeanRemote.truncateTable("CAMOWNER.MDT_OPS_SLA_TIMES");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_SCHEDULER");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_TRANS_CTRL_MSG");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_REP_SEQ_NR");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_LAST_EXTRACT_TIMES");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_FILE_SIZE_LIMIT");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_MNDT_COUNT");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_STATUS_HDRS");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_STATUS_DETAILS");
+                      adminBeanRemote.truncateTable("CAMOWNER.SYS_CIS_BANK");
+                      adminBeanRemote.truncateTable("CAMOWNER.SYS_CIS_BRANCH");
 
                       updateEodRunInd(casSysctrlSysParamEntity, forcecloseReason);
                       updateActiveInd(casSysctrlSysParamEntity);

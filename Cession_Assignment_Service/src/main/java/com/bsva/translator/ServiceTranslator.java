@@ -468,16 +468,6 @@ public class ServiceTranslator {
 
 //		if(intBillModel.getActionDate() != null)
 //			billingStagingEntity.setActionDate(intBillModel.getActionDate());
-
-    if (intBillModel != null && intBillModel.getSubService().equalsIgnoreCase("SRINP")) {
-		if (intBillModel.getDebtorBank() != null) {
-			billingStagingEntity.setOriginator(new BigDecimal(intBillModel.getDebtorBank()));
-		}
-
-		if (intBillModel.getCreditorBank() != null) {
-			billingStagingEntity.setDestination(new BigDecimal(intBillModel.getCreditorBank()));
-		}
-    } else {
 		if (intBillModel.getCreditorBank() != null) {
 			billingStagingEntity.setOriginator(new BigDecimal(intBillModel.getCreditorBank()));
 		}
@@ -485,7 +475,6 @@ public class ServiceTranslator {
 		if (intBillModel.getDebtorBank() != null) {
 			billingStagingEntity.setDestination(new BigDecimal(intBillModel.getDebtorBank()));
 		}
-    }
 
 	  if (intBillModel.getVolume() != null) {
 		  billingStagingEntity.setVolume(intBillModel.getVolume());

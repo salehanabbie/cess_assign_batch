@@ -65,7 +65,7 @@ public class SimpleEjb {
   public void runBillingExport() throws Exception {
     BillingExport billingExport = new BillingExport();
     billingExport.exportInterchangeBilling();
-//    billingExport.exportTxnBilling();
+    billingExport.exportTxnBilling();
   }
 
   public void runEotExtract(String mdtLoadType) throws Exception {
