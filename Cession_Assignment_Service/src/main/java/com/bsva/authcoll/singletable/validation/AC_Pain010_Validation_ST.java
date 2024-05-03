@@ -103,7 +103,7 @@ public class AC_Pain010_Validation_ST extends Validation_ST {
       fileSizeLimit = Integer.valueOf(fileSizeLimitStr);
     } catch (Exception e) {
       log.error(
-          "AC_Pain010_Validation_ST - Could not find MandateMessageCommons.properties in " +
+          "AC_Pain010_Validation_ST - Could not find CessionAssignment.properties in " +
 				  "classpath");
       carinService = "CARIN";
       fileSizeLimit = 50000;

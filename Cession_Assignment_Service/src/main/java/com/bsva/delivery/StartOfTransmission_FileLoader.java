@@ -53,7 +53,7 @@ public class StartOfTransmission_FileLoader implements Serializable
 	String msgRef = "SOT";
 	String achInstId = "210000";
 	String backEndProcess = "BACKEND";
-	private String sotSchema = "/home/opsjava/Delivery/Mandates/Schema/sot.001.001.02.xsd";
+	private String sotSchema = "/home/opsjava/Delivery/Cession_Assign/Schema/sot.001.001.02.xsd";
 	ControlMessage controlMessage;
 	String testLiveIndProp = null;
 	
@@ -69,7 +69,7 @@ public class StartOfTransmission_FileLoader implements Serializable
 			this.testLiveIndProp = propertyUtil.getPropValue("TestLiveInd");
 			//log.info("Test Live Indicator Property: "+testLiveIndProp);
 		}catch (Exception e) {
-			log.error("StartOfTransmission_FileLoader - Could not find MandateMessageCommons.properties in classpath");
+			log.error("StartOfTransmission_FileLoader - Could not find CessionAssignment.properties in classpath");
 		}
 		
 		this.fileName = fileName;

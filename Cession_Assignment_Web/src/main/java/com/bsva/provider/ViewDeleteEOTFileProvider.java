@@ -52,7 +52,7 @@ public class ViewDeleteEOTFileProvider extends SortableDataProvider {
 	private SortableDataProviderComparator comparator = new SortableDataProviderComparator();
 	private List<ViewDeleteEOTFileModel> viewDeleteEOTFileModelList;
 	List<String> results;
-	String directoryName = "/home/opsjava/Delivery/Mandates/Input/Processing/";
+	String directoryName = "/home/opsjava/Delivery/Cession_Assign/Input/Processing/";
 	File fileNames = new File(directoryName);
 	String name = null;
 	private List<WebOpsFileRegModel> webOpsFileRegList;

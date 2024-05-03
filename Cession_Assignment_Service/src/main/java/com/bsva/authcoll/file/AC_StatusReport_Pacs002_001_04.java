@@ -117,7 +117,7 @@ public class AC_StatusReport_Pacs002_001_04 {
       //log.info("Test Live Indicator Property: "+testLiveIndProp);
     } catch (Exception e) {
       log.error(
-          "AC_StatusReport_Pacs002_001_04 - Could not find MandateMessageCommons.properties in " +
+          "AC_StatusReport_Pacs002_001_04 - Could not find CessionAssignment.properties in " +
 				  "classpath");
     }
   }

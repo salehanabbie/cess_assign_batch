@@ -797,7 +797,7 @@ public class EndOfDayLogic {
 
 
   public static void archiveOutputFiles() throws IOException {
-    File dir = new File("/home/opsjava/Delivery/Mandates/Archive/Output");
+    File dir = new File("/home/opsjava/Delivery/Cession_Assign/Archive/Output");
     Path filePath = dir.toPath();
 
     Date currentDate = new Date();
@@ -824,14 +824,14 @@ public class EndOfDayLogic {
       //dir.delete();
 
       if (diffDays >= 7) {
-        deleteDirectory(new File("/home/opsjava/Delivery/Mandates/Archive/Output"));
+        deleteDirectory(new File("/home/opsjava/Delivery/Cession_Assign/Archive/Output"));
       }
     }
 
   }
 
   public static void archiveInputFiles() throws IOException {
-    File dir = new File("/home/opsjava/Delivery/Mandates/Archive/Input");
+    File dir = new File("/home/opsjava/Delivery/Cession_Assign/Archive/Input");
     Path filePath = dir.toPath();
 
     Date currentDate = new Date();
@@ -858,7 +858,7 @@ public class EndOfDayLogic {
       //dir.delete();
 
       if (diffDays >= 7) {
-        deleteDirectory(new File("/home/opsjava/Delivery/Mandates/Archive/Input"));
+        deleteDirectory(new File("/home/opsjava/Delivery/Cession_Assign/Archive/Input"));
       }
     }
 

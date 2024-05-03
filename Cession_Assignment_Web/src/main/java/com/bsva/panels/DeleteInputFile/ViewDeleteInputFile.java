@@ -53,7 +53,7 @@ public class ViewDeleteInputFile extends Panel implements Serializable {
 	private Button cancelButton;
 	private Button searchButton;
 	private TextField<String> searchText;
-	String directoryName = "/home/opsjava/Delivery/Mandates/Input/";
+	String directoryName = "/home/opsjava/Delivery/Cession_Assign/Input/";
 	//"/home/opsjava/Delivery/Mandates/Input/"
 	private String fileName;
 	String name;
@@ -377,9 +377,9 @@ public class ViewDeleteInputFile extends Panel implements Serializable {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String today = sdf.format(date); 
 
-        File file = new File("/home/opsjava/Delivery/Mandates/Input/" + fileName);
+        File file = new File("/home/opsjava/Delivery/Cession_Assign/Input/" + fileName);
         
-        File dest = new File("/home/opsjava/Delivery/Mandates/Archive/Deleted Files/"+ today +File.separator);
+        File dest = new File("/home/opsjava/Delivery/Cession_Assign/Archive/Deleted Files/"+ today +File.separator);
         
         if(!dest.exists()){
         	

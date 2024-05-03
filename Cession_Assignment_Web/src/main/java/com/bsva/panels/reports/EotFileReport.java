@@ -43,7 +43,7 @@ public class EotFileReport {
 	
 	public static Logger log=Logger.getLogger(EotFileReport.class);
 	Date currentDate = new Date();
-	private String downloaddirectory ="/home/opsjava/Delivery/Mandates/Reports/";
+	private String downloaddirectory ="/home/opsjava/Delivery/Cession_Assign/Reports/";
 	Controller controller = new Controller ();
 	
 	List<AcOpsTransCtrlMsgModel>eotFileList = new ArrayList<AcOpsTransCtrlMsgModel>();

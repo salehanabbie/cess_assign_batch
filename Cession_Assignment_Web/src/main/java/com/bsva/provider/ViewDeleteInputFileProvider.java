@@ -49,7 +49,7 @@ public class ViewDeleteInputFileProvider extends SortableDataProvider  {
 	private SortableDataProviderComparator comparator = new SortableDataProviderComparator();
 	private List<ViewDeleteInputModel> viewDeleteInputModelList;
 	List<String> results;
-	String directoryName = "/home/opsjava/Delivery/Mandates/Input/";
+	String directoryName = "/home/opsjava/Cession_Assign/Mandates/Input/";
 	File fileNames = new File(directoryName);
 	String name = null;
 	

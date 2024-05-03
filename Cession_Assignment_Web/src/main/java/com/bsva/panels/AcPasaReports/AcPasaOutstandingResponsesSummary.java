@@ -55,7 +55,7 @@ public class AcPasaOutstandingResponsesSummary {
 	
 
 	
-	private String downloaddirectory ="/home/opsjava/Delivery/Mandates/Reports/";
+	private String downloaddirectory ="/home/opsjava/Delivery/Cession_Assign/Reports/";
 	public static Logger log=Logger.getLogger(OutstandingResponsesReport.class);
 	Controller controller = new Controller();
 	int fileSeqNo =000;

@@ -361,8 +361,8 @@ public class ViewCopyFilesPanel  extends Panel implements Serializable
 	{
 		boolean fileCopied = false;
 
-		File tmpFile = new File("/home/opsjava/Delivery/Mandates/Output/" + fileName);
-		String outputFile = "/home/opsjava/Delivery/Mandates/Output/temp/" + fileName;
+		File tmpFile = new File("/home/opsjava/Delivery/Cession_Assign/Output/" + fileName);
+		String outputFile = "/home/opsjava/Delivery/Cession_Assign/Output/temp/" + fileName;
 		FileOutputStream fos = new FileOutputStream(tmpFile);
 		Path source = Paths.get(outputFile);
 		Files.copy(source, fos);

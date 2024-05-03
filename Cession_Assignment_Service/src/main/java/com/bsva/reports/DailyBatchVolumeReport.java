@@ -90,7 +90,7 @@ public class DailyBatchVolumeReport
 
 	SimpleDateFormat monthFormat = new SimpleDateFormat("MMM-yyyy");
 	String reportName,recipientNr, reportNr, reportDir = null, tempDir = null;
-	String xlsFileName = null, mr022 = null;
+	String xlsFileName = null, BSCA01 = null;
 	String invBank = null;
 	int fileSeqNo =000;
 	int rowCount = 0;
@@ -160,21 +160,21 @@ public class DailyBatchVolumeReport
 			reportDir= propertyUtilRemote.getPropValue("Reports.Output");
 			log.debug("reportDir ==> "+reportDir);
 			//Retrieve Report Name here
-			mr022 = propertyUtilRemote.getPropValue("RPT.DAILY.BATCH.VOLUMES");
+			BSCA01 = propertyUtilRemote.getPropValue("RPT.DAILY.BATCH.VOLUMES");
 			invBank = propertyUtilRemote.getPropValue("ERROR_CODES_REPORT_INV_BANK");
 			recipientNr = propertyUtilRemote.getPropValue("AC.ACH.RPT.RECIPIENT.NUMBER");
 		}
 		catch(Exception ex)
 		{
-			log.error("mr022- Could not find MandateMessageCommons.properties in classpath");	
-			reportDir = "/home/opsjava/Delivery/Mandates/Output/Reports/";
-			tempDir="/home/opsjava/Delivery/Mandates/Output/temp/";
+			log.error("BSCA01- Could not find CessionAssignment.properties in classpath");
+			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
+			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 			invBank = "INVBNK";
 		}
 
 		//Retrieve Report Name
 		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
-		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(mr022);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(BSCA01);
 
 		if(reportNameEntity != null)
 		{
@@ -187,7 +187,7 @@ public class DailyBatchVolumeReport
 				
 				long endTime = System.nanoTime();
 				long duration = (endTime - startTime) / 1000000;
-				log.info("[MR022 Report Duration: "+DurationFormatUtils.formatDuration(duration, "HH:mm:ss.S")+" milliseconds |");
+				log.info("[BSCA01 Report Duration: "+DurationFormatUtils.formatDuration(duration, "HH:mm:ss.S")+" milliseconds |");
 			}
 		}
 	}
@@ -222,7 +222,7 @@ public class DailyBatchVolumeReport
 			xlsFileName  =recipientNr+reportNo+"AC"+reportDate.format(currentDate).toString()+".xlsx";
 		}
 
-		String inpFromCreditorsSheetName = "BSA BATCH PROD VOLUMES";//name of inpFromCreditorsSheet
+		String inpFromCreditorsSheetName = "CASA BATCH PROD VOLUMES";//name of inpFromCreditorsSheet
 
 		strMonth = fileTimeFormat.format(systemParameterModel.getProcessDate()).substring(0,2);
 		month= DateUtil.getMonthFullname(Integer.valueOf(strMonth), true);
@@ -534,12 +534,12 @@ public class DailyBatchVolumeReport
 		}
 		catch(IOException ioe)
 		{
-			log.error("Error on copying mr022 report to temp "+ioe.getMessage());
+			log.error("Error on copying BSCA01 report to temp "+ioe.getMessage());
 			ioe.printStackTrace();
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on copying mr022 report to temp "+ex.getMessage());
+			log.error("Error on copying BSCA01 report to temp "+ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
@@ -697,13 +697,13 @@ public class DailyBatchVolumeReport
 		nrOfExtTxnsCell.setCellValue("EXTRACTED TXNS");
 
 
-		//		========================MANIN============================//
+		//		========================CARIN============================//
 		int rowCount = 6;
 		int debtorCount = 6;
 
-		//Retrieve MANIN Counts
+		//Retrieve CARIN Counts
 		//		2018-09-07 SalehaR - Removed as it is replaced by loadCreditorData()
-		//		List<MonthlyVolumeCountEntityModel> maninCountList = (List<MonthlyVolumeCountEntityModel>) beanRemote.retrieveMndtCountByCreditorBanks(strFromDate,strToDate,"MANIN");
+		//		List<MonthlyVolumeCountEntityModel> carinCountList = (List<MonthlyVolumeCountEntityModel>) beanRemote.retrieveMndtCountByCreditorBanks(strFromDate,strToDate,"CARIN");
 
 		if(inputFromCreditorCountList != null && inputFromCreditorCountList.size() > 0)
 		{
@@ -714,70 +714,70 @@ public class DailyBatchVolumeReport
 
 			int fstCount = 0;
 			int outfstCount = 0;
-			Row maninRow = null;
-			//			//Retrieve the maninCount
-			List<MonthlyVolumeCountEntityModel> maninCountList = inputFromCreditorBanksMap.get("MANIN");
+			Row carinRow = null;
+			//			//Retrieve the carinCount
+			List<MonthlyVolumeCountEntityModel> carinCountList = inputFromCreditorBanksMap.get("CARIN");
 
-			if(maninCountList != null && maninCountList.size() > 0)
+			if(carinCountList != null && carinCountList.size() > 0)
 			{	
-				for (MonthlyVolumeCountEntityModel maninCountEntity : maninCountList) 
+				for (MonthlyVolumeCountEntityModel carinCountEntity : carinCountList) 
 				{
-					maninRow = inpFromCreditorsSheet.createRow(rowCount);
-					Cell maninServCell = maninRow.createCell(0);
+					carinRow = inpFromCreditorsSheet.createRow(rowCount);
+					Cell carinServCell = carinRow.createCell(0);
 
 					if(fstCount == 0)
 					{
-						maninServCell.setCellStyle(serviceCellStyle);
-						maninServCell.setCellValue("MANIN");
+						carinServCell.setCellStyle(serviceCellStyle);
+						carinServCell.setCellValue("CARIN");
 						fstCount = 1;
 					}
 					else
 					{
-						maninServCell.setCellStyle(normalCellStyle);
+						carinServCell.setCellStyle(normalCellStyle);
 					}
 
-					Cell creditorBank = maninRow.createCell(1);
+					Cell creditorBank = carinRow.createCell(1);
 					creditorBank.setCellStyle(normalCellStyle);
-					creditorBank.setCellValue(maninCountEntity.getInstId());
+					creditorBank.setCellValue(carinCountEntity.getInstId());
 
-					Cell totalNrMsgs = maninRow.createCell(2);
+					Cell totalNrMsgs = carinRow.createCell(2);
 					totalNrMsgs.setCellStyle(normalCellStyle);
-					totalNrMsgs.setCellValue(maninCountEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(maninCountEntity.getNrOfMsgs());
+					totalNrMsgs.setCellValue(carinCountEntity.getNrOfMsgs().intValue());
+					stTotal = stTotal.add(carinCountEntity.getNrOfMsgs());
 
-					Cell accptdMsgs = maninRow.createCell(3);
+					Cell accptdMsgs = carinRow.createCell(3);
 					accptdMsgs.setCellStyle(acceptedCellStyle);
-					accptdMsgs.setCellValue(maninCountEntity.getNrOfAccpMsgs().intValue());
-					stAccptd = stAccptd.add(maninCountEntity.getNrOfAccpMsgs());
+					accptdMsgs.setCellValue(carinCountEntity.getNrOfAccpMsgs().intValue());
+					stAccptd = stAccptd.add(carinCountEntity.getNrOfAccpMsgs());
 
-					Cell rjctdMsgs = maninRow.createCell(4);
+					Cell rjctdMsgs = carinRow.createCell(4);
 					rjctdMsgs.setCellStyle(rejectedCellStyle);
-					rjctdMsgs.setCellValue(maninCountEntity.getNrOfRjctMsgs().intValue());
-					stRejected = stRejected.add(maninCountEntity.getNrOfRjctMsgs());
+					rjctdMsgs.setCellValue(carinCountEntity.getNrOfRjctMsgs().intValue());
+					stRejected = stRejected.add(carinCountEntity.getNrOfRjctMsgs());
 
 					//Move to next row
 					rowCount++;
 				}
 
 				//SubTotal the Rows
-				Row maninSTRow = inpFromCreditorsSheet.createRow(rowCount);
+				Row carinSTRow = inpFromCreditorsSheet.createRow(rowCount);
 
-				Cell maninServ = maninSTRow.createCell(0);
-				maninServ.setCellStyle(subTotalCellStyle);
+				Cell carinServ = carinSTRow.createCell(0);
+				carinServ.setCellStyle(subTotalCellStyle);
 
-				Cell maninBank = maninSTRow.createCell(1);
-				maninBank.setCellStyle(subTotalCellStyle);
-				maninBank.setCellValue("Total");
+				Cell carinBank = carinSTRow.createCell(1);
+				carinBank.setCellStyle(subTotalCellStyle);
+				carinBank.setCellValue("Total");
 
-				Cell sttotalNrMsgs = maninSTRow.createCell(2);
+				Cell sttotalNrMsgs = carinSTRow.createCell(2);
 				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
 				sttotalNrMsgs.setCellValue(stTotal.intValue());
 
-				Cell staccp = maninSTRow.createCell(3);
+				Cell staccp = carinSTRow.createCell(3);
 				staccp.setCellStyle(subTotalCellStyle);
 				staccp.setCellValue(stAccptd.intValue());
 
-				Cell stRjct = maninSTRow.createCell(4);
+				Cell stRjct = carinSTRow.createCell(4);
 				stRjct.setCellStyle(subTotalCellStyle);
 				stRjct.setCellValue(stRejected.intValue());
 
@@ -790,34 +790,34 @@ public class DailyBatchVolumeReport
 			}	
 
 
-			//			Retrieve the manotCount
-			List<MonthlyVolumeCountEntityModel> manotCountList = outputToDebtorBanksMap.get("MANOT");
-			//			log.info("manotCountList.size() ===>"+manotCountList.size()); 
-			if(manotCountList != null && manotCountList.size() > 0)
+			//			Retrieve the carotCount
+			List<MonthlyVolumeCountEntityModel> carotCountList = outputToDebtorBanksMap.get("CAROT");
+			//			log.info("carotCountList.size() ===>"+carotCountList.size()); 
+			if(carotCountList != null && carotCountList.size() > 0)
 			{	
-				for (MonthlyVolumeCountEntityModel manotCountEntity : manotCountList) 
+				for (MonthlyVolumeCountEntityModel carotCountEntity : carotCountList) 
 				{
-					Row manotRow = inpFromCreditorsSheet.getRow(debtorCount);
-					Cell manotServCell = manotRow.createCell(6);
+					Row carotRow = inpFromCreditorsSheet.getRow(debtorCount);
+					Cell carotServCell = carotRow.createCell(6);
 					if(outfstCount == 0)
 					{
-						manotServCell.setCellStyle(serviceCellStyle);
-						manotServCell.setCellValue("MANOT");
+						carotServCell.setCellStyle(serviceCellStyle);
+						carotServCell.setCellValue("CAROT");
 						outfstCount = 1;
 					}
 					else
 					{
-						manotServCell.setCellStyle(normalCellStyle);
+						carotServCell.setCellStyle(normalCellStyle);
 					}
 
-					Cell debtorBank = manotRow.createCell(7);
+					Cell debtorBank = carotRow.createCell(7);
 					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(manotCountEntity.getInstId());
+					debtorBank.setCellValue(carotCountEntity.getInstId());
 
-					Cell totalNrExtrctdMsgs = manotRow.createCell(8);
+					Cell totalNrExtrctdMsgs = carotRow.createCell(8);
 					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(manotCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(manotCountEntity.getNrOfExtMsgs());
+					totalNrExtrctdMsgs.setCellValue(carotCountEntity.getNrOfExtMsgs().intValue());
+					stExtracted = stExtracted.add(carotCountEntity.getNrOfExtMsgs());
 					//Move to next row
 					debtorCount++;
 				}
@@ -825,12 +825,12 @@ public class DailyBatchVolumeReport
 				//SubTotal the Rows
 				Row extStRow = inpFromCreditorsSheet.getRow(rowCount-1);
 
-				Cell manotServ = extStRow.createCell(6);
-				manotServ.setCellStyle(subTotalCellStyle);
+				Cell carotServ = extStRow.createCell(6);
+				carotServ.setCellStyle(subTotalCellStyle);
 
-				Cell manotBank = extStRow.createCell(7);
-				manotBank.setCellStyle(subTotalCellStyle);
-				manotBank.setCellValue("Total");
+				Cell carotBank = extStRow.createCell(7);
+				carotBank.setCellStyle(subTotalCellStyle);
+				carotBank.setCellValue("Total");
 
 				Cell sttotalNrExtMsgs = extStRow.createCell(8);
 				sttotalNrExtMsgs.setCellStyle(subTotalCellStyle);
@@ -840,14 +840,14 @@ public class DailyBatchVolumeReport
 				gtExtracted = gtExtracted.add(stExtracted);
 			}
 			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel maninTotalEntity = new MonthlyVolumeCountEntityModel();
-			maninTotalEntity.setService("MANIN");
-			maninTotalEntity.setTotalNrOfMsgs(stTotal);
-			maninTotalEntity.setTotalAccpMsgs(stAccptd);
-			maninTotalEntity.setTotalRjctdMsgs(stRejected);
-			maninTotalEntity.setTotalNrOfExtMsgs(stExtracted);
+			MonthlyVolumeCountEntityModel carinTotalEntity = new MonthlyVolumeCountEntityModel();
+			carinTotalEntity.setService("CARIN");
+			carinTotalEntity.setTotalNrOfMsgs(stTotal);
+			carinTotalEntity.setTotalAccpMsgs(stAccptd);
+			carinTotalEntity.setTotalRjctdMsgs(stRejected);
+			carinTotalEntity.setTotalNrOfExtMsgs(stExtracted);
 
-			summaryTotalsMap.put("MANIN", maninTotalEntity);
+			summaryTotalsMap.put("CARIN", carinTotalEntity);
 		}
 
 		//		log.info("rowCount ==> "+rowCount);
@@ -949,7 +949,7 @@ public class DailyBatchVolumeReport
 
 			if(manomCountList != null && manomCountList.size() > 0)
 			{	
-				for (MonthlyVolumeCountEntityModel manotCountEntity : manomCountList) 
+				for (MonthlyVolumeCountEntityModel carotCountEntity : manomCountList) 
 				{
 					Row manomRow = inpFromCreditorsSheet.getRow(debtorCount);
 					Cell manomServCell = manomRow.createCell(6);
@@ -966,12 +966,12 @@ public class DailyBatchVolumeReport
 
 					Cell debtorBank = manomRow.createCell(7);
 					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(manotCountEntity.getInstId());
+					debtorBank.setCellValue(carotCountEntity.getInstId());
 
 					Cell totalNrExtrctdMsgs = manomRow.createCell(8);
 					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(manotCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(manotCountEntity.getNrOfExtMsgs());
+					totalNrExtrctdMsgs.setCellValue(carotCountEntity.getNrOfExtMsgs().intValue());
+					stExtracted = stExtracted.add(carotCountEntity.getNrOfExtMsgs());
 					//Move to next row
 					debtorCount++;
 				}
@@ -979,12 +979,12 @@ public class DailyBatchVolumeReport
 				//SubTotal the Rows
 				Row extStRow = inpFromCreditorsSheet.getRow(rowCount-1);
 
-				Cell manotServ = extStRow.createCell(6);
-				manotServ.setCellStyle(subTotalCellStyle);
+				Cell carotServ = extStRow.createCell(6);
+				carotServ.setCellStyle(subTotalCellStyle);
 
-				Cell manotBank = extStRow.createCell(7);
-				manotBank.setCellStyle(subTotalCellStyle);
-				manotBank.setCellValue("Total");
+				Cell carotBank = extStRow.createCell(7);
+				carotBank.setCellStyle(subTotalCellStyle);
+				carotBank.setCellValue("Total");
 
 				Cell sttotalNrExtMsgs = extStRow.createCell(8);
 				sttotalNrExtMsgs.setCellStyle(subTotalCellStyle);
@@ -1099,7 +1099,7 @@ public class DailyBatchVolumeReport
 
 			if(mancoCountList != null && mancoCountList.size() > 0)
 			{	
-				for (MonthlyVolumeCountEntityModel manotCountEntity : mancoCountList) 
+				for (MonthlyVolumeCountEntityModel carotCountEntity : mancoCountList) 
 				{
 					Row mancoRow = inpFromCreditorsSheet.getRow(debtorCount);
 					Cell mancoServCell = mancoRow.createCell(6);
@@ -1116,12 +1116,12 @@ public class DailyBatchVolumeReport
 
 					Cell debtorBank = mancoRow.createCell(7);
 					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(manotCountEntity.getInstId());
+					debtorBank.setCellValue(carotCountEntity.getInstId());
 
 					Cell totalNrExtrctdMsgs = mancoRow.createCell(8);
 					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(manotCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(manotCountEntity.getNrOfExtMsgs());
+					totalNrExtrctdMsgs.setCellValue(carotCountEntity.getNrOfExtMsgs().intValue());
+					stExtracted = stExtracted.add(carotCountEntity.getNrOfExtMsgs());
 					//Move to next row
 					debtorCount++;
 				}
@@ -1172,7 +1172,7 @@ public class DailyBatchVolumeReport
 			int firstCount = 0;
 			int outfstCount = 0;
 
-			//			//Retrieve the maninCount
+			//			//Retrieve the carinCount
 			List<MonthlyVolumeCountEntityModel> manriCountList = inputFromCreditorBanksMap.get("MANRI");
 			if(manriCountList != null && manriCountList.size() > 0)
 			{
@@ -1193,9 +1193,9 @@ public class DailyBatchVolumeReport
 						manriServCell.setCellStyle(normalCellStyle);
 					}
 
-					Cell maninBank = manriRow.createCell(1);
-					maninBank.setCellStyle(normalCellStyle);
-					maninBank.setCellValue(manriCountEntity.getInstId());
+					Cell carinBank = manriRow.createCell(1);
+					carinBank.setCellStyle(normalCellStyle);
+					carinBank.setCellValue(manriCountEntity.getInstId());
 
 					Cell totalNrMsgs = manriRow.createCell(2);
 					totalNrMsgs.setCellStyle(normalCellStyle);
@@ -1251,7 +1251,7 @@ public class DailyBatchVolumeReport
 
 			if(manroCountList != null && manroCountList.size() > 0)
 			{	
-				for (MonthlyVolumeCountEntityModel manotCountEntity : manroCountList) 
+				for (MonthlyVolumeCountEntityModel carotCountEntity : manroCountList) 
 				{
 					Row manroRow = inpFromCreditorsSheet.getRow(debtorCount);
 					Cell manroServCell = manroRow.createCell(6);
@@ -1268,12 +1268,12 @@ public class DailyBatchVolumeReport
 
 					Cell debtorBank = manroRow.createCell(7);
 					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(manotCountEntity.getInstId());
+					debtorBank.setCellValue(carotCountEntity.getInstId());
 
 					Cell totalNrExtrctdMsgs = manroRow.createCell(8);
 					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(manotCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(manotCountEntity.getNrOfExtMsgs());
+					totalNrExtrctdMsgs.setCellValue(carotCountEntity.getNrOfExtMsgs().intValue());
+					stExtracted = stExtracted.add(carotCountEntity.getNrOfExtMsgs());
 					//Move to next row
 					debtorCount++;
 				}
@@ -1689,9 +1689,9 @@ public class DailyBatchVolumeReport
 		int rowCount_3 = 6;
 		int debtorCount = 6;
 
-		//		========================ST101============================//
+		//		========================ST201============================//
 		//		2018-09-13 SalehaR - Removed as it is replaced by loadVolumeData()
-		//				List<MonthlyVolumeCountEntityModel> st101CountList = (List<MonthlyVolumeCountEntityModel>) beanRemote.retrieveMndtCountByDebtorBanks(strFromDate,strToDate,"ST101");
+		//				List<MonthlyVolumeCountEntityModel> st101CountList = (List<MonthlyVolumeCountEntityModel>) beanRemote.retrieveMndtCountByDebtorBanks(strFromDate,strToDate,"ST201");
 		if(inputFromDebtorCountList != null && inputFromDebtorCountList.size() > 0)
 		{
 			BigDecimal stTotal = BigDecimal.ZERO;
@@ -1703,7 +1703,7 @@ public class DailyBatchVolumeReport
 			int outfstCount = 0;
 
 			//			//Retrieve the st101Count
-			List<MonthlyVolumeCountEntityModel> st101CountList = inputFromDebtorBankMap.get("ST101");
+			List<MonthlyVolumeCountEntityModel> st101CountList = inputFromDebtorBankMap.get("ST201");
 
 			if(st101CountList != null && st101CountList.size() > 0)
 			{	
@@ -1715,7 +1715,7 @@ public class DailyBatchVolumeReport
 					if(fstCount == 0)
 					{
 						extServiceCell.setCellStyle(serviceCellStyle);
-						extServiceCell.setCellValue("ST101");
+						extServiceCell.setCellValue("ST201");
 						fstCount = 1;
 					}
 					else
@@ -1778,7 +1778,7 @@ public class DailyBatchVolumeReport
 
 
 			//			Retrieve the st103Count
-			List<MonthlyVolumeCountEntityModel> st103CountList = outputToCreditorBankMap.get("ST103");
+			List<MonthlyVolumeCountEntityModel> st103CountList = outputToCreditorBankMap.get("ST203");
 			//			log.info("st103CountList.size() ===>"+st103CountList.size()); 
 			if(st103CountList != null && st103CountList.size() > 0)
 			{	
@@ -1794,7 +1794,7 @@ public class DailyBatchVolumeReport
 					if(outfstCount == 0)
 					{
 						extServCell.setCellStyle(serviceCellStyle);
-						extServCell.setCellValue("ST103");
+						extServCell.setCellValue("ST203");
 						outfstCount = 1;
 					}
 					else
@@ -1834,13 +1834,13 @@ public class DailyBatchVolumeReport
 			}
 			//POPULATE SUMMARY TOTALS
 			MonthlyVolumeCountEntityModel st101TotalEntity = new MonthlyVolumeCountEntityModel();
-			st101TotalEntity.setService("ST101");
+			st101TotalEntity.setService("ST201");
 			st101TotalEntity.setTotalNrOfMsgs(stTotal);
 			st101TotalEntity.setTotalAccpMsgs(stAccptd);
 			st101TotalEntity.setTotalRjctdMsgs(stRejected);
 			st101TotalEntity.setTotalNrOfExtMsgs(stExtracted);
 
-			summaryTotalsMap.put("ST101", st101TotalEntity);
+			summaryTotalsMap.put("ST201", st101TotalEntity);
 		}
 
 		//		log.info("rowCount_3 AFTER ==> "+rowCount_3);
@@ -1852,11 +1852,11 @@ public class DailyBatchVolumeReport
 		debtorCount++;
 		rowCount_3 = debtorCount;
 
-		//		log.info("rowCount_3 BEFORE MANAC ==> "+rowCount_3);
-		//		log.info("creditorCount BEFORE MANAC ==> "+creditorCount);
+		//		log.info("rowCount_3 BEFORE RCAIN ==> "+rowCount_3);
+		//		log.info("creditorCount BEFORE RCAIN ==> "+creditorCount);
 
 
-		//		========================MANAC============================//
+		//		========================RCAIN============================//
 
 		if(inputFromDebtorCountList != null && inputFromDebtorCountList.size() > 0)
 		{
@@ -1869,7 +1869,7 @@ public class DailyBatchVolumeReport
 			int outfstCount = 0;
 
 			//			//Retrieve the manacCount
-			List<MonthlyVolumeCountEntityModel> manacCountList = inputFromDebtorBankMap.get("MANAC");
+			List<MonthlyVolumeCountEntityModel> manacCountList = inputFromDebtorBankMap.get("RCAIN");
 
 			if(manacCountList != null && manacCountList.size() > 0)
 			{	
@@ -1881,7 +1881,7 @@ public class DailyBatchVolumeReport
 					if(fstCount == 0)
 					{
 						extServiceCell.setCellStyle(serviceCellStyle);
-						extServiceCell.setCellValue("MANAC");
+						extServiceCell.setCellValue("RCAIN");
 						fstCount = 1;
 					}
 					else
@@ -1944,7 +1944,7 @@ public class DailyBatchVolumeReport
 
 
 			//			Retrieve the manocCount
-			List<MonthlyVolumeCountEntityModel> manocCountList = outputToCreditorBankMap.get("MANOC");
+			List<MonthlyVolumeCountEntityModel> manocCountList = outputToCreditorBankMap.get("RCAOT");
 			//			log.info("manocCountList.size() ===>"+manocCountList.size()); 
 			if(manocCountList != null && manocCountList.size() > 0)
 			{	
@@ -1960,7 +1960,7 @@ public class DailyBatchVolumeReport
 					if(outfstCount == 0)
 					{
 						extServCell.setCellStyle(serviceCellStyle);
-						extServCell.setCellValue("MANOC");
+						extServCell.setCellValue("RCAOT");
 						outfstCount = 1;
 					}
 					else
@@ -2000,17 +2000,17 @@ public class DailyBatchVolumeReport
 			}
 			//POPULATE SUMMARY TOTALS
 			MonthlyVolumeCountEntityModel manacTotalEntity = new MonthlyVolumeCountEntityModel();
-			manacTotalEntity.setService("MANAC");
+			manacTotalEntity.setService("RCAIN");
 			manacTotalEntity.setTotalNrOfMsgs(stTotal);
 			manacTotalEntity.setTotalAccpMsgs(stAccptd);
 			manacTotalEntity.setTotalRjctdMsgs(stRejected);
 			manacTotalEntity.setTotalNrOfExtMsgs(stExtracted);
 
-			summaryTotalsMap.put("MANAC", manacTotalEntity);
+			summaryTotalsMap.put("RCAIN", manacTotalEntity);
 		}
 
-		//		log.info("rowCount_3 AFTER MANOC ==> "+rowCount_3);
-		//		log.info("creditorCount AFTER MANOC==> "+creditorCount);
+		//		log.info("rowCount_3 AFTER RCAOT ==> "+rowCount_3);
+		//		log.info("creditorCount AFTER RCAOT==> "+creditorCount);
 
 		//SubTotal the Rows
 		debtorCount++;
@@ -2533,14 +2533,14 @@ public class DailyBatchVolumeReport
 		int stsCount = 6;
 
 		//Retrieve Status Reports to Creditor Details
-		//ST100 Counts
+		//ST200 Counts
 		if(statusReportToCreditorsCountList != null && statusReportToCreditorsCountList.size() > 0)
 		{
 			BigDecimal stTotal = BigDecimal.ZERO;
 
 			int firstCount = 0;
 
-			List<MonthlyVolumeCountEntityModel> st100CountList = statusReportToCreditorsMap.get("ST100");
+			List<MonthlyVolumeCountEntityModel> st100CountList = statusReportToCreditorsMap.get("ST200");
 			if(st100CountList != null && st100CountList.size() > 0)
 			{
 				for (MonthlyVolumeCountEntityModel statusReportEntity : st100CountList) 
@@ -2551,7 +2551,7 @@ public class DailyBatchVolumeReport
 					if(firstCount == 0)
 					{
 						stServCell.setCellStyle(serviceCellStyle);
-						stServCell.setCellValue("ST100");
+						stServCell.setCellValue("ST200");
 						firstCount = 1;
 					}
 					else
@@ -2592,20 +2592,20 @@ public class DailyBatchVolumeReport
 			}
 			//POPULATE SUMMARY TOTALS
 			MonthlyVolumeCountEntityModel st100TotalEntity = new MonthlyVolumeCountEntityModel();
-			st100TotalEntity.setService("ST100");
+			st100TotalEntity.setService("ST200");
 			st100TotalEntity.setTotalNrOfMsgs(stTotal);
 
-			summaryTotalsMap.put("ST100", st100TotalEntity);
+			summaryTotalsMap.put("ST200", st100TotalEntity);
 		}
 
-		//ST102 Counts
+		//ST202 Counts
 		if(statusReportToDebtorsCountList != null && statusReportToDebtorsCountList.size() > 0)
 		{
 			BigDecimal stTotal = BigDecimal.ZERO;
 
 			int firstCount = 0;
 
-			List<MonthlyVolumeCountEntityModel> st102CountList = statusReportToDebtorsMap.get("ST102");
+			List<MonthlyVolumeCountEntityModel> st102CountList = statusReportToDebtorsMap.get("ST202");
 			if(st102CountList != null && st102CountList.size() > 0)
 			{
 
@@ -2617,7 +2617,7 @@ public class DailyBatchVolumeReport
 					if(firstCount == 0)
 					{
 						stServCell.setCellStyle(serviceCellStyle);
-						stServCell.setCellValue("ST102");
+						stServCell.setCellValue("ST202");
 						firstCount = 1;
 					}
 					else
@@ -2658,10 +2658,10 @@ public class DailyBatchVolumeReport
 			}
 			//POPULATE SUMMARY TOTALS
 			MonthlyVolumeCountEntityModel st102TotalEntity = new MonthlyVolumeCountEntityModel();
-			st102TotalEntity.setService("ST102");
+			st102TotalEntity.setService("ST202");
 			st102TotalEntity.setTotalNrOfMsgs(stTotal);
 
-			summaryTotalsMap.put("ST102", st102TotalEntity);
+			summaryTotalsMap.put("ST202", st102TotalEntity);
 		}
 
 		//		log.info("rowCount_4 ==> "+rowCount_4);
@@ -2738,14 +2738,14 @@ public class DailyBatchVolumeReport
 			summaryTotalsMap.put("ST105", st105TotalEntity);	
 		}
 
-		//ST104 Counts
+		//ST204 Counts
 		if(statusReportToDebtorsCountList != null && statusReportToDebtorsCountList.size() > 0)
 		{
 			BigDecimal stTotal = BigDecimal.ZERO;
 
 			int firstCount = 0;
 
-			List<MonthlyVolumeCountEntityModel> st104CountList = statusReportToDebtorsMap.get("ST104");
+			List<MonthlyVolumeCountEntityModel> st104CountList = statusReportToDebtorsMap.get("ST204");
 			if(st104CountList != null && st104CountList.size() > 0)
 			{
 				for (MonthlyVolumeCountEntityModel statusReportEntity : st104CountList) 
@@ -2756,7 +2756,7 @@ public class DailyBatchVolumeReport
 					if(firstCount == 0)
 					{
 						stServCell.setCellStyle(serviceCellStyle);
-						stServCell.setCellValue("ST104");
+						stServCell.setCellValue("ST204");
 						firstCount = 1;
 					}
 					else
@@ -2797,10 +2797,10 @@ public class DailyBatchVolumeReport
 			}
 			//POPULATE SUMMARY TOTALS
 			MonthlyVolumeCountEntityModel st104TotalEntity = new MonthlyVolumeCountEntityModel();
-			st104TotalEntity.setService("ST104");
+			st104TotalEntity.setService("ST204");
 			st104TotalEntity.setTotalNrOfMsgs(stTotal);
 
-			summaryTotalsMap.put("ST104", st104TotalEntity);
+			summaryTotalsMap.put("ST204", st104TotalEntity);
 		}
 
 		//SubTotal the Rows
@@ -3136,139 +3136,36 @@ public class DailyBatchVolumeReport
 
 		summaryInfoSheet.addMergedRegion(new CellRangeAddress(5,5, 0, 1));
 
-		Row maninRow = summaryInfoSheet.createRow(6);
-		//MANIN Data
-		Cell maninSummCell = maninRow.createCell(0);
-		maninSummCell.setCellStyle(serviceCellStyle);
-		maninSummCell.setCellValue("MANIN");
+		Row carinRow = summaryInfoSheet.createRow(6);
+		//CARIN Data
+		Cell carinSummCell = carinRow.createCell(0);
+		carinSummCell.setCellStyle(serviceCellStyle);
+		carinSummCell.setCellValue("CARIN");
 
-		Cell maninTotalCell = maninRow.createCell(1);
-		maninTotalCell.setCellStyle(normalCellStyle);
-		maninTotalCell.setCellValue(summaryTotalsMap.get("MANIN").getTotalNrOfMsgs().intValue());
+		Cell carinTotalCell = carinRow.createCell(1);
+		carinTotalCell.setCellStyle(normalCellStyle);
+		carinTotalCell.setCellValue(summaryTotalsMap.get("CARIN").getTotalNrOfMsgs().intValue());
 
-		Cell maninAccpCell = maninRow.createCell(2);
-		maninAccpCell.setCellStyle(normalCellStyle);
-		maninAccpCell.setCellValue(summaryTotalsMap.get("MANIN").getTotalAccpMsgs().intValue());
+		Cell carinAccpCell = carinRow.createCell(2);
+		carinAccpCell.setCellStyle(normalCellStyle);
+		carinAccpCell.setCellValue(summaryTotalsMap.get("CARIN").getTotalAccpMsgs().intValue());
 
-		Cell maninRejCell = maninRow.createCell(3);
-		maninRejCell.setCellStyle(normalCellStyle);
-		maninRejCell.setCellValue(summaryTotalsMap.get("MANIN").getTotalRjctdMsgs().intValue());
+		Cell carinRejCell = carinRow.createCell(3);
+		carinRejCell.setCellStyle(normalCellStyle);
+		carinRejCell.setCellValue(summaryTotalsMap.get("CARIN").getTotalRjctdMsgs().intValue());
 
-		Cell maninExtServCell = maninRow.createCell(4);
-		maninExtServCell.setCellStyle(serviceCellStyle);
-		maninExtServCell.setCellValue("MANOT");
+		Cell carinExtServCell = carinRow.createCell(4);
+		carinExtServCell.setCellStyle(serviceCellStyle);
+		carinExtServCell.setCellValue("CAROT");
 
-		Cell manotExtCell = maninRow.createCell(5);
-		manotExtCell.setCellStyle(normalCellStyle);
-		manotExtCell.setCellValue(summaryTotalsMap.get("MANIN").getTotalNrOfExtMsgs().intValue());
+		Cell carotExtCell = carinRow.createCell(5);
+		carotExtCell.setCellStyle(normalCellStyle);
+		carotExtCell.setCellValue(summaryTotalsMap.get("CARIN").getTotalNrOfExtMsgs().intValue());
 
-		//MANAM Data
-		Row manamRow = summaryInfoSheet.createRow(7);
-		Cell manamSummCell = manamRow.createCell(0);
-		manamSummCell.setCellStyle(serviceCellStyle);
-		manamSummCell.setCellValue("MANAM");
-
-		Cell manamTotalCell = manamRow.createCell(1);
-		manamTotalCell.setCellStyle(normalCellStyle);
-		manamTotalCell.setCellValue(summaryTotalsMap.get("MANAM").getTotalNrOfMsgs().intValue());
-
-		Cell manamAccpCell = manamRow.createCell(2);
-		manamAccpCell.setCellStyle(normalCellStyle);
-		manamAccpCell.setCellValue(summaryTotalsMap.get("MANAM").getTotalAccpMsgs().intValue());
-
-		Cell manamRejCell = manamRow.createCell(3);
-		manamRejCell.setCellStyle(normalCellStyle);
-		manamRejCell.setCellValue(summaryTotalsMap.get("MANAM").getTotalRjctdMsgs().intValue());
-
-		Cell manamExtServCell = manamRow.createCell(4);
-		manamExtServCell.setCellStyle(serviceCellStyle);
-		manamExtServCell.setCellValue("MANOM");
-
-		Cell manomExtCell = manamRow.createCell(5);
-		manomExtCell.setCellStyle(normalCellStyle);
-		manomExtCell.setCellValue(summaryTotalsMap.get("MANAM").getTotalNrOfExtMsgs().intValue());
-
-		//MANCN Data
-		Row mancnRow = summaryInfoSheet.createRow(8);
-		Cell mancnSummCell = mancnRow.createCell(0);
-		mancnSummCell.setCellStyle(serviceCellStyle);
-		mancnSummCell.setCellValue("MANCN");
-
-		Cell mancnTotalCell = mancnRow.createCell(1);
-		mancnTotalCell.setCellStyle(normalCellStyle);
-		mancnTotalCell.setCellValue(summaryTotalsMap.get("MANCN").getTotalNrOfMsgs().intValue());
-
-		Cell mancnAccpCell = mancnRow.createCell(2);
-		mancnAccpCell.setCellStyle(normalCellStyle);
-		mancnAccpCell.setCellValue(summaryTotalsMap.get("MANCN").getTotalAccpMsgs().intValue());
-
-		Cell mancnRejCell = mancnRow.createCell(3);
-		mancnRejCell.setCellStyle(normalCellStyle);
-		mancnRejCell.setCellValue(summaryTotalsMap.get("MANCN").getTotalRjctdMsgs().intValue());
-
-		Cell mancnExtServCell = mancnRow.createCell(4);
-		mancnExtServCell.setCellStyle(serviceCellStyle);
-		mancnExtServCell.setCellValue("MANCO");
-
-		Cell mancoExtCell = mancnRow.createCell(5);
-		mancoExtCell.setCellStyle(normalCellStyle);
-		mancoExtCell.setCellValue(summaryTotalsMap.get("MANCN").getTotalNrOfExtMsgs().intValue());
-
-		//MANRI Data
-		Row manriRow = summaryInfoSheet.createRow(9);
-		Cell manriSummCell = manriRow.createCell(0);
-		manriSummCell.setCellStyle(serviceCellStyle);
-		manriSummCell.setCellValue("MANRI");
-
-		Cell manriTotalCell = manriRow.createCell(1);
-		manriTotalCell.setCellStyle(normalCellStyle);
-		manriTotalCell.setCellValue(summaryTotalsMap.get("MANRI").getTotalNrOfMsgs().intValue());
-
-		Cell manriAccpCell = manriRow.createCell(2);
-		manriAccpCell.setCellStyle(normalCellStyle);
-		manriAccpCell.setCellValue(summaryTotalsMap.get("MANRI").getTotalAccpMsgs().intValue());
-
-		Cell manriRejCell = manriRow.createCell(3);
-		manriRejCell.setCellStyle(normalCellStyle);
-		manriRejCell.setCellValue(summaryTotalsMap.get("MANRI").getTotalRjctdMsgs().intValue());
-
-		Cell manriExtServCell = manriRow.createCell(4);
-		manriExtServCell.setCellStyle(serviceCellStyle);
-		manriExtServCell.setCellValue("MANRO");
-
-		Cell manriExtCell = manriRow.createCell(5);
-		manriExtCell.setCellStyle(normalCellStyle);
-		manriExtCell.setCellValue(summaryTotalsMap.get("MANRI").getTotalNrOfExtMsgs().intValue());
-
-		//SRINP Data
-		Row srinpRow = summaryInfoSheet.createRow(10);
-		Cell srinpSummCell = srinpRow.createCell(0);
-		srinpSummCell.setCellStyle(serviceCellStyle);
-		srinpSummCell.setCellValue("SRINP");
-
-		Cell srinpTotalCell = srinpRow.createCell(1);
-		srinpTotalCell.setCellStyle(normalCellStyle);
-		srinpTotalCell.setCellValue(summaryTotalsMap.get("SRINP").getTotalNrOfMsgs().intValue());
-
-		Cell srinpAccpCell = srinpRow.createCell(2);
-		srinpAccpCell.setCellStyle(normalCellStyle);
-		srinpAccpCell.setCellValue(summaryTotalsMap.get("SRINP").getTotalAccpMsgs().intValue());
-
-		Cell srinpRejCell = srinpRow.createCell(3);
-		srinpRejCell.setCellStyle(normalCellStyle);
-		srinpRejCell.setCellValue(summaryTotalsMap.get("SRINP").getTotalRjctdMsgs().intValue());
-
-		Cell srinpExtServCell = srinpRow.createCell(4);
-		srinpExtServCell.setCellStyle(serviceCellStyle);
-		srinpExtServCell.setCellValue("SROUT");
-
-		Cell srinpExtCell = srinpRow.createCell(5);
-		srinpExtCell.setCellStyle(normalCellStyle);
-		srinpExtCell.setCellValue(summaryTotalsMap.get("SRINP").getTotalNrOfExtMsgs().intValue());
 
 		//Subtotal Creditor Banks
 		//SubTotal Data
-		Row crSubTotalRow = summaryInfoSheet.createRow(11);
+		Row crSubTotalRow = summaryInfoSheet.createRow(7);
 
 		Cell crStSummCell = crSubTotalRow.createCell(0);
 		crStSummCell.setCellStyle(summSubtotalCellStyle);
@@ -3277,17 +3174,17 @@ public class DailyBatchVolumeReport
 		Cell subTotalNrOfMsgsCell = crSubTotalRow.createCell(1);
 		subTotalNrOfMsgsCell.setCellStyle(summSubtotalCellStyle);
 		subTotalNrOfMsgsCell.setCellType(CellType.FORMULA);
-		subTotalNrOfMsgsCell.setCellFormula("SUM(B7:B11)");
+		subTotalNrOfMsgsCell.setCellFormula("SUM(B7)");
 
 		Cell subTotAccpCell = crSubTotalRow.createCell(2);
 		subTotAccpCell.setCellStyle(summSubtotalCellStyle);
 		subTotAccpCell.setCellType(CellType.FORMULA);
-		subTotAccpCell.setCellFormula("SUM(C7:C11)");
+		subTotAccpCell.setCellFormula("SUM(C7)");
 
 		Cell subTotalRejCell = crSubTotalRow.createCell(3);
 		subTotalRejCell.setCellStyle(summSubtotalCellStyle);
 		subTotalRejCell.setCellType(CellType.FORMULA);
-		subTotalRejCell.setCellFormula("SUM(D7:D11)");
+		subTotalRejCell.setCellFormula("SUM(D7)");
 
 		Cell nullCell4 = crSubTotalRow.createCell(4);
 		nullCell4.setCellStyle(summSubtotalCellStyle);
@@ -3296,122 +3193,71 @@ public class DailyBatchVolumeReport
 		Cell subTotalExtMsgsCell = crSubTotalRow.createCell(5);
 		subTotalExtMsgsCell.setCellStyle(summSubtotalCellStyle);
 		subTotalExtMsgsCell.setCellType(CellType.FORMULA);
-		subTotalExtMsgsCell.setCellFormula("SUM(F7:F11)");
+		subTotalExtMsgsCell.setCellFormula("SUM(F7)");
 
-		Row drBanksRow = summaryInfoSheet.createRow(12);
+		Row drBanksRow = summaryInfoSheet.createRow(8);
 		Cell drBanksCell = drBanksRow.createCell(0);
 		drBanksCell.setCellStyle(subTitleCellStyle);
 		drBanksCell.setCellValue("Debtor Banks");
 
-		summaryInfoSheet.addMergedRegion(new CellRangeAddress(12,12, 0, 1));
+		summaryInfoSheet.addMergedRegion(new CellRangeAddress(8,8, 0, 1));
 
-		//ST101 Data
-		Row st101Row = summaryInfoSheet.createRow(13);
+		//ST201 Data
+		Row st101Row = summaryInfoSheet.createRow(9);
 		Cell st101SummCell = st101Row.createCell(0);
 		st101SummCell.setCellStyle(serviceCellStyle);
-		st101SummCell.setCellValue("ST101");
+		st101SummCell.setCellValue("ST201");
 
 		Cell st101TotalCell = st101Row.createCell(1);
 		st101TotalCell.setCellStyle(normalCellStyle);
-		st101TotalCell.setCellValue(summaryTotalsMap.get("ST101").getTotalNrOfMsgs().intValue());
+		st101TotalCell.setCellValue(summaryTotalsMap.get("ST201").getTotalNrOfMsgs().intValue());
 
 		Cell st101AccpCell = st101Row.createCell(2);
 		st101AccpCell.setCellStyle(normalCellStyle);
-		st101AccpCell.setCellValue(summaryTotalsMap.get("ST101").getTotalAccpMsgs().intValue());
+		st101AccpCell.setCellValue(summaryTotalsMap.get("ST201").getTotalAccpMsgs().intValue());
 
 		Cell st101RejCell = st101Row.createCell(3);
 		st101RejCell.setCellStyle(normalCellStyle);
-		st101RejCell.setCellValue(summaryTotalsMap.get("ST101").getTotalRjctdMsgs().intValue());
+		st101RejCell.setCellValue(summaryTotalsMap.get("ST201").getTotalRjctdMsgs().intValue());
 
 		Cell st101ExtServCell = st101Row.createCell(4);
 		st101ExtServCell.setCellStyle(serviceCellStyle);
-		st101ExtServCell.setCellValue("ST103");
+		st101ExtServCell.setCellValue("ST203");
 
 		Cell st103ExtCell = st101Row.createCell(5);
 		st103ExtCell.setCellStyle(normalCellStyle);
-		st103ExtCell.setCellValue(summaryTotalsMap.get("ST101").getTotalNrOfExtMsgs().intValue());
+		st103ExtCell.setCellValue(summaryTotalsMap.get("ST201").getTotalNrOfExtMsgs().intValue());
 
-		//MANAC Data
-		Row manacRow = summaryInfoSheet.createRow(14);
+		//RCAIN Data
+		Row manacRow = summaryInfoSheet.createRow(10);
 		Cell manacSummCell = manacRow.createCell(0);
 		manacSummCell.setCellStyle(serviceCellStyle);
-		manacSummCell.setCellValue("MANAC");
+		manacSummCell.setCellValue("RCAIN");
 
 		Cell manacTotalCell = manacRow.createCell(1);
 		manacTotalCell.setCellStyle(normalCellStyle);
-		manacTotalCell.setCellValue(summaryTotalsMap.get("MANAC").getTotalNrOfMsgs().intValue());
+		manacTotalCell.setCellValue(summaryTotalsMap.get("RCAIN").getTotalNrOfMsgs().intValue());
 
 		Cell manacAccpCell = manacRow.createCell(2);
 		manacAccpCell.setCellStyle(normalCellStyle);
-		manacAccpCell.setCellValue(summaryTotalsMap.get("MANAC").getTotalAccpMsgs().intValue());
+		manacAccpCell.setCellValue(summaryTotalsMap.get("RCAIN").getTotalAccpMsgs().intValue());
 
 		Cell manacRejCell = manacRow.createCell(3);
 		manacRejCell.setCellStyle(normalCellStyle);
-		manacRejCell.setCellValue(summaryTotalsMap.get("MANAC").getTotalRjctdMsgs().intValue());
+		manacRejCell.setCellValue(summaryTotalsMap.get("RCAIN").getTotalRjctdMsgs().intValue());
 
 		Cell manacExtServCell = manacRow.createCell(4);
 		manacExtServCell.setCellStyle(serviceCellStyle);
-		manacExtServCell.setCellValue("MANOC");
+		manacExtServCell.setCellValue("RCAOT");
 
 		Cell manacExtCell = manacRow.createCell(5);
 		manacExtCell.setCellStyle(normalCellStyle);
-		manacExtCell.setCellValue(summaryTotalsMap.get("MANAC").getTotalNrOfExtMsgs().intValue());
+		manacExtCell.setCellValue(summaryTotalsMap.get("RCAIN").getTotalNrOfExtMsgs().intValue());
 
-		//MANRT Data
-		Row manrtRow = summaryInfoSheet.createRow(15);
-		Cell manrtSummCell = manrtRow.createCell(0);
-		manrtSummCell.setCellStyle(serviceCellStyle);
-		manrtSummCell.setCellValue("MANRT");
-
-		Cell manrtTotalCell = manrtRow.createCell(1);
-		manrtTotalCell.setCellStyle(normalCellStyle);
-		manrtTotalCell.setCellValue(summaryTotalsMap.get("MANRT").getTotalNrOfMsgs().intValue());
-
-		Cell manrtAccpCell = manrtRow.createCell(2);
-		manrtAccpCell.setCellStyle(normalCellStyle);
-		manrtAccpCell.setCellValue(summaryTotalsMap.get("MANRT").getTotalAccpMsgs().intValue());
-
-		Cell manrtRejCell = manrtRow.createCell(3);
-		manrtRejCell.setCellStyle(normalCellStyle);
-		manrtRejCell.setCellValue(summaryTotalsMap.get("MANRT").getTotalRjctdMsgs().intValue());
-
-		Cell manrtExtServCell = manrtRow.createCell(4);
-		manrtExtServCell.setCellStyle(serviceCellStyle);
-		manrtExtServCell.setCellValue("MANRF");
-
-		Cell manrtExtCell = manrtRow.createCell(5);
-		manrtExtCell.setCellStyle(normalCellStyle);
-		manrtExtCell.setCellValue(summaryTotalsMap.get("MANRT").getTotalNrOfExtMsgs().intValue());
-
-		//SPINP Data
-		Row spinpRow = summaryInfoSheet.createRow(16);
-		Cell spinpSummCell = spinpRow.createCell(0);
-		spinpSummCell.setCellStyle(serviceCellStyle);
-		spinpSummCell.setCellValue("SPINP");
-
-		Cell spinpTotalCell = spinpRow.createCell(1);
-		spinpTotalCell.setCellStyle(normalCellStyle);
-		spinpTotalCell.setCellValue(summaryTotalsMap.get("SPINP").getTotalNrOfMsgs().intValue());
-
-		Cell spinpAccpCell = spinpRow.createCell(2);
-		spinpAccpCell.setCellStyle(normalCellStyle);
-		spinpAccpCell.setCellValue(summaryTotalsMap.get("SPINP").getTotalAccpMsgs().intValue());
-
-		Cell spinpRejCell = spinpRow.createCell(3);
-		spinpRejCell.setCellStyle(normalCellStyle);
-		spinpRejCell.setCellValue(summaryTotalsMap.get("SPINP").getTotalRjctdMsgs().intValue());
-
-		Cell spinpExtServCell = spinpRow.createCell(4);
-		spinpExtServCell.setCellStyle(serviceCellStyle);
-		spinpExtServCell.setCellValue("SPOUT");
-
-		Cell spinpExtCell = spinpRow.createCell(5);
-		spinpExtCell.setCellStyle(normalCellStyle);
-		spinpExtCell.setCellValue(summaryTotalsMap.get("SPINP").getTotalNrOfExtMsgs().intValue());
 
 		//Subtotal Debtor Banks
 		//SubTotal Data
-		Row drSubTotalRow = summaryInfoSheet.createRow(17);
+		Row drSubTotalRow = summaryInfoSheet.createRow(11);
 
 		Cell drStSummCell = drSubTotalRow.createCell(0);
 		drStSummCell.setCellStyle(summSubtotalCellStyle);
@@ -3420,17 +3266,17 @@ public class DailyBatchVolumeReport
 		Cell drsubTotalNrOfMsgsCell = drSubTotalRow.createCell(1);
 		drsubTotalNrOfMsgsCell.setCellStyle(summSubtotalCellStyle);
 		drsubTotalNrOfMsgsCell.setCellType(CellType.FORMULA);
-		drsubTotalNrOfMsgsCell.setCellFormula("SUM(B14:B17)");
+		drsubTotalNrOfMsgsCell.setCellFormula("SUM(B9:B10)");
 
 		Cell drsubTotAccpCell = drSubTotalRow.createCell(2);
 		drsubTotAccpCell.setCellStyle(summSubtotalCellStyle);
 		drsubTotAccpCell.setCellType(CellType.FORMULA);
-		drsubTotAccpCell.setCellFormula("SUM(C14:C17)");
+		drsubTotAccpCell.setCellFormula("SUM(C9:C10)");
 
 		Cell drsubTotalRejCell = drSubTotalRow.createCell(3);
 		drsubTotalRejCell.setCellStyle(summSubtotalCellStyle);
 		drsubTotalRejCell.setCellType(CellType.FORMULA);
-		drsubTotalRejCell.setCellFormula("SUM(D14:D17)");
+		drsubTotalRejCell.setCellFormula("SUM(D9:D10)");
 
 		Cell nullCell1 = drSubTotalRow.createCell(4);
 		nullCell1.setCellStyle(summSubtotalCellStyle);
@@ -3439,10 +3285,10 @@ public class DailyBatchVolumeReport
 		Cell drsubTotalExtMsgsCell = drSubTotalRow.createCell(5);
 		drsubTotalExtMsgsCell.setCellStyle(summSubtotalCellStyle);
 		drsubTotalExtMsgsCell.setCellType(CellType.FORMULA);
-		drsubTotalExtMsgsCell.setCellFormula("SUM(F14:F17)");
+		drsubTotalExtMsgsCell.setCellFormula("SUM(F9:F10)");
 
 		//TOTAL Data
-		Row totalRow = summaryInfoSheet.createRow(18);
+		Row totalRow = summaryInfoSheet.createRow(12);
 		Cell totalSummCell = totalRow.createCell(0);
 		totalSummCell.setCellStyle(serviceCellStyle);
 		totalSummCell.setCellValue("Total Processed");
@@ -3450,17 +3296,17 @@ public class DailyBatchVolumeReport
 		Cell nrOfMsgsTotalCell = totalRow.createCell(1);
 		nrOfMsgsTotalCell.setCellStyle(serviceCellStyle);
 		nrOfMsgsTotalCell.setCellType(CellType.FORMULA);
-		nrOfMsgsTotalCell.setCellFormula("SUM(B7:B11,B13:B17)");
+		nrOfMsgsTotalCell.setCellFormula("SUM(B7,B11)");
 
 		Cell accpMsgsCell = totalRow.createCell(2);
 		accpMsgsCell.setCellStyle(serviceCellStyle);
 		accpMsgsCell.setCellType(CellType.FORMULA);
-		accpMsgsCell.setCellFormula("SUM(C7:C11,C13:C17)");
+		accpMsgsCell.setCellFormula("SUM(C7,C11)");
 
 		Cell rejMsgsCell = totalRow.createCell(3);
 		rejMsgsCell.setCellStyle(serviceCellStyle);
 		rejMsgsCell.setCellType(CellType.FORMULA);
-		rejMsgsCell.setCellFormula("SUM(D7:D11,D13:D17)");
+		rejMsgsCell.setCellFormula("SUM(D7,D11)");
 
 		Cell nullCell = totalRow.createCell(4);
 		nullCell.setCellStyle(serviceCellStyle);
@@ -3469,10 +3315,10 @@ public class DailyBatchVolumeReport
 		Cell extMsgsCell = totalRow.createCell(5);
 		extMsgsCell.setCellStyle(serviceCellStyle);
 		extMsgsCell.setCellType(CellType.FORMULA);
-		extMsgsCell.setCellFormula("SUM(F7:F11,F13:F17)");
+		extMsgsCell.setCellFormula("SUM(F7,F11)");
 
 		//Percentage Data
-		Row totalPrecRow = summaryInfoSheet.createRow(20);
+		Row totalPrecRow = summaryInfoSheet.createRow(14);
 		Cell totalPercCell = totalPrecRow.createCell(0);
 		totalPercCell.setCellStyle(serviceCellStyle);
 		totalPercCell.setCellValue("Acceptance %");
@@ -3482,16 +3328,16 @@ public class DailyBatchVolumeReport
 		Cell accpPercCell = totalPrecRow.createCell(2);
 		accpPercCell.setCellStyle(normalPercCellStyle);
 		accpPercCell.setCellType(CellType.FORMULA);
-		accpPercCell.setCellFormula("IF(B19>0,C19/B19,0)");
+		accpPercCell.setCellFormula("IF(B12>0,C12/B12,0)");
 
 		Cell rejPercCell = totalPrecRow.createCell(3);
 		rejPercCell.setCellStyle(normalPercCellStyle);
 		rejPercCell.setCellType(CellType.FORMULA);
-		rejPercCell.setCellFormula("IF(B19>0,D19/B19,0)");
+		rejPercCell.setCellFormula("IF(B12>0,D12/B12,0)");
 
 		//Status Report Summary
 		//GENERATE SUB TITLE ROW
-		Row subHdrRow12 = summaryInfoSheet.createRow(21);
+		Row subHdrRow12 = summaryInfoSheet.createRow(15);
 
 		Cell subHdrCrdCell12 = subHdrRow12.createCell(0);
 		subHdrCrdCell12.setCellStyle(subHdrCellStyle);
@@ -3501,7 +3347,7 @@ public class DailyBatchVolumeReport
 		summaryInfoSheet.addMergedRegion(new CellRangeAddress(21,21, 0, 5));
 
 		//GENERATE COLUMN HEADERS
-		Row stsSummHdrRow = summaryInfoSheet.createRow(22);
+		Row stsSummHdrRow = summaryInfoSheet.createRow(16);
 
 		Cell stsRepCell = stsSummHdrRow.createCell(0);
 		stsRepCell.setCellStyle(headerCellStyle);
@@ -3512,42 +3358,25 @@ public class DailyBatchVolumeReport
 		stsNrOfTxnsCell.setCellValue("TOT NR OF STATUS REPORTS");
 
 		//Populate Summary Information
-		Row stsCrBanksRow = summaryInfoSheet.createRow(23);
+		Row stsCrBanksRow = summaryInfoSheet.createRow(17);
 		Cell stsCrBanksCell = stsCrBanksRow.createCell(0);
 		stsCrBanksCell.setCellStyle(subTitleCellStyle);
 		stsCrBanksCell.setCellValue("Creditor Banks");
 
-		summaryInfoSheet.addMergedRegion(new CellRangeAddress(23,23, 0, 1));
+		summaryInfoSheet.addMergedRegion(new CellRangeAddress(17,17, 0, 1));
 
-		Row st100Row = summaryInfoSheet.createRow(24);
+		Row st100Row = summaryInfoSheet.createRow(18);
 		Cell st100SummCell = st100Row.createCell(0);
 		st100SummCell.setCellStyle(serviceCellStyle);
-		st100SummCell.setCellValue("ST100");
+		st100SummCell.setCellValue("ST200");
 
 		Cell st100TotalCell = st100Row.createCell(1);
 		st100TotalCell.setCellStyle(normalCellStyle);
-		st100TotalCell.setCellValue(summaryTotalsMap.get("ST100").getTotalNrOfMsgs().intValue());
+		st100TotalCell.setCellValue(summaryTotalsMap.get("ST200").getTotalNrOfMsgs().intValue());
 
-		Row st105Row = summaryInfoSheet.createRow(25);
-		Cell st105SummCell = st105Row.createCell(0);
-		st105SummCell.setCellStyle(serviceCellStyle);
-		st105SummCell.setCellValue("ST105");
-
-		Cell st105TotalCell = st105Row.createCell(1);
-		st105TotalCell.setCellStyle(normalCellStyle);
-		st105TotalCell.setCellValue(summaryTotalsMap.get("ST105").getTotalNrOfMsgs().intValue());
-
-		Row st007Row = summaryInfoSheet.createRow(26);
-		Cell st007SummCell = st007Row.createCell(0);
-		st007SummCell.setCellStyle(serviceCellStyle);
-		st007SummCell.setCellValue("ST007");
-
-		Cell st007TotalCell = st007Row.createCell(1);
-		st007TotalCell.setCellStyle(normalCellStyle);
-		st007TotalCell.setCellValue(summaryTotalsMap.get("ST007").getTotalNrOfMsgs().intValue());
 
 		//Subtotal Creditor Banks Status Reports
-		Row crStsSubTotRow = summaryInfoSheet.createRow(27);
+		Row crStsSubTotRow = summaryInfoSheet.createRow(19);
 
 		Cell crStsSubTotalCell = crStsSubTotRow.createCell(0);
 		crStsSubTotalCell.setCellStyle(summSubtotalCellStyle);
@@ -3556,54 +3385,37 @@ public class DailyBatchVolumeReport
 		Cell crStsSubTotNrOfMsgsCell = crStsSubTotRow.createCell(1);
 		crStsSubTotNrOfMsgsCell.setCellStyle(summSubtotalCellStyle);
 		crStsSubTotNrOfMsgsCell.setCellType(CellType.FORMULA);
-		crStsSubTotNrOfMsgsCell.setCellFormula("SUM(B25:B27)");
+		crStsSubTotNrOfMsgsCell.setCellFormula("SUM(B18)");
 
 		//Populate Summary Information
-		Row stsDrBanksRow = summaryInfoSheet.createRow(28);
+		Row stsDrBanksRow = summaryInfoSheet.createRow(20);
 		Cell stsDrBanksCell = stsDrBanksRow.createCell(0);
 		stsDrBanksCell.setCellStyle(subTitleCellStyle);
 		stsDrBanksCell.setCellValue("Debtor Banks");
 
-		summaryInfoSheet.addMergedRegion(new CellRangeAddress(28,28, 0, 1));
+		summaryInfoSheet.addMergedRegion(new CellRangeAddress(20,20, 0, 1));
 
-		Row st102Row = summaryInfoSheet.createRow(29);
+		Row st102Row = summaryInfoSheet.createRow(21);
 		Cell st102SummCell = st102Row.createCell(0);
 		st102SummCell.setCellStyle(serviceCellStyle);
-		st102SummCell.setCellValue("ST102");
+		st102SummCell.setCellValue("ST202");
 
 		Cell st102TotalCell = st102Row.createCell(1);
 		st102TotalCell.setCellStyle(normalCellStyle);
-		st102TotalCell.setCellValue(summaryTotalsMap.get("ST102").getTotalNrOfMsgs().intValue());
+		st102TotalCell.setCellValue(summaryTotalsMap.get("ST202").getTotalNrOfMsgs().intValue());
 
-		Row st104Row = summaryInfoSheet.createRow(30);
+		Row st104Row = summaryInfoSheet.createRow(22);
 		Cell st104SummCell = st104Row.createCell(0);
 		st104SummCell.setCellStyle(serviceCellStyle);
-		st104SummCell.setCellValue("ST104");
+		st104SummCell.setCellValue("ST204");
 
 		Cell st104TotalCell = st104Row.createCell(1);
 		st104TotalCell.setCellStyle(normalCellStyle);
-		st104TotalCell.setCellValue(summaryTotalsMap.get("ST104").getTotalNrOfMsgs().intValue());
+		st104TotalCell.setCellValue(summaryTotalsMap.get("ST204").getTotalNrOfMsgs().intValue());
 
-		Row st106Row = summaryInfoSheet.createRow(31);
-		Cell st106SummCell = st106Row.createCell(0);
-		st106SummCell.setCellStyle(serviceCellStyle);
-		st106SummCell.setCellValue("ST106");
-
-		Cell st106TotalCell = st106Row.createCell(1);
-		st106TotalCell.setCellStyle(normalCellStyle);
-		st106TotalCell.setCellValue(summaryTotalsMap.get("ST106").getTotalNrOfMsgs().intValue());
-
-		Row st008Row = summaryInfoSheet.createRow(32);
-		Cell st008SummCell = st008Row.createCell(0);
-		st008SummCell.setCellStyle(serviceCellStyle);
-		st008SummCell.setCellValue("ST008");
-
-		Cell st008TotalCell = st008Row.createCell(1);
-		st008TotalCell.setCellStyle(normalCellStyle);
-		st008TotalCell.setCellValue(summaryTotalsMap.get("ST008").getTotalNrOfMsgs().intValue());
 
 		//Subtotal Debtor Banks Status Reports
-		Row drStsSubTotRow = summaryInfoSheet.createRow(33);
+		Row drStsSubTotRow = summaryInfoSheet.createRow(23);
 
 		Cell drStsSubTotalCell = drStsSubTotRow.createCell(0);
 		drStsSubTotalCell.setCellStyle(summSubtotalCellStyle);
@@ -3612,10 +3424,10 @@ public class DailyBatchVolumeReport
 		Cell drStsSubTotNrOfMsgsCell = drStsSubTotRow.createCell(1);
 		drStsSubTotNrOfMsgsCell.setCellStyle(summSubtotalCellStyle);
 		drStsSubTotNrOfMsgsCell.setCellType(CellType.FORMULA);
-		drStsSubTotNrOfMsgsCell.setCellFormula("SUM(B30:B33)");
+		drStsSubTotNrOfMsgsCell.setCellFormula("SUM(B21:B22)");
 
 		//STATUS REPORT TOTAL Data
-		Row stsTotalRow = summaryInfoSheet.createRow(34);
+		Row stsTotalRow = summaryInfoSheet.createRow(24);
 		Cell totalProcessCell = stsTotalRow.createCell(0);
 		totalProcessCell.setCellStyle(serviceCellStyle);
 		totalProcessCell.setCellValue("Total Processed");
@@ -3623,7 +3435,7 @@ public class DailyBatchVolumeReport
 		Cell totTxnsCell = stsTotalRow.createCell(1);
 		totTxnsCell.setCellStyle(serviceCellStyle);
 		totTxnsCell.setCellType(CellType.FORMULA);
-		totTxnsCell.setCellFormula("SUM(B25:B27,B30:B33)");
+		totTxnsCell.setCellFormula("SUM(B19,B23)");
 	}
 
 	public void loadVolumeData(String strFromDate)

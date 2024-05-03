@@ -45,7 +45,7 @@ public class FileStatusReport {
 
 	public static Logger log=Logger.getLogger(FileStatusReport.class);
 	Date currentDate = new Date();
-	private String downloaddirectory ="/home/opsjava/Delivery/Mandates/Reports/";
+	private String downloaddirectory ="/home/opsjava/Delivery/Cession_Assign/Reports/";
 	Controller controller = new Controller ();
 	List<FileStatusReportModel> fileStatusReportList = new ArrayList<FileStatusReportModel>();
 	//List<FileStatusReportModel> countNrOfFilesList = new ArrayList<FileStatusReportModel>();

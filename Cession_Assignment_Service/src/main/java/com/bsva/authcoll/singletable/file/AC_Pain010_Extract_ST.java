@@ -166,7 +166,7 @@ public class AC_Pain010_Extract_ST {
 			//log.info("Test Live Indicator Property: "+testLiveIndProp);
 
 		}catch (Exception e) {
-			log.error("AC_Pain010_Extract_ST - Could not find MandateMessageCommons.properties in classpath");
+			log.error("AC_Pain010_Extract_ST - Could not find CessionAssignment.properties in classpath");
 			outgoingService = "CAROT";
 			inwardServ = "CARIN";
 			processStatus ="4";

@@ -43,7 +43,7 @@ public class MandateResponseOutstandingPerBank
 
 	String reportName, reportNr;
 	
-	private String downloaddirectory ="/home/opsjava/Delivery/Mandates/Reports/";
+	private String downloaddirectory ="/home/opsjava/Delivery/Cession_Assign/Reports/";
 	public static Logger log=Logger.getLogger(MandateResponseOutstandingPerBank.class);
 	Controller controller = new Controller();
 	

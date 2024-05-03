@@ -76,9 +76,9 @@ public class DailyBatchVolumeReportPDF
 		}
 		catch(Exception ex)
 		{
-			log.error("MR022- Could not find MandateMessageCommons.properties in classpath");	
-			reportDir = "/home/opsjava/Delivery/Mandates/Output/Reports/";
-			tempDir="/home/opsjava/Delivery/Mandates/Output/temp/";
+			log.error("MR022- Could not find CessionAssignment.properties in classpath");
+			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
+			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 		}
 
 		//Retrieve Report Name

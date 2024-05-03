@@ -3148,19 +3148,12 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		StringBuffer sb = new StringBuffer();
 
-
-		//		sb.append("SELECT SERVICE_ID AS serviceId, SUM(NR_OF_MSGS) AS totalNrOfMsgs, SUM(NR_MSGS_ACCEPTED) AS nrMsgsAccepted, SUM(NR_MSGS_REJECTED) AS nrMsgsRejected ");
-		//		sb.append("FROM  CAMOWNER.CAS_OPS_MNDT_COUNT ");
-		//		sb.append(" WHERE INCOMING = 'Y' ");
-		//		sb.append("GROUP BY SERVICE_ID ");
-		//		sb.append("ORDER BY SERVICE_ID ASC ");
-
 		sb.append("SELECT Q1.SERVICE_IN as inServiceId, Q1.TOTALMSGS as totalNrOfMsgs, Q1.TOTALACCP as nrMsgsAccepted, Q1.TOTALREJ as nrMsgsRejected, Q1.OPS_SERVICE_OUT as outServiceId, ");
 		sb.append("Q2.SERVICE_OUT as extServiceId, NVL(Q2.TOTALEXT,0) as nrMsgsExtracted , NVL(Q1.TOTALACCP - NVL(Q2.TOTALEXT,0), 0) as difference ");
 		sb.append("FROM (SELECT a.SERVICE_ID AS SERVICE_IN, SUM(NVL(a.NR_OF_MSGS, 0)) AS TOTALMSGS, SUM(NVL(a.NR_MSGS_ACCEPTED, 0)) AS TOTALACCP ");
 		sb.append(",SUM(NVL(a.NR_MSGS_REJECTED, 0)) AS TOTALREJ, c.SERVICE_ID_OUT AS OPS_SERVICE_OUT ");
 		sb.append("FROM CAMOWNER.CAS_OPS_MNDT_COUNT a ");
-		sb.append("LEFT OUTER JOIN CAMOWNER.MDT_OPS_SERVICES c ON c.SERVICE_ID_IN = a.SERVICE_ID WHERE a.INCOMING = 'Y' ");
+		sb.append("LEFT OUTER JOIN CAMOWNER.CAS_OPS_SERVICES c ON c.SERVICE_ID_IN = a.SERVICE_ID WHERE a.INCOMING = 'Y' ");
 		sb.append("GROUP BY a.SERVICE_ID,c.SERVICE_ID_OUT) Q1 ");
 		sb.append("LEFT JOIN ");
 		sb.append("(SELECT b.SERVICE_ID AS SERVICE_OUT, SUM(NVL(b.NR_MSGS_EXTRACTED, 0)) AS TOTALEXT ");

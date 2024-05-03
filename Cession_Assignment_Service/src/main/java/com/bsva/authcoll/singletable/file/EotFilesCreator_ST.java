@@ -88,7 +88,7 @@ public class EotFilesCreator_ST {
 			this.st202Serv = propertyUtil.getPropValue("StatusRep.ST202");
 			this.st204Serv = propertyUtil.getPropValue("StatusRep.ST204");
 		} catch (Exception e) {
-			log.error("EOTFilesCreator - Could not find MandateMessageCommons.properties in classpath");
+			log.error("EOTFilesCreator - Could not find CessionAssignment.properties in classpath");
 		}
 	}
 

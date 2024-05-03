@@ -57,7 +57,7 @@ public class EndOfTransmission_FileLoader implements Serializable {
 	String msgRef = "EOT";
 	String achInstId = "210000";
 	String backEndProcess = "BACKEND";
-	private String eotSchema = "/home/opsjava/Delivery/Mandates/Schema/eot.001.001.02.xsd";
+	private String eotSchema = "/home/opsjava/Delivery/Cession_Assign/Schema/eot.001.001.02.xsd";
 	public static boolean result, unmarshall = false;
 	String fileName = null, achMemberId = null, destMemberId = null, serviceName = null,  achLiveTestInd = null, fileType = null;
 	String testLiveIndProp = null;
@@ -74,7 +74,7 @@ public class EndOfTransmission_FileLoader implements Serializable {
 			this.testLiveIndProp = propertyUtil.getPropValue("TestLiveInd");
 			//log.info("Test Live Indicator Property: "+testLiveIndProp);
 		}catch (Exception e) {
-			log.error("EndOfTransmission_FileLoader - Could not find MandateMessageCommons.properties in classpath");
+			log.error("EndOfTransmission_FileLoader - Could not find CessionAssignment.properties in classpath");
 		}
 		
 		

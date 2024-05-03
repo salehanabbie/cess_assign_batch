@@ -99,8 +99,8 @@ public class PasaBatchAmendmentReport
 		catch(Exception ex)
 		{
 			log.error("PSMD06 - Could not find MandateMessageCommons.properties in classpath");	
-			reportDir = "/home/opsjava/Delivery/Mandates/Output/Reports/";
-			tempDir="/home/opsjava/Delivery/Mandates/Output/temp/";
+			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
+			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 		}
 
 		//Retrieve Report Name
