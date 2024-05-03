@@ -26,28 +26,7 @@ import org.hibernate.annotations.Parameter;
 /**
  *
  * @author DimakatsoN
- */
-//@Entity
-//@Table(name = "OPS_STATUS_HDRS")
-//@XmlRootElement
-//@NamedQueries({
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findAll", query = "SELECT o FROM OpsStatusHdrsEntity o"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findBySystemSeqNo", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.systemSeqNo = :systemSeqNo"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByHdrMsgId", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.hdrMsgId = :hdrMsgId"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByCreateDateTime", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.createDateTime = :createDateTime"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByInstgAgt", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.instgAgt = :instgAgt"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByInstdAgt", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.instdAgt = :instdAgt"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByOrgnlMsgId", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.orgnlMsgId = :orgnlMsgId"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByOrgnlMsgName", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.orgnlMsgName = :orgnlMsgName"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByOrgnlCreateDateTime", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.orgnlCreateDateTime = :orgnlCreateDateTime"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByOrgnlNoOfTxns", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.orgnlNoOfTxns = :orgnlNoOfTxns"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByOrgnlCntlSum", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.orgnlCntlSum = :orgnlCntlSum"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByProcessStatus", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.processStatus = :processStatus"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByIN", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.processStatus IN (:processStatus1, :processStatus2)"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByGroupStatus", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.groupStatus = :groupStatus"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByService", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.service = :service"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByVetRunNumber", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.vetRunNumber = :vetRunNumber"),
-//    @NamedQuery(name = "OpsStatusHdrsEntity.findByWorkunitRefNo", query = "SELECT o FROM OpsStatusHdrsEntity o WHERE o.workunitRefNo = :workunitRefNo")})
+*/
 @Entity
 @Table(name = "CAS_OPS_STATUS_HDRS",schema = "CAMOWNER")
 @XmlRootElement

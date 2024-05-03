@@ -56,13 +56,9 @@ public OpsFileRegLogic(){
 	public OpsFileRegModel retrieveDelDelivery(CasOpsFileRegEntity CasOpsFileRegEntity) {
 	
 	OpsFileRegModel opsFileRegModel = new OpsFileRegModel();
-	
 	opsFileRegModel = new AdminTranslator().translateCommonsToOpsFileRegEntity(CasOpsFileRegEntity);
 
-
 	return opsFileRegModel;
-		
-		
 	}
 	
 	

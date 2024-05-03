@@ -21,17 +21,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ElelwaniR
  */
 @Entity
-@Table(name = "MDT_AC_ARC_GRP_HDR",schema = "MANOWNER")
+@Table(name = "CAS_ARC_GRP_HDR",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MdtAcArcGrpHdrEntity.findAll", query = "SELECT m FROM MdtAcArcGrpHdrEntity m"),
-    @NamedQuery(name = "MdtAcArcGrpHdrEntity.findByMsgId", query = "SELECT m FROM MdtAcArcGrpHdrEntity m WHERE m.msgId = :msgId"),
-    @NamedQuery(name = "MdtAcArcGrpHdrEntity.findByCreateDateTime", query = "SELECT m FROM MdtAcArcGrpHdrEntity m WHERE m.createDateTime = :createDateTime"),
-    @NamedQuery(name = "MdtAcArcGrpHdrEntity.findByAuthCode", query = "SELECT m FROM MdtAcArcGrpHdrEntity m WHERE m.authCode = :authCode"),
-    @NamedQuery(name = "MdtAcArcGrpHdrEntity.findByCreatedBy", query = "SELECT m FROM MdtAcArcGrpHdrEntity m WHERE m.createdBy = :createdBy"),
-    @NamedQuery(name = "MdtAcArcGrpHdrEntity.findByArchiveDate", query = "SELECT m FROM MdtAcArcGrpHdrEntity m WHERE m.archiveDate = :archiveDate"),
-    @NamedQuery(name = "MdtAcArcGrpHdrEntity.findByArchiveDateCleanUp", query = "SELECT m FROM MdtAcArcGrpHdrEntity m WHERE m.archiveDate <= :archiveDate")})
-public class MdtAcArcGrpHdrEntity implements Serializable {
+    @NamedQuery(name = "CasArcGrpHdrEntity.findAll", query = "SELECT m FROM CasArcGrpHdrEntity m"),
+    @NamedQuery(name = "CasArcGrpHdrEntity.findByMsgId", query = "SELECT m FROM CasArcGrpHdrEntity m WHERE m.msgId = :msgId"),
+    @NamedQuery(name = "CasArcGrpHdrEntity.findByCreateDateTime", query = "SELECT m FROM CasArcGrpHdrEntity m WHERE m.createDateTime = :createDateTime"),
+    @NamedQuery(name = "CasArcGrpHdrEntity.findByAuthCode", query = "SELECT m FROM CasArcGrpHdrEntity m WHERE m.authCode = :authCode"),
+    @NamedQuery(name = "CasArcGrpHdrEntity.findByCreatedBy", query = "SELECT m FROM CasArcGrpHdrEntity m WHERE m.createdBy = :createdBy"),
+    @NamedQuery(name = "CasArcGrpHdrEntity.findByArchiveDate", query = "SELECT m FROM CasArcGrpHdrEntity m WHERE m.archiveDate = :archiveDate"),
+    @NamedQuery(name = "CasArcGrpHdrEntity.findByArchiveDateCleanUp", query = "SELECT m FROM CasArcGrpHdrEntity m WHERE m.archiveDate <= :archiveDate")})
+public class CasArcGrpHdrEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -52,10 +52,10 @@ public class MdtAcArcGrpHdrEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date archiveDate;
 
-    public MdtAcArcGrpHdrEntity() {
+    public CasArcGrpHdrEntity() {
     }
 
-    public MdtAcArcGrpHdrEntity(String msgId) {
+    public CasArcGrpHdrEntity(String msgId) {
         this.msgId = msgId;
     }
 
@@ -123,7 +123,7 @@ public class MdtAcArcGrpHdrEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcGrpHdrEntity other = (MdtAcArcGrpHdrEntity) obj;
+		CasArcGrpHdrEntity other = (CasArcGrpHdrEntity) obj;
 		if (archiveDate == null) {
 			if (other.archiveDate != null)
 				return false;
@@ -154,7 +154,7 @@ public class MdtAcArcGrpHdrEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MdtAcArcGrpHdrEntity [msgId=" + msgId + ", createDateTime="
+		return "CasArcGrpHdrEntity [msgId=" + msgId + ", createDateTime="
 				+ createDateTime + ", authCode=" + authCode + ", createdBy="
 				+ createdBy + ", archiveDate=" + archiveDate + "]";
 	}

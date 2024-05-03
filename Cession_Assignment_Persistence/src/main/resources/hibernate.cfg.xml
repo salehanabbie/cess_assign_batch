@@ -83,47 +83,17 @@
         <mapping class="com.bsva.entities.SysCisBranchEntity"/>
         <mapping class="com.bsva.entities.MdtCnfgValRuleEntity"/>
         <mapping class="com.bsva.entities.ObsSystemBillingCtrlsEntity"/>
+        <mapping class="com.bsva.entities.CasArcCessAssignTxnsEntity"/>
+        <mapping class="com.bsva.entities.CasArcConfHdrsEntity"/>
+        <mapping class="com.bsva.entities.CasArcConfDetailsEntity"/>
+        <mapping class="com.bsva.entities.CasArcDailyBillingEntity"/>
+        <mapping class="com.bsva.entities.CasArcFileRegEntity"/>
+        <mapping class="com.bsva.entities.CasArcGrpHdrEntity"/>
+        <mapping class="com.bsva.entities.CasArcMndtCountEntity"/>
+        <mapping class="com.bsva.entities.CasArcStatusDetailsEntity"/>
+        <mapping class="com.bsva.entities.CasArcStatusHdrsEntity"/>
+        <mapping class="com.bsva.entities.CasArcTxnsBillingEntity"/>
+        <mapping class="com.bsva.entities.CasArcTxnsBillReportEntity"/>
 
-
-        <!--		<mapping class="com.bsva.entities.MdtOpsAccptFinInstEntity"/>-->
-        <!--		<mapping class="com.bsva.entities.MdtOpsAccptPartyIdentEntity"/>-->
-        <!--		<mapping class="com.bsva.entities.MdtOpsMdteRequestEntity"/>-->
-        <!--		<mapping class="com.bsva.entities.MdtSysctrlCronEntity"/>-->
-
-        <!--	    <mapping class="com.bsva.entities.MdtCnfgAddressTypeEntity"/>-->
-        <!--	    <mapping class="com.bsva.entities.MdtCnfgNamePrefixEntity"/>-->
-        <!--	    <mapping class="com.bsva.entities.MdtCnfgDwnldReqTypeEntity"/>	  -->
-        <!--	    <mapping class="com.bsva.entities.MdtCnfgRejectReasonCodesEntity"/>-->
-        <!--	    <mapping class="com.bsva.entities.MdtCnfgRejectReasonCodesEntity"/>-->
-        <!--		<mapping class="com.bsva.entities.MdtSysctrlProcessStatusEntity"/>-->
-        <!--        <mapping class="com.bsva.entities.MdtCnfgStatusReasonCodesEntity"/>-->
-        <!--        <mapping class="com.bsva.entities.MdtCnfgCancellationCodesEntity"/>-->
-        <!--       	-->
-        <!--		<mapping class="com.bsva.entities.MdtAcArcStatusHdrsEntity"/>-->
-        <!--      	<mapping class="com.bsva.entities.MdtAcArcStatusDetailsEntity"/>-->
-
-        <!--      	<mapping class="com.bsva.entities.MdtCnfgSuspensionCodesEntity"/>-->
-        <!--      	<mapping class="com.bsva.entities.MdtAcArcConfHdrsEntity"/>-->
-        <!--      	<mapping class="com.bsva.entities.MdtAcArcConfDetailsEntity"/>-->
-        <!--      	<mapping class="com.bsva.entities.MdtAcArcMndtCountEntity"/>-->
-        <!--      	<mapping class="com.bsva.entities.CasSystemBillingCtrlsEntity"/>-->
-        <!--      	<mapping class="com.bsva.entities.MdtAcArcDailyBillingEntity"/>-->
-
-        <!--      	<mapping class="com.bsva.entities.MdtAcArcErrorCodesReportEntity"/> -->
-        <!--    	<mapping class="com.bsva.entities.MdtAcOpsErrorCodesReportEntity"/> -->
-        <!--    	<mapping class="com.bsva.entities.MdtAcArcErrCodesRepSumEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcArcFileRegEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcArcMandateTxnsEntity" />-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcOpsMrkoffGrpHdrEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcOpsMrkoffAcceptDetEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcArcMrkoffGrpHdrEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcArcMrkoffAcceptDetEntity"/>-->
-
-        <!--	 	<mapping class="com.bsva.entities.MdtAcArcTxnsBillingEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcOpsMdteRspTxnsEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcOpsRtTxnsBillEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcArcRtTxnsBillEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcConfigDataTimeEntity"/>-->
-        <!--	 	<mapping class="com.bsva.entities.MdtAcArcTxnsBillReportEntity"/>-->
     </session-factory>
 </hibernate-configuration>  

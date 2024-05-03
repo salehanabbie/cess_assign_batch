@@ -1022,7 +1022,7 @@ public class AC_Pain010_Extract_ST {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		opsFileRegModel.setService(outgoingService);
 
 		Boolean result = adminBeanRemote.createOpsFileRegModel(opsFileRegModel);
 

@@ -110,6 +110,7 @@ import com.bsva.delivery.StartOfTransmissionExtract;
 import com.bsva.entities.AudSystemProcessEntity;
 import com.bsva.entities.AudTrackingEntity;
 import com.bsva.entities.AuditTrackingEntityModel;
+import com.bsva.entities.CasArcDailyBillingEntity;
 import com.bsva.entities.CasCnfgAccountTypeEntity;
 import com.bsva.entities.CasCnfgAdjustmentCatEntity;
 import com.bsva.entities.CasCnfgAmendmentCodesEntity;
@@ -161,10 +162,8 @@ import com.bsva.entities.MandateDailyTransEntityModel;
 import com.bsva.entities.MandateRejectionEntityModel;
 import com.bsva.entities.MandateResponseOutstandingPerBankEntityModel;
 import com.bsva.entities.MandatesCountCommonsModelEntity;
-import com.bsva.entities.MdtAcArcDailyBillingEntity;
 import com.bsva.entities.MndtSummaryTotalsEntityModel;
 import com.bsva.entities.ObsSystemBillingCtrlsEntity;
-import com.bsva.entities.ObsSystemBillingCtrlsPK;
 import com.bsva.entities.OutSotEotEntityModel;
 import com.bsva.entities.OutstandingResponsesDebtorModelEntity;
 import com.bsva.entities.OutstandingResponsesModelEntity;
@@ -2374,6 +2373,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
       e.printStackTrace();
       eodCheck = false;
     }
+
     return eodCheck;
   }
 
@@ -6662,8 +6662,8 @@ null
       //Retrieve Billable Transactions
       List<CasOpsDailyBillingEntity> dailyBillingList =
           new ArrayList<CasOpsDailyBillingEntity>();
-      List<MdtAcArcDailyBillingEntity> dailyBillingArcList =
-          new ArrayList<MdtAcArcDailyBillingEntity>();
+      List<CasArcDailyBillingEntity> dailyBillingArcList =
+          new ArrayList<CasArcDailyBillingEntity>();
       HashMap<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("creditorBank", instId);
       parameters.put("actionDate", date);
@@ -6672,7 +6672,7 @@ null
       dailyBillingList = (List<CasOpsDailyBillingEntity>) genericDAO.findAllByNQCriteria(
           "MdtAcOpsDailyBillingEntity.findByCreatedDateSubSTR", parameters);
 
-      dailyBillingArcList = (List<MdtAcArcDailyBillingEntity>) genericDAO.findAllByNQCriteria(
+      dailyBillingArcList = (List<CasArcDailyBillingEntity>) genericDAO.findAllByNQCriteria(
           "MdtAcArcDailyBillingEntity.findByCreatedDateSubSTR", parameters);
 
       //log.info("dailyBillingList ==> " + dailyBillingList.size());
@@ -6696,7 +6696,7 @@ null
 
       //Retrieve TT1 From Archive
       if (dailyBillingArcList != null && dailyBillingArcList.size() > 0) {
-        for (MdtAcArcDailyBillingEntity localEntity : dailyBillingArcList) {
+        for (CasArcDailyBillingEntity localEntity : dailyBillingArcList) {
 
           if (!(localEntity.getTxnType().equalsIgnoreCase(tt2TxnType))) {
             MandateDailyTransModel localModel = new MandateDailyTransModel();

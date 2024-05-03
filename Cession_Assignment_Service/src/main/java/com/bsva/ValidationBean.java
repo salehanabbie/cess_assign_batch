@@ -1,5 +1,11 @@
 package com.bsva;
 
+import com.bsva.entities.CasArcConfDetailsEntity;
+import com.bsva.entities.CasArcConfHdrsEntity;
+import com.bsva.entities.CasArcFileRegEntity;
+import com.bsva.entities.CasArcMndtCountEntity;
+import com.bsva.entities.CasArcStatusDetailsEntity;
+import com.bsva.entities.CasArcStatusHdrsEntity;
 import com.bsva.entities.CasOpsFileRegEntity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,14 +23,8 @@ import com.bsva.businessLogic.SysCisBankLogic;
 import com.bsva.commons.model.OpsCustParamModel;
 import com.bsva.commons.model.SysCisBankModel;
 import com.bsva.commons.model.SysctrlCompParamModel;
-import com.bsva.entities.MdtAcArcConfDetailsEntity;
-import com.bsva.entities.MdtAcArcConfHdrsEntity;
-import com.bsva.entities.MdtAcArcDailyBillingEntity;
-import com.bsva.entities.MdtAcArcFileRegEntity;
-import com.bsva.entities.MdtAcArcGrpHdrEntity;
-import com.bsva.entities.MdtAcArcMndtCountEntity;
-import com.bsva.entities.MdtAcArcStatusDetailsEntity;
-import com.bsva.entities.MdtAcArcStatusHdrsEntity;
+import com.bsva.entities.CasArcDailyBillingEntity;
+import com.bsva.entities.CasArcGrpHdrEntity;
 import com.bsva.entities.CasOpsConfDetailsEntity;
 import com.bsva.entities.CasOpsConfHdrsEntity;
 import com.bsva.entities.CasOpsDailyBillingEntity;
@@ -266,12 +266,12 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 	//AC methods to create Archive process
 	public boolean createACArchiveStatusDetails(Object obj)
 	{
-		if(obj instanceof MdtAcArcStatusDetailsEntity)
+		if(obj instanceof CasArcStatusDetailsEntity)
 		{
-			MdtAcArcStatusDetailsEntity mdtAcArcStatusDetailsEntity = (MdtAcArcStatusDetailsEntity) obj;
+			CasArcStatusDetailsEntity casArcStatusDetailsEntity = (CasArcStatusDetailsEntity) obj;
 			try
 			{
-				genericDAO.save(mdtAcArcStatusDetailsEntity);
+				genericDAO.save(casArcStatusDetailsEntity);
 				return true;
 			}
 			catch(Exception ex)
@@ -286,12 +286,12 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public boolean createACArchiveStatusHdrs(Object obj)
 	{
-		if(obj instanceof MdtAcArcStatusHdrsEntity)
+		if(obj instanceof CasArcStatusHdrsEntity)
 		{
-			MdtAcArcStatusHdrsEntity mdtAcArcStatusHdrsEntity = (MdtAcArcStatusHdrsEntity) obj;
+			CasArcStatusHdrsEntity casArcStatusHdrsEntity = (CasArcStatusHdrsEntity) obj;
 			try
 			{
-				genericDAO.save(mdtAcArcStatusHdrsEntity);
+				genericDAO.save(casArcStatusHdrsEntity);
 				return true;
 			}
 			catch(Exception ex)
@@ -306,9 +306,9 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public boolean createACArcGrpHDR(Object obj)
 	{
-		if(obj instanceof MdtAcArcGrpHdrEntity)
+		if(obj instanceof CasArcGrpHdrEntity)
 		{
-			MdtAcArcGrpHdrEntity mdtAcArcOpsGrpHdrEntity = (MdtAcArcGrpHdrEntity) obj;
+			CasArcGrpHdrEntity mdtAcArcOpsGrpHdrEntity = (CasArcGrpHdrEntity) obj;
 			try
 			{
 				log.debug("TRYING TO SAVE GROUP HEADER ==> "+mdtAcArcOpsGrpHdrEntity.getMsgId());
@@ -846,12 +846,12 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 	@Override
 	public boolean createArcConfStatusDetails(Object obj)
 	{
-		if(obj instanceof MdtAcArcConfDetailsEntity)
+		if(obj instanceof CasArcConfDetailsEntity)
 		{
-			MdtAcArcConfDetailsEntity mdtAcArcConfDetailsEntity = (MdtAcArcConfDetailsEntity) obj;
+			CasArcConfDetailsEntity casArcConfDetailsEntity = (CasArcConfDetailsEntity) obj;
 			try
 			{
-				genericDAO.save(mdtAcArcConfDetailsEntity);
+				genericDAO.save(casArcConfDetailsEntity);
 				return true;
 			}
 			catch(Exception ex)
@@ -888,12 +888,12 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	@Override
 	public boolean createArcConfHdrsEntity(Object obj) {
-		if(obj instanceof MdtAcArcConfHdrsEntity)
+		if(obj instanceof CasArcConfHdrsEntity)
 		{
-			MdtAcArcConfHdrsEntity mdtAcArcConfHdrsEntity = (MdtAcArcConfHdrsEntity) obj;
+			CasArcConfHdrsEntity casArcConfHdrsEntity = (CasArcConfHdrsEntity) obj;
 			try
 			{
-				genericDAO.save(mdtAcArcConfHdrsEntity);
+				genericDAO.save(casArcConfHdrsEntity);
 				return true;
 			}
 			catch(Exception ex)
@@ -930,13 +930,13 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	@Override
 	public boolean createArArcMndtCout(Object obj) {
-		if(obj instanceof MdtAcArcMndtCountEntity)
+		if(obj instanceof CasArcMndtCountEntity)
 		{
-			MdtAcArcMndtCountEntity mdtAcArcMndtCountEntity = (MdtAcArcMndtCountEntity) obj;
+			CasArcMndtCountEntity casArcMndtCountEntity = (CasArcMndtCountEntity) obj;
 			try
 			{
 				log.debug("Saving mdtAcArcMndtCountEntity");
-				genericDAO.save(mdtAcArcMndtCountEntity);
+				genericDAO.save(casArcMndtCountEntity);
 				return true;
 			}
 			catch(Exception ex)
@@ -973,12 +973,12 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	public boolean createArchiveDailyBilling(Object obj)
 	{
-		if(obj instanceof MdtAcArcDailyBillingEntity)
+		if(obj instanceof CasArcDailyBillingEntity)
 		{
-			MdtAcArcDailyBillingEntity mdtAcArcDailyBillingEntity = (MdtAcArcDailyBillingEntity) obj;
+			CasArcDailyBillingEntity casArcDailyBillingEntity = (CasArcDailyBillingEntity) obj;
 			try
 			{
-				genericDAO.save(mdtAcArcDailyBillingEntity);
+				genericDAO.save(casArcDailyBillingEntity);
 				return true;
 			}
 			catch(Exception ex)
@@ -1073,13 +1073,13 @@ public class ValidationBean  implements ValidationBeanRemote, ValidationBeanLoca
 
 	@Override
 	public boolean createAcArcFileReg(Object obj) {
-		if(obj instanceof MdtAcArcFileRegEntity)
+		if(obj instanceof CasArcFileRegEntity)
 		{
-			MdtAcArcFileRegEntity mdtAcArcFileRegEntity = (MdtAcArcFileRegEntity) obj;
+			CasArcFileRegEntity casArcFileRegEntity = (CasArcFileRegEntity) obj;
 			try
 			{
 				log.debug("Saving mdtAcArcFileRegEntity");
-				genericDAO.save(mdtAcArcFileRegEntity);
+				genericDAO.save(casArcFileRegEntity);
 				return true;
 			}
 			catch(Exception ex)

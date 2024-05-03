@@ -3,6 +3,7 @@ package com.bsva.commons.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 public class OpsFileRegModel implements Serializable {
 
@@ -22,6 +23,7 @@ public class OpsFileRegModel implements Serializable {
     private String onlineInd;
     private String inOutInd;
     private String extractMsgId;
+	private String service;
     
 	public OpsFileRegModel() {
 		
@@ -112,104 +114,56 @@ public class OpsFileRegModel implements Serializable {
 		this.extractMsgId = extractMsgId;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((extractMsgId == null) ? 0 : extractMsgId.hashCode());
-		result = prime * result
-				+ ((fileName == null) ? 0 : fileName.hashCode());
-		result = prime * result
-				+ ((filepath == null) ? 0 : filepath.hashCode());
-		result = prime * result
-				+ ((grpHdrMsgId == null) ? 0 : grpHdrMsgId.hashCode());
-		result = prime * result
-				+ ((inOutInd == null) ? 0 : inOutInd.hashCode());
-		result = prime * result
-				+ ((nameSpace == null) ? 0 : nameSpace.hashCode());
-		result = prime * result
-				+ ((onlineInd == null) ? 0 : onlineInd.hashCode());
-		result = prime * result
-				+ ((processDate == null) ? 0 : processDate.hashCode());
-		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		return result;
+	public String getService() {
+		return service;
+	}
+
+	public void setService(String service) {
+		this.service = service;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(Object o) {
+		if (this == o) {
 			return true;
-		if (obj == null)
+		}
+		if (o == null || getClass() != o.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OpsFileRegModel other = (OpsFileRegModel) obj;
-		if (extractMsgId == null) {
-			if (other.extractMsgId != null)
-				return false;
-		} else if (!extractMsgId.equals(other.extractMsgId))
-			return false;
-		if (fileName == null) {
-			if (other.fileName != null)
-				return false;
-		} else if (!fileName.equals(other.fileName))
-			return false;
-		if (filepath == null) {
-			if (other.filepath != null)
-				return false;
-		} else if (!filepath.equals(other.filepath))
-			return false;
-		if (grpHdrMsgId == null) {
-			if (other.grpHdrMsgId != null)
-				return false;
-		} else if (!grpHdrMsgId.equals(other.grpHdrMsgId))
-			return false;
-		if (inOutInd == null) {
-			if (other.inOutInd != null)
-				return false;
-		} else if (!inOutInd.equals(other.inOutInd))
-			return false;
-		if (nameSpace == null) {
-			if (other.nameSpace != null)
-				return false;
-		} else if (!nameSpace.equals(other.nameSpace))
-			return false;
-		if (onlineInd == null) {
-			if (other.onlineInd != null)
-				return false;
-		} else if (!onlineInd.equals(other.onlineInd))
-			return false;
-		if (processDate == null) {
-			if (other.processDate != null)
-				return false;
-		} else if (!processDate.equals(other.processDate))
-			return false;
-		if (reason == null) {
-			if (other.reason != null)
-				return false;
-		} else if (!reason.equals(other.reason))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		return true;
+		}
+		OpsFileRegModel that = (OpsFileRegModel) o;
+		return Objects.equals(fileName, that.fileName) &&
+				Objects.equals(filepath, that.filepath) &&
+				Objects.equals(status, that.status) &&
+				Objects.equals(reason, that.reason) &&
+				Objects.equals(processDate, that.processDate) &&
+				Objects.equals(nameSpace, that.nameSpace) &&
+				Objects.equals(grpHdrMsgId, that.grpHdrMsgId) &&
+				Objects.equals(onlineInd, that.onlineInd) &&
+				Objects.equals(inOutInd, that.inOutInd) &&
+				Objects.equals(extractMsgId, that.extractMsgId) &&
+				Objects.equals(service, that.service);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(fileName, filepath, status, reason, processDate, nameSpace, grpHdrMsgId,
+				onlineInd, inOutInd, extractMsgId, service);
 	}
 
 	@Override
 	public String toString() {
-		return "OpsFileRegModel [fileName=" + fileName + ", filepath="
-				+ filepath + ", status=" + status + ", reason=" + reason
-				+ ", processDate=" + processDate + ", nameSpace=" + nameSpace
-				+ ", grpHdrMsgId=" + grpHdrMsgId + ", onlineInd=" + onlineInd
-				+ ", inOutInd=" + inOutInd + ", extractMsgId=" + extractMsgId
-				+ "]";
+		return "OpsFileRegModel{" +
+				"fileName='" + fileName + '\'' +
+				", filepath='" + filepath + '\'' +
+				", status='" + status + '\'' +
+				", reason='" + reason + '\'' +
+				", processDate=" + processDate +
+				", nameSpace='" + nameSpace + '\'' +
+				", grpHdrMsgId='" + grpHdrMsgId + '\'' +
+				", onlineInd='" + onlineInd + '\'' +
+				", inOutInd='" + inOutInd + '\'' +
+				", extractMsgId='" + extractMsgId + '\'' +
+				", service='" + service + '\'' +
+				'}';
 	}
-
-	
-	
-
 }

@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -18,38 +17,33 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 /**
  *
  * @author SalehaR
  */
 @Entity
-@Table(name = "MDT_AC_ARC_CONF_HDRS",schema = "MANOWNER")
+@Table(name = "CAS_ARC_CONF_HDRS",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findAll", query = "SELECT m FROM MdtAcArcConfHdrsEntity m"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findBySystemSeqNo", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByHdrMsgId", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.hdrMsgId = :hdrMsgId"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByCreateDateTime", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.createDateTime = :createDateTime"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByInstgAgt", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.instgAgt = :instgAgt"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByInstdAgt", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.instdAgt = :instdAgt"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByOrgnlMsgId", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.orgnlMsgId = :orgnlMsgId"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByOrgnlMsgName", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.orgnlMsgName = :orgnlMsgName"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByOrgnlCreateDateTime", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.orgnlCreateDateTime = :orgnlCreateDateTime"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByProcessStatus", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.processStatus = :processStatus"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByGroupStatus", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.groupStatus = :groupStatus"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByService", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.service = :service"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByGroupError", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.groupError = :groupError"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByArchiveDate", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.archiveDate = :archiveDate"),
-    @NamedQuery(name = "MdtAcArcConfHdrsEntity.findByArchiveDateCleanUp", query = "SELECT m FROM MdtAcArcConfHdrsEntity m WHERE m.archiveDate <= :archiveDate")})
+    @NamedQuery(name = "CasArcConfHdrsEntity.findAll", query = "SELECT m FROM CasArcConfHdrsEntity m"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findBySystemSeqNo", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByHdrMsgId", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.hdrMsgId = :hdrMsgId"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByCreateDateTime", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.createDateTime = :createDateTime"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByInstgAgt", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.instgAgt = :instgAgt"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByInstdAgt", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.instdAgt = :instdAgt"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByOrgnlMsgId", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.orgnlMsgId = :orgnlMsgId"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByOrgnlMsgName", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.orgnlMsgName = :orgnlMsgName"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByOrgnlCreateDateTime", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.orgnlCreateDateTime = :orgnlCreateDateTime"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByProcessStatus", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.processStatus = :processStatus"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByGroupStatus", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.groupStatus = :groupStatus"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByService", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.service = :service"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByGroupError", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.groupError = :groupError"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByArchiveDate", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.archiveDate = :archiveDate"),
+    @NamedQuery(name = "CasArcConfHdrsEntity.findByArchiveDateCleanUp", query = "SELECT m FROM CasArcConfHdrsEntity m WHERE m.archiveDate <= :archiveDate")})
 
-public class MdtAcArcConfHdrsEntity implements Serializable {
+public class CasArcConfHdrsEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-//    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MANOWNER.MDT_AC_ARC_CONF_HDRS_SEQ") )
-//    @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)
     @NotNull
@@ -94,14 +88,14 @@ public class MdtAcArcConfHdrsEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date archiveDate;
 
-    public MdtAcArcConfHdrsEntity() {
+    public CasArcConfHdrsEntity() {
     }
 
-    public MdtAcArcConfHdrsEntity(BigDecimal systemSeqNo) {
+    public CasArcConfHdrsEntity(BigDecimal systemSeqNo) {
         this.systemSeqNo = systemSeqNo;
     }
 
-    public MdtAcArcConfHdrsEntity(BigDecimal systemSeqNo, String hdrMsgId) {
+    public CasArcConfHdrsEntity(BigDecimal systemSeqNo, String hdrMsgId) {
         this.systemSeqNo = systemSeqNo;
         this.hdrMsgId = hdrMsgId;
     }
@@ -252,7 +246,7 @@ public class MdtAcArcConfHdrsEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcConfHdrsEntity other = (MdtAcArcConfHdrsEntity) obj;
+		CasArcConfHdrsEntity other = (CasArcConfHdrsEntity) obj;
 		if (archiveDate == null) {
 			if (other.archiveDate != null)
 				return false;
@@ -323,7 +317,7 @@ public class MdtAcArcConfHdrsEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MdtAcArcConfHdrsEntity [systemSeqNo=" + systemSeqNo
+		return "CasArcConfHdrsEntity [systemSeqNo=" + systemSeqNo
 				+ ", hdrMsgId=" + hdrMsgId + ", createDateTime="
 				+ createDateTime + ", instgAgt=" + instgAgt + ", instdAgt="
 				+ instdAgt + ", orgnlMsgId=" + orgnlMsgId + ", orgnlMsgName="

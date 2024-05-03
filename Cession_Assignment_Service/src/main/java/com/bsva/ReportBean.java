@@ -17,13 +17,13 @@ import com.bsva.entities.BatchOustandingResponseEntityModel;
 import com.bsva.entities.BatchOustandingResponseEntityReportModel;
 import com.bsva.entities.BatchRejectedTransactionEntityModel;
 import com.bsva.entities.BatchTxnBillReportEntity;
+import com.bsva.entities.CasArcCessAssignTxnsEntity;
 import com.bsva.entities.CasOpsFileRegEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
 import com.bsva.entities.ExceptionReportEntityModel;
 import com.bsva.entities.MandateAmendEntityModel;
 import com.bsva.entities.MandateRejectionEntityModel;
 import com.bsva.entities.MandateResponseOutstandingPerBankEntityModel;
-import com.bsva.entities.MdtAcArcMandateTxnsEntity;
 import com.bsva.entities.MonthlyVolumeCountEntityModel;
 import com.bsva.entities.OutstandingRespSummaryCountEntityModel;
 import com.bsva.entities.PasaMandateReportEntityModel;
@@ -724,7 +724,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
   }
 
   public Object retrievePain012FromArchive(String serviceId, String mrti, String accepted) {
-    MdtAcArcMandateTxnsEntity pain012Entity = new MdtAcArcMandateTxnsEntity();
+    CasArcCessAssignTxnsEntity pain012Entity = new CasArcCessAssignTxnsEntity();
 
     try {
       HashMap<String, Object> parameters = new HashMap<String, Object>();
@@ -734,7 +734,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
 
       log.debug("---------------sparameters: ------------------" + parameters.toString());
       pain012Entity =
-          (MdtAcArcMandateTxnsEntity) genericDAO.findByCriteria(MdtAcArcMandateTxnsEntity.class,
+          (CasArcCessAssignTxnsEntity) genericDAO.findByCriteria(CasArcCessAssignTxnsEntity.class,
               parameters);
     } catch (NullPointerException npe) {
       log.error("NullPointer exception :" + npe.getMessage());

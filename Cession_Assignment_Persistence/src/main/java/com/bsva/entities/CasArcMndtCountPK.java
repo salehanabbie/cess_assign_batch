@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
  * @author DimakatsoN
  */
 @Embeddable
-public class MdtAcArcMndtCountPK implements Serializable {
+public class CasArcMndtCountPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 6)
@@ -32,10 +32,10 @@ public class MdtAcArcMndtCountPK implements Serializable {
     @Column(name = "MSG_ID")
     private String msgId;
 
-    public MdtAcArcMndtCountPK() {
+    public CasArcMndtCountPK() {
     }
 
-    public MdtAcArcMndtCountPK(String instId, String serviceId, String msgId) {
+    public CasArcMndtCountPK(String instId, String serviceId, String msgId) {
         this.instId = instId;
         this.serviceId = serviceId;
         this.msgId = msgId;
@@ -84,7 +84,7 @@ public class MdtAcArcMndtCountPK implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcMndtCountPK other = (MdtAcArcMndtCountPK) obj;
+		CasArcMndtCountPK other = (CasArcMndtCountPK) obj;
 		if (instId == null) {
 			if (other.instId != null)
 				return false;

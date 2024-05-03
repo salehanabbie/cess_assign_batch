@@ -22,29 +22,29 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author DimakatsoN
  */
 @Entity
-@Table(name = "MDT_AC_ARC_DAILY_BILLING", schema="MANOWNER")
+@Table(name = "CAS_ARC_DAILY_BILLING", schema="CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findAll", query = "SELECT m FROM MdtAcArcDailyBillingEntity m"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findBySystemSeqNo", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.systemSeqNo = :systemSeqNo"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByCreditorBank", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.creditorBank = :creditorBank"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByDebtorBank", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.debtorBank = :debtorBank"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findBySubService", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.subService = :subService"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByTxnType", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.txnType = :txnType"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByTxnStatus", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.txnStatus = :txnStatus"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByCreatedBy", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.createdBy = :createdBy"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByCreatedDate", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.createdDate = :createdDate"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByBillExpStatus", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.billExpStatus = :billExpStatus"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByActionDate", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.actionDate = :actionDate"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByAuthCode", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.authCode = :authCode"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByArchiveDate", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.archiveDate = :archiveDate"), 
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByTxnId", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.txnId = :txnId"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByMndtRefNum", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.mndtRefNum = :mndtRefNum"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByExtMsgId", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.extMsgId = :extMsgId"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByRespDate", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.respDate = :respDate"),
-    @NamedQuery(name = "MdtAcArcDailyBillingEntity.findByCreatedDateSubSTR", query = "SELECT m FROM MdtAcArcDailyBillingEntity m WHERE m.creditorBank = :creditorBank and m.actionDate = :actionDate")})
+    @NamedQuery(name = "CasArcDailyBillingEntity.findAll", query = "SELECT m FROM CasArcDailyBillingEntity m"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findBySystemSeqNo", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.systemSeqNo = :systemSeqNo"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByCreditorBank", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.creditorBank = :creditorBank"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByDebtorBank", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.debtorBank = :debtorBank"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findBySubService", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.subService = :subService"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByTxnType", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.txnType = :txnType"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByTxnStatus", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.txnStatus = :txnStatus"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByCreatedBy", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.createdBy = :createdBy"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByCreatedDate", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.createdDate = :createdDate"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByBillExpStatus", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.billExpStatus = :billExpStatus"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByActionDate", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.actionDate = :actionDate"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByAuthCode", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.authCode = :authCode"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByArchiveDate", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.archiveDate = :archiveDate"), 
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByTxnId", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.txnId = :txnId"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByMndtRefNum", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.mndtRefNum = :mndtRefNum"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByExtMsgId", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.extMsgId = :extMsgId"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByRespDate", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.respDate = :respDate"),
+    @NamedQuery(name = "CasArcDailyBillingEntity.findByCreatedDateSubSTR", query = "SELECT m FROM CasArcDailyBillingEntity m WHERE m.creditorBank = :creditorBank and m.actionDate = :actionDate")})
 
-public class MdtAcArcDailyBillingEntity implements Serializable {
+public class CasArcDailyBillingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -97,10 +97,10 @@ public class MdtAcArcDailyBillingEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date respDate;
 
-    public MdtAcArcDailyBillingEntity() {
+    public CasArcDailyBillingEntity() {
     }
 
-    public MdtAcArcDailyBillingEntity(BigDecimal systemSeqNo) {
+    public CasArcDailyBillingEntity(BigDecimal systemSeqNo) {
         this.systemSeqNo = systemSeqNo;
     }
 
@@ -263,7 +263,7 @@ public class MdtAcArcDailyBillingEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcDailyBillingEntity other = (MdtAcArcDailyBillingEntity) obj;
+		CasArcDailyBillingEntity other = (CasArcDailyBillingEntity) obj;
 		if (actionDate == null) {
 			if (other.actionDate != null)
 				return false;
@@ -349,7 +349,7 @@ public class MdtAcArcDailyBillingEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MdtAcArcDailyBillingEntity [systemSeqNo=" + systemSeqNo + ", creditorBank=" + creditorBank
+		return "CasArcDailyBillingEntity [systemSeqNo=" + systemSeqNo + ", creditorBank=" + creditorBank
 				+ ", debtorBank=" + debtorBank + ", subService=" + subService + ", txnType=" + txnType + ", txnStatus="
 				+ txnStatus + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", billExpStatus="
 				+ billExpStatus + ", actionDate=" + actionDate + ", authCode=" + authCode + ", archiveDate="

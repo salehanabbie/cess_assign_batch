@@ -15,27 +15,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Modified by: SalehaR - 2016/09/13
  */
 @Entity
-@Table(name = "MDT_AC_ARC_STATUS_DETAILS",schema = "MANOWNER")
+@Table(name = "CAS_ARC_STATUS_DETAILS",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findAll", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findBySystemSeqNo", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByStatusHdrSeqNo", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.statusHdrSeqNo = :statusHdrSeqNo"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByErrorCode", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.errorCode = :errorCode"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByTxnId", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.txnId = :txnId"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByEndToEndId", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.endToEndId = :endToEndId"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByTxnStatus", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.txnStatus = :txnStatus"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByErrorType", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.errorType = :errorType"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByRecordId", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.recordId = :recordId"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByOrgnlTxnSeqNo", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.orgnlTxnSeqNo = :orgnlTxnSeqNo"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByMandateRefNumber", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.mandateRefNumber = :mandateRefNumber"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByInstId", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.instId = :instId"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByProcessStatus", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.processStatus = :processStatus"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByDebtorBranchNo", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.debtorBranchNo = :debtorBranchNo"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByCrAbbShortName", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.crAbbShortName = :crAbbShortName"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByArchiveDate", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.archiveDate = :archiveDate"),
-    @NamedQuery(name = "MdtAcArcStatusDetailsEntity.findByArchiveDateCleanUp", query = "SELECT m FROM MdtAcArcStatusDetailsEntity m WHERE m.archiveDate <= :archiveDate")})
-public class MdtAcArcStatusDetailsEntity implements Serializable {
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findAll", query = "SELECT m FROM CasArcStatusDetailsEntity m"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findBySystemSeqNo", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByStatusHdrSeqNo", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.statusHdrSeqNo = :statusHdrSeqNo"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByErrorCode", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.errorCode = :errorCode"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByTxnId", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.txnId = :txnId"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByEndToEndId", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.endToEndId = :endToEndId"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByTxnStatus", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.txnStatus = :txnStatus"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByErrorType", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.errorType = :errorType"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByRecordId", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.recordId = :recordId"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByOrgnlTxnSeqNo", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.orgnlTxnSeqNo = :orgnlTxnSeqNo"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByMandateRefNumber", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.mandateRefNumber = :mandateRefNumber"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByInstId", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.instId = :instId"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByProcessStatus", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.processStatus = :processStatus"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByDebtorBranchNo", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.debtorBranchNo = :debtorBranchNo"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByCrAbbShortName", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.crAbbShortName = :crAbbShortName"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByArchiveDate", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.archiveDate = :archiveDate"),
+    @NamedQuery(name = "CasArcStatusDetailsEntity.findByArchiveDateCleanUp", query = "SELECT m FROM CasArcStatusDetailsEntity m WHERE m.archiveDate <= :archiveDate")})
+public class CasArcStatusDetailsEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -85,14 +85,14 @@ public class MdtAcArcStatusDetailsEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date archiveDate;
 
-    public MdtAcArcStatusDetailsEntity() {
+    public CasArcStatusDetailsEntity() {
     }
 
-    public MdtAcArcStatusDetailsEntity(Long systemSeqNo) {
+    public CasArcStatusDetailsEntity(Long systemSeqNo) {
         this.systemSeqNo = systemSeqNo;
     }
 
-    public MdtAcArcStatusDetailsEntity(Long systemSeqNo, long statusHdrSeqNo) {
+    public CasArcStatusDetailsEntity(Long systemSeqNo, long statusHdrSeqNo) {
         this.systemSeqNo = systemSeqNo;
         this.statusHdrSeqNo = statusHdrSeqNo;
     }
@@ -259,7 +259,7 @@ public class MdtAcArcStatusDetailsEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcStatusDetailsEntity other = (MdtAcArcStatusDetailsEntity) obj;
+		CasArcStatusDetailsEntity other = (CasArcStatusDetailsEntity) obj;
 		if (crAbbShortName == null) {
 			if (other.crAbbShortName != null)
 				return false;
@@ -332,7 +332,7 @@ public class MdtAcArcStatusDetailsEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MdtAcArcStatusDetailsEntity [systemSeqNo=" + systemSeqNo
+		return "CasArcStatusDetailsEntity [systemSeqNo=" + systemSeqNo
 				+ ", statusHdrSeqNo=" + statusHdrSeqNo + ", errorCode="
 				+ errorCode + ", txnId=" + txnId + ", endToEndId=" + endToEndId
 				+ ", txnStatus=" + txnStatus + ", errorType=" + errorType

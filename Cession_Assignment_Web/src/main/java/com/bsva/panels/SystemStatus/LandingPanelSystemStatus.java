@@ -196,7 +196,6 @@ public class LandingPanelSystemStatus extends Panel implements Serializable
 				if (totalDifferenceCalculate == 0) 
 				{
 					boolean eodCheck = controller.runEndofDayManually(clientSessionModel.getUsername(), null);
-					//boolean eodCheck = controller.runArchive();
 
 					if(eodCheck)
 					{

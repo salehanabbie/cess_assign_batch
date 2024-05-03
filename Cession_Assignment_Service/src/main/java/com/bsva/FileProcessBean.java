@@ -283,11 +283,11 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		log.info("===============ARCHIVING "+archiveType+" GROUP HEADER===============");
 		StringBuffer sbGrpHdr = new StringBuffer();
 		//GROUP HEADER
-		sbGrpHdr.append("INSERT INTO MANOWNER.MDT_AC_ARC_GRP_HDR ");
+		sbGrpHdr.append("INSERT INTO CAMOWNER.CAS_ARC_GRP_HDR ");
 		sbGrpHdr.append("(MSG_ID ,CREATE_DATE_TIME ,AUTH_CODE ,CREATED_BY ,ARCHIVE_DATE) ");
 		sbGrpHdr.append("SELECT distinct nvl(b.MSG_ID,'NF') as msgid ,b.CREATE_DATE_TIME ,b.AUTH_CODE ,b.CREATED_BY ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbGrpHdr.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
-		sbGrpHdr.append("left join MANOWNER.MDT_AC_OPS_GRP_HDR b on a.msg_id = b.msg_id ");
+		sbGrpHdr.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
+		sbGrpHdr.append("left join CAMOWNER.CAS_OPS_GRP_HDR b on a.msg_id = b.msg_id ");
 
 		switch(archiveType)
 		{
@@ -308,16 +308,16 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on Matched Mandates Archive--Group Hdr:- "+ex.getMessage());
+			log.error("Error on Matched CASA Archive--Group Hdr:- "+ex.getMessage());
 			ex.printStackTrace();
 			grpHdrBool = false;
 		}
 
-		//MANDATE MESSAGE
+		//CESSION ASSIGNMENT TXNS
 		log.info("===============ARCHIVING "+archiveType+" MANDATE===============");
 		StringBuffer sbMandate = new StringBuffer();
 
-		sbMandate.append("INSERT INTO MANOWNER.MDT_AC_ARC_MANDATE_TXNS ( ");
+		sbMandate.append("INSERT INTO CAMOWNER.CAS_ARC_CESS_ASSIGN_TXNS ( ");
 		sbMandate.append("MSG_ID ,MANDATE_REQ_TRAN_ID ,CREDITOR_BANK ,DEBTOR_BANK ,SERVICE_ID ,PROCESS_STATUS ,IN_FILE_NAME ,IN_FILE_DATE ,EXTRACT_MSG_ID ,EXTRACT_FILE_NAME ,INIT_PARTY ,MANDATE_ID "); 
 		sbMandate.append(",CONTRACT_REF ,SERVICE_LEVEL ,LOCAL_INSTR_CD ,SEQUENCE_TYPE ,FREQUENCY ,FROM_DATE ,FIRST_COLL_DATE ,COLL_AMOUNT_CURR ,COLL_AMOUNT ,MAX_AMOUNT_CURR ,MAX_AMOUNT ,CRED_SCHEME_ID ");
 		sbMandate.append(",CREDITOR_NAME ,CRED_PHONE_NR ,CRED_EMAIL_ADDR ,CRED_ACC_NUM ,CRED_BRANCH_NR ,ULT_CRED_NAME ,CRED_ABB_SHORT_NAME ,DEBTOR_NAME ,DEBTOR_ID ,DEBT_PHONE_NR ,DEBT_EMAIL_ADDR ");
@@ -335,7 +335,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		sbMandate.append(",DEBT_ACC_NUM ,DEBT_ACC_TYPE ,DEBT_BRANCH_NR ,ULT_DEBT_NAME ,AUTH_TYPE ,COLLECTION_DAY ,DATE_ADJ_RULE_IND ,ADJ_CATEGORY ,ADJ_RATE ,ADJ_AMOUNT_CURR ,ADJ_AMOUNT ,FIRST_COLL_AMT_CURR ");
 		sbMandate.append(",FIRST_COLL_AMT ,DEBIT_VALUE_TYPE ,ACCEPTED_IND ,REJECT_REASON_CODE ,AUTH_STATUS_IND ,AUTH_CHANNEL ,MANDATE_REF_NR ,MANDATE_AUTH_DATE ,AMEND_REASON ,ORIG_MANDATE_ID ,ORIG_CONTRACT_REF "); 
 		sbMandate.append(",ORIG_CRED_NAME ,ORIG_MAND_REQ_TRAN_ID ,ORIG_DEBT_NAME ,ORIG_DEBT_BRANCH ,CANCEL_REASON ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,TO_DATE('"+archDate+"','YYYY-MM-DD'),MAC_CODE ");
-		sbMandate.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS ");
+		sbMandate.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS ");
 
 		switch(archiveType)
 		{
@@ -356,7 +356,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		}
 		catch(Exception ex)
 		{
-			log.error("ST_Error on Matched Mandates Archive--Mandate Mess:- "+ex.getMessage());
+			log.error("ST_Error on Matched CASA Archive--Mandate Mess:- "+ex.getMessage());
 			ex.printStackTrace();
 			mandateBool = false;
 		}
@@ -371,11 +371,11 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 	{
 		boolean grpHdrBool = false, mndtMsgBool= false;
 
-		log.info("===============DELETING "+archiveType+" MANDATE TXNS===============");
+		log.info("===============DELETING "+archiveType+" CASA TXNS===============");
 		StringBuffer sbGrpHdr = new StringBuffer();
-		sbGrpHdr.append("delete from MANOWNER.MDT_AC_OPS_GRP_HDR b "); 
+		sbGrpHdr.append("delete from CAMOWNER.CAS_OPS_GRP_HDR b ");
 		sbGrpHdr.append("where (b.msg_id) IN ");
-		sbGrpHdr.append("(select a.msg_id from MANOWNER.MDT_AC_OPS_MANDATE_TXNS a ");
+		sbGrpHdr.append("(select a.msg_id from CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");
@@ -395,13 +395,13 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on Delete Matched Mandates--Group Header:- "+ex.getMessage());
+			log.error("Error on Delete CASA Txns--Group Header:- "+ex.getMessage());
 			ex.printStackTrace();
 			grpHdrBool = false;
 		}
 
 		StringBuffer sbMndMsg = new StringBuffer();
-		sbMndMsg.append("delete from MANOWNER.MDT_AC_OPS_MANDATE_TXNS ");
+		sbMndMsg.append("delete from CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbMndMsg.append("WHERE PROCESS_STATUS IN ('M','R') ");
@@ -420,7 +420,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on Delete Matched Mandates--MndtTxns:- "+ex.getMessage());
+			log.error("Error on Delete CASA TXNS:- "+ex.getMessage());
 			ex.printStackTrace();
 			mndtMsgBool = false;
 		}
@@ -437,10 +437,10 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 
 		log.info("===============ARCHIVING GROUP HEADER EXCESS TXNS===============");
 		StringBuffer leftGHMsg = new StringBuffer();
-		leftGHMsg.append("INSERT INTO MANOWNER.MDT_AC_ARC_GRP_HDR ");
+		leftGHMsg.append("INSERT INTO CAMOWNER.CAS_ARC_GRP_HDR ");
 		leftGHMsg.append("(MSG_ID ,CREATE_DATE_TIME ,AUTH_CODE ,CREATED_BY ,ARCHIVE_DATE) ");
 		leftGHMsg.append("SELECT MSG_ID ,CREATE_DATE_TIME ,AUTH_CODE ,CREATED_BY ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		leftGHMsg.append("FROM MANOWNER.MDT_AC_OPS_GRP_HDR ");
+		leftGHMsg.append("FROM CAMOWNER.CAS_OPS_GRP_HDR ");
 		leftGHMsg.append("WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -456,9 +456,9 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		}
 
 		//Mandate Message
-		log.info("===============ARCHIVING MANDATES EXCESS TXNS===============");
+		log.info("===============ARCHIVING CASA EXCESS TXNS===============");
 		StringBuffer sbMandate = new StringBuffer();
-		sbMandate.append("INSERT INTO MANOWNER.MDT_AC_ARC_MANDATE_TXNS ( ");
+		sbMandate.append("INSERT INTO CAMOWNER.CAS_ARC_CESS_ASSIGN_TXNS ( ");
 		sbMandate.append("MSG_ID ,MANDATE_REQ_TRAN_ID ,CREDITOR_BANK ,DEBTOR_BANK ,SERVICE_ID ,PROCESS_STATUS ,IN_FILE_NAME ,IN_FILE_DATE ,EXTRACT_MSG_ID ,EXTRACT_FILE_NAME ,INIT_PARTY ,MANDATE_ID "); 
 		sbMandate.append(",CONTRACT_REF ,SERVICE_LEVEL ,LOCAL_INSTR_CD ,SEQUENCE_TYPE ,FREQUENCY ,FROM_DATE ,FIRST_COLL_DATE ,COLL_AMOUNT_CURR ,COLL_AMOUNT ,MAX_AMOUNT_CURR ,MAX_AMOUNT ,CRED_SCHEME_ID ");
 		sbMandate.append(",CREDITOR_NAME ,CRED_PHONE_NR ,CRED_EMAIL_ADDR ,CRED_ACC_NUM ,CRED_BRANCH_NR ,ULT_CRED_NAME ,CRED_ABB_SHORT_NAME ,DEBTOR_NAME ,DEBTOR_ID ,DEBT_PHONE_NR ,DEBT_EMAIL_ADDR ");
@@ -471,7 +471,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		sbMandate.append(",DEBT_ACC_NUM ,DEBT_ACC_TYPE ,DEBT_BRANCH_NR ,ULT_DEBT_NAME ,AUTH_TYPE ,COLLECTION_DAY ,DATE_ADJ_RULE_IND ,ADJ_CATEGORY ,ADJ_RATE ,ADJ_AMOUNT_CURR ,ADJ_AMOUNT ,FIRST_COLL_AMT_CURR ");
 		sbMandate.append(",FIRST_COLL_AMT ,DEBIT_VALUE_TYPE ,ACCEPTED_IND ,REJECT_REASON_CODE ,AUTH_STATUS_IND ,AUTH_CHANNEL ,MANDATE_REF_NR ,MANDATE_AUTH_DATE ,AMEND_REASON ,ORIG_MANDATE_ID ,ORIG_CONTRACT_REF "); 
 		sbMandate.append(",ORIG_CRED_NAME ,ORIG_MAND_REQ_TRAN_ID ,ORIG_DEBT_NAME ,ORIG_DEBT_BRANCH ,CANCEL_REASON ,CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbMandate.append("FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS ");
+		sbMandate.append("FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS ");
 		sbMandate.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
 
 		try
@@ -482,49 +482,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on Archive Mandates LeftOver:- "+ex.getMessage());
-			ex.printStackTrace();
-		}
-
-		log.info("===============ARCHIVING SUSPENSION GRPHDR EXCESS TXNS===============");
-		StringBuffer sbSuspHdrs = new StringBuffer();
-		sbSuspHdrs.append("INSERT INTO MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR ");
-		sbSuspHdrs.append("(ASSIGNMENT_ID ,ASSIGNER ,ASSIGNEE ,CREATE_DATE_TIME ,ARCHIVE_DATE) ");
-		sbSuspHdrs.append("SELECT DISTINCT nvl(ASSIGNMENT_ID,'NF') as assgnid ,ASSIGNER ,ASSIGNEE ,CREATE_DATE_TIME ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbSuspHdrs.append("FROM MANOWNER.MDT_AC_OPS_SUSP_GRP_HDR ");
-		sbSuspHdrs.append("WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
-
-		try
-		{
-			String suspHdrsLeftSQL = sbSuspHdrs.toString();
-			log.debug("suspHdrsLeftSQL: " + suspHdrsLeftSQL);
-			genericDAO.executeNativeSQL(suspHdrsLeftSQL);
-		}
-		catch(Exception ex)
-		{
-			log.error("Error on Archive SuspHdrs LeftOver:- "+ex.getMessage());
-			ex.printStackTrace();
-		}
-
-		log.info("===============ARCHIVING SUSPENSION MSG EXCESS TXNS===============");
-		StringBuffer sbSuspDtls = new StringBuffer();
-		sbSuspDtls.append("INSERT INTO MANOWNER.MDT_AC_ARC_SUSP_MSG ");
-		sbSuspDtls.append("(MANDATE_SUSP_ID ,ORIGINAL_PMT_ID ,ASSIGNMENT_ID ,REASON_CODE ,MANDATE_REF_NR ,CREDITOR_BANK ,MANDATE_REQ_TRAN_ID "); 
-		sbSuspDtls.append(",CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,PROCESS_STATUS ,EXTRACT_MSG_ID ,ARCHIVE_DATE) ");
-		sbSuspDtls.append("SELECT MANDATE_SUSP_ID ,ORIGINAL_PMT_ID ,ASSIGNMENT_ID ,REASON_CODE ,MANDATE_REF_NR ,CREDITOR_BANK ,MANDATE_REQ_TRAN_ID "); 
-		sbSuspDtls.append(",CREATED_BY ,CREATED_DATE ,MODIFIED_BY ,MODIFIED_DATE ,PROCESS_STATUS ,EXTRACT_MSG_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
-		sbSuspDtls.append("FROM MANOWNER.MDT_AC_OPS_SUSP_MSG ");
-		sbSuspDtls.append("WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ");
-
-		try
-		{
-			String suspDtlsLeftSQL = sbSuspDtls.toString();
-			log.debug("suspDtlsLeftSQL: " + suspDtlsLeftSQL);
-			genericDAO.executeNativeSQL(suspDtlsLeftSQL);
-		}
-		catch(Exception ex)
-		{
-			log.error("Error on Archive SuspDtls LeftOver:- "+ex.getMessage());
+			log.error("Error on Archive CASA LeftOver:- "+ex.getMessage());
 			ex.printStackTrace();
 		}
 
@@ -536,24 +494,14 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		try
 		{
 			log.info("===============DELETING GROUP HEADER EXCESS TXNS===============");
-			String ghLeftDel = "DELETE FROM  MANOWNER.MDT_AC_OPS_GRP_HDR WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String ghLeftDel = "DELETE FROM  CAMOWNER.CAS_OPS_GRP_HDR WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("ghLeftDel: " + ghLeftDel);
 			genericDAO.executeNativeSQL(ghLeftDel);
 
-			log.info("===============DELETING MANDATES EXCESS TXNS===============");
-			String mndtLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_MANDATE_TXNS WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			log.info("===============DELETING CASA EXCESS TXNS===============");
+			String mndtLeftDel = "DELETE FROM CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("mndtLeftDel: " + mndtLeftDel);
 			genericDAO.executeNativeSQL(mndtLeftDel);
-
-			log.info("===============DELETING SUSPENSION GRPHDR EXCESS TXNS===============");
-			String suspGHLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_SUSP_GRP_HDR WHERE CREATE_DATE_TIME <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
-			log.debug("suspGHLeftDel: " + suspGHLeftDel);
-			genericDAO.executeNativeSQL(suspGHLeftDel);
-
-			log.info("===============DELETING SUSPENSION MSG EXCESS TXNS===============");
-			String suspMsgLeftDel = "DELETE FROM MANOWNER.MDT_AC_OPS_SUSP_MSG WHERE CREATED_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
-			log.debug("suspMsgLeftDel: " + suspMsgLeftDel);
-			genericDAO.executeNativeSQL(suspMsgLeftDel);
 
 			return true;
 		}
@@ -570,24 +518,14 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		try
 		{
 			log.info("===============CLEANING UP ARC GROUP HEADER TXNS===============");
-			String ghLeftDel = "DELETE FROM  MANOWNER.MDT_AC_ARC_GRP_HDR WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String ghLeftDel = "DELETE FROM  CAMOWNER.CAS_ARC_GRP_HDR WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("ghLeftDel: " + ghLeftDel);
 			genericDAO.executeNativeSQL(ghLeftDel);
 
 			log.info("===============CLEANING UP ARC MANDATES TXNS===============");
-			String mndtLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_MANDATE_TXNS WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
+			String mndtLeftDel = "DELETE FROM CAMOWNER.CAS_ARC_CESS_ASSIGN_TXNS WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
 			log.debug("mndtLeftDel: " + mndtLeftDel);
 			genericDAO.executeNativeSQL(mndtLeftDel);
-
-			log.info("===============CLEANING UP ARC SUSPENSION GRPHDR TXNS===============");
-			String suspGHLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_SUSP_GRP_HDR WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
-			log.debug("suspGHLeftDel: " + suspGHLeftDel);
-			genericDAO.executeNativeSQL(suspGHLeftDel);
-
-			log.info("===============CLEANING UP ARC SUSPENSION MSG TXNS===============");
-			String suspMsgLeftDel = "DELETE FROM MANOWNER.MDT_AC_ARC_SUSP_MSG WHERE ARCHIVE_DATE <= TO_DATE('"+expiredDate+"','YYYY-MM-DD') ";
-			log.debug("suspMsgLeftDel: " + suspMsgLeftDel);
-			genericDAO.executeNativeSQL(suspMsgLeftDel);
 
 			return true;
 		}
@@ -681,7 +619,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 			genericDAO.bulkSaveAll(collection, 700);
 		} 
 		catch (Exception e) {
-			log.error("Error on bulkInsertCreateMandates: " + e.getMessage());
+			log.error("Error on bulkSaveMandates: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
