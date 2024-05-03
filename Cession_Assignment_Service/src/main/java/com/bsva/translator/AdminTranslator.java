@@ -55,6 +55,7 @@ import com.bsva.commons.model.TransCtrlMsgModel;
 import com.bsva.entities.AudReportsEntity;
 import com.bsva.entities.AudSystemProcessEntity;
 import com.bsva.entities.AudTrackingEntity;
+import com.bsva.entities.CasArcDailyBillingEntity;
 import com.bsva.entities.CasCnfgAccountTypeEntity;
 import com.bsva.entities.CasCnfgAdjustmentCatEntity;
 import com.bsva.entities.CasCnfgAmendmentCodesEntity;
@@ -101,7 +102,6 @@ import com.bsva.entities.CisBranchEntity;
 import com.bsva.entities.CisMemberEntity;
 import com.bsva.entities.IamSessionEntity;
 import com.bsva.entities.IncSotEotEntityModel;
-import com.bsva.entities.MdtAcArcDailyBillingEntity;
 import com.bsva.entities.OutSotEotEntityModel;
 import com.bsva.entities.SysCisBankEntity;
 import com.bsva.entities.SysCisBranchEntity;
@@ -631,7 +631,7 @@ public class AdminTranslator {
     casOpsFileRegEntity.setExtractMsgId(opsFileRegModel.getExtractMsgId());
     casOpsFileRegEntity.setInOutInd(opsFileRegModel.getInOutInd());
     casOpsFileRegEntity.setOnlineInd(opsFileRegModel.getOnlineInd());
-
+    casOpsFileRegEntity.setServiceId(opsFileRegModel.getService());
 
     return casOpsFileRegEntity;
   }
@@ -650,6 +650,7 @@ public class AdminTranslator {
     opsFileRegModel.setExtractMsgId(casOpsFileRegEntity.getExtractMsgId());
     opsFileRegModel.setInOutInd(casOpsFileRegEntity.getInOutInd());
     opsFileRegModel.setOnlineInd(casOpsFileRegEntity.getOnlineInd());
+    opsFileRegModel.setService(casOpsFileRegEntity.getServiceId());
 
     return opsFileRegModel;
   }
@@ -1521,21 +1522,17 @@ public class AdminTranslator {
   }
 
 
-  public AcOpsSotEotCntrlModel translateAcOpsSotEotCntrlModelToEntity(
-      CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity) {
+  public AcOpsSotEotCntrlModel translateAcOpsSotEotCntrlModelToEntity(CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity) {
     AcOpsSotEotCntrlModel acOpsSotEotCntrlModel = new AcOpsSotEotCntrlModel();
 
     acOpsSotEotCntrlModel.setEotIn(casOpsSotEotCtrlEntity.getEotIn());
     acOpsSotEotCntrlModel.setEotOut(casOpsSotEotCtrlEntity.getEotOut());
     acOpsSotEotCntrlModel.setInstId(casOpsSotEotCtrlEntity.getCasOpsSotEotCtrlPK().getInstId());
-    acOpsSotEotCntrlModel.setServiceId(
-        casOpsSotEotCtrlEntity.getCasOpsSotEotCtrlPK().getServiceId());
+    acOpsSotEotCntrlModel.setServiceId(casOpsSotEotCtrlEntity.getCasOpsSotEotCtrlPK().getServiceId());
     acOpsSotEotCntrlModel.setSotIn(casOpsSotEotCtrlEntity.getSotIn());
     acOpsSotEotCntrlModel.setSotOut(casOpsSotEotCtrlEntity.getSotOut());
 
-
     return acOpsSotEotCntrlModel;
-
   }
 
 
@@ -1867,21 +1864,21 @@ public class AdminTranslator {
   }
 
   public MandateDailyTransModel translateDailyBillingArcEntityToModel(
-      MdtAcArcDailyBillingEntity mdtAcArcDailyBillingEntity) {
+      CasArcDailyBillingEntity casArcDailyBillingEntity) {
     MandateDailyTransModel mandateDailyTransModel = new MandateDailyTransModel();
 
-    mandateDailyTransModel.setCreditorBank(mdtAcArcDailyBillingEntity.getCreditorBank());
-    mandateDailyTransModel.setDebtorBank(mdtAcArcDailyBillingEntity.getDebtorBank());
-    mandateDailyTransModel.setServiceId(mdtAcArcDailyBillingEntity.getSubService());
-    mandateDailyTransModel.setTxnType(mdtAcArcDailyBillingEntity.getTxnType());
+    mandateDailyTransModel.setCreditorBank(casArcDailyBillingEntity.getCreditorBank());
+    mandateDailyTransModel.setDebtorBank(casArcDailyBillingEntity.getDebtorBank());
+    mandateDailyTransModel.setServiceId(casArcDailyBillingEntity.getSubService());
+    mandateDailyTransModel.setTxnType(casArcDailyBillingEntity.getTxnType());
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    mandateDailyTransModel.setActionDate(sdf.format(mdtAcArcDailyBillingEntity.getActionDate()));
-    mandateDailyTransModel.setExtractMsgId(mdtAcArcDailyBillingEntity.getExtMsgId());
-    mandateDailyTransModel.setMndtReqTransId(mdtAcArcDailyBillingEntity.getTxnId());
-    mandateDailyTransModel.setMndtRefNumber(mdtAcArcDailyBillingEntity.getMndtRefNum());
-    mandateDailyTransModel.setAuthCode(mdtAcArcDailyBillingEntity.getAuthCode());
-    mandateDailyTransModel.setTrxnStatus(mdtAcArcDailyBillingEntity.getTxnStatus());
-    mandateDailyTransModel.setRespDate(sdf.format(mdtAcArcDailyBillingEntity.getRespDate()));
+    mandateDailyTransModel.setActionDate(sdf.format(casArcDailyBillingEntity.getActionDate()));
+    mandateDailyTransModel.setExtractMsgId(casArcDailyBillingEntity.getExtMsgId());
+    mandateDailyTransModel.setMndtReqTransId(casArcDailyBillingEntity.getTxnId());
+    mandateDailyTransModel.setMndtRefNumber(casArcDailyBillingEntity.getMndtRefNum());
+    mandateDailyTransModel.setAuthCode(casArcDailyBillingEntity.getAuthCode());
+    mandateDailyTransModel.setTrxnStatus(casArcDailyBillingEntity.getTxnStatus());
+    mandateDailyTransModel.setRespDate(sdf.format(casArcDailyBillingEntity.getRespDate()));
 
     return mandateDailyTransModel;
   }

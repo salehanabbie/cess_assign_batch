@@ -691,7 +691,6 @@ public class AC_StatusReport_Pacs002_001_04 {
 				originalTransactionReference16.getUltmtCdtr() != null) {
 			transInfo.setOrgnlTxRef(originalTransactionReference16);
 		}
-
     }
 
     return transInfo;
@@ -711,6 +710,7 @@ public class AC_StatusReport_Pacs002_001_04 {
     opsFileRegModel.setInOutInd("O");
     opsFileRegModel.setOnlineInd("N");
     opsFileRegModel.setExtractMsgId(extractMsgId);
+    opsFileRegModel.setService(pac002ServiceId);
 
     Boolean result = adminBeanRemote.createOpsFileRegModel(opsFileRegModel);
 

@@ -94,6 +94,7 @@ public class ServiceTranslator {
     opsFileRegModel.setReason(opsFileRegEntity.getReason());
     opsFileRegModel.setStatus(opsFileRegEntity.getStatus());
     opsFileRegModel.setGrpHdrMsgId(opsFileRegEntity.getGrpHdrMsgId());
+    opsFileRegModel.setService(opsFileRegEntity.getServiceId());
 
     return opsFileRegModel;
   }

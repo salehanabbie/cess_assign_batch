@@ -1,15 +1,15 @@
 package com.bsva.translator;
 
+import com.bsva.entities.CasArcConfDetailsEntity;
+import com.bsva.entities.CasArcConfHdrsEntity;
+import com.bsva.entities.CasArcDailyBillingEntity;
+import com.bsva.entities.CasArcMndtCountEntity;
+import com.bsva.entities.CasArcStatusDetailsEntity;
+import com.bsva.entities.CasArcStatusHdrsEntity;
 import com.bsva.entities.CasOpsFileRegEntity;
-import com.bsva.entities.MdtAcArcConfDetailsEntity;
-import com.bsva.entities.MdtAcArcConfHdrsEntity;
-import com.bsva.entities.MdtAcArcDailyBillingEntity;
-import com.bsva.entities.MdtAcArcFileRegEntity;
-import com.bsva.entities.MdtAcArcGrpHdrEntity;
-import com.bsva.entities.MdtAcArcMndtCountEntity;
-import com.bsva.entities.MdtAcArcMndtCountPK;
-import com.bsva.entities.MdtAcArcStatusDetailsEntity;
-import com.bsva.entities.MdtAcArcStatusHdrsEntity;
+import com.bsva.entities.CasArcFileRegEntity;
+import com.bsva.entities.CasArcGrpHdrEntity;
+import com.bsva.entities.CasArcMndtCountPK;
 import com.bsva.entities.CasOpsConfDetailsEntity;
 import com.bsva.entities.CasOpsConfHdrsEntity;
 import com.bsva.entities.CasOpsDailyBillingEntity;
@@ -28,94 +28,94 @@ import org.apache.log4j.Logger;
 public class ValidationTranslator {
   public static Logger log = Logger.getLogger(ValidationTranslator.class);
 
-  public MdtAcArcStatusDetailsEntity translateAcOpsStsDtlsToArchiveStatusDetails(
+  public CasArcStatusDetailsEntity translateAcOpsStsDtlsToArchiveStatusDetails(
       CasOpsStatusDetailsEntity casOpsStatusDetailsEntity, Date systemDate) {
-    MdtAcArcStatusDetailsEntity mdtAcArcStatusDetailsEntity = new MdtAcArcStatusDetailsEntity();
+    CasArcStatusDetailsEntity casArcStatusDetailsEntity = new CasArcStatusDetailsEntity();
 
-    mdtAcArcStatusDetailsEntity.setSystemSeqNo(
+    casArcStatusDetailsEntity.setSystemSeqNo(
         casOpsStatusDetailsEntity.getSystemSeqNo().longValue());
-    mdtAcArcStatusDetailsEntity.setStatusHdrSeqNo(
+    casArcStatusDetailsEntity.setStatusHdrSeqNo(
         casOpsStatusDetailsEntity.getStatusHdrSeqNo().longValue());
-    mdtAcArcStatusDetailsEntity.setErrorCode(casOpsStatusDetailsEntity.getErrorCode());
-    mdtAcArcStatusDetailsEntity.setTxnId(casOpsStatusDetailsEntity.getTxnId());
-    mdtAcArcStatusDetailsEntity.setTxnStatus(casOpsStatusDetailsEntity.getTxnStatus());
-    mdtAcArcStatusDetailsEntity.setErrorType(casOpsStatusDetailsEntity.getErrorType());
-    mdtAcArcStatusDetailsEntity.setMandateRefNumber(
-        mdtAcArcStatusDetailsEntity.getMandateRefNumber());
-    mdtAcArcStatusDetailsEntity.setInstId(casOpsStatusDetailsEntity.getInstId());
-    mdtAcArcStatusDetailsEntity.setProcessStatus(casOpsStatusDetailsEntity.getProcessStatus());
-    mdtAcArcStatusDetailsEntity.setDebtorBranchNo(casOpsStatusDetailsEntity.getDebtorBranchNo());
-    mdtAcArcStatusDetailsEntity.setCrAbbShortName(casOpsStatusDetailsEntity.getCrAbbShortName());
+    casArcStatusDetailsEntity.setErrorCode(casOpsStatusDetailsEntity.getErrorCode());
+    casArcStatusDetailsEntity.setTxnId(casOpsStatusDetailsEntity.getTxnId());
+    casArcStatusDetailsEntity.setTxnStatus(casOpsStatusDetailsEntity.getTxnStatus());
+    casArcStatusDetailsEntity.setErrorType(casOpsStatusDetailsEntity.getErrorType());
+    casArcStatusDetailsEntity.setMandateRefNumber(
+        casArcStatusDetailsEntity.getMandateRefNumber());
+    casArcStatusDetailsEntity.setInstId(casOpsStatusDetailsEntity.getInstId());
+    casArcStatusDetailsEntity.setProcessStatus(casOpsStatusDetailsEntity.getProcessStatus());
+    casArcStatusDetailsEntity.setDebtorBranchNo(casOpsStatusDetailsEntity.getDebtorBranchNo());
+    casArcStatusDetailsEntity.setCrAbbShortName(casOpsStatusDetailsEntity.getCrAbbShortName());
 //		mdtAcArcStatusDetailsEntity.setArchiveDate(DateUtils.truncate(new Date(), java.util
 //		.Calendar.DAY_OF_MONTH));
-    mdtAcArcStatusDetailsEntity.setArchiveDate(
+    casArcStatusDetailsEntity.setArchiveDate(
         DateUtils.truncate(systemDate, java.util.Calendar.DAY_OF_MONTH));
 
-    return mdtAcArcStatusDetailsEntity;
+    return casArcStatusDetailsEntity;
   }
 
   public CasOpsStatusDetailsEntity translateMdtAcArcStatusDetailsEntityToAcOpsStatusDetails(
-      MdtAcArcStatusDetailsEntity mdtAcArcStatusDetailsEntity) {
+      CasArcStatusDetailsEntity casArcStatusDetailsEntity) {
     CasOpsStatusDetailsEntity casOpsStatusDetailsEntity = new CasOpsStatusDetailsEntity();
 
-    casOpsStatusDetailsEntity.setEndToEndId(mdtAcArcStatusDetailsEntity.getEndToEndId());
-    casOpsStatusDetailsEntity.setErrorCode(mdtAcArcStatusDetailsEntity.getErrorCode());
-    casOpsStatusDetailsEntity.setErrorType(mdtAcArcStatusDetailsEntity.getErrorType());
-    casOpsStatusDetailsEntity.setInstId(mdtAcArcStatusDetailsEntity.getInstId());
+    casOpsStatusDetailsEntity.setEndToEndId(casArcStatusDetailsEntity.getEndToEndId());
+    casOpsStatusDetailsEntity.setErrorCode(casArcStatusDetailsEntity.getErrorCode());
+    casOpsStatusDetailsEntity.setErrorType(casArcStatusDetailsEntity.getErrorType());
+    casOpsStatusDetailsEntity.setInstId(casArcStatusDetailsEntity.getInstId());
     casOpsStatusDetailsEntity.setMandateRefNumber(
-        mdtAcArcStatusDetailsEntity.getMandateRefNumber());
+        casArcStatusDetailsEntity.getMandateRefNumber());
     casOpsStatusDetailsEntity.setOrgnlTxnSeqNo(
-        new BigDecimal(mdtAcArcStatusDetailsEntity.getOrgnlTxnSeqNo()));
-    casOpsStatusDetailsEntity.setProcessStatus(mdtAcArcStatusDetailsEntity.getProcessStatus());
-    casOpsStatusDetailsEntity.setRecordId(mdtAcArcStatusDetailsEntity.getRecordId());
+        new BigDecimal(casArcStatusDetailsEntity.getOrgnlTxnSeqNo()));
+    casOpsStatusDetailsEntity.setProcessStatus(casArcStatusDetailsEntity.getProcessStatus());
+    casOpsStatusDetailsEntity.setRecordId(casArcStatusDetailsEntity.getRecordId());
     casOpsStatusDetailsEntity.setStatusHdrSeqNo(
-        new BigDecimal(mdtAcArcStatusDetailsEntity.getStatusHdrSeqNo()));
+        new BigDecimal(casArcStatusDetailsEntity.getStatusHdrSeqNo()));
     casOpsStatusDetailsEntity.setSystemSeqNo(
-        new BigDecimal(mdtAcArcStatusDetailsEntity.getSystemSeqNo()));
-    casOpsStatusDetailsEntity.setTxnId(mdtAcArcStatusDetailsEntity.getTxnId());
-    casOpsStatusDetailsEntity.setTxnStatus(mdtAcArcStatusDetailsEntity.getTxnStatus());
+        new BigDecimal(casArcStatusDetailsEntity.getSystemSeqNo()));
+    casOpsStatusDetailsEntity.setTxnId(casArcStatusDetailsEntity.getTxnId());
+    casOpsStatusDetailsEntity.setTxnStatus(casArcStatusDetailsEntity.getTxnStatus());
 
     return casOpsStatusDetailsEntity;
   }
 
 
-  public MdtAcArcStatusHdrsEntity translateMdtAcOpsStatusHrdsToArchiveStatusHdrs(
+  public CasArcStatusHdrsEntity translateMdtAcOpsStatusHrdsToArchiveStatusHdrs(
       CasOpsStatusHdrsEntity casOpsStatusHdrsEntity, Date systemDate) {
-    MdtAcArcStatusHdrsEntity mdtAcArcStatusHdrsEntity = new MdtAcArcStatusHdrsEntity();
+    CasArcStatusHdrsEntity casArcStatusHdrsEntity = new CasArcStatusHdrsEntity();
 
-    mdtAcArcStatusHdrsEntity.setCreateDateTime(casOpsStatusHdrsEntity.getCreateDateTime());
-    mdtAcArcStatusHdrsEntity.setGroupStatus(casOpsStatusHdrsEntity.getGroupStatus());
-    mdtAcArcStatusHdrsEntity.setHdrMsgId(casOpsStatusHdrsEntity.getHdrMsgId());
-    mdtAcArcStatusHdrsEntity.setInstdAgt(casOpsStatusHdrsEntity.getInstdAgt());
-    mdtAcArcStatusHdrsEntity.setInstgAgt(casOpsStatusHdrsEntity.getInstgAgt());
-    mdtAcArcStatusHdrsEntity.setOrgnlCntlSum(casOpsStatusHdrsEntity.getOrgnlCntlSum());
-    mdtAcArcStatusHdrsEntity.setOrgnlCreateDateTime(
+    casArcStatusHdrsEntity.setCreateDateTime(casOpsStatusHdrsEntity.getCreateDateTime());
+    casArcStatusHdrsEntity.setGroupStatus(casOpsStatusHdrsEntity.getGroupStatus());
+    casArcStatusHdrsEntity.setHdrMsgId(casOpsStatusHdrsEntity.getHdrMsgId());
+    casArcStatusHdrsEntity.setInstdAgt(casOpsStatusHdrsEntity.getInstdAgt());
+    casArcStatusHdrsEntity.setInstgAgt(casOpsStatusHdrsEntity.getInstgAgt());
+    casArcStatusHdrsEntity.setOrgnlCntlSum(casOpsStatusHdrsEntity.getOrgnlCntlSum());
+    casArcStatusHdrsEntity.setOrgnlCreateDateTime(
         casOpsStatusHdrsEntity.getOrgnlCreateDateTime());
-    mdtAcArcStatusHdrsEntity.setOrgnlMsgId(casOpsStatusHdrsEntity.getOrgnlMsgId());
-    mdtAcArcStatusHdrsEntity.setOrgnlMsgName(casOpsStatusHdrsEntity.getOrgnlMsgName());
-    mdtAcArcStatusHdrsEntity.setOrgnlNoOfTxns(casOpsStatusHdrsEntity.getOrgnlNoOfTxns());
-    mdtAcArcStatusHdrsEntity.setProcessStatus(casOpsStatusHdrsEntity.getProcessStatus());
-    mdtAcArcStatusHdrsEntity.setService(casOpsStatusHdrsEntity.getService());
-    mdtAcArcStatusHdrsEntity.setSystemSeqNo(casOpsStatusHdrsEntity.getSystemSeqNo().longValue());
-    mdtAcArcStatusHdrsEntity.setVetRunNumber(casOpsStatusHdrsEntity.getVetRunNumber());
-    mdtAcArcStatusHdrsEntity.setWorkunitRefNo(casOpsStatusHdrsEntity.getWorkunitRefNo());
+    casArcStatusHdrsEntity.setOrgnlMsgId(casOpsStatusHdrsEntity.getOrgnlMsgId());
+    casArcStatusHdrsEntity.setOrgnlMsgName(casOpsStatusHdrsEntity.getOrgnlMsgName());
+    casArcStatusHdrsEntity.setOrgnlNoOfTxns(casOpsStatusHdrsEntity.getOrgnlNoOfTxns());
+    casArcStatusHdrsEntity.setProcessStatus(casOpsStatusHdrsEntity.getProcessStatus());
+    casArcStatusHdrsEntity.setService(casOpsStatusHdrsEntity.getService());
+    casArcStatusHdrsEntity.setSystemSeqNo(casOpsStatusHdrsEntity.getSystemSeqNo());
+    casArcStatusHdrsEntity.setVetRunNumber(casOpsStatusHdrsEntity.getVetRunNumber());
+    casArcStatusHdrsEntity.setWorkunitRefNo(casOpsStatusHdrsEntity.getWorkunitRefNo());
 //	mdtAcArcStatusHdrsEntity.setArchiveDate(DateUtils.truncate(new Date(), java.util.Calendar
 //	.DAY_OF_MONTH));
 //	mdtAcArcStatusHdrsEntity.setArchiveDate(systemDate);
-    mdtAcArcStatusHdrsEntity.setArchiveDate(
+    casArcStatusHdrsEntity.setArchiveDate(
         DateUtils.truncate(systemDate, java.util.Calendar.DAY_OF_MONTH));
 
-    return mdtAcArcStatusHdrsEntity;
+    return casArcStatusHdrsEntity;
 
   }
 
 // AC Archive translation.************************************************
 
 
-  public MdtAcArcGrpHdrEntity translateMdtAcOpsGrpHdrEntityToAcArcGrpHdr(
+  public CasArcGrpHdrEntity translateMdtAcOpsGrpHdrEntityToAcArcGrpHdr(
       CasOpsGrpHdrEntity casOpsGrpHdrEntity, Date systemDate) {
 
-    MdtAcArcGrpHdrEntity mdtAcArcOpsGrpHdrEntity = new MdtAcArcGrpHdrEntity();
+    CasArcGrpHdrEntity mdtAcArcOpsGrpHdrEntity = new CasArcGrpHdrEntity();
 
     if (casOpsGrpHdrEntity.getAuthCode() != null) {
       mdtAcArcOpsGrpHdrEntity.setAuthCode(casOpsGrpHdrEntity.getAuthCode());
@@ -133,129 +133,129 @@ public class ValidationTranslator {
   }
 
 
-  public MdtAcArcConfDetailsEntity transalteConfStatusDetailsToArcConfStatusDetsils(
+  public CasArcConfDetailsEntity transalteConfStatusDetailsToArcConfStatusDetsils(
       CasOpsConfDetailsEntity mdtAcOpsConfDetailsEntity, Date systemDate) {
-    MdtAcArcConfDetailsEntity mdtAcArcConfDetailsEntity = new MdtAcArcConfDetailsEntity();
+    CasArcConfDetailsEntity casArcConfDetailsEntity = new CasArcConfDetailsEntity();
 
-    mdtAcArcConfDetailsEntity.setSystemSeqNo(mdtAcOpsConfDetailsEntity.getSystemSeqNo());
-    mdtAcArcConfDetailsEntity.setConfHdrSeqNo(
+    casArcConfDetailsEntity.setSystemSeqNo(mdtAcOpsConfDetailsEntity.getSystemSeqNo());
+    casArcConfDetailsEntity.setConfHdrSeqNo(
         mdtAcOpsConfDetailsEntity.getConfHdrSeqNo().longValue());
-    mdtAcArcConfDetailsEntity.setErrorCode(mdtAcOpsConfDetailsEntity.getErrorCode());
-    mdtAcArcConfDetailsEntity.setTxnId(mdtAcOpsConfDetailsEntity.getTxnId());
-    mdtAcArcConfDetailsEntity.setTxnStatus(mdtAcOpsConfDetailsEntity.getTxnStatus());
-    mdtAcArcConfDetailsEntity.setErrorType(mdtAcOpsConfDetailsEntity.getErrorType());
-    mdtAcArcConfDetailsEntity.setRecordId(mdtAcOpsConfDetailsEntity.getRecordId());
-    mdtAcArcConfDetailsEntity.setMandateRefNumber(mdtAcOpsConfDetailsEntity.getMandateRefNumber());
-    mdtAcArcConfDetailsEntity.setInstId(mdtAcOpsConfDetailsEntity.getInstId());
-    mdtAcArcConfDetailsEntity.setProcessStatus(mdtAcOpsConfDetailsEntity.getProcessStatus());
-    mdtAcArcConfDetailsEntity.setExtractService(mdtAcOpsConfDetailsEntity.getExtractService());
+    casArcConfDetailsEntity.setErrorCode(mdtAcOpsConfDetailsEntity.getErrorCode());
+    casArcConfDetailsEntity.setTxnId(mdtAcOpsConfDetailsEntity.getTxnId());
+    casArcConfDetailsEntity.setTxnStatus(mdtAcOpsConfDetailsEntity.getTxnStatus());
+    casArcConfDetailsEntity.setErrorType(mdtAcOpsConfDetailsEntity.getErrorType());
+    casArcConfDetailsEntity.setRecordId(mdtAcOpsConfDetailsEntity.getRecordId());
+    casArcConfDetailsEntity.setMandateRefNumber(mdtAcOpsConfDetailsEntity.getMandateRefNumber());
+    casArcConfDetailsEntity.setInstId(mdtAcOpsConfDetailsEntity.getInstId());
+    casArcConfDetailsEntity.setProcessStatus(mdtAcOpsConfDetailsEntity.getProcessStatus());
+    casArcConfDetailsEntity.setExtractService(mdtAcOpsConfDetailsEntity.getExtractService());
 //			mdtAcArcConfDetailsEntity.setArchiveDate(DateUtils.truncate(new Date(), java.util
 //			.Calendar.DAY_OF_MONTH));
-    mdtAcArcConfDetailsEntity.setArchiveDate(
+    casArcConfDetailsEntity.setArchiveDate(
         DateUtils.truncate(systemDate, java.util.Calendar.DAY_OF_MONTH));
-    mdtAcArcConfDetailsEntity.setOrgnlMsgType(mdtAcOpsConfDetailsEntity.getOrgnlMsgType());
-    mdtAcArcConfDetailsEntity.setExtractMsgId(mdtAcOpsConfDetailsEntity.getExtractMsgId());
-    mdtAcArcConfDetailsEntity.setLocalInstrCd(mdtAcOpsConfDetailsEntity.getLocalInstrCd());
+    casArcConfDetailsEntity.setOrgnlMsgType(mdtAcOpsConfDetailsEntity.getOrgnlMsgType());
+    casArcConfDetailsEntity.setExtractMsgId(mdtAcOpsConfDetailsEntity.getExtractMsgId());
+    casArcConfDetailsEntity.setLocalInstrCd(mdtAcOpsConfDetailsEntity.getLocalInstrCd());
 
-    return mdtAcArcConfDetailsEntity;
+    return casArcConfDetailsEntity;
   }
 
-  public MdtAcArcConfHdrsEntity transalteConfSHdrsToArcConfHdrs(
+  public CasArcConfHdrsEntity transalteConfSHdrsToArcConfHdrs(
       CasOpsConfHdrsEntity casOpsConfHdrsEntity, Date systemDate) {
-    MdtAcArcConfHdrsEntity mdtAcArcConfHdrsEntity = new MdtAcArcConfHdrsEntity();
+    CasArcConfHdrsEntity casArcConfHdrsEntity = new CasArcConfHdrsEntity();
 
-    mdtAcArcConfHdrsEntity.setSystemSeqNo(casOpsConfHdrsEntity.getSystemSeqNo());
-    mdtAcArcConfHdrsEntity.setHdrMsgId(casOpsConfHdrsEntity.getHdrMsgId());
-    mdtAcArcConfHdrsEntity.setCreateDateTime(casOpsConfHdrsEntity.getCreateDateTime());
-    mdtAcArcConfHdrsEntity.setInstgAgt(casOpsConfHdrsEntity.getInstgAgt());
-    mdtAcArcConfHdrsEntity.setInstdAgt(casOpsConfHdrsEntity.getInstdAgt());
-    mdtAcArcConfHdrsEntity.setOrgnlMsgId(casOpsConfHdrsEntity.getOrgnlMsgId());
-    mdtAcArcConfHdrsEntity.setOrgnlMsgName(casOpsConfHdrsEntity.getOrgnlMsgName());
-    mdtAcArcConfHdrsEntity.setOrgnlCreateDateTime(casOpsConfHdrsEntity.getCreateDateTime());
-    mdtAcArcConfHdrsEntity.setProcessStatus(casOpsConfHdrsEntity.getProcessStatus());
-    mdtAcArcConfHdrsEntity.setService(casOpsConfHdrsEntity.getService());
-    mdtAcArcConfHdrsEntity.setGroupStatus(casOpsConfHdrsEntity.getGroupStatus());
-    mdtAcArcConfHdrsEntity.setGroupError(casOpsConfHdrsEntity.getGroupError());
+    casArcConfHdrsEntity.setSystemSeqNo(casOpsConfHdrsEntity.getSystemSeqNo());
+    casArcConfHdrsEntity.setHdrMsgId(casOpsConfHdrsEntity.getHdrMsgId());
+    casArcConfHdrsEntity.setCreateDateTime(casOpsConfHdrsEntity.getCreateDateTime());
+    casArcConfHdrsEntity.setInstgAgt(casOpsConfHdrsEntity.getInstgAgt());
+    casArcConfHdrsEntity.setInstdAgt(casOpsConfHdrsEntity.getInstdAgt());
+    casArcConfHdrsEntity.setOrgnlMsgId(casOpsConfHdrsEntity.getOrgnlMsgId());
+    casArcConfHdrsEntity.setOrgnlMsgName(casOpsConfHdrsEntity.getOrgnlMsgName());
+    casArcConfHdrsEntity.setOrgnlCreateDateTime(casOpsConfHdrsEntity.getCreateDateTime());
+    casArcConfHdrsEntity.setProcessStatus(casOpsConfHdrsEntity.getProcessStatus());
+    casArcConfHdrsEntity.setService(casOpsConfHdrsEntity.getService());
+    casArcConfHdrsEntity.setGroupStatus(casOpsConfHdrsEntity.getGroupStatus());
+    casArcConfHdrsEntity.setGroupError(casOpsConfHdrsEntity.getGroupError());
 //			mdtAcArcConfHdrsEntity.setArchiveDate(DateUtils.truncate(new Date(), java.util
 //			.Calendar.DAY_OF_MONTH));
-    mdtAcArcConfHdrsEntity.setArchiveDate(
+    casArcConfHdrsEntity.setArchiveDate(
         DateUtils.truncate(systemDate, java.util.Calendar.DAY_OF_MONTH));
 
-    return mdtAcArcConfHdrsEntity;
+    return casArcConfHdrsEntity;
   }
 
-  public MdtAcArcMndtCountEntity translateAcOpsMndtCountEntityToAcArcMndtCount(
+  public CasArcMndtCountEntity translateAcOpsMndtCountEntityToAcArcMndtCount(
       CasOpsMndtCountEntity casOpsMndtCountEntity, Date systemDate) {
-    MdtAcArcMndtCountEntity mdtAcArcMndtCountEntity = new MdtAcArcMndtCountEntity();
-    MdtAcArcMndtCountPK mdtAcArcMndtCountPK = new MdtAcArcMndtCountPK();
+    CasArcMndtCountEntity casArcMndtCountEntity = new CasArcMndtCountEntity();
+    CasArcMndtCountPK casArcMndtCountPK = new CasArcMndtCountPK();
 
-    mdtAcArcMndtCountPK.setInstId(casOpsMndtCountEntity.getCasOpsMndtCountPK().getInstId());
-    mdtAcArcMndtCountPK.setMsgId(casOpsMndtCountEntity.getCasOpsMndtCountPK().getMsgId());
-    mdtAcArcMndtCountPK.setServiceId(
+    casArcMndtCountPK.setInstId(casOpsMndtCountEntity.getCasOpsMndtCountPK().getInstId());
+    casArcMndtCountPK.setMsgId(casOpsMndtCountEntity.getCasOpsMndtCountPK().getMsgId());
+    casArcMndtCountPK.setServiceId(
         casOpsMndtCountEntity.getCasOpsMndtCountPK().getServiceId());
 
-    mdtAcArcMndtCountEntity.setMdtAcArcMndtCountPK(mdtAcArcMndtCountPK);
+    casArcMndtCountEntity.setMdtAcArcMndtCountPK(casArcMndtCountPK);
 
-    mdtAcArcMndtCountEntity.setFileName(casOpsMndtCountEntity.getFileName());
-    mdtAcArcMndtCountEntity.setIncoming(casOpsMndtCountEntity.getIncoming());
-    mdtAcArcMndtCountEntity.setNrMsgsAccepted(casOpsMndtCountEntity.getNrMsgsAccepted());
-    mdtAcArcMndtCountEntity.setNrMsgsExtracted(casOpsMndtCountEntity.getNrMsgsExtracted());
-    mdtAcArcMndtCountEntity.setNrMsgsRejected(casOpsMndtCountEntity.getNrMsgsRejected());
-    mdtAcArcMndtCountEntity.setNrOfFiles(casOpsMndtCountEntity.getNrOfFiles());
-    mdtAcArcMndtCountEntity.setNrOfMsgs(casOpsMndtCountEntity.getNrOfMsgs());
-    mdtAcArcMndtCountEntity.setOutgoing(casOpsMndtCountEntity.getOutgoing());
+    casArcMndtCountEntity.setFileName(casOpsMndtCountEntity.getFileName());
+    casArcMndtCountEntity.setIncoming(casOpsMndtCountEntity.getIncoming());
+    casArcMndtCountEntity.setNrMsgsAccepted(casOpsMndtCountEntity.getNrMsgsAccepted());
+    casArcMndtCountEntity.setNrMsgsExtracted(casOpsMndtCountEntity.getNrMsgsExtracted());
+    casArcMndtCountEntity.setNrMsgsRejected(casOpsMndtCountEntity.getNrMsgsRejected());
+    casArcMndtCountEntity.setNrOfFiles(casOpsMndtCountEntity.getNrOfFiles());
+    casArcMndtCountEntity.setNrOfMsgs(casOpsMndtCountEntity.getNrOfMsgs());
+    casArcMndtCountEntity.setOutgoing(casOpsMndtCountEntity.getOutgoing());
 //			mdtAcArcMndtCountEntity.setProcessDate(DateUtils.truncate(new Date(), java.util
 //			.Calendar.DAY_OF_MONTH));
-    mdtAcArcMndtCountEntity.setProcessDate(
+    casArcMndtCountEntity.setProcessDate(
         DateUtils.truncate(systemDate, java.util.Calendar.DAY_OF_MONTH));
 
-    return mdtAcArcMndtCountEntity;
+    return casArcMndtCountEntity;
   }
 
-  public MdtAcArcDailyBillingEntity translateAcOpsDailyBillingToArcDailyBilling(
+  public CasArcDailyBillingEntity translateAcOpsDailyBillingToArcDailyBilling(
       CasOpsDailyBillingEntity casOpsDailyBillingEntity, Date systemDate) {
-    MdtAcArcDailyBillingEntity mdtAcArcDailyBillingEntity = new MdtAcArcDailyBillingEntity();
+    CasArcDailyBillingEntity casArcDailyBillingEntity = new CasArcDailyBillingEntity();
 
-    mdtAcArcDailyBillingEntity.setSystemSeqNo(casOpsDailyBillingEntity.getSystemSeqNo());
-    mdtAcArcDailyBillingEntity.setCreditorBank(casOpsDailyBillingEntity.getCreditorBank());
-    mdtAcArcDailyBillingEntity.setDebtorBank(casOpsDailyBillingEntity.getDebtorBank());
-    mdtAcArcDailyBillingEntity.setSubService(casOpsDailyBillingEntity.getSubService());
-    mdtAcArcDailyBillingEntity.setTxnType(casOpsDailyBillingEntity.getTxnType());
-    mdtAcArcDailyBillingEntity.setTxnStatus(casOpsDailyBillingEntity.getTxnStatus());
-    mdtAcArcDailyBillingEntity.setCreatedBy(casOpsDailyBillingEntity.getCreatedBy());
-    mdtAcArcDailyBillingEntity.setCreatedDate(casOpsDailyBillingEntity.getCreatedDate());
-    mdtAcArcDailyBillingEntity.setBillExpStatus(casOpsDailyBillingEntity.getBillExpStatus());
-    mdtAcArcDailyBillingEntity.setActionDate(casOpsDailyBillingEntity.getActionDate());
-    mdtAcArcDailyBillingEntity.setAuthCode(casOpsDailyBillingEntity.getAuthCode());
+    casArcDailyBillingEntity.setSystemSeqNo(casOpsDailyBillingEntity.getSystemSeqNo());
+    casArcDailyBillingEntity.setCreditorBank(casOpsDailyBillingEntity.getCreditorBank());
+    casArcDailyBillingEntity.setDebtorBank(casOpsDailyBillingEntity.getDebtorBank());
+    casArcDailyBillingEntity.setSubService(casOpsDailyBillingEntity.getSubService());
+    casArcDailyBillingEntity.setTxnType(casOpsDailyBillingEntity.getTxnType());
+    casArcDailyBillingEntity.setTxnStatus(casOpsDailyBillingEntity.getTxnStatus());
+    casArcDailyBillingEntity.setCreatedBy(casOpsDailyBillingEntity.getCreatedBy());
+    casArcDailyBillingEntity.setCreatedDate(casOpsDailyBillingEntity.getCreatedDate());
+    casArcDailyBillingEntity.setBillExpStatus(casOpsDailyBillingEntity.getBillExpStatus());
+    casArcDailyBillingEntity.setActionDate(casOpsDailyBillingEntity.getActionDate());
+    casArcDailyBillingEntity.setAuthCode(casOpsDailyBillingEntity.getAuthCode());
 //			mdtAcArcDailyBillingEntity.setArchiveDate(DateUtils.truncate(new Date(), java.util
 //			.Calendar.DAY_OF_MONTH));
-    mdtAcArcDailyBillingEntity.setArchiveDate(
+    casArcDailyBillingEntity.setArchiveDate(
         DateUtils.truncate(systemDate, java.util.Calendar.DAY_OF_MONTH));
-    mdtAcArcDailyBillingEntity.setTxnId(casOpsDailyBillingEntity.getTxnId());
-    mdtAcArcDailyBillingEntity.setMndtRefNum(casOpsDailyBillingEntity.getMndtRefNum());
-    mdtAcArcDailyBillingEntity.setExtMsgId(casOpsDailyBillingEntity.getExtMsgId());
-    mdtAcArcDailyBillingEntity.setRespDate(casOpsDailyBillingEntity.getRespDate());
+    casArcDailyBillingEntity.setTxnId(casOpsDailyBillingEntity.getTxnId());
+    casArcDailyBillingEntity.setMndtRefNum(casOpsDailyBillingEntity.getMndtRefNum());
+    casArcDailyBillingEntity.setExtMsgId(casOpsDailyBillingEntity.getExtMsgId());
+    casArcDailyBillingEntity.setRespDate(casOpsDailyBillingEntity.getRespDate());
 
-    return mdtAcArcDailyBillingEntity;
+    return casArcDailyBillingEntity;
   }
-  public MdtAcArcFileRegEntity translateOpsFileRegEntityToAcArcFileRegEntity(
+  public CasArcFileRegEntity translateOpsFileRegEntityToAcArcFileRegEntity(
       CasOpsFileRegEntity casOpsFileRegEntity, Date systemDate) {
-    MdtAcArcFileRegEntity mdtAcArcFileRegEntity = new MdtAcArcFileRegEntity();
+    CasArcFileRegEntity casArcFileRegEntity = new CasArcFileRegEntity();
 
-    mdtAcArcFileRegEntity.setExtractMsgId(casOpsFileRegEntity.getExtractMsgId());
-    mdtAcArcFileRegEntity.setFileName(casOpsFileRegEntity.getFileName());
-    mdtAcArcFileRegEntity.setFilepath(casOpsFileRegEntity.getGrpHdrMsgId());
-    mdtAcArcFileRegEntity.setGrpHdrMsgId(casOpsFileRegEntity.getGrpHdrMsgId());
-    mdtAcArcFileRegEntity.setInOutInd(casOpsFileRegEntity.getInOutInd());
-    mdtAcArcFileRegEntity.setNameSpace(casOpsFileRegEntity.getNameSpace());
-    mdtAcArcFileRegEntity.setOnlineInd(casOpsFileRegEntity.getOnlineInd());
-    mdtAcArcFileRegEntity.setProcessDate(casOpsFileRegEntity.getProcessDate());
-    mdtAcArcFileRegEntity.setReason(casOpsFileRegEntity.getReason());
-    mdtAcArcFileRegEntity.setStatus(casOpsFileRegEntity.getStatus());
-    mdtAcArcFileRegEntity.setArchiveDate(
+    casArcFileRegEntity.setExtractMsgId(casOpsFileRegEntity.getExtractMsgId());
+    casArcFileRegEntity.setFileName(casOpsFileRegEntity.getFileName());
+    casArcFileRegEntity.setFilepath(casOpsFileRegEntity.getGrpHdrMsgId());
+    casArcFileRegEntity.setGrpHdrMsgId(casOpsFileRegEntity.getGrpHdrMsgId());
+    casArcFileRegEntity.setInOutInd(casOpsFileRegEntity.getInOutInd());
+    casArcFileRegEntity.setNameSpace(casOpsFileRegEntity.getNameSpace());
+    casArcFileRegEntity.setOnlineInd(casOpsFileRegEntity.getOnlineInd());
+    casArcFileRegEntity.setProcessDate(casOpsFileRegEntity.getProcessDate());
+    casArcFileRegEntity.setReason(casOpsFileRegEntity.getReason());
+    casArcFileRegEntity.setStatus(casOpsFileRegEntity.getStatus());
+    casArcFileRegEntity.setArchiveDate(
         DateUtils.truncate(systemDate, java.util.Calendar.DAY_OF_MONTH));
 
-    return mdtAcArcFileRegEntity;
+    return casArcFileRegEntity;
   }
 
 

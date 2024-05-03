@@ -21,26 +21,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author DimakatsoN
  */
 @Entity
-@Table(name = "MDT_AC_ARC_MNDT_COUNT",schema = "MANOWNER")
+@Table(name = "CAS_ARC_MNDT_COUNT",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findAll", query = "SELECT m FROM MdtAcArcMndtCountEntity m"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByInstId", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.mdtAcArcMndtCountPK.instId = :instId"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByServiceId", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.mdtAcArcMndtCountPK.serviceId = :serviceId"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByNrOfFiles", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.nrOfFiles = :nrOfFiles"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByNrOfMsgs", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.nrOfMsgs = :nrOfMsgs"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByProcessDate", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.processDate = :processDate"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByIncoming", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.incoming = :incoming"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByOutgoing", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.outgoing = :outgoing"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByMsgId", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.mdtAcArcMndtCountPK.msgId = :msgId"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByNrMsgsRejected", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.nrMsgsRejected = :nrMsgsRejected"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByFileName", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.fileName = :fileName"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByNrMsgsAccepted", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.nrMsgsAccepted = :nrMsgsAccepted"),
-    @NamedQuery(name = "MdtAcArcMndtCountEntity.findByNrMsgsExtracted", query = "SELECT m FROM MdtAcArcMndtCountEntity m WHERE m.nrMsgsExtracted = :nrMsgsExtracted")})
-public class MdtAcArcMndtCountEntity implements Serializable {
+    @NamedQuery(name = "CasArcMndtCountEntity.findAll", query = "SELECT m FROM CasArcMndtCountEntity m"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByInstId", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.casArcMndtCountPK.instId = :instId"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByServiceId", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.casArcMndtCountPK.serviceId = :serviceId"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByNrOfFiles", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.nrOfFiles = :nrOfFiles"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByNrOfMsgs", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.nrOfMsgs = :nrOfMsgs"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByProcessDate", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.processDate = :processDate"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByIncoming", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.incoming = :incoming"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByOutgoing", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.outgoing = :outgoing"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByMsgId", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.casArcMndtCountPK.msgId = :msgId"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByNrMsgsRejected", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.nrMsgsRejected = :nrMsgsRejected"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByFileName", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.fileName = :fileName"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByNrMsgsAccepted", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.nrMsgsAccepted = :nrMsgsAccepted"),
+    @NamedQuery(name = "CasArcMndtCountEntity.findByNrMsgsExtracted", query = "SELECT m FROM CasArcMndtCountEntity m WHERE m.nrMsgsExtracted = :nrMsgsExtracted")})
+public class CasArcMndtCountEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected MdtAcArcMndtCountPK mdtAcArcMndtCountPK;
+    protected CasArcMndtCountPK casArcMndtCountPK;
     @Column(name = "NR_OF_FILES")
     private Integer nrOfFiles;
     @Column(name = "NR_OF_MSGS")
@@ -64,23 +64,23 @@ public class MdtAcArcMndtCountEntity implements Serializable {
     @Column(name = "NR_MSGS_EXTRACTED")
     private Integer nrMsgsExtracted;
 
-    public MdtAcArcMndtCountEntity() {
+    public CasArcMndtCountEntity() {
     }
 
-    public MdtAcArcMndtCountEntity(MdtAcArcMndtCountPK mdtAcArcMndtCountPK) {
-        this.mdtAcArcMndtCountPK = mdtAcArcMndtCountPK;
+    public CasArcMndtCountEntity(CasArcMndtCountPK casArcMndtCountPK) {
+        this.casArcMndtCountPK = casArcMndtCountPK;
     }
 
-    public MdtAcArcMndtCountEntity(String instId, String serviceId, String msgId) {
-        this.mdtAcArcMndtCountPK = new MdtAcArcMndtCountPK(instId, serviceId, msgId);
+    public CasArcMndtCountEntity(String instId, String serviceId, String msgId) {
+        this.casArcMndtCountPK = new CasArcMndtCountPK(instId, serviceId, msgId);
     }
 
-    public MdtAcArcMndtCountPK getMdtAcArcMndtCountPK() {
-        return mdtAcArcMndtCountPK;
+    public CasArcMndtCountPK getMdtAcArcMndtCountPK() {
+        return casArcMndtCountPK;
     }
 
-    public void setMdtAcArcMndtCountPK(MdtAcArcMndtCountPK mdtAcArcMndtCountPK) {
-        this.mdtAcArcMndtCountPK = mdtAcArcMndtCountPK;
+    public void setMdtAcArcMndtCountPK(CasArcMndtCountPK casArcMndtCountPK) {
+        this.casArcMndtCountPK = casArcMndtCountPK;
     }
 
     public Integer getNrOfFiles() {
@@ -165,7 +165,7 @@ public class MdtAcArcMndtCountEntity implements Serializable {
 				+ ((incoming == null) ? 0 : incoming.hashCode());
 		result = prime
 				* result
-				+ ((mdtAcArcMndtCountPK == null) ? 0 : mdtAcArcMndtCountPK
+				+ ((casArcMndtCountPK == null) ? 0 : casArcMndtCountPK
 						.hashCode());
 		result = prime * result
 				+ ((nrMsgsAccepted == null) ? 0 : nrMsgsAccepted.hashCode());
@@ -192,7 +192,7 @@ public class MdtAcArcMndtCountEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcMndtCountEntity other = (MdtAcArcMndtCountEntity) obj;
+		CasArcMndtCountEntity other = (CasArcMndtCountEntity) obj;
 		if (fileName == null) {
 			if (other.fileName != null)
 				return false;
@@ -203,10 +203,10 @@ public class MdtAcArcMndtCountEntity implements Serializable {
 				return false;
 		} else if (!incoming.equals(other.incoming))
 			return false;
-		if (mdtAcArcMndtCountPK == null) {
-			if (other.mdtAcArcMndtCountPK != null)
+		if (casArcMndtCountPK == null) {
+			if (other.casArcMndtCountPK != null)
 				return false;
-		} else if (!mdtAcArcMndtCountPK.equals(other.mdtAcArcMndtCountPK))
+		} else if (!casArcMndtCountPK.equals(other.casArcMndtCountPK))
 			return false;
 		if (nrMsgsAccepted == null) {
 			if (other.nrMsgsAccepted != null)
@@ -248,8 +248,8 @@ public class MdtAcArcMndtCountEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MdtAcArcMndtCountEntity [mdtAcArcMndtCountPK="
-				+ mdtAcArcMndtCountPK + ", nrOfFiles=" + nrOfFiles
+		return "CasArcMndtCountEntity [casArcMndtCountPK="
+				+ casArcMndtCountPK + ", nrOfFiles=" + nrOfFiles
 				+ ", nrOfMsgs=" + nrOfMsgs + ", processDate=" + processDate
 				+ ", incoming=" + incoming + ", outgoing=" + outgoing
 				+ ", nrMsgsRejected=" + nrMsgsRejected + ", fileName="

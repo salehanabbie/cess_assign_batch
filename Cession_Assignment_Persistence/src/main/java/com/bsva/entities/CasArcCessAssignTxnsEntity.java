@@ -2,7 +2,6 @@ package com.bsva.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -20,84 +19,84 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author SalehaR
  */
 @Entity
-@Table(name = "MDT_AC_ARC_MANDATE_TXNS", schema="MANOWNER")
+@Table(name = "CAS_ARC_MANDATE_TXNS", schema="CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findAll", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByMsgId", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.mdtAcArcMandateTxnsEntityPK.msgId = :msgId"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByMandateReqTranId", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.mdtAcArcMandateTxnsEntityPK.mandateReqTranId = :mandateReqTranId"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCreditorBank", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.creditorBank = :creditorBank"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDebtorBank", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.debtorBank = :debtorBank"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByServiceId", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.serviceId = :serviceId"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByProcessStatus", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.processStatus = :processStatus"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByInFileName", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.inFileName = :inFileName"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByInFileDate", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.inFileDate = :inFileDate"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByExtractMsgId", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.extractMsgId = :extractMsgId"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByExtractFileName", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.extractFileName = :extractFileName"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByInitParty", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.initParty = :initParty"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByMandateId", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.mandateId = :mandateId"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByContractRef", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.contractRef = :contractRef"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByServiceLevel", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.serviceLevel = :serviceLevel"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByLocalInstrCd", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.localInstrCd = :localInstrCd"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findBySequenceType", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.sequenceType = :sequenceType"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByFrequency", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.frequency = :frequency"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByFromDate", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.fromDate = :fromDate"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByFirstCollDate", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.firstCollDate = :firstCollDate"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCollAmountCurr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.collAmountCurr = :collAmountCurr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCollAmount", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.collAmount = :collAmount"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByMaxAmountCurr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.maxAmountCurr = :maxAmountCurr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByMaxAmount", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.maxAmount = :maxAmount"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCredSchemeId", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.credSchemeId = :credSchemeId"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCreditorName", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.creditorName = :creditorName"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCredPhoneNr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.credPhoneNr = :credPhoneNr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCredEmailAddr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.credEmailAddr = :credEmailAddr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCredAccNum", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.credAccNum = :credAccNum"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCredBranchNr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.credBranchNr = :credBranchNr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByUltCredName", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.ultCredName = :ultCredName"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCredAbbShortName", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.credAbbShortName = :credAbbShortName"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDebtorName", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.debtorName = :debtorName"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDebtorId", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.debtorId = :debtorId"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDebtPhoneNr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.debtPhoneNr = :debtPhoneNr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDebtEmailAddr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.debtEmailAddr = :debtEmailAddr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDebtAccNum", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.debtAccNum = :debtAccNum"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDebtAccType", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.debtAccType = :debtAccType"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDebtBranchNr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.debtBranchNr = :debtBranchNr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByUltDebtName", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.ultDebtName = :ultDebtName"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByAuthType", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.authType = :authType"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCollectionDay", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.collectionDay = :collectionDay"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDateAdjRuleInd", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.dateAdjRuleInd = :dateAdjRuleInd"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByAdjCategory", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.adjCategory = :adjCategory"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByAdjRate", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.adjRate = :adjRate"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByAdjAmountCurr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.adjAmountCurr = :adjAmountCurr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByAdjAmount", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.adjAmount = :adjAmount"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByFirstCollAmtCurr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.firstCollAmtCurr = :firstCollAmtCurr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByFirstCollAmt", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.firstCollAmt = :firstCollAmt"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByDebitValueType", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.debitValueType = :debitValueType"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByAcceptedInd", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.acceptedInd = :acceptedInd"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByRejectReasonCode", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.rejectReasonCode = :rejectReasonCode"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByAuthStatusInd", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.authStatusInd = :authStatusInd"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByAuthChannel", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.authChannel = :authChannel"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByMandateRefNr", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.mandateRefNr = :mandateRefNr"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByMandateAuthDate", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.mandateAuthDate = :mandateAuthDate"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByAmendReason", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.amendReason = :amendReason"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByOrigMandateId", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.origMandateId = :origMandateId"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByOrigContractRef", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.origContractRef = :origContractRef"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByOrigCredName", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.origCredName = :origCredName"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByOrigMandReqTranId", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.origMandReqTranId = :origMandReqTranId"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByOrigDebtName", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.origDebtName = :origDebtName"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByOrigDebtBranch", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.origDebtBranch = :origDebtBranch"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCancelReason", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.cancelReason = :cancelReason"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCreatedBy", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.createdBy = :createdBy"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByCreatedDate", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.createdDate = :createdDate"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByModifiedBy", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.modifiedBy = :modifiedBy"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByModifiedDate", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.modifiedDate = :modifiedDate"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByArchiveDate", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.archiveDate = :archiveDate"),
-	@NamedQuery(name = "MdtAcArcMandateTxnsEntity.findByMacCode", query = "SELECT m FROM MdtAcArcMandateTxnsEntity m WHERE m.macCode = :macCode")})
-public class MdtAcArcMandateTxnsEntity implements Serializable {
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findAll", query = "SELECT m FROM CasArcCessAssignTxnsEntity m"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByMsgId", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.casArcCessAssignTxnsEntityPK.msgId = :msgId"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByMandateReqTranId", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.casArcCessAssignTxnsEntityPK.mandateReqTranId = :mandateReqTranId"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCreditorBank", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.creditorBank = :creditorBank"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDebtorBank", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.debtorBank = :debtorBank"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByServiceId", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.serviceId = :serviceId"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByProcessStatus", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.processStatus = :processStatus"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByInFileName", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.inFileName = :inFileName"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByInFileDate", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.inFileDate = :inFileDate"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByExtractMsgId", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.extractMsgId = :extractMsgId"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByExtractFileName", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.extractFileName = :extractFileName"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByInitParty", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.initParty = :initParty"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByMandateId", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.mandateId = :mandateId"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByContractRef", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.contractRef = :contractRef"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByServiceLevel", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.serviceLevel = :serviceLevel"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByLocalInstrCd", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.localInstrCd = :localInstrCd"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findBySequenceType", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.sequenceType = :sequenceType"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByFrequency", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.frequency = :frequency"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByFromDate", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.fromDate = :fromDate"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByFirstCollDate", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.firstCollDate = :firstCollDate"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCollAmountCurr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.collAmountCurr = :collAmountCurr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCollAmount", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.collAmount = :collAmount"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByMaxAmountCurr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.maxAmountCurr = :maxAmountCurr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByMaxAmount", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.maxAmount = :maxAmount"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCredSchemeId", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.credSchemeId = :credSchemeId"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCreditorName", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.creditorName = :creditorName"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCredPhoneNr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.credPhoneNr = :credPhoneNr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCredEmailAddr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.credEmailAddr = :credEmailAddr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCredAccNum", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.credAccNum = :credAccNum"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCredBranchNr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.credBranchNr = :credBranchNr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByUltCredName", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.ultCredName = :ultCredName"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCredAbbShortName", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.credAbbShortName = :credAbbShortName"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDebtorName", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.debtorName = :debtorName"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDebtorId", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.debtorId = :debtorId"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDebtPhoneNr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.debtPhoneNr = :debtPhoneNr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDebtEmailAddr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.debtEmailAddr = :debtEmailAddr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDebtAccNum", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.debtAccNum = :debtAccNum"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDebtAccType", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.debtAccType = :debtAccType"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDebtBranchNr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.debtBranchNr = :debtBranchNr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByUltDebtName", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.ultDebtName = :ultDebtName"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByAuthType", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.authType = :authType"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCollectionDay", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.collectionDay = :collectionDay"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDateAdjRuleInd", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.dateAdjRuleInd = :dateAdjRuleInd"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByAdjCategory", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.adjCategory = :adjCategory"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByAdjRate", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.adjRate = :adjRate"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByAdjAmountCurr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.adjAmountCurr = :adjAmountCurr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByAdjAmount", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.adjAmount = :adjAmount"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByFirstCollAmtCurr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.firstCollAmtCurr = :firstCollAmtCurr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByFirstCollAmt", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.firstCollAmt = :firstCollAmt"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByDebitValueType", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.debitValueType = :debitValueType"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByAcceptedInd", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.acceptedInd = :acceptedInd"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByRejectReasonCode", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.rejectReasonCode = :rejectReasonCode"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByAuthStatusInd", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.authStatusInd = :authStatusInd"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByAuthChannel", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.authChannel = :authChannel"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByMandateRefNr", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.mandateRefNr = :mandateRefNr"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByMandateAuthDate", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.mandateAuthDate = :mandateAuthDate"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByAmendReason", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.amendReason = :amendReason"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByOrigMandateId", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.origMandateId = :origMandateId"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByOrigContractRef", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.origContractRef = :origContractRef"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByOrigCredName", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.origCredName = :origCredName"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByOrigMandReqTranId", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.origMandReqTranId = :origMandReqTranId"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByOrigDebtName", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.origDebtName = :origDebtName"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByOrigDebtBranch", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.origDebtBranch = :origDebtBranch"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCancelReason", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.cancelReason = :cancelReason"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCreatedBy", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.createdBy = :createdBy"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByCreatedDate", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.createdDate = :createdDate"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByModifiedBy", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.modifiedBy = :modifiedBy"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByModifiedDate", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.modifiedDate = :modifiedDate"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByArchiveDate", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.archiveDate = :archiveDate"),
+	@NamedQuery(name = "CasArcCessAssignTxnsEntity.findByMacCode", query = "SELECT m FROM CasArcCessAssignTxnsEntity m WHERE m.macCode = :macCode")})
+public class CasArcCessAssignTxnsEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@EmbeddedId
-	protected MdtAcArcMandateTxnsEntityPK mdtAcArcMandateTxnsEntityPK;
+	protected CasArcCessAssignTxnsEntityPK casArcCessAssignTxnsEntityPK;
 	@Size(max = 6)
 	@Column(name = "CREDITOR_BANK")
 	private String creditorBank;
@@ -297,23 +296,24 @@ public class MdtAcArcMandateTxnsEntity implements Serializable {
     private String macCode;
 
 
-	public MdtAcArcMandateTxnsEntity() {
+	public CasArcCessAssignTxnsEntity() {
 	}
 
-	public MdtAcArcMandateTxnsEntity(MdtAcArcMandateTxnsEntityPK mdtAcArcMandateTxnsEntityPK) {
-		this.mdtAcArcMandateTxnsEntityPK = mdtAcArcMandateTxnsEntityPK;
+	public CasArcCessAssignTxnsEntity(CasArcCessAssignTxnsEntityPK casArcCessAssignTxnsEntityPK) {
+		this.casArcCessAssignTxnsEntityPK = casArcCessAssignTxnsEntityPK;
 	}
 
-	public MdtAcArcMandateTxnsEntity(String msgId, String mandateReqTranId) {
-		this.mdtAcArcMandateTxnsEntityPK = new MdtAcArcMandateTxnsEntityPK(msgId, mandateReqTranId);
+	public CasArcCessAssignTxnsEntity(String msgId, String mandateReqTranId) {
+		this.casArcCessAssignTxnsEntityPK = new CasArcCessAssignTxnsEntityPK(msgId, mandateReqTranId);
 	}
 
-	public MdtAcArcMandateTxnsEntityPK getMdtAcArcMandateTxnsEntityPK() {
-		return mdtAcArcMandateTxnsEntityPK;
+	public CasArcCessAssignTxnsEntityPK getCasArcMandateTxnsEntityPK() {
+		return casArcCessAssignTxnsEntityPK;
 	}
 
-	public void setMdtAcArcMandateTxnsEntityPK(MdtAcArcMandateTxnsEntityPK mdtAcArcMandateTxnsEntityPK) {
-		this.mdtAcArcMandateTxnsEntityPK = mdtAcArcMandateTxnsEntityPK;
+	public void setCasArcMandateTxnsEntityPK(
+			CasArcCessAssignTxnsEntityPK casArcCessAssignTxnsEntityPK) {
+		this.casArcCessAssignTxnsEntityPK = casArcCessAssignTxnsEntityPK;
 	}
 
 	public String getCreditorBank() {
@@ -908,7 +908,7 @@ public class MdtAcArcMandateTxnsEntity implements Serializable {
 		result = prime * result + ((mandateRefNr == null) ? 0 : mandateRefNr.hashCode());
 		result = prime * result + ((maxAmount == null) ? 0 : maxAmount.hashCode());
 		result = prime * result + ((maxAmountCurr == null) ? 0 : maxAmountCurr.hashCode());
-		result = prime * result + ((mdtAcArcMandateTxnsEntityPK == null) ? 0 : mdtAcArcMandateTxnsEntityPK.hashCode());
+		result = prime * result + ((casArcCessAssignTxnsEntityPK == null) ? 0 : casArcCessAssignTxnsEntityPK.hashCode());
 		result = prime * result + ((modifiedBy == null) ? 0 : modifiedBy.hashCode());
 		result = prime * result + ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
 		result = prime * result + ((origContractRef == null) ? 0 : origContractRef.hashCode());
@@ -935,7 +935,7 @@ public class MdtAcArcMandateTxnsEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcMandateTxnsEntity other = (MdtAcArcMandateTxnsEntity) obj;
+		CasArcCessAssignTxnsEntity other = (CasArcCessAssignTxnsEntity) obj;
 		if (acceptedInd == null) {
 			if (other.acceptedInd != null)
 				return false;
@@ -1196,10 +1196,10 @@ public class MdtAcArcMandateTxnsEntity implements Serializable {
 				return false;
 		} else if (!maxAmountCurr.equals(other.maxAmountCurr))
 			return false;
-		if (mdtAcArcMandateTxnsEntityPK == null) {
-			if (other.mdtAcArcMandateTxnsEntityPK != null)
+		if (casArcCessAssignTxnsEntityPK == null) {
+			if (other.casArcCessAssignTxnsEntityPK != null)
 				return false;
-		} else if (!mdtAcArcMandateTxnsEntityPK.equals(other.mdtAcArcMandateTxnsEntityPK))
+		} else if (!casArcCessAssignTxnsEntityPK.equals(other.casArcCessAssignTxnsEntityPK))
 			return false;
 		if (modifiedBy == null) {
 			if (other.modifiedBy != null)
@@ -1281,7 +1281,8 @@ public class MdtAcArcMandateTxnsEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MdtAcArcMandateTxnsEntity [mdtAcArcMandateTxnsEntityPK=" + mdtAcArcMandateTxnsEntityPK
+		return "CasArcCessAssignTxnsEntity [casArcCessAssignTxnsEntityPK=" +
+				casArcCessAssignTxnsEntityPK
 				+ ", creditorBank=" + creditorBank + ", debtorBank=" + debtorBank + ", serviceId=" + serviceId
 				+ ", processStatus=" + processStatus + ", inFileName=" + inFileName + ", inFileDate=" + inFileDate
 				+ ", extractMsgId=" + extractMsgId + ", extractFileName=" + extractFileName + ", initParty=" + initParty

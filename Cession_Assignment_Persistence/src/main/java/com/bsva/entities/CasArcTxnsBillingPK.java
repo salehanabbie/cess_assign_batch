@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
  * @author DimakatsoN
  */
 @Embeddable
-public class MdtAcArcTxnsBillingPK implements Serializable {
+public class CasArcTxnsBillingPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "SYSTEM_SEQ_NO")
@@ -32,10 +32,10 @@ public class MdtAcArcTxnsBillingPK implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date actionDate;
 
-    public MdtAcArcTxnsBillingPK() {
+    public CasArcTxnsBillingPK() {
     }
 
-    public MdtAcArcTxnsBillingPK(long systemSeqNo, String fileName, Date actionDate) {
+    public CasArcTxnsBillingPK(long systemSeqNo, String fileName, Date actionDate) {
         this.systemSeqNo = systemSeqNo;
         this.fileName = fileName;
         this.actionDate = actionDate;
@@ -83,7 +83,7 @@ public class MdtAcArcTxnsBillingPK implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcTxnsBillingPK other = (MdtAcArcTxnsBillingPK) obj;
+		CasArcTxnsBillingPK other = (CasArcTxnsBillingPK) obj;
 		if (actionDate == null) {
 			if (other.actionDate != null)
 				return false;

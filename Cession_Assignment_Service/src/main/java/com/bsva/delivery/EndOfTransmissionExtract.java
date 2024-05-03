@@ -518,6 +518,7 @@ public class EndOfTransmissionExtract
 		opsFileRegModel.setStatus("C");
 		opsFileRegModel.setOnlineInd("N");
 		opsFileRegModel.setInOutInd("O");
+		opsFileRegModel.setService("EOT");
 
 		Boolean result = adminBeanRemote.createOpsFileRegModel(opsFileRegModel);
 		

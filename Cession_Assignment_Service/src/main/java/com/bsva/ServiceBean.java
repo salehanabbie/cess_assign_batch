@@ -41,9 +41,11 @@ import com.bsva.commons.model.SysCisBranchModel;
 import com.bsva.commons.model.SysctrlCompParamModel;
 import com.bsva.commons.model.SystemParameterReportModel;
 import com.bsva.entities.BatchOustandingResponseEntityModel;
+import com.bsva.entities.CasArcConfDetailsEntity;
+import com.bsva.entities.CasArcConfHdrsEntity;
+import com.bsva.entities.CasArcStatusDetailsEntity;
 import com.bsva.entities.CasConfigDataTimeEntity;
 import com.bsva.entities.CasOpsBillingCtrlsEntity;
-import com.bsva.entities.CasOpsProcessControlsEntity;
 import com.bsva.entities.CasSysctrlCompParamEntity;
 import com.bsva.entities.CasSysctrlProcessStatusEntity;
 import com.bsva.entities.CasSysctrlSysParamEntity;
@@ -57,10 +59,7 @@ import com.bsva.entities.MandatesRejectedReportEntityModel;
 import com.bsva.entities.MandatesReportsEntityModel;
 import com.bsva.entities.MandatesSearchEntityModel;
 import com.bsva.entities.MandatesSummaryReportModel;
-import com.bsva.entities.MdtAcArcConfDetailsEntity;
-import com.bsva.entities.MdtAcArcConfHdrsEntity;
-import com.bsva.entities.MdtAcArcStatusDetailsEntity;
-import com.bsva.entities.MdtAcArcStatusHdrsEntity;
+import com.bsva.entities.CasArcStatusHdrsEntity;
 import com.bsva.entities.CasOpsConfDetailsEntity;
 import com.bsva.entities.CasOpsConfHdrsEntity;
 import com.bsva.entities.CasOpsDailyBillingEntity;
@@ -2013,7 +2012,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public List<?> retrieveArcConfHdrsByArchiveDate(Date archiveDate) 
 	{
-		List<MdtAcArcConfHdrsEntity> mdtAcArcConfHdrsList= new ArrayList<MdtAcArcConfHdrsEntity>();
+		List<CasArcConfHdrsEntity> mdtAcArcConfHdrsList= new ArrayList<CasArcConfHdrsEntity>();
 
 		try 
 		{	
@@ -2034,7 +2033,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public List<?> retrieveArcConfDtlsByArchiveDate(Date archiveDate) 
 	{
-		List<MdtAcArcConfDetailsEntity> mdtAcArcConfDtlsList= new ArrayList<MdtAcArcConfDetailsEntity>();
+		List<CasArcConfDetailsEntity> mdtAcArcConfDtlsList= new ArrayList<CasArcConfDetailsEntity>();
 
 		try 
 		{	
@@ -2055,7 +2054,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public List<?> retrieveArcStatHdrsByArchiveDate(Date archiveDate) 
 	{
-		List<MdtAcArcStatusHdrsEntity> mdtAcArcStatHdrsList= new ArrayList<MdtAcArcStatusHdrsEntity>();
+		List<CasArcStatusHdrsEntity> mdtAcArcStatHdrsList= new ArrayList<CasArcStatusHdrsEntity>();
 
 		try 
 		{	
@@ -2076,7 +2075,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public List<?> retrieveArcStatDtlsByArchiveDate(Date archiveDate) 
 	{
-		List<MdtAcArcStatusDetailsEntity> mdtAcArcStatDtlsList= new ArrayList<MdtAcArcStatusDetailsEntity>();
+		List<CasArcStatusDetailsEntity> mdtAcArcStatDtlsList= new ArrayList<CasArcStatusDetailsEntity>();
 
 		try 
 		{	
@@ -4133,7 +4132,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 	public List<?> retrieveSuspRejections(String txnId)
 	{
-		List<MdtAcArcConfDetailsEntity> confDtlsList = new ArrayList<MdtAcArcConfDetailsEntity>();
+		List<CasArcConfDetailsEntity> confDtlsList = new ArrayList<CasArcConfDetailsEntity>();
 
 		try 
 		{
@@ -4143,7 +4142,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			parameters.put("txnStatus", "RJCT");
 
 			log.debug("---------------sparameters: ------------------" + parameters.toString());
-			confDtlsList =  (List<MdtAcArcConfDetailsEntity>) genericDAO.findAllByCriteria(MdtAcArcConfDetailsEntity.class,parameters);
+			confDtlsList =  (List<CasArcConfDetailsEntity>) genericDAO.findAllByCriteria(
+                CasArcConfDetailsEntity.class,parameters);
 		} catch (NullPointerException npe) {
 			log.error("NullPointer exception :" + npe.getMessage());
 		} catch (ObjectNotFoundException onfe) {
@@ -7144,8 +7144,8 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 		StringBuffer sbFileReg = new StringBuffer();
 
 		sbFileReg.append("INSERT INTO CAMOWNER.CAS_ARC_FILE_REG ");
-		sbFileReg.append("(FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID ,ARCHIVE_DATE) ");
-		sbFileReg.append("SELECT FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
+		sbFileReg.append("(FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID, SERVICE_ID, ARCHIVE_DATE) ");
+		sbFileReg.append("SELECT FILE_NAME ,FILEPATH ,STATUS ,REASON ,PROCESS_DATE ,NAME_SPACE ,GRP_HDR_MSG_ID ,ONLINE_IND ,IN_OUT_IND ,EXTRACT_MSG_ID, SERVICE_ID ,TO_DATE('"+archDate+"','YYYY-MM-DD') ");
 		sbFileReg.append("FROM CAMOWNER.CAS_OPS_FILE_REG ");
 
 		try

@@ -375,7 +375,7 @@ public class FileProcessBean implements FileProcessBeanRemote, FileProcessBeanLo
 		StringBuffer sbGrpHdr = new StringBuffer();
 		sbGrpHdr.append("delete from CAMOWNER.CAS_OPS_GRP_HDR b ");
 		sbGrpHdr.append("where (b.msg_id) IN ");
-		sbGrpHdr.append("(select a.msg_id from CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNSa ");
+		sbGrpHdr.append("(select a.msg_id from CAMOWNER.CAS_OPS_CESS_ASSIGN_TXNS a ");
 		switch(archiveType)
 		{
 		case "MATCH":  sbGrpHdr.append("WHERE a.PROCESS_STATUS IN ('M','R') and nvl(b.MSG_ID,'NF') <> 'NF') ");

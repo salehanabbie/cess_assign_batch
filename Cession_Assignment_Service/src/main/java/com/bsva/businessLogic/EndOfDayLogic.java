@@ -109,6 +109,16 @@ public class EndOfDayLogic {
     moveInputFiles();
   }
 
+  public void testArchive() {
+    AC_ArchiveMessages_ST ac_ArchiveMessages_ST = new AC_ArchiveMessages_ST();
+    try {
+      ac_ArchiveMessages_ST.archiveProcessLogic();
+    } catch (ParseException e) {
+     log.info("Error on Archiving Test: "+e.getMessage());
+     e.printStackTrace();
+    }
+  }
+
   public boolean EndOfdayImplementation(String forcecloseReason)
       throws ParseException, IOException {
     contextAdminBeanCheck();
@@ -172,97 +182,6 @@ public class EndOfDayLogic {
               feedbackMsg = "All schedulers need to be stopped before End Of Day can run.";
               eodCheck = false;
             } else {
-              //2018-11-12 Logic Moved below
-              //							//Update System Audit Log Information
-              //							AudSystemProcessModel audSystemProcessModel = new
-              //							AudSystemProcessModel();
-              //							audSystemProcessModel.setProcess(eodProcess);
-              //							audSystemProcessModel.setProcessDate(new Date());
-              //							audSystemProcessModel.setUserId(loggedInUser);
-              //
-              //
-              //							//Update EOD Ind to 'R' - Request to Close
-              //							mdtSysctrlSysParamEntity.setEodRunInd("R");
-              //							log.info("mdtSysCtrlSysParamEntity in EodLogic ---->>
-              //							" + mdtSysctrlSysParamEntity);
-              //							boolean updateToR = adminBeanRemote
-              //							.updateSystemParameters(mdtSysctrlSysParamEntity);
-              //							log.info("updateToR ---->> " + updateToR);
-              //
-              //
-              //							if(updateToR)
-              //								log.info("End of day requested.....");
-
-							/*
-					Boolean eotCreated = false;
-					//Generate EOT files
-//					log.info("custParamsList.size()---->"+custParamsList.size());
-					log.info("sysCntrlServicesList.size()---->"+sysCntrlServicesList.size());
-
-					List<SysCisBankEntity> sysCisBankList = new ArrayList<SysCisBankEntity>();
-					sysCisBankList = adminBeanRemote.retrieveSysCisBank();
-
-					if(sysCisBankList != null && sysCisBankList.size() > 0 && sysCntrlServicesList
-					 != null && sysCntrlServicesList.size() > 0)
-					{
-						log.info("<<---------GENERATING EOT---------->");
-						for (SysCisBankEntity sysCisBankEntity : sysCisBankList) 
-						{
-								String memberId = sysCisBankEntity.getMemberNo();
-								String debtorInd = sysCisBankEntity.getAcDebtor();
-								String creditorInd = sysCisBankEntity.getAcCreditor();
-
-								log.info("memberId ==> "+memberId);
-								log.info("creditorInd ==> "+creditorInd);
-								log.info("debtorInd ==> "+debtorInd);
-
-								for (MdtSysctrlServicesEntity servicesEntity :
-								sysCntrlServicesList)
-								{
-									String outService = servicesEntity.getServiceIdOut();
-									log.info("outService ==> "+outService);
-
-									//Output Debtor Services
-									if(outService.equalsIgnoreCase(manotServ) || outService
-									.equalsIgnoreCase(carotServ) || outService.equalsIgnoreCase
-									(mancoServ) ||
-											outService.equalsIgnoreCase(manroServ) || outService
-											.equalsIgnoreCase(sroutServ) || outService
-											.equalsIgnoreCase(st202Serv) ||
-											outService.equalsIgnoreCase(st204Serv) || outService
-											.equalsIgnoreCase(st106Serv) || outService
-											.equalsIgnoreCase(st008Serv))
-									{
-										if(sysCisBankEntity.getAcDebtor().equalsIgnoreCase("Y"))
-										{
-											generateEOT(memberId, outService);
-										}
-									}
-
-
-									//Output Creditor Services
-									if(outService.equalsIgnoreCase(rcaotServ) || outService
-									.equalsIgnoreCase(st203Serv) || outService.equalsIgnoreCase
-									(manrfServ) || outService.equalsIgnoreCase(spoutServ) ||
-											outService.equalsIgnoreCase(st200Serv) || outService
-											.equalsIgnoreCase(st105Serv) || outService
-											.equalsIgnoreCase(st007Serv))
-									{
-										if(sysCisBankEntity.getAcCreditor().equalsIgnoreCase("Y"))
-										{
-											generateEOT(memberId, outService);
-										}
-									}
-								}
-							}
-						eotCreated = true;
-					}
-					else
-					{
-						eotCreated = true;
-						eodCheck = false;
-					}
-							 */
 
               Boolean eotCheck = false;
               //							log.info("eotCheck===> "+eotCheck);
@@ -280,7 +199,7 @@ public class EndOfDayLogic {
                     CasOpsSotEotCtrlEntity casOpsSotEotCtrlEntity = new CasOpsSotEotCtrlEntity();
                     casOpsSotEotCtrlEntity =
                         (CasOpsSotEotCtrlEntity) beanRemote.retrieveSOTEOTCntrl(memberId, outService);
-                    //										log.info("SOT/EOT CTRL CHECK ==>
+                    //										log.info("SOT/EOT CTRL CHECK ==>a
                     //										"+mdtAcOpsSotEotCtrlEntity);
                     if (casOpsSotEotCtrlEntity != null) {
                       if (casOpsSotEotCtrlEntity.getEotOut().equalsIgnoreCase("Y") &&

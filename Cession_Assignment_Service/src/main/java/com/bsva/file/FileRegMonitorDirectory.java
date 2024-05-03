@@ -53,7 +53,7 @@ public class FileRegMonitorDirectory {
       testLiveIndProp = propertyUtil.getPropValue("TestLiveInd");
 
     } catch (Exception ex) {
-      log.error("MonitorDirectory - Could not find CessionAssignment.properties in classpath");
+      log.error("FileRegMonitorDirectory - Could not find CessionAssignment.properties in classpath");
       inputPath = "/home/opsjava/Delivery/Cession_Assign/Input/";
       processPath = "/home/opsjava/Delivery/Cession_Assign/Input/Processing/";
     }
@@ -176,6 +176,8 @@ public class FileRegMonitorDirectory {
     opsFileRegModel.setStatus("W");
     opsFileRegModel.setOnlineInd("N");
     opsFileRegModel.setInOutInd("I");
+    String serviceId = (fileName.substring(3, 8)).trim();
+    opsFileRegModel.setService(serviceId);
 
     Boolean result = adminBeanRemote.createOpsFileRegModel(opsFileRegModel);
     log.debug("result in generateFileOpsReg: " + result);

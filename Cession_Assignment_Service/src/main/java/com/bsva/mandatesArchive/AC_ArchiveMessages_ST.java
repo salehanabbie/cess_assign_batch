@@ -181,8 +181,7 @@ public class AC_ArchiveMessages_ST implements Serializable {
     boolean arcConfDtlsBool = beanRemote.archiveConfDtls(archDate);
 	  if (arcConfHdrsBool && arcConfDtlsBool) {
 		  log.info(
-				  "XXXXXXXXXXXX~~~~~~OPS CASA INTERIM RESPONSES[ST201] DELETED " +
-						  "SUCCESSFULLY~~~~~XXXXXXXXXXXX");
+				  "XXXXXXXXXXXX~~~~~~OPS CASA INTERIM RESPONSES[ST201] DELETED SUCCESSFULLY~~~~~XXXXXXXXXXXX");
 	  }
 
     //6. Archive Status Reports

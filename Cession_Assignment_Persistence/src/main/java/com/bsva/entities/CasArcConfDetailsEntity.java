@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -18,39 +17,34 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 /**
  *
  * @author SalehaR
  */
 @Entity
-@Table(name = "MDT_AC_ARC_CONF_DETAILS",schema = "MANOWNER")
+@Table(name = "CAS_ARC_CONF_DETAILS",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findAll", query = "SELECT m FROM MdtAcArcConfDetailsEntity m"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findBySystemSeqNo", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByConfHdrSeqNo", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.confHdrSeqNo = :confHdrSeqNo"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByErrorCode", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.errorCode = :errorCode"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByTxnId", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.txnId = :txnId"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByTxnStatus", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.txnStatus = :txnStatus"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByErrorType", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.errorType = :errorType"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByRecordId", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.recordId = :recordId"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByMandateRefNumber", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.mandateRefNumber = :mandateRefNumber"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByInstId", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.instId = :instId"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByProcessStatus", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.processStatus = :processStatus"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByExtractService", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.extractService = :extractService"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByArchiveDate", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.archiveDate = :archiveDate"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByArchiveDateCleanUp", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.archiveDate <= :archiveDate"),
-    @NamedQuery(name = "MdtAcArcConfDetailsEntity.findByOrgnlMsgType", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.orgnlMsgType = :orgnlMsgType"),
-	@NamedQuery(name = "MdtAcArcConfDetailsEntity.findByExtractMsgId", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.extractMsgId = :extractMsgId"),
-	@NamedQuery(name = "MdtAcArcConfDetailsEntity.findByLocalInstrCd", query = "SELECT m FROM MdtAcArcConfDetailsEntity m WHERE m.localInstrCd = :localInstrCd")})
-public class MdtAcArcConfDetailsEntity implements Serializable {
+    @NamedQuery(name = "CasArcConfDetailsEntity.findAll", query = "SELECT m FROM CasArcConfDetailsEntity m"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findBySystemSeqNo", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.systemSeqNo = :systemSeqNo"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByConfHdrSeqNo", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.confHdrSeqNo = :confHdrSeqNo"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByErrorCode", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.errorCode = :errorCode"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByTxnId", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.txnId = :txnId"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByTxnStatus", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.txnStatus = :txnStatus"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByErrorType", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.errorType = :errorType"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByRecordId", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.recordId = :recordId"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByMandateRefNumber", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.mandateRefNumber = :mandateRefNumber"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByInstId", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.instId = :instId"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByProcessStatus", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.processStatus = :processStatus"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByExtractService", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.extractService = :extractService"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByArchiveDate", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.archiveDate = :archiveDate"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByArchiveDateCleanUp", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.archiveDate <= :archiveDate"),
+    @NamedQuery(name = "CasArcConfDetailsEntity.findByOrgnlMsgType", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.orgnlMsgType = :orgnlMsgType"),
+	@NamedQuery(name = "CasArcConfDetailsEntity.findByExtractMsgId", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.extractMsgId = :extractMsgId"),
+	@NamedQuery(name = "CasArcConfDetailsEntity.findByLocalInstrCd", query = "SELECT m FROM CasArcConfDetailsEntity m WHERE m.localInstrCd = :localInstrCd")})
+public class CasArcConfDetailsEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-//    @GenericGenerator(name = "generator", strategy = "sequence-identity", parameters = @Parameter(name = "sequence", value = "MDT_AC_OPS_CONF_DETAILS_SEQ") )
-//    @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)
     @NotNull
@@ -102,14 +96,14 @@ public class MdtAcArcConfDetailsEntity implements Serializable {
     private String localInstrCd;
     
 
-    public MdtAcArcConfDetailsEntity() {
+    public CasArcConfDetailsEntity() {
     }
 
-    public MdtAcArcConfDetailsEntity(BigDecimal systemSeqNo) {
+    public CasArcConfDetailsEntity(BigDecimal systemSeqNo) {
         this.systemSeqNo = systemSeqNo;
     }
 
-    public MdtAcArcConfDetailsEntity(BigDecimal systemSeqNo, long confHdrSeqNo) {
+    public CasArcConfDetailsEntity(BigDecimal systemSeqNo, long confHdrSeqNo) {
         this.systemSeqNo = systemSeqNo;
         this.confHdrSeqNo = confHdrSeqNo;
     }
@@ -265,7 +259,7 @@ public class MdtAcArcConfDetailsEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcConfDetailsEntity other = (MdtAcArcConfDetailsEntity) obj;
+		CasArcConfDetailsEntity other = (CasArcConfDetailsEntity) obj;
 		if (archiveDate == null) {
 			if (other.archiveDate != null)
 				return false;
@@ -343,7 +337,7 @@ public class MdtAcArcConfDetailsEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MdtAcArcConfDetailsEntity [systemSeqNo=" + systemSeqNo + ", confHdrSeqNo=" + confHdrSeqNo
+		return "CasArcConfDetailsEntity [systemSeqNo=" + systemSeqNo + ", confHdrSeqNo=" + confHdrSeqNo
 				+ ", errorCode=" + errorCode + ", txnId=" + txnId + ", txnStatus=" + txnStatus + ", errorType="
 				+ errorType + ", recordId=" + recordId + ", mandateRefNumber=" + mandateRefNumber + ", instId=" + instId
 				+ ", processStatus=" + processStatus + ", extractService=" + extractService + ", archiveDate="

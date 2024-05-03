@@ -22,21 +22,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author DimakatsoN
  */
 @Entity
-@Table(name = "MDT_AC_ARC_TXNS_BILL_REPORT",schema ="MANOWNER")
+@Table(name = "CAS_ARC_TXNS_BILL_REPORT",schema ="CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findAll", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findBySystemSeqNo", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.systemSeqNo = :systemSeqNo"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findByOriginator", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.originator = :originator"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findBySubService", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.subService = :subService"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findByTxnType", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.txnType = :txnType"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findByFileName", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.fileName = :fileName"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findByProcessDate", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.processDate = :processDate"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findByDeliveryTime", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.deliveryTime = :deliveryTime"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findByMandateReqTranId", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.mandateReqTranId = :mandateReqTranId"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findByArchiveDate", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.archiveDate = :archiveDate"),
-    @NamedQuery(name = "MdtAcArcTxnsBillReportEntity.findByTxnStatus", query = "SELECT m FROM MdtAcArcTxnsBillReportEntity m WHERE m.txnStatus = :txnStatus")})
-public class MdtAcArcTxnsBillReportEntity implements Serializable {
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findAll", query = "SELECT m FROM CasArcTxnsBillReportEntity m"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findBySystemSeqNo", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.systemSeqNo = :systemSeqNo"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findByOriginator", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.originator = :originator"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findBySubService", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.subService = :subService"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findByTxnType", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.txnType = :txnType"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findByFileName", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.fileName = :fileName"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findByProcessDate", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.processDate = :processDate"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findByDeliveryTime", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.deliveryTime = :deliveryTime"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findByMandateReqTranId", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.mandateReqTranId = :mandateReqTranId"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findByArchiveDate", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.archiveDate = :archiveDate"),
+    @NamedQuery(name = "CasArcTxnsBillReportEntity.findByTxnStatus", query = "SELECT m FROM CasArcTxnsBillReportEntity m WHERE m.txnStatus = :txnStatus")})
+public class CasArcTxnsBillReportEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -71,7 +71,7 @@ public class MdtAcArcTxnsBillReportEntity implements Serializable {
     @Column(name = "TXN_STATUS")
     private String txnStatus;
 
-    public MdtAcArcTxnsBillReportEntity() {
+    public CasArcTxnsBillReportEntity() {
     }
 
 	public BigDecimal getSystemSeqNo() {
@@ -179,7 +179,7 @@ public class MdtAcArcTxnsBillReportEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcTxnsBillReportEntity other = (MdtAcArcTxnsBillReportEntity) obj;
+		CasArcTxnsBillReportEntity other = (CasArcTxnsBillReportEntity) obj;
 		if (archiveDate == null) {
 			if (other.archiveDate != null)
 				return false;
@@ -235,7 +235,7 @@ public class MdtAcArcTxnsBillReportEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MdtAcArcTxnsBillReportEntity [systemSeqNo=" + systemSeqNo + ", originator=" + originator
+		return "CasArcTxnsBillReportEntity [systemSeqNo=" + systemSeqNo + ", originator=" + originator
 				+ ", subService=" + subService + ", txnType=" + txnType + ", fileName=" + fileName + ", processDate="
 				+ processDate + ", deliveryTime=" + deliveryTime + ", mandateReqTranId=" + mandateReqTranId
 				+ ", archiveDate=" + archiveDate + ", txnStatus=" + txnStatus + "]";

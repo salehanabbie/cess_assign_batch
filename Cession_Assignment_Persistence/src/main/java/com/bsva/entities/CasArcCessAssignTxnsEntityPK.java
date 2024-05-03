@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  * @author SalehaR
  */
 @Embeddable
-public class MdtAcArcMandateTxnsEntityPK implements Serializable {
+public class CasArcCessAssignTxnsEntityPK implements Serializable {
 	@Basic(optional = false)
 	@NotNull
 	@Size(min = 1, max = 35)
@@ -24,10 +24,10 @@ public class MdtAcArcMandateTxnsEntityPK implements Serializable {
 	@Column(name = "MANDATE_REQ_TRAN_ID")
 	private String mandateReqTranId;
 
-	public MdtAcArcMandateTxnsEntityPK() {
+	public CasArcCessAssignTxnsEntityPK() {
 	}
 
-	public MdtAcArcMandateTxnsEntityPK(String msgId, String mandateReqTranId) {
+	public CasArcCessAssignTxnsEntityPK(String msgId, String mandateReqTranId) {
 		this.msgId = msgId;
 		this.mandateReqTranId = mandateReqTranId;
 	}
@@ -65,7 +65,7 @@ public class MdtAcArcMandateTxnsEntityPK implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MdtAcArcMandateTxnsEntityPK other = (MdtAcArcMandateTxnsEntityPK) obj;
+		CasArcCessAssignTxnsEntityPK other = (CasArcCessAssignTxnsEntityPK) obj;
 		if (mandateReqTranId == null) {
 			if (other.mandateReqTranId != null)
 				return false;

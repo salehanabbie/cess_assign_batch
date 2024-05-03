@@ -956,6 +956,7 @@ public class AC_Pain012_Extract_ST {
 		opsFileRegModel.setStatus("C");
 		opsFileRegModel.setInOutInd("O");
 		opsFileRegModel.setExtractMsgId(outMsgId);
+		opsFileRegModel.setService(outgoingService);
 
 		Boolean result = adminBeanRemote.createOpsFileRegModel(opsFileRegModel);
 

@@ -19,23 +19,23 @@ import javax.persistence.NamedQueries;
  *
  */
 @Entity
-@Table(name = "MDT_AC_ARC_FILE_REG",schema = "MANOWNER")
+@Table(name = "CAS_ARC_FILE_REG",schema = "CAMOWNER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findAll", query = "SELECT m FROM MdtAcArcFileRegEntity m"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByFileName", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.fileName = :fileName"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByFilepath", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.filepath = :filepath"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByStatus", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.status = :status"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByReason", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.reason = :reason"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByProcessDate", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.processDate = :processDate"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByNameSpace", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.nameSpace = :nameSpace"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByGrpHdrMsgId", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.grpHdrMsgId = :grpHdrMsgId"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByOnlineInd", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.onlineInd = :onlineInd"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByInOutInd", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.inOutInd = :inOutInd"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByExtractMsgId", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.extractMsgId = :extractMsgId"),
-    @NamedQuery(name = "MdtAcArcFileRegEntity.findByArchiveDate", query = "SELECT m FROM MdtAcArcFileRegEntity m WHERE m.archiveDate = :archiveDate")})
+    @NamedQuery(name = "CasArcFileRegEntity.findAll", query = "SELECT m FROM CasArcFileRegEntity m"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByFileName", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.fileName = :fileName"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByFilepath", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.filepath = :filepath"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByStatus", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.status = :status"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByReason", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.reason = :reason"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByProcessDate", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.processDate = :processDate"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByNameSpace", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.nameSpace = :nameSpace"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByGrpHdrMsgId", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.grpHdrMsgId = :grpHdrMsgId"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByOnlineInd", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.onlineInd = :onlineInd"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByInOutInd", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.inOutInd = :inOutInd"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByExtractMsgId", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.extractMsgId = :extractMsgId"),
+    @NamedQuery(name = "CasArcFileRegEntity.findByArchiveDate", query = "SELECT m FROM CasArcFileRegEntity m WHERE m.archiveDate = :archiveDate")})
 
-public class MdtAcArcFileRegEntity implements Serializable{
+public class CasArcFileRegEntity implements Serializable{
 	
 	 private static final long serialVersionUID = 1L;
 	    @Id
@@ -65,10 +65,10 @@ public class MdtAcArcFileRegEntity implements Serializable{
 	    @Temporal(TemporalType.TIMESTAMP)
 	    private Date archiveDate;
 
-	    public MdtAcArcFileRegEntity() {
+	    public CasArcFileRegEntity() {
 	    }
 
-	    public MdtAcArcFileRegEntity(String fileName) {
+	    public CasArcFileRegEntity(String fileName) {
 	        this.fileName = fileName;
 	    }
 
@@ -186,7 +186,7 @@ public class MdtAcArcFileRegEntity implements Serializable{
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			MdtAcArcFileRegEntity other = (MdtAcArcFileRegEntity) obj;
+			CasArcFileRegEntity other = (CasArcFileRegEntity) obj;
 			if (archiveDate == null) {
 				if (other.archiveDate != null)
 					return false;
@@ -247,7 +247,7 @@ public class MdtAcArcFileRegEntity implements Serializable{
 
 		@Override
 		public String toString() {
-			return "MdtAcArcFileRegEntity [fileName=" + fileName + ", filepath=" + filepath + ", status=" + status
+			return "CasArcFileRegEntity [fileName=" + fileName + ", filepath=" + filepath + ", status=" + status
 					+ ", reason=" + reason + ", processDate=" + processDate + ", nameSpace=" + nameSpace
 					+ ", grpHdrMsgId=" + grpHdrMsgId + ", onlineInd=" + onlineInd + ", inOutInd=" + inOutInd
 					+ ", extractMsgId=" + extractMsgId + ", archiveDate=" + archiveDate + "]";

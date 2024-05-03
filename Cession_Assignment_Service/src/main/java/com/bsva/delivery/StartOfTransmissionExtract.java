@@ -348,6 +348,7 @@ public class StartOfTransmissionExtract
 		opsFileRegModel.setStatus("C");
 		opsFileRegModel.setOnlineInd("N");
 		opsFileRegModel.setInOutInd("O");
+		opsFileRegModel.setService("SOT");
 		Boolean result = adminBeanRemote.createOpsFileRegModel(opsFileRegModel);
 		
 		if (result == true) 

@@ -707,6 +707,7 @@ public class AC_Pacs002_001_04_Extract {
 		opsFileRegModel.setStatus("C");
 		opsFileRegModel.setInOutInd("O");
 		opsFileRegModel.setExtractMsgId(messgId);
+		opsFileRegModel.setService(outgoingService);
 
 		Boolean result = adminBeanRemote.createOpsFileRegModel(opsFileRegModel);
 
