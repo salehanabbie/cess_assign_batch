@@ -7948,18 +7948,18 @@ null
 
   public void generateDailyBatchProdVolumesReport(Date frontEndDate) {
     try {
-      log.info("***********Generating BSCA01 Report*****************");
+      log.info("***********Generating BSACA02 Report*****************");
       DailyBatchVolumeReport dailyBatchVolumeReport = new DailyBatchVolumeReport();
       dailyBatchVolumeReport.generateReport(true, frontEndDate);
-      log.info("***********BSCA01 Report Completed*****************");
+      log.info("***********BSACA02 Report Completed*****************");
     } catch (FileNotFoundException e) {
-      log.error("<FE> Error on populating BSCA01 Report :" + e.getMessage());
+      log.error("<FE> Error on populating BSACA02 Report :" + e.getMessage());
       e.printStackTrace();
     } catch (DocumentException e) {
-      log.error("<DE> Error on populating BSCA01 Report :" + e.getMessage());
+      log.error("<DE> Error on populating BSACA02 Report :" + e.getMessage());
       e.printStackTrace();
     } catch (Exception e) {
-      log.error("<EX> Error on populating BSCA01 Report :" + e.getMessage());
+      log.error("<EX> Error on populating BSACA02 Report :" + e.getMessage());
       e.printStackTrace();
     }
   }

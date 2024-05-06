@@ -52,28 +52,28 @@ public class DailyReportsLogic
 	{
 		try 
 		{
-			log.info("***********Generating CA01 Report*****************");
+			log.info("***********Generating BSACA02 Report*****************");
 			DailyBatchVolumeReport dailyBatchVolumeReport = new DailyBatchVolumeReport();
 			dailyBatchVolumeReport.generateReport(false,null);
 			bsca01Report = true;
-			log.info("***********CA01 Report Completed*****************");
+			log.info("***********BSACA02 Report Completed*****************");
 		} 
 		catch (FileNotFoundException e) 
 		{
 			bsca01Report = false;
-			log.error("<FE> Error on populating BSCA01 Report :"+e.getMessage());
+			log.error("<FE> Error on populating BSBSACA02 Report :"+e.getMessage());
 			e.printStackTrace();
 		} 
 		catch (DocumentException e) 
 		{
 			bsca01Report = false;
-			log.error("<DE> Error on populating BSCA01 Report :"+e.getMessage());
+			log.error("<DE> Error on populating BSBSACA02 Report :"+e.getMessage());
 			e.printStackTrace();
 		}
 		catch (Exception e) 
 		{
 			bsca01Report = false;
-			log.error("<EX> Error on populating BSCA01 Report :"+e.getMessage());
+			log.error("<EX> Error on populating BSBSACA02 Report :"+e.getMessage());
 			e.printStackTrace();
 		}
 

@@ -90,7 +90,7 @@ public class DailyBatchVolumeReport
 
 	SimpleDateFormat monthFormat = new SimpleDateFormat("MMM-yyyy");
 	String reportName,recipientNr, reportNr, reportDir = null, tempDir = null;
-	String xlsFileName = null, BSCA01 = null;
+	String xlsFileName = null, BSACA02 = null;
 	String invBank = null;
 	int fileSeqNo =000;
 	int rowCount = 0;
@@ -155,18 +155,19 @@ public class DailyBatchVolumeReport
 
 		try
 		{
+			log.info("Date : "+ frontEndDate);
 			tempDir = propertyUtilRemote.getPropValue("ExtractTemp.Out");
 			log.debug("tempDir ==> "+tempDir);
 			reportDir= propertyUtilRemote.getPropValue("Reports.Output");
 			log.debug("reportDir ==> "+reportDir);
 			//Retrieve Report Name here
-			BSCA01 = propertyUtilRemote.getPropValue("RPT.DAILY.BATCH.VOLUMES");
+			BSACA02 = propertyUtilRemote.getPropValue("RPT.DAILY.BATCH.VOLUMES");
 			invBank = propertyUtilRemote.getPropValue("ERROR_CODES_REPORT_INV_BANK");
 			recipientNr = propertyUtilRemote.getPropValue("AC.ACH.RPT.RECIPIENT.NUMBER");
 		}
 		catch(Exception ex)
 		{
-			log.error("BSCA01- Could not find CessionAssignment.properties in classpath");
+			log.error("BSACA02- Could not find CessionAssignment.properties in classpath");
 			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
 			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 			invBank = "INVBNK";
@@ -174,7 +175,7 @@ public class DailyBatchVolumeReport
 
 		//Retrieve Report Name
 		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
-		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(BSCA01);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(BSACA02);
 
 		if(reportNameEntity != null)
 		{
@@ -187,7 +188,7 @@ public class DailyBatchVolumeReport
 				
 				long endTime = System.nanoTime();
 				long duration = (endTime - startTime) / 1000000;
-				log.info("[BSCA01 Report Duration: "+DurationFormatUtils.formatDuration(duration, "HH:mm:ss.S")+" milliseconds |");
+				log.info("[BSACA02 Report Duration: "+DurationFormatUtils.formatDuration(duration, "HH:mm:ss.S")+" milliseconds |");
 			}
 		}
 	}
@@ -534,12 +535,12 @@ public class DailyBatchVolumeReport
 		}
 		catch(IOException ioe)
 		{
-			log.error("Error on copying BSCA01 report to temp "+ioe.getMessage());
+			log.error("Error on copying BSACA02 report to temp "+ioe.getMessage());
 			ioe.printStackTrace();
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on copying BSCA01 report to temp "+ex.getMessage());
+			log.error("Error on copying BSACA02 report to temp "+ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
@@ -848,613 +849,6 @@ public class DailyBatchVolumeReport
 			carinTotalEntity.setTotalNrOfExtMsgs(stExtracted);
 
 			summaryTotalsMap.put("CARIN", carinTotalEntity);
-		}
-
-		//		log.info("rowCount ==> "+rowCount);
-		//		log.info("initCount ==> "+debtorCount);
-
-		//SubTotal the Rows
-		Row emptyRow = inpFromCreditorsSheet.createRow(rowCount);
-		rowCount++;
-		debtorCount = rowCount;
-
-
-		//		========================MANAM============================//
-		//		2018-09-07 SalehaR - Removed as it is replaced by loadCreditorData()
-		//		List<MonthlyVolumeCountEntityModel> manamCountList = (List<MonthlyVolumeCountEntityModel>) beanRemote.retrieveMndtCountByCreditorBanks(strFromDate,strToDate,"MANAM");
-
-		if(inputFromCreditorCountList != null && inputFromCreditorCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-			BigDecimal stAccptd = BigDecimal.ZERO;
-			BigDecimal stRejected = BigDecimal.ZERO;
-			BigDecimal stExtracted= BigDecimal.ZERO;
-
-			int firstCount = 0;
-			int outfstCount = 0;
-			//			//Retrieve the manamCount
-			List<MonthlyVolumeCountEntityModel> manamCountList = inputFromCreditorBanksMap.get("MANAM");
-			if(manamCountList != null && manamCountList.size() > 0)
-			{
-				for (MonthlyVolumeCountEntityModel manamCountEntity : manamCountList) 
-				{
-					Row manamRow = inpFromCreditorsSheet.createRow(rowCount);
-					Cell manamServCell = manamRow.createCell(0);
-
-					if(firstCount == 0)
-					{
-						manamServCell.setCellStyle(serviceCellStyle);
-						manamServCell.setCellValue("MANAM");
-						firstCount = 1;
-					}
-					else
-					{
-						manamServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell creditorBank = manamRow.createCell(1);
-					creditorBank.setCellStyle(normalCellStyle);
-					creditorBank.setCellValue(manamCountEntity.getInstId());
-
-					Cell totalNrMsgs = manamRow.createCell(2);
-					totalNrMsgs.setCellStyle(normalCellStyle);
-					totalNrMsgs.setCellValue(manamCountEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(manamCountEntity.getNrOfMsgs());
-
-					Cell accptdMsgs = manamRow.createCell(3);
-					accptdMsgs.setCellStyle(acceptedCellStyle);
-					accptdMsgs.setCellValue(manamCountEntity.getNrOfAccpMsgs().intValue());
-					stAccptd = stAccptd.add(manamCountEntity.getNrOfAccpMsgs());
-
-					Cell rjctdMsgs = manamRow.createCell(4);
-					rjctdMsgs.setCellStyle(rejectedCellStyle);
-					rjctdMsgs.setCellValue(manamCountEntity.getNrOfRjctMsgs().intValue());
-					stRejected = stRejected.add(manamCountEntity.getNrOfRjctMsgs());
-
-					rowCount++;
-				}
-				//SubTotal the Rows
-				Row manamSTRow = inpFromCreditorsSheet.createRow(rowCount);
-
-				Cell manamServ = manamSTRow.createCell(0);
-				manamServ.setCellStyle(subTotalCellStyle);
-
-				Cell manamBank = manamSTRow.createCell(1);
-				manamBank.setCellStyle(subTotalCellStyle);
-				manamBank.setCellValue("Total");
-
-				Cell sttotalNrMsgs = manamSTRow.createCell(2);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-
-				Cell staccp = manamSTRow.createCell(3);
-				staccp.setCellStyle(subTotalCellStyle);
-				staccp.setCellValue(stAccptd.intValue());
-
-				Cell stRjct = manamSTRow.createCell(4);
-				stRjct.setCellStyle(subTotalCellStyle);
-				stRjct.setCellValue(stRejected.intValue());
-
-				//Add to Grand Total
-				gtTotal = gtTotal.add(stTotal);
-				gtAccptd = gtAccptd.add(stAccptd);
-				gtRejected = gtRejected.add(stRejected);
-
-				rowCount++;
-			}
-
-			//			Retrieve the manomCount
-			List<MonthlyVolumeCountEntityModel> manomCountList = outputToDebtorBanksMap.get("MANOM");
-			//			log.info("manomCountList.size() ===>"+manomCountList.size()); 
-
-			if(manomCountList != null && manomCountList.size() > 0)
-			{	
-				for (MonthlyVolumeCountEntityModel carotCountEntity : manomCountList) 
-				{
-					Row manomRow = inpFromCreditorsSheet.getRow(debtorCount);
-					Cell manomServCell = manomRow.createCell(6);
-					if(outfstCount == 0)
-					{
-						manomServCell.setCellStyle(serviceCellStyle);
-						manomServCell.setCellValue("MANOM");
-						outfstCount = 1;
-					}
-					else
-					{
-						manomServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell debtorBank = manomRow.createCell(7);
-					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(carotCountEntity.getInstId());
-
-					Cell totalNrExtrctdMsgs = manomRow.createCell(8);
-					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(carotCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(carotCountEntity.getNrOfExtMsgs());
-					//Move to next row
-					debtorCount++;
-				}
-
-				//SubTotal the Rows
-				Row extStRow = inpFromCreditorsSheet.getRow(rowCount-1);
-
-				Cell carotServ = extStRow.createCell(6);
-				carotServ.setCellStyle(subTotalCellStyle);
-
-				Cell carotBank = extStRow.createCell(7);
-				carotBank.setCellStyle(subTotalCellStyle);
-				carotBank.setCellValue("Total");
-
-				Cell sttotalNrExtMsgs = extStRow.createCell(8);
-				sttotalNrExtMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrExtMsgs.setCellValue(stExtracted.intValue());
-
-				//Add to Grand Total
-				gtExtracted = gtExtracted.add(stExtracted);
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel manamTotalEntity = new MonthlyVolumeCountEntityModel();
-			manamTotalEntity.setService("MANAM");
-			manamTotalEntity.setTotalNrOfMsgs(stTotal);
-			manamTotalEntity.setTotalAccpMsgs(stAccptd);
-			manamTotalEntity.setTotalRjctdMsgs(stRejected);
-			manamTotalEntity.setTotalNrOfExtMsgs(stExtracted);
-
-			summaryTotalsMap.put("MANAM", manamTotalEntity);
-		}
-
-		//Empty Rows
-		Row emptyRow1 = inpFromCreditorsSheet.createRow(rowCount);
-		rowCount++;
-		debtorCount = rowCount;
-		//		========================MANCN============================//
-		//		2018-09-07 SalehaR - Removed as it is replaced by loadCreditorData()
-		//		List<MonthlyVolumeCountEntityModel> mancnCountList = (List<MonthlyVolumeCountEntityModel>) beanRemote.retrieveMndtCountByCreditorBanks(strFromDate,strToDate,"MANCN");
-
-		if(inputFromCreditorCountList != null && inputFromCreditorCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-			BigDecimal stAccptd = BigDecimal.ZERO;
-			BigDecimal stRejected = BigDecimal.ZERO;
-			BigDecimal stExtracted= BigDecimal.ZERO;
-
-			int firstCount = 0;
-			int outfstCount = 0;
-
-			List<MonthlyVolumeCountEntityModel> mancnCountList = inputFromCreditorBanksMap.get("MANCN");
-
-			if(mancnCountList != null && mancnCountList.size() > 0)
-			{
-				for (MonthlyVolumeCountEntityModel mancnCountEntity : mancnCountList) 
-				{
-					Row mancnRow = inpFromCreditorsSheet.createRow(rowCount);
-					Cell mancnServCell = mancnRow.createCell(0);
-
-					if(firstCount == 0)
-					{
-						mancnServCell.setCellStyle(serviceCellStyle);
-						mancnServCell.setCellValue("MANCN");
-						firstCount = 1;
-					}
-					else
-					{
-						mancnServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell creditorBank = mancnRow.createCell(1);
-					creditorBank.setCellStyle(normalCellStyle);
-					creditorBank.setCellValue(mancnCountEntity.getInstId());
-
-					Cell totalNrMsgs = mancnRow.createCell(2);
-					totalNrMsgs.setCellStyle(normalCellStyle);
-					totalNrMsgs.setCellValue(mancnCountEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(mancnCountEntity.getNrOfMsgs());
-
-					Cell accptdMsgs = mancnRow.createCell(3);
-					accptdMsgs.setCellStyle(acceptedCellStyle);
-					accptdMsgs.setCellValue(mancnCountEntity.getNrOfAccpMsgs().intValue());
-					stAccptd = stAccptd.add(mancnCountEntity.getNrOfAccpMsgs());
-
-					Cell rjctdMsgs = mancnRow.createCell(4);
-					rjctdMsgs.setCellStyle(rejectedCellStyle);
-					rjctdMsgs.setCellValue(mancnCountEntity.getNrOfRjctMsgs().intValue());
-					stRejected = stRejected.add(mancnCountEntity.getNrOfRjctMsgs());
-
-					rowCount++;
-				}
-
-				//SubTotal the Rows
-				Row mancnSTRow = inpFromCreditorsSheet.createRow(rowCount);
-
-				Cell mancnServ = mancnSTRow.createCell(0);
-				mancnServ.setCellStyle(subTotalCellStyle);
-
-				Cell mancnBank = mancnSTRow.createCell(1);
-				mancnBank.setCellStyle(subTotalCellStyle);
-				mancnBank.setCellValue("Total");
-
-				Cell sttotalNrMsgs = mancnSTRow.createCell(2);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-
-				Cell staccp = mancnSTRow.createCell(3);
-				staccp.setCellStyle(subTotalCellStyle);
-				staccp.setCellValue(stAccptd.intValue());
-
-				Cell stRjct = mancnSTRow.createCell(4);
-				stRjct.setCellStyle(subTotalCellStyle);
-				stRjct.setCellValue(stRejected.intValue());
-
-				//Add to Grand Total
-				gtTotal = gtTotal.add(stTotal);
-				gtAccptd = gtAccptd.add(stAccptd);
-				gtRejected = gtRejected.add(stRejected);
-
-				rowCount++;
-			}
-			//			Retrieve the mancoCount
-			List<MonthlyVolumeCountEntityModel> mancoCountList = outputToDebtorBanksMap.get("MANCO");
-			//			log.info("mancoCountList.size() ===>"+mancoCountList.size()); 
-
-			if(mancoCountList != null && mancoCountList.size() > 0)
-			{	
-				for (MonthlyVolumeCountEntityModel carotCountEntity : mancoCountList) 
-				{
-					Row mancoRow = inpFromCreditorsSheet.getRow(debtorCount);
-					Cell mancoServCell = mancoRow.createCell(6);
-					if(outfstCount == 0)
-					{
-						mancoServCell.setCellStyle(serviceCellStyle);
-						mancoServCell.setCellValue("MANCO");
-						outfstCount = 1;
-					}
-					else
-					{
-						mancoServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell debtorBank = mancoRow.createCell(7);
-					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(carotCountEntity.getInstId());
-
-					Cell totalNrExtrctdMsgs = mancoRow.createCell(8);
-					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(carotCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(carotCountEntity.getNrOfExtMsgs());
-					//Move to next row
-					debtorCount++;
-				}
-
-				//SubTotal the Rows
-				Row extStRow = inpFromCreditorsSheet.getRow(rowCount-1);
-
-				Cell mancoServ = extStRow.createCell(6);
-				mancoServ.setCellStyle(subTotalCellStyle);
-
-				Cell mancoBank = extStRow.createCell(7);
-				mancoBank.setCellStyle(subTotalCellStyle);
-				mancoBank.setCellValue("Total");
-
-				Cell sttotalNrExtMsgs = extStRow.createCell(8);
-				sttotalNrExtMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrExtMsgs.setCellValue(stExtracted.intValue());
-
-				//Add to Grand Total
-				gtExtracted = gtExtracted.add(stExtracted);
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel mancnTotalEntity = new MonthlyVolumeCountEntityModel();
-			mancnTotalEntity.setService("MANCN");
-			mancnTotalEntity.setTotalNrOfMsgs(stTotal);
-			mancnTotalEntity.setTotalAccpMsgs(stAccptd);
-			mancnTotalEntity.setTotalRjctdMsgs(stRejected);
-			mancnTotalEntity.setTotalNrOfExtMsgs(stExtracted);
-
-			summaryTotalsMap.put("MANCN", mancnTotalEntity);
-		}
-
-		//Empty Rows
-		Row emptyRow2 = inpFromCreditorsSheet.createRow(rowCount);
-		rowCount++;
-		debtorCount = rowCount;
-		//		========================MANRI============================//
-		//		2018-09-07 SalehaR - Removed as it is replaced by loadCreditorData()
-		//				List<MonthlyVolumeCountEntityModel> manriCountList = (List<MonthlyVolumeCountEntityModel>) beanRemote.retrieveMndtCountByCreditorBanks(strFromDate,strToDate,"MANRI");
-
-		if(inputFromCreditorCountList != null && inputFromCreditorCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-			BigDecimal stAccptd = BigDecimal.ZERO;
-			BigDecimal stRejected = BigDecimal.ZERO;
-			BigDecimal stExtracted= BigDecimal.ZERO;
-
-			int firstCount = 0;
-			int outfstCount = 0;
-
-			//			//Retrieve the carinCount
-			List<MonthlyVolumeCountEntityModel> manriCountList = inputFromCreditorBanksMap.get("MANRI");
-			if(manriCountList != null && manriCountList.size() > 0)
-			{
-
-				for (MonthlyVolumeCountEntityModel manriCountEntity : manriCountList) 
-				{
-					Row manriRow = inpFromCreditorsSheet.createRow(rowCount);
-					Cell manriServCell = manriRow.createCell(0);
-
-					if(firstCount == 0)
-					{
-						manriServCell.setCellStyle(serviceCellStyle);
-						manriServCell.setCellValue("MANRI");
-						firstCount = 1;
-					}
-					else
-					{
-						manriServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell carinBank = manriRow.createCell(1);
-					carinBank.setCellStyle(normalCellStyle);
-					carinBank.setCellValue(manriCountEntity.getInstId());
-
-					Cell totalNrMsgs = manriRow.createCell(2);
-					totalNrMsgs.setCellStyle(normalCellStyle);
-					totalNrMsgs.setCellValue(manriCountEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(manriCountEntity.getNrOfMsgs());
-
-					Cell accptdMsgs = manriRow.createCell(3);
-					accptdMsgs.setCellStyle(acceptedCellStyle);
-					accptdMsgs.setCellValue(manriCountEntity.getNrOfAccpMsgs().intValue());
-					stAccptd = stAccptd.add(manriCountEntity.getNrOfAccpMsgs());
-
-					Cell rjctdMsgs = manriRow.createCell(4);
-					rjctdMsgs.setCellStyle(rejectedCellStyle);
-					rjctdMsgs.setCellValue(manriCountEntity.getNrOfRjctMsgs().intValue());
-					stRejected = stRejected.add(manriCountEntity.getNrOfRjctMsgs());
-
-					rowCount++;
-				}
-
-				//SubTotal the Rows
-				Row manriSTRow = inpFromCreditorsSheet.createRow(rowCount);
-
-				Cell manriServ = manriSTRow.createCell(0);
-				manriServ.setCellStyle(subTotalCellStyle);
-
-				Cell manriBank = manriSTRow.createCell(1);
-				manriBank.setCellStyle(subTotalCellStyle);
-				manriBank.setCellValue("Total");
-
-				Cell sttotalNrMsgs = manriSTRow.createCell(2);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-
-				Cell staccp = manriSTRow.createCell(3);
-				staccp.setCellStyle(subTotalCellStyle);
-				staccp.setCellValue(stAccptd.intValue());
-
-				Cell stRjct = manriSTRow.createCell(4);
-				stRjct.setCellStyle(subTotalCellStyle);
-				stRjct.setCellValue(stRejected.intValue());
-
-				//Add to Grand Total
-				gtTotal = gtTotal.add(stTotal);
-				gtAccptd = gtAccptd.add(stAccptd);
-				gtRejected = gtRejected.add(stRejected);
-
-				rowCount++;
-			}
-
-			//			Retrieve the manroCount
-			List<MonthlyVolumeCountEntityModel> manroCountList = outputToDebtorBanksMap.get("MANRO");
-			//			log.info("manroCountList.size() ===>"+manroCountList.size()); 
-
-			if(manroCountList != null && manroCountList.size() > 0)
-			{	
-				for (MonthlyVolumeCountEntityModel carotCountEntity : manroCountList) 
-				{
-					Row manroRow = inpFromCreditorsSheet.getRow(debtorCount);
-					Cell manroServCell = manroRow.createCell(6);
-					if(outfstCount == 0)
-					{
-						manroServCell.setCellStyle(serviceCellStyle);
-						manroServCell.setCellValue("MANRO");
-						outfstCount = 1;
-					}
-					else
-					{
-						manroServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell debtorBank = manroRow.createCell(7);
-					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(carotCountEntity.getInstId());
-
-					Cell totalNrExtrctdMsgs = manroRow.createCell(8);
-					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(carotCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(carotCountEntity.getNrOfExtMsgs());
-					//Move to next row
-					debtorCount++;
-				}
-
-				//SubTotal the Rows
-				Row extStRow = inpFromCreditorsSheet.getRow(rowCount-1);
-
-				Cell manroServ = extStRow.createCell(6);
-				manroServ.setCellStyle(subTotalCellStyle);
-
-				Cell manroBank = extStRow.createCell(7);
-				manroBank.setCellStyle(subTotalCellStyle);
-				manroBank.setCellValue("Total");
-
-				Cell sttotalNrExtMsgs = extStRow.createCell(8);
-				sttotalNrExtMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrExtMsgs.setCellValue(stExtracted.intValue());
-
-				//Add to Grand Total
-				gtExtracted = gtExtracted.add(stExtracted);
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel manriTotalEntity = new MonthlyVolumeCountEntityModel();
-			manriTotalEntity.setService("MANRI");
-			manriTotalEntity.setTotalNrOfMsgs(stTotal);
-			manriTotalEntity.setTotalAccpMsgs(stAccptd);
-			manriTotalEntity.setTotalRjctdMsgs(stRejected);
-			manriTotalEntity.setTotalNrOfExtMsgs(stExtracted);
-
-			summaryTotalsMap.put("MANRI", manriTotalEntity);
-		}
-
-		//Empty Rows
-		Row emptyRow3 = inpFromCreditorsSheet.createRow(rowCount);
-		rowCount++;
-		debtorCount = rowCount;
-		//		========================SRINP============================//
-		//		2018-09-07 SalehaR - Removed as it is replaced by loadCreditorData()
-		//				List<MonthlyVolumeCountEntityModel> srinpCountList = (List<MonthlyVolumeCountEntityModel>) beanRemote.retrieveMndtCountByCreditorBanks(strFromDate,strToDate,"SRINP");
-
-		if(inputFromCreditorCountList != null && inputFromCreditorCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-			BigDecimal stAccptd = BigDecimal.ZERO;
-			BigDecimal stRejected = BigDecimal.ZERO;
-			BigDecimal stExtracted= BigDecimal.ZERO;
-
-			int firstCount = 0;
-			int outfstCount = 0;
-
-			List<MonthlyVolumeCountEntityModel> srinpCountList = inputFromCreditorBanksMap.get("SRINP");
-			if(srinpCountList != null && srinpCountList.size() > 0)
-			{
-
-				for (MonthlyVolumeCountEntityModel srinpCountEntity : srinpCountList) 
-				{
-					Row srinpRow = inpFromCreditorsSheet.createRow(rowCount);
-					Cell srinpServCell = srinpRow.createCell(0);
-
-					if(firstCount == 0)
-					{
-						srinpServCell.setCellStyle(serviceCellStyle);
-						srinpServCell.setCellValue("SRINP");
-						firstCount = 1;
-					}
-					else
-					{
-						srinpServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell srinpBank = srinpRow.createCell(1);
-					srinpBank.setCellStyle(normalCellStyle);
-					srinpBank.setCellValue(srinpCountEntity.getInstId());
-
-					Cell totalNrMsgs = srinpRow.createCell(2);
-					totalNrMsgs.setCellStyle(normalCellStyle);
-					totalNrMsgs.setCellValue(srinpCountEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(srinpCountEntity.getNrOfMsgs());
-
-					Cell accptdMsgs = srinpRow.createCell(3);
-					accptdMsgs.setCellStyle(acceptedCellStyle);
-					accptdMsgs.setCellValue(srinpCountEntity.getNrOfAccpMsgs().intValue());
-					stAccptd = stAccptd.add(srinpCountEntity.getNrOfAccpMsgs());
-
-					Cell rjctdMsgs = srinpRow.createCell(4);
-					rjctdMsgs.setCellStyle(rejectedCellStyle);
-					rjctdMsgs.setCellValue(srinpCountEntity.getNrOfRjctMsgs().intValue());
-					stRejected = stRejected.add(srinpCountEntity.getNrOfRjctMsgs());
-
-					rowCount++;
-				}
-
-				//SubTotal the Rows
-				Row srinpSTRow = inpFromCreditorsSheet.createRow(rowCount);
-
-				Cell srinpServ = srinpSTRow.createCell(0);
-				srinpServ.setCellStyle(subTotalCellStyle);
-
-				Cell mancnBank = srinpSTRow.createCell(1);
-				mancnBank.setCellStyle(subTotalCellStyle);
-				mancnBank.setCellValue("Total");
-
-				Cell sttotalNrMsgs = srinpSTRow.createCell(2);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-
-				Cell staccp = srinpSTRow.createCell(3);
-				staccp.setCellStyle(subTotalCellStyle);
-				staccp.setCellValue(stAccptd.intValue());
-
-				Cell stRjct = srinpSTRow.createCell(4);
-				stRjct.setCellStyle(subTotalCellStyle);
-				stRjct.setCellValue(stRejected.intValue());
-
-				//Add to Grand Total
-				gtTotal = gtTotal.add(stTotal);
-				gtAccptd = gtAccptd.add(stAccptd);
-				gtRejected = gtRejected.add(stRejected);
-
-				rowCount++;
-			}
-
-			//			Retrieve the sroutCount
-			List<MonthlyVolumeCountEntityModel> sroutCountList = outputToDebtorBanksMap.get("SROUT");
-			//			log.info("sroutCountList.size() ===>"+sroutCountList.size()); 
-
-			if(sroutCountList != null && sroutCountList.size() > 0)
-			{	
-				for (MonthlyVolumeCountEntityModel sroutCountEntity : sroutCountList) 
-				{
-					Row sroutRow = inpFromCreditorsSheet.getRow(debtorCount);
-					Cell sroutServCell = sroutRow.createCell(6);
-					if(outfstCount == 0)
-					{
-						sroutServCell.setCellStyle(serviceCellStyle);
-						sroutServCell.setCellValue("SROUT");
-						outfstCount = 1;
-					}
-					else
-					{
-						sroutServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell debtorBank = sroutRow.createCell(7);
-					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(sroutCountEntity.getInstId());
-
-					Cell totalNrExtrctdMsgs = sroutRow.createCell(8);
-					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(sroutCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(sroutCountEntity.getNrOfExtMsgs());
-					//Move to next row
-					debtorCount++;
-				}
-
-				//SubTotal the Rows
-				Row extStRow = inpFromCreditorsSheet.getRow(rowCount-1);
-
-				Cell sroutServ = extStRow.createCell(6);
-				sroutServ.setCellStyle(subTotalCellStyle);
-
-				Cell sroutBank = extStRow.createCell(7);
-				sroutBank.setCellStyle(subTotalCellStyle);
-				sroutBank.setCellValue("Total");
-
-				Cell sttotalNrExtMsgs = extStRow.createCell(8);
-				sttotalNrExtMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrExtMsgs.setCellValue(stExtracted.intValue());
-
-				//Add to Grand Total
-				gtExtracted = gtExtracted.add(stExtracted);
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel srinpTotalEntity = new MonthlyVolumeCountEntityModel();
-			srinpTotalEntity.setService("SRINP");
-			srinpTotalEntity.setTotalNrOfMsgs(stTotal);
-			srinpTotalEntity.setTotalAccpMsgs(stAccptd);
-			srinpTotalEntity.setTotalRjctdMsgs(stRejected);
-			srinpTotalEntity.setTotalNrOfExtMsgs(stExtracted);
-
-			summaryTotalsMap.put("SRINP", srinpTotalEntity);
 		}
 
 		//Empty Rows
@@ -2021,339 +1415,6 @@ public class DailyBatchVolumeReport
 		//		log.info("rowCount_3 BEFORE MANRT ==> "+rowCount_3);
 		//		log.info("creditorCount BEFORE MANRT ==> "+creditorCount);
 
-
-		//		========================MANRT============================//
-
-		if(inputFromDebtorCountList != null && inputFromDebtorCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-			BigDecimal stAccptd = BigDecimal.ZERO;
-			BigDecimal stRejected = BigDecimal.ZERO;
-			BigDecimal stExtracted= BigDecimal.ZERO;
-
-			int fstCount = 0;
-			int outfstCount = 0;
-
-			//			//Retrieve the manacCount
-			List<MonthlyVolumeCountEntityModel> manrtCountList = inputFromDebtorBankMap.get("MANRT");
-
-			if(manrtCountList != null && manrtCountList.size() > 0)
-			{	
-				for (MonthlyVolumeCountEntityModel manrtCountEntity : manrtCountList) 
-				{
-					Row outServiceRow = inpFromDebtorsSheet.createRow(rowCount_3);
-					Cell extServiceCell = outServiceRow.createCell(0);
-
-					if(fstCount == 0)
-					{
-						extServiceCell.setCellStyle(serviceCellStyle);
-						extServiceCell.setCellValue("MANRT");
-						fstCount = 1;
-					}
-					else
-					{
-						extServiceCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell debtorBank = outServiceRow.createCell(1);
-					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(manrtCountEntity.getInstId());
-
-					Cell totalNrMsgs = outServiceRow.createCell(2);
-					totalNrMsgs.setCellStyle(normalCellStyle);
-					totalNrMsgs.setCellValue(manrtCountEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(manrtCountEntity.getNrOfMsgs());
-
-					Cell accptdMsgs = outServiceRow.createCell(3);
-					accptdMsgs.setCellStyle(acceptedCellStyle);
-					accptdMsgs.setCellValue(manrtCountEntity.getNrOfAccpMsgs().intValue());
-					stAccptd = stAccptd.add(manrtCountEntity.getNrOfAccpMsgs());
-
-					Cell rjctdMsgs = outServiceRow.createCell(4);
-					rjctdMsgs.setCellStyle(rejectedCellStyle);
-					rjctdMsgs.setCellValue(manrtCountEntity.getNrOfRjctMsgs().intValue());
-					stRejected = stRejected.add(manrtCountEntity.getNrOfRjctMsgs());
-
-					//Move to next row
-					rowCount_3++;
-				}
-
-				//SubTotal the Rows
-				Row extRow3 = inpFromDebtorsSheet.createRow(rowCount_3);
-
-				Cell extServ = extRow3.createCell(0);
-				extServ.setCellStyle(subTotalCellStyle);
-
-				Cell extBank = extRow3.createCell(1);
-				extBank.setCellStyle(subTotalCellStyle);
-				extBank.setCellValue("Total");
-
-				Cell sttotalNrMsgs = extRow3.createCell(2);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-
-				Cell staccp = extRow3.createCell(3);
-				staccp.setCellStyle(subTotalCellStyle);
-				staccp.setCellValue(stAccptd.intValue());
-
-				Cell stRjct = extRow3.createCell(4);
-				stRjct.setCellStyle(subTotalCellStyle);
-				stRjct.setCellValue(stRejected.intValue());
-
-				//Add to Grand Total
-				gtTotalDebt = gtTotalDebt.add(stTotal);
-				gtAccptdDebt = gtAccptdDebt.add(stAccptd);
-				gtRejectedDebt = gtRejectedDebt.add(stRejected);
-
-				rowCount_3++;
-			}	
-
-
-			//			Retrieve the manocCount
-			List<MonthlyVolumeCountEntityModel> manrfCountList = outputToCreditorBankMap.get("MANRF");
-			//			log.info("manrfCountList.size() ===>"+manrfCountList.size()); 
-			if(manrfCountList != null && manrfCountList.size() > 0)
-			{	
-				for (MonthlyVolumeCountEntityModel manrfCountEntity : manrfCountList) 
-				{
-					//					if(rowCount_3 == debtorCount)
-					//					{
-					//						debtorCount++;
-					//					}
-
-					Row extRow33 = inpFromDebtorsSheet.getRow(debtorCount);
-					Cell extServCell = extRow33.createCell(6);
-					if(outfstCount == 0)
-					{
-						extServCell.setCellStyle(serviceCellStyle);
-						extServCell.setCellValue("MANRF");
-						outfstCount = 1;
-					}
-					else
-					{
-						extServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell debtorBank = extRow33.createCell(7);
-					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(manrfCountEntity.getInstId());
-
-					Cell totalNrExtrctdMsgs = extRow33.createCell(8);
-					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(manrfCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(manrfCountEntity.getNrOfExtMsgs());
-					//Move to next row
-					debtorCount++;
-				}
-
-				//				log.info("creditorCount before SUBTOTAL ===>"+creditorCount);
-				//SubTotal the Rows
-				Row extStRow = inpFromDebtorsSheet.getRow(debtorCount);
-
-				Cell st103Serv = extStRow.createCell(6);
-				st103Serv.setCellStyle(subTotalCellStyle);
-
-				Cell st103Bank = extStRow.createCell(7);
-				st103Bank.setCellStyle(subTotalCellStyle);
-				st103Bank.setCellValue("Total");
-
-				Cell sttotalNrExtMsgs = extStRow.createCell(8);
-				sttotalNrExtMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrExtMsgs.setCellValue(stExtracted.intValue());
-
-				//Add to Grand Total
-				gtExtractedDebt = gtExtractedDebt.add(stExtracted);
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel manrtTotalEntity = new MonthlyVolumeCountEntityModel();
-			manrtTotalEntity.setService("MANRT");
-			manrtTotalEntity.setTotalNrOfMsgs(stTotal);
-			manrtTotalEntity.setTotalAccpMsgs(stAccptd);
-			manrtTotalEntity.setTotalRjctdMsgs(stRejected);
-			manrtTotalEntity.setTotalNrOfExtMsgs(stExtracted);
-
-			summaryTotalsMap.put("MANRT", manrtTotalEntity);
-		}
-
-		//		log.info("rowCount_3 AFTER MANRF ==> "+rowCount_3);
-		//		log.info("creditorCount AFTER MANRF==> "+creditorCount);
-
-		//SubTotal the Rows
-		debtorCount++;
-		Row emptyRow35 = inpFromDebtorsSheet.createRow(debtorCount);
-		debtorCount++;
-		rowCount_3 = debtorCount;
-		log.info("rowCount_3"+rowCount_3);
-		log.info("debtorCount"+debtorCount);
-
-		//		log.info("rowCount_3 BEFORE SPINP ==> "+rowCount_3);
-		//		log.info("creditorCount BEFORE SPINP ==> "+creditorCount);
-
-		//		========================SPINP============================//
-		if(inputFromDebtorCountList != null && inputFromDebtorCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-			BigDecimal stAccptd = BigDecimal.ZERO;
-			BigDecimal stRejected = BigDecimal.ZERO;
-			BigDecimal stExtracted= BigDecimal.ZERO;
-
-			int fstCount = 0;
-			int outfstCount = 0;
-
-			//			//Retrieve the manacCount
-			List<MonthlyVolumeCountEntityModel> spinpCountList = inputFromDebtorBankMap.get("SPINP");
-
-			if(spinpCountList != null && spinpCountList.size() > 0)
-			{	
-				for (MonthlyVolumeCountEntityModel spinpCountEntity : spinpCountList) 
-				{
-					Row outServiceRow = inpFromDebtorsSheet.createRow(rowCount_3);
-					Cell extServiceCell = outServiceRow.createCell(0);
-
-					if(fstCount == 0)
-					{
-						extServiceCell.setCellStyle(serviceCellStyle);
-						extServiceCell.setCellValue("SPINP");
-						fstCount = 1;
-					}
-					else
-					{
-						extServiceCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell debtorBank = outServiceRow.createCell(1);
-					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(spinpCountEntity.getInstId());
-
-					Cell totalNrMsgs = outServiceRow.createCell(2);
-					totalNrMsgs.setCellStyle(normalCellStyle);
-					totalNrMsgs.setCellValue(spinpCountEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(spinpCountEntity.getNrOfMsgs());
-
-					Cell accptdMsgs = outServiceRow.createCell(3);
-					accptdMsgs.setCellStyle(acceptedCellStyle);
-					accptdMsgs.setCellValue(spinpCountEntity.getNrOfAccpMsgs().intValue());
-					stAccptd = stAccptd.add(spinpCountEntity.getNrOfAccpMsgs());
-
-					Cell rjctdMsgs = outServiceRow.createCell(4);
-					rjctdMsgs.setCellStyle(rejectedCellStyle);
-					rjctdMsgs.setCellValue(spinpCountEntity.getNrOfRjctMsgs().intValue());
-					stRejected = stRejected.add(spinpCountEntity.getNrOfRjctMsgs());
-
-					//Move to next row
-					rowCount_3++;
-				}
-
-				//SubTotal the Rows
-				Row extRow3 = inpFromDebtorsSheet.createRow(rowCount_3);
-
-				Cell extServ = extRow3.createCell(0);
-				extServ.setCellStyle(subTotalCellStyle);
-
-				Cell extBank = extRow3.createCell(1);
-				extBank.setCellStyle(subTotalCellStyle);
-				extBank.setCellValue("Total");
-
-				Cell sttotalNrMsgs = extRow3.createCell(2);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-
-				Cell staccp = extRow3.createCell(3);
-				staccp.setCellStyle(subTotalCellStyle);
-				staccp.setCellValue(stAccptd.intValue());
-
-				Cell stRjct = extRow3.createCell(4);
-				stRjct.setCellStyle(subTotalCellStyle);
-				stRjct.setCellValue(stRejected.intValue());
-
-				//Add to Grand Total
-				gtTotalDebt = gtTotalDebt.add(stTotal);
-				gtAccptdDebt = gtAccptdDebt.add(stAccptd);
-				gtRejectedDebt = gtRejectedDebt.add(stRejected);
-
-				rowCount_3++;
-			}	
-
-
-			//			Retrieve the manocCount
-			List<MonthlyVolumeCountEntityModel> spoutCountList = outputToCreditorBankMap.get("SPOUT");
-			//			log.info("spoutCountList.size() ===>"+spoutCountList.size()); 
-			if(spoutCountList != null && spoutCountList.size() > 0)
-			{	
-				for (MonthlyVolumeCountEntityModel spoutCountEntity : spoutCountList) 
-				{
-					//					if(rowCount_3 == debtorCount)
-					//					{
-					//						debtorCount++;
-					//					}
-
-					Row extRow33 = inpFromDebtorsSheet.getRow(debtorCount);
-					Cell extServCell = extRow33.createCell(6);
-					if(outfstCount == 0)
-					{
-						extServCell.setCellStyle(serviceCellStyle);
-						extServCell.setCellValue("SPOUT");
-						outfstCount = 1;
-					}
-					else
-					{
-						extServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell debtorBank = extRow33.createCell(7);
-					debtorBank.setCellStyle(normalCellStyle);
-					debtorBank.setCellValue(spoutCountEntity.getInstId());
-
-					Cell totalNrExtrctdMsgs = extRow33.createCell(8);
-					totalNrExtrctdMsgs.setCellStyle(normalCellStyle);
-					totalNrExtrctdMsgs.setCellValue(spoutCountEntity.getNrOfExtMsgs().intValue());
-					stExtracted = stExtracted.add(spoutCountEntity.getNrOfExtMsgs());
-					//Move to next row
-					debtorCount++;
-				}
-
-				//				log.info("creditorCount before SUBTOTAL ===>"+creditorCount);
-				//SubTotal the Rows
-				Row extStRow = inpFromDebtorsSheet.getRow(debtorCount);
-
-				Cell st103Serv = extStRow.createCell(6);
-				st103Serv.setCellStyle(subTotalCellStyle);
-
-				Cell st103Bank = extStRow.createCell(7);
-				st103Bank.setCellStyle(subTotalCellStyle);
-				st103Bank.setCellValue("Total");
-
-				Cell sttotalNrExtMsgs = extStRow.createCell(8);
-				sttotalNrExtMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrExtMsgs.setCellValue(stExtracted.intValue());
-
-				//Add to Grand Total
-				gtExtractedDebt = gtExtractedDebt.add(stExtracted);
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel spinpTotalEntity = new MonthlyVolumeCountEntityModel();
-			spinpTotalEntity.setService("SPINP");
-			spinpTotalEntity.setTotalNrOfMsgs(stTotal);
-			spinpTotalEntity.setTotalAccpMsgs(stAccptd);
-			spinpTotalEntity.setTotalRjctdMsgs(stRejected);
-			spinpTotalEntity.setTotalNrOfExtMsgs(stExtracted);
-
-			summaryTotalsMap.put("SPINP", spinpTotalEntity);
-		}
-
-		//		log.info("rowCount_3 AFTER SPOUT ==> "+rowCount_3);
-		//		log.info("creditorCount AFTER SPOUT==> "+creditorCount);
-
-		//SubTotal the Rows
-		debtorCount++;
-		Row emptyRow36 = inpFromDebtorsSheet.createRow(debtorCount);
-		debtorCount++;
-		rowCount_3 = debtorCount;
-
-		//		log.info("rowCount_3 BEFORE GRAND TOTAL ==> "+rowCount_3);
-		//		log.info("creditorCount BEFORE GRAND TOTAL ==> "+creditorCount);
-
-
 		Row grandTotalRow3 = inpFromDebtorsSheet.createRow(rowCount_3);
 		rowCount_3++;
 
@@ -2531,7 +1592,8 @@ public class DailyBatchVolumeReport
 
 		int rowCount_4 = 6;
 		int stsCount = 6;
-
+		log.info("rowCount4: "+rowCount_4);
+		log.info("stsCount: "+stsCount);
 		//Retrieve Status Reports to Creditor Details
 		//ST200 Counts
 		if(statusReportToCreditorsCountList != null && statusReportToCreditorsCountList.size() > 0)
@@ -2570,7 +1632,8 @@ public class DailyBatchVolumeReport
 
 					rowCount_4++;
 				}
-
+				log.info("rowCount4 create: "+rowCount_4);
+				log.info("stsCount: "+stsCount);
 				//SubTotal the Rows
 				Row statusTotalRow = statusReportsSheet.createRow(rowCount_4);
 
@@ -2605,11 +1668,11 @@ public class DailyBatchVolumeReport
 
 			int firstCount = 0;
 
-			List<MonthlyVolumeCountEntityModel> st102CountList = statusReportToDebtorsMap.get("ST202");
-			if(st102CountList != null && st102CountList.size() > 0)
+			List<MonthlyVolumeCountEntityModel> st202CountList = statusReportToDebtorsMap.get("ST202");
+			if(st202CountList != null && st202CountList.size() > 0)
 			{
 
-				for (MonthlyVolumeCountEntityModel statusReportEntity : st102CountList) 
+				for (MonthlyVolumeCountEntityModel statusReportEntity : st202CountList) 
 				{
 					Row statusRowCr1 = statusReportsSheet.getRow(stsCount);
 					Cell stServCell = statusRowCr1.createCell(4);
@@ -2664,80 +1727,16 @@ public class DailyBatchVolumeReport
 			summaryTotalsMap.put("ST202", st102TotalEntity);
 		}
 
-		//		log.info("rowCount_4 ==> "+rowCount_4);
-		//		log.info("stsCount ==> "+stsCount);
+				log.info("rowCount_4 ==> "+rowCount_4);
+				log.info("stsCount ==> "+stsCount);
 
 		//SubTotal the Rows
 		Row statusNullRow = statusReportsSheet.createRow(rowCount_4);
 		rowCount_4++;
 
 		stsCount = rowCount_4;
-		//ST105 Counts
-		if(statusReportToCreditorsCountList != null && statusReportToCreditorsCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-
-			int firstCount = 0;
-
-			List<MonthlyVolumeCountEntityModel> st105CountList = statusReportToCreditorsMap.get("ST105");
-			if(st105CountList != null && st105CountList.size() > 0)
-			{
-
-				for (MonthlyVolumeCountEntityModel statusReportEntity : st105CountList) 
-				{
-					Row statusRowCr1 = statusReportsSheet.createRow(rowCount_4);
-					Cell stServCell = statusRowCr1.createCell(0);
-
-					if(firstCount == 0)
-					{
-						stServCell.setCellStyle(serviceCellStyle);
-						stServCell.setCellValue("ST105");
-						firstCount = 1;
-					}
-					else
-					{
-						stServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell statusBank1 = statusRowCr1.createCell(1);
-					statusBank1.setCellStyle(normalCellStyle);
-					statusBank1.setCellValue(statusReportEntity.getInstId());
-
-					Cell statusTotalNrMsgs = statusRowCr1.createCell(2);
-					statusTotalNrMsgs.setCellStyle(normalCellStyle);
-					statusTotalNrMsgs.setCellValue(statusReportEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(statusReportEntity.getNrOfMsgs());
-
-					rowCount_4++;
-				}
-
-				//SubTotal the Rows
-				Row statusTotalRow = statusReportsSheet.createRow(rowCount_4);
-
-				Cell totServCell = statusTotalRow.createCell(0);
-				totServCell.setCellStyle(subTotalCellStyle);
-
-				Cell totStsBankCell = statusTotalRow.createCell(1);
-				totStsBankCell.setCellStyle(subTotalCellStyle);
-				totStsBankCell.setCellValue("Total");
-
-				Cell sttotalNrMsgs = statusTotalRow.createCell(2);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-
-				//Add to Grand Total
-				gtCredStatusTotal = gtCredStatusTotal.add(stTotal);
-
-				rowCount_4++;
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel st105TotalEntity = new MonthlyVolumeCountEntityModel();
-			st105TotalEntity.setService("ST105");
-			st105TotalEntity.setTotalNrOfMsgs(stTotal);
-
-			summaryTotalsMap.put("ST105", st105TotalEntity);	
-		}
-
+		log.info("rowCount_4 ==> "+rowCount_4);
+		log.info("stsCount ==> "+stsCount);
 		//ST204 Counts
 		if(statusReportToDebtorsCountList != null && statusReportToDebtorsCountList.size() > 0)
 		{
@@ -2745,12 +1744,12 @@ public class DailyBatchVolumeReport
 
 			int firstCount = 0;
 
-			List<MonthlyVolumeCountEntityModel> st104CountList = statusReportToDebtorsMap.get("ST204");
-			if(st104CountList != null && st104CountList.size() > 0)
+			List<MonthlyVolumeCountEntityModel> st204CountList = statusReportToDebtorsMap.get("ST204");
+			if(st204CountList != null && st204CountList.size() > 0)
 			{
-				for (MonthlyVolumeCountEntityModel statusReportEntity : st104CountList) 
+				for (MonthlyVolumeCountEntityModel statusReportEntity : st204CountList) 
 				{
-					Row statusRowCr1 = statusReportsSheet.getRow(stsCount);
+					Row statusRowCr1 = statusReportsSheet.createRow(rowCount_4);
 					Cell stServCell = statusRowCr1.createCell(4);
 
 					if(firstCount == 0)
@@ -2773,245 +1772,40 @@ public class DailyBatchVolumeReport
 					statusTotalNrMsgs.setCellValue(statusReportEntity.getNrOfMsgs().intValue());
 					stTotal = stTotal.add(statusReportEntity.getNrOfMsgs());
 
-					stsCount++;
-				}
-
-				//SubTotal the Rows
-				Row statusTotalRow = statusReportsSheet.getRow(stsCount);
-
-				Cell totServCell = statusTotalRow.createCell(4);
-				totServCell.setCellStyle(subTotalCellStyle);
-
-				Cell totStsBankCell = statusTotalRow.createCell(5);
-				totStsBankCell.setCellStyle(subTotalCellStyle);
-				totStsBankCell.setCellValue("Total");
-
-				Cell sttotalNrMsgs = statusTotalRow.createCell(6);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-
-				//Add to Grand Total
-				gtDebtStatusTotal = gtDebtStatusTotal.add(stTotal);
-
-				stsCount++;
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel st104TotalEntity = new MonthlyVolumeCountEntityModel();
-			st104TotalEntity.setService("ST204");
-			st104TotalEntity.setTotalNrOfMsgs(stTotal);
-
-			summaryTotalsMap.put("ST204", st104TotalEntity);
-		}
-
-		//SubTotal the Rows
-		Row statusNullRow1 = statusReportsSheet.createRow(rowCount_4);
-		rowCount_4++;
-		stsCount = rowCount_4;
-
-		//ST007 Counts
-		if(statusReportToCreditorsCountList != null && statusReportToCreditorsCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-
-			int firstCount = 0;
-
-			List<MonthlyVolumeCountEntityModel> st007CountList = statusReportToCreditorsMap.get("ST007");
-			if(st007CountList != null && st007CountList.size() > 0)
-			{
-
-				for (MonthlyVolumeCountEntityModel statusReportEntity : st007CountList) 
-				{
-					Row statusRowCr1 = statusReportsSheet.createRow(rowCount_4);
-					Cell stServCell = statusRowCr1.createCell(0);
-
-					if(firstCount == 0)
-					{
-						stServCell.setCellStyle(serviceCellStyle);
-						stServCell.setCellValue("ST007");
-						firstCount = 1;
-					}
-					else
-					{
-						stServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell statusBank1 = statusRowCr1.createCell(1);
-					statusBank1.setCellStyle(normalCellStyle);
-					statusBank1.setCellValue(statusReportEntity.getInstId());
-
-					Cell statusTotalNrMsgs = statusRowCr1.createCell(2);
-					statusTotalNrMsgs.setCellStyle(normalCellStyle);
-					statusTotalNrMsgs.setCellValue(statusReportEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(statusReportEntity.getNrOfMsgs());
-
 					rowCount_4++;
 				}
 
 				//SubTotal the Rows
 				Row statusTotalRow = statusReportsSheet.createRow(rowCount_4);
 
-				Cell totServCell = statusTotalRow.createCell(0);
+				Cell totServCell = statusTotalRow.createCell(4);
 				totServCell.setCellStyle(subTotalCellStyle);
 
-				Cell totStsBankCell = statusTotalRow.createCell(1);
+				Cell totStsBankCell = statusTotalRow.createCell(5);
 				totStsBankCell.setCellStyle(subTotalCellStyle);
 				totStsBankCell.setCellValue("Total");
 
-				Cell sttotalNrMsgs = statusTotalRow.createCell(2);
+				Cell sttotalNrMsgs = statusTotalRow.createCell(6);
 				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
 				sttotalNrMsgs.setCellValue(stTotal.intValue());
 
 				//Add to Grand Total
-				gtCredStatusTotal = gtCredStatusTotal.add(stTotal);
+				gtDebtStatusTotal = gtDebtStatusTotal.add(stTotal);
 
 				rowCount_4++;
 			}
 			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel st007TotalEntity = new MonthlyVolumeCountEntityModel();
-			st007TotalEntity.setService("ST007");
-			st007TotalEntity.setTotalNrOfMsgs(stTotal);
-
-			summaryTotalsMap.put("ST007", st007TotalEntity);
+			MonthlyVolumeCountEntityModel st204TotalEntity = new MonthlyVolumeCountEntityModel();
+			st204TotalEntity.setService("ST204");
+			st204TotalEntity.setTotalNrOfMsgs(stTotal);
+			summaryTotalsMap.put("ST204", st204TotalEntity);	
 		}
 
-		//ST106 Counts
-		if(statusReportToDebtorsCountList != null && statusReportToDebtorsCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-
-			int firstCount = 0;
-
-			List<MonthlyVolumeCountEntityModel> st106CountList = statusReportToDebtorsMap.get("ST106");
-			if(st106CountList != null && st106CountList.size() > 0)
-			{
-				for (MonthlyVolumeCountEntityModel statusReportEntity : st106CountList) 
-				{
-					Row statusRowCr1 = statusReportsSheet.getRow(stsCount);
-					Cell stServCell = statusRowCr1.createCell(4);
-
-					if(firstCount == 0)
-					{
-						stServCell.setCellStyle(serviceCellStyle);
-						stServCell.setCellValue("ST106");
-						firstCount = 1;
-					}
-					else
-					{
-						stServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell statusBank1 = statusRowCr1.createCell(5);
-					statusBank1.setCellStyle(normalCellStyle);
-					statusBank1.setCellValue(statusReportEntity.getInstId());
-
-					Cell statusTotalNrMsgs = statusRowCr1.createCell(6);
-					statusTotalNrMsgs.setCellStyle(normalCellStyle);
-					statusTotalNrMsgs.setCellValue(statusReportEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(statusReportEntity.getNrOfMsgs());
-
-					stsCount++;
-				}
-
-				//SubTotal the Rows
-				Row statusTotalRow = statusReportsSheet.getRow(stsCount);
-
-				Cell totServCell = statusTotalRow.createCell(4);
-				totServCell.setCellStyle(subTotalCellStyle);
-
-				Cell totStsBankCell = statusTotalRow.createCell(5);
-				totStsBankCell.setCellStyle(subTotalCellStyle);
-				totStsBankCell.setCellValue("Total");
-
-				Cell sttotalNrMsgs = statusTotalRow.createCell(6);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-				//Add to Grand Total
-				gtDebtStatusTotal = gtDebtStatusTotal.add(stTotal);
-
-				stsCount++;
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel st106TotalEntity = new MonthlyVolumeCountEntityModel();
-			st106TotalEntity.setService("ST106");
-			st106TotalEntity.setTotalNrOfMsgs(stTotal);
-
-			summaryTotalsMap.put("ST106", st106TotalEntity);
-		}
-
-		//SubTotal the Rows
-		Row statusNullRow2 = statusReportsSheet.createRow(rowCount_4);
+		Row statusNullRow1 = statusReportsSheet.createRow(rowCount_4);
 		rowCount_4++;
-		stsCount = rowCount_4;
 
-		//ST007 Counts
-		if(statusReportToDebtorsCountList != null && statusReportToDebtorsCountList.size() > 0)
-		{
-			BigDecimal stTotal = BigDecimal.ZERO;
-
-			int firstCount = 0;
-
-			List<MonthlyVolumeCountEntityModel> st007CountList = statusReportToDebtorsMap.get("ST008");
-			if(st007CountList != null && st007CountList.size() > 0)
-			{
-				for (MonthlyVolumeCountEntityModel statusReportEntity : st007CountList) 
-				{
-					Row statusRowCr1 = statusReportsSheet.createRow(stsCount);
-					Cell stServCell = statusRowCr1.createCell(4);
-
-					if(firstCount == 0)
-					{
-						stServCell.setCellStyle(serviceCellStyle);
-						stServCell.setCellValue("ST008");
-						firstCount = 1;
-					}
-					else
-					{
-						stServCell.setCellStyle(normalCellStyle);
-					}
-
-					Cell statusBank1 = statusRowCr1.createCell(5);
-					statusBank1.setCellStyle(normalCellStyle);
-					statusBank1.setCellValue(statusReportEntity.getInstId());
-
-					Cell statusTotalNrMsgs = statusRowCr1.createCell(6);
-					statusTotalNrMsgs.setCellStyle(normalCellStyle);
-					statusTotalNrMsgs.setCellValue(statusReportEntity.getNrOfMsgs().intValue());
-					stTotal = stTotal.add(statusReportEntity.getNrOfMsgs());
-
-					stsCount++;
-				}
-
-				//SubTotal the Rows
-				Row statusTotalRow = statusReportsSheet.createRow(stsCount);
-
-				Cell totServCell = statusTotalRow.createCell(4);
-				totServCell.setCellStyle(subTotalCellStyle);
-
-				Cell totStsBankCell = statusTotalRow.createCell(5);
-				totStsBankCell.setCellStyle(subTotalCellStyle);
-				totStsBankCell.setCellValue("Total");
-
-				Cell sttotalNrMsgs = statusTotalRow.createCell(6);
-				sttotalNrMsgs.setCellStyle(subTotalCellStyle);
-				sttotalNrMsgs.setCellValue(stTotal.intValue());
-
-				//Add to Grand Total
-				gtDebtStatusTotal = gtDebtStatusTotal.add(stTotal);
-
-				stsCount++;
-			}
-			//POPULATE SUMMARY TOTALS
-			MonthlyVolumeCountEntityModel st008TotalEntity = new MonthlyVolumeCountEntityModel();
-			st008TotalEntity.setService("ST008");
-			st008TotalEntity.setTotalNrOfMsgs(stTotal);
-
-			summaryTotalsMap.put("ST008", st008TotalEntity);
-		}
-
-		//SubTotal the Rows
-		Row statusNullRow3 = statusReportsSheet.createRow(stsCount);
-		stsCount++;
-		rowCount_4 = stsCount;
+		log.info("rowCount_4 ==> "+rowCount_4);
+		log.info("stsCount ==> "+stsCount);
 
 		//Grand Total
 		Row statusGtRow = statusReportsSheet.createRow(rowCount_4);
@@ -3344,7 +2138,7 @@ public class DailyBatchVolumeReport
 		subHdrCrdCell12.setCellValue("STATUS REPORTS SUMMARY INFORMATION");
 
 		//Merge Cell 0 to 4
-		summaryInfoSheet.addMergedRegion(new CellRangeAddress(21,21, 0, 5));
+		summaryInfoSheet.addMergedRegion(new CellRangeAddress(15,15, 0, 5));
 
 		//GENERATE COLUMN HEADERS
 		Row stsSummHdrRow = summaryInfoSheet.createRow(16);
@@ -3372,6 +2166,7 @@ public class DailyBatchVolumeReport
 
 		Cell st100TotalCell = st100Row.createCell(1);
 		st100TotalCell.setCellStyle(normalCellStyle);
+		log.info("ST200: "+ summaryTotalsMap.get("ST200").getTotalNrOfMsgs().toString());
 		st100TotalCell.setCellValue(summaryTotalsMap.get("ST200").getTotalNrOfMsgs().intValue());
 
 
