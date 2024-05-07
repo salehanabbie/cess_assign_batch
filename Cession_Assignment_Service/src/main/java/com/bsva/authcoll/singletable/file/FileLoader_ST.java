@@ -59,7 +59,7 @@ public class FileLoader_ST implements Serializable {
       this.testLiveIndProp = propertyUtil.getPropValue("TestLiveInd");
       //log.info("Test Live Indicator Property: "+testLiveIndProp);
     } catch (Exception ex) {
-      log.error("FileLoader_ST - Could not find MandateMessageCommons.properties in classpath");
+      log.error("FileLoader_ST - Could not find CessionAssignment.properties in classpath");
     }
 
     trimmedFileName = fileName.substring(0, 37).trim();

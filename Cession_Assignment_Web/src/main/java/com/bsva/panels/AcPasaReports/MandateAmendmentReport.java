@@ -49,7 +49,7 @@ public class MandateAmendmentReport {
 	public static Logger log=Logger.getLogger(MandateAmendmentReport.class);
 
 	Date currentDate = new Date();
-	private String downloaddirectory ="/home/opsjava/Delivery/Mandates/Reports/";
+	private String downloaddirectory ="/home/opsjava/Delivery/Cession_Assign/Reports/";
 	Controller controller  = new Controller();
 
 	List<CreditorBankModel> creditorBankModelList;

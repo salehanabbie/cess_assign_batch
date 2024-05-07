@@ -35,7 +35,7 @@ import com.google.common.io.Files;
  */
 public class PBMD08_DailyFiveDayOutstRespCSV {
 	String reportName, reportNr;
-	private String downloaddirectory ="/home/opsjava/Delivery/Mandates/Reports/";
+	private String downloaddirectory ="/home/opsjava/Delivery/Cession_Assign/Reports/";
 	public static Logger log=Logger.getLogger("PBMD08_5DayOutstRespCSV");
 
 	public static ServiceBeanRemote beanRemote;
@@ -74,9 +74,9 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 		}
 		catch(Exception ex)
 		{
-			log.error("PBMD08CSV - Could not find MandateMessageCommons.properties in classpath");	
-			reportDir = "/home/opsjava/Delivery/Mandates/Output/Reports/";
-			tempDir="/home/opsjava/Delivery/Mandates/Output/temp/";
+			log.error("PBMD08CSV - Could not find CessionAssignment.properties in classpath");
+			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
+			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 		}
 
 		//Retrieve Report Name

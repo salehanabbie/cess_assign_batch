@@ -72,8 +72,8 @@ public class Exception_Report_CSV {
 		catch(Exception ex)
 		{
 			log.error("Daily Exception Report - Could not find MandateMessageCommons.properties in classpath");	
-			reportDir = "/home/opsjava/Delivery/Mandates/Output/Reports/";
-			tempDir="/home/opsjava/Delivery/Mandates/Output/temp/";
+			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
+			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 			reportNr = "PBMD12";
 		}
 		

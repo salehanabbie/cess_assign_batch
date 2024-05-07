@@ -79,7 +79,7 @@ public class MonitorDirectory {
       processPath = propertyUtil.getPropValue("ProcessingFile.In");
       log.info("PROCESS PATH FROM PROPERTIES: " + processPath);
     } catch (Exception ex) {
-      log.error("MonitorDirectory - Could not find MandateMessageCommons.properties in classpath");
+      log.error("MonitorDirectory - Could not find CessionAssignment.properties in classpath");
       inputPath = "/home/opsjava/Delivery/Cession_Assign/Input/";
       processPath = "/home/opsjava/Delivery/Cession_Assign/Input/Processing/";
     }

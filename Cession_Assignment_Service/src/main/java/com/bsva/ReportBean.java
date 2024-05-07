@@ -1889,7 +1889,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "LEFT OUTER JOIN CAMOWNER.CAS_OPS_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
             ".inService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
-    sb.append("WHERE aa.inService IN ('MANIN', 'MANAM', 'MANCN', 'MANRI', 'SRINP') ");
+    sb.append("WHERE aa.inService = 'CARIN' ");
     sb.append("GROUP BY aa.inService, aa.cr_memno ");
     sb.append("ORDER BY aa.inService, aa.cr_memno ");
 
@@ -1936,7 +1936,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "LEFT OUTER JOIN CAMOWNER.CAS_OPS_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
             ".outService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
-    sb.append("WHERE aa.outService IN ('MANOT', 'MANOM', 'MANCO', 'MANRO', 'SROUT') ");
+    sb.append("WHERE aa.outService = 'CAROT' ");
     sb.append("GROUP BY aa.outService, aa.dr_memno ");
     sb.append("ORDER BY aa.outService, aa.dr_memno ");
 
@@ -1984,7 +1984,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "LEFT OUTER JOIN CAMOWNER.CAS_OPS_MNDT_COUNT bb ON aa.dr_memno = bb.INST_ID AND aa" +
             ".inService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
-    sb.append("WHERE aa.inService IN ('ST101', 'MANAC', 'MANRT', 'SPINP') ");
+    sb.append("WHERE aa.inService IN ('ST201', 'RCAIN') ");
     sb.append("GROUP BY aa.inService, aa.dr_memno ");
     sb.append("ORDER BY aa.inService, aa.dr_memno ");
 
@@ -2031,7 +2031,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
         "LEFT OUTER JOIN CAMOWNER.CAS_OPS_MNDT_COUNT bb ON aa.cr_memno = bb.INST_ID AND aa" +
             ".outService = bb.SERVICE_ID ");
     sb.append("AND bb.PROCESS_DATE = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
-    sb.append("WHERE aa.outService IN ('ST103', 'MANOC', 'MANRF', 'SPOUT') ");
+    sb.append("WHERE aa.outService IN ('ST203', 'RCAOT') ");
     sb.append("GROUP BY aa.outService, aa.cr_memno ");
     sb.append("ORDER BY aa.outService, aa.cr_memno ");
 
@@ -2078,7 +2078,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "AND substr(bb.CREATE_DATE_TIME,1,10) = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
     sb.append("AND aa.outService = bb.SERVICE ");
-    sb.append("WHERE aa.outService IN ('ST100', 'ST105', 'ST007') ");
+    sb.append("WHERE aa.outService = 'ST200' ");
     sb.append("GROUP BY aa.outService, aa.cr_memno ");
     sb.append("ORDER BY aa.outService, aa.cr_memno ");
 
@@ -2125,7 +2125,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
     sb.append(
         "AND substr(bb.CREATE_DATE_TIME,1,10) = TO_DATE('" + currentDate + "','YYYY-MM-DD') ");
     sb.append("AND aa.outService = bb.SERVICE ");
-    sb.append("WHERE aa.outService IN ('ST102', 'ST104', 'ST106', 'ST008') ");
+    sb.append("WHERE aa.outService IN ('ST202', 'ST204') ");
     sb.append("GROUP BY aa.outService, aa.dr_memno ");
     sb.append("ORDER BY aa.outService, aa.dr_memno ");
 

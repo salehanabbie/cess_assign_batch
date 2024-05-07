@@ -31,7 +31,7 @@ public class StatusReportST204Extract
 		}
 		catch (Exception e) 
 		{
-			log.error("StatusReportST104Extract - Could not find MandateMessageCommons.properties in classpath");
+			log.error("StatusReportST204Extract - Could not find CessionAssignment.properties in classpath");
 		}
 		
 		try

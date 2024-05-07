@@ -108,7 +108,7 @@ public class AC_Pain012_Validation_ST extends Validation_ST
 		}
 		catch (Exception e) 
 		{
-			log.error("AC_Pain012_Validation_ST - Could not find MandateMessageCommons.properties in classpath");	
+			log.error("AC_Pain012_Validation_ST - Could not find CessionAssignment.properties in classpath");
 			manacService = "RCAIN";
 			fileSizeLimit = 50000;
 		}

@@ -65,7 +65,7 @@ public class ViewFilesNotProcessedProvider extends SortableDataProvider
 	private SortableDataProviderComparator comparator = new SortableDataProviderComparator();
 	private List<ViewDeleteInputModel> viewDeleteInputModelList;
 	List<String> results;
-	String directoryName = "/home/opsjava/Delivery/Mandates/Input/";
+	String directoryName = "/home/opsjava/Delivery/Cession_Assign/Input/";
 	File fileNames = new File(directoryName);
 	String name = null;
 	

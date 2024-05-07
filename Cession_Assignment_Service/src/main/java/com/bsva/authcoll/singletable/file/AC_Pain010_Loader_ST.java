@@ -108,7 +108,7 @@ public class AC_Pain010_Loader_ST {
 		}
 		catch (Exception e) 
 		{
-			log.error("AC_Pain010_Loader_ST - Could not find MandateMessageCommons.properties in classpath");
+			log.error("AC_Pain010_Loader_ST - Could not find CessionAssignment.properties in classpath");
 		}
 
 		try

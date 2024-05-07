@@ -28,7 +28,7 @@ public class EotExtractJob implements Job {
 			mdtLoadType = propertyUtil.getPropValue("MDT.LOAD.TYPE");
 		}
 		catch (Exception e) {
-			log.error("EotExtractJob: Could not find MandateMessageCommons.properties in classpath");
+			log.error("EotExtractJob: Could not find CessionAssignment.properties in classpath");
 		}
 		
 		try 

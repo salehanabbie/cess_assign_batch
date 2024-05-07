@@ -32,7 +32,7 @@ import com.itextpdf.text.DocumentException;
 
 public class ManAuditReport 
 {
-	private String downloaddirectory ="/home/opsjava/Delivery/Mandates/Reports/";
+	private String downloaddirectory ="/home/opsjava/Delivery/Cession_Assign/Reports/";
 	public static Logger log = Logger.getLogger(ManAuditReport.class);
 	Controller controller = new Controller();
 	String reportName, reportNr;

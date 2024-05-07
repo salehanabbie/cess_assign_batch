@@ -97,7 +97,7 @@ public class AC_Pacs002_Validation_ST extends Validation_ST {
       fileSizeLimit = Integer.valueOf(fileSizeLimitStr);
     } catch (Exception e) {
       log.error(
-          "AC_Pacs002_Validation_ST - Could not find MandateMessageCommons.properties in " +
+          "AC_Pacs002_Validation_ST - Could not find CessionAssignment.properties in " +
               "classpath");
       st201Service = "ST201";
       fileSizeLimit = 50000;

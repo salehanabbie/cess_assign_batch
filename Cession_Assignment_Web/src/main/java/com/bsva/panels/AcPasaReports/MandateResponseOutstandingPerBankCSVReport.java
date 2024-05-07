@@ -28,7 +28,7 @@ public class MandateResponseOutstandingPerBankCSVReport {
 
 	String reportName, reportNr;
 
-	private String downloaddirectory ="/home/opsjava/Delivery/Mandates/Reports/";
+	private String downloaddirectory ="/home/opsjava/Delivery/Cession_Assign/Reports/";
 	public static Logger log=Logger.getLogger(MandateResponseOutstandingPerBankCSVReport.class);
 	Controller controller = new Controller();
 

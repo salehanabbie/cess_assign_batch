@@ -28,7 +28,7 @@ public class ViewFilesNotProcessed  extends Panel implements Serializable
 	public static String id;
 	private Form form;
 	private List<IColumn> columns;
-	String directoryName = "/home/opsjava/Delivery/Mandates/Input/";
+	String directoryName = "/home/opsjava/Delivery/Cession_Assign/Input/";
 	private String fileName;
 	String name;
 	String action;

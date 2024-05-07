@@ -204,7 +204,7 @@ public class ReportPanel extends Panel implements IAjaxIndicatorAware {
               e.printStackTrace();
             }
 
-          } else if (choice.equalsIgnoreCase("MR008")) {
+          } else if (choice.equalsIgnoreCase("BSCA03")) {
             OutOfBalanceReport outOfBalanceReport = new OutOfBalanceReport();
             try {
               outOfBalanceReport.generateReport(
@@ -462,12 +462,12 @@ public class ReportPanel extends Panel implements IAjaxIndicatorAware {
               log.error("Error on generating <MR020> Batch Prod Stats:" + ex.getMessage());
               ex.printStackTrace();
             }
-          } else if (choice.equalsIgnoreCase("MR022")) {
+          } else if (choice.equalsIgnoreCase("BSACA02")) {
             Date mr022Date = new SimpleDateFormat("MMMM dd, yyyy").parse(fromDate.getValue());
             try {
               controller.generateDailyBatchProdVolumesReport(mr022Date);
             } catch (Exception ex) {
-              log.error("Error on generating <MR022> Daily Batch Prod Stats:" + ex.getMessage());
+              log.error("Error on generating <BSACA02> Daily Batch Prod Stats:" + ex.getMessage());
 
               ex.printStackTrace();
             }

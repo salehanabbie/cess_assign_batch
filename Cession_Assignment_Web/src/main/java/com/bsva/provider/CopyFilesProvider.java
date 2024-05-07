@@ -78,7 +78,7 @@ public class CopyFilesProvider  extends SortableDataProvider
 	private SortableDataProviderComparator comparator = new SortableDataProviderComparator();
 	private List<WebCopyFilesModel> webCopyFilesModelList;
 	List<String> results;
-	String directoryName = "/home/opsjava/Delivery/Mandates/Output/temp/";
+	String directoryName = "/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 	File outputFiles = new File(directoryName);
 	String name = null;
 	

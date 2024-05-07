@@ -85,7 +85,7 @@ public class EndOfTransmissionExtract
 			this.testLiveIndProp = propertyUtil.getPropValue("TestLiveInd");
 			//log.info("Test Live Indicator Property: "+testLiveIndProp);
 		}catch (Exception e) {
-			log.error("EndOfTransmissionExtract - Could not find MandateMessageCommons.properties in classpath");
+			log.error("EndOfTransmissionExtract - Could not find CessionAssignment.properties in classpath");
 		}
 	}
 	
