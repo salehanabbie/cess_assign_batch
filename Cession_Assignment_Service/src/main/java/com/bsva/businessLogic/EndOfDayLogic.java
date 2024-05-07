@@ -261,10 +261,18 @@ public class EndOfDayLogic {
                     ac_ArchiveMessages_ST.archiveProcessLogic();
 
                     log.info("<<---------ARCHIVING MANDATES COMPLETED---------->");
+                    //Calc Day Of Week
+                    Calendar calend = Calendar.getInstance();
+                    calend.setTime(casSysctrlSysParamEntity.getProcessDate());
+                    boolean sunday = calend.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+                    log.info("IS TODAY SUNDAY ? ==>"+sunday);
 
-                    log.info("<<---------RUNNING PBMD08 EXPIRED TXNS REPORT---------->");
-                    log.info("!!!!!!This report needs to be aligned for C/A!!!!!!");
-//                    boolean expReport = dailyReportsLogic.generateExpiredTxnsReport();
+                    if(sunday){
+                      log.info("<<---------RUNNING CAMPB01 EXPIRED TXNS REPORT---------->");
+                      boolean expReport = dailyReportsLogic.generateExpiredTxnsReport();
+                    }
+
+
 
 //                    Monthly reports cannot be run as part of EOD.
 //                    //MONTHLY REPORT RUN CHECK

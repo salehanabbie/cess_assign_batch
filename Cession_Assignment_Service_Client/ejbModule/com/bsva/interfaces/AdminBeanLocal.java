@@ -181,7 +181,6 @@ public interface AdminBeanLocal
 	public List<?> retrieveAmendmendReasonCode();
 	public List<?> retrieveActiveCreditorBank();
 	public List<?> retrieveMndtBillingTransactions(String txnType);
-	public List<?> retrieveMndtDailyTransPerDebtor(String instId, String txnType);
 	public List<?> retrieveMndtDailyTransPerCreditor(String instId, String txnType);
 	public boolean createBillingCtrls(Object obj);
 	public Object retrieveBillingCtrls(Date processDate);
@@ -233,7 +232,6 @@ public interface AdminBeanLocal
 	public void generatePasaBatchOutstandingResponses(Date frontDate);
 	public void generatePerBankOutstandingResponses(Date frontEndDate);
 	public void generateBatchBillableTxnCreditor();
-	public void generateBatchBillableTxnDebtor();
 	public void generateBatchBillableTxnReport();
 	public List<?> retrieveBranchesByDebtorCreditor(boolean creditorBranch, boolean debtorBranch);
 	public void testArchiveProcess();
@@ -248,7 +246,7 @@ public interface AdminBeanLocal
 	public void generateDailyBatchProdVolumesReport(Date frontEndDate);
 	public List<?> retrieveAllBanksRemovingCreditorBank(String memberNo);
 	public List<?> retrieveAllCisBank();
-	public void generate5DayOutstResp(Date frontEndDate);
+	public void generateExpiredTxnReport(Date frontEndDate);
 	public List<?> retrieveSysctrlFileSizeLimit();
 	public List<?> retrieveOpsFileSizeLimit();
 	public boolean createOpsFileSizeLimit(Object obj);
@@ -273,7 +271,6 @@ public interface AdminBeanLocal
 	public boolean generateSRINPinterchangeBill(Date fromDate, Date toDate);
 	public void generateBatchTxnBillMonthlyReport(Date fromFrontDate,Date toFrontDate, boolean frontEndRun);
 	public void generateBatchFileStatsReport(Date fromFrontDate);
-	public void generateExceptionReport(Date frontDate);
 	public List<?> retrievePBMD06RealTimeCreditorTransBilling(String creditorBank, Date reportDate);
 
 }

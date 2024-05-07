@@ -34,7 +34,7 @@ public class DailyBatchBillableTxnCreditorReport
 {
 	//	private String downloaddirectory ="/home/opsjava/Delivery/Mandates/Reports/";
 	public static Logger log=Logger.getLogger(DailyBatchBillableTxnCreditorReport.class);
-	private final static String XML = "PBMD04CSV.xml";
+	private final static String XML = "PBCA01CSV.xml";
 	private String fileName;
 
 	public static ServiceBeanRemote beanRemote;
@@ -49,7 +49,7 @@ public class DailyBatchBillableTxnCreditorReport
 	CustomerParametersModel customerParametersModel = new CustomerParametersModel();
 
 	String reportName, reportNr , reportDir = null, tempDir = null;
-	String pbmd04;
+	String pbca01;
 	int lastSeqNoUsed;
 	String tt2TxnType;
 	String activeIndicator = "Y";
@@ -68,7 +68,7 @@ public class DailyBatchBillableTxnCreditorReport
 			reportDir= propertyUtilRemote.getPropValue("Reports.Output");
 //			log.info("reportDir ==> "+reportDir);
 
-			pbmd04 = propertyUtilRemote.getPropValue("RPT.DAILY.TXN.CRED");
+			pbca01 = propertyUtilRemote.getPropValue("RPT.DAILY.TXN.CRED");
 			tt2TxnType = propertyUtilRemote.getPropValue("AC.TT2SubService"); 
 		}
 		catch(Exception ex)
@@ -84,7 +84,7 @@ public class DailyBatchBillableTxnCreditorReport
 	{
 		//Retrieve Report Name
 		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
-		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbmd04);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbca01);
 //		log.info("reportNameEntity ==>"+reportNameEntity);
 		if(reportNameEntity != null)
 		{
@@ -106,7 +106,7 @@ public class DailyBatchBillableTxnCreditorReport
 
 						if(mandateDailyTransModelList!= null && mandateDailyTransModelList.size() > 0)
 						{
-							log.info("*****GENERATING PMBD04 REPORT for "+creditorBankModel.getMemberNo()+"*****");
+							log.info("*****GENERATING PBCA01 REPORT for "+creditorBankModel.getMemberNo()+"*****");
 							generateReportDetail(creditorBankModel.getMemberNo(), mandateDailyTransModelList);
 						}
 					}
@@ -150,11 +150,11 @@ public class DailyBatchBillableTxnCreditorReport
 		StreamFactory factory = StreamFactory.newInstance();
 		factory.loadResource(XML); 
 
-		BeanWriter writer = factory.createWriter("pbmd04ReportFile", new File(tempDir + getFileName()));
+		BeanWriter writer = factory.createWriter("pbca01ReportFile", new File(tempDir + getFileName()));
 
 		MandateDailyTransModel file2 = new MandateDailyTransModel();
 
-		//SET COLUMNS HEARDERS
+		//SET COLUMNS HEADERS
 		file2.setCreditorBank("Creditor Bank");
 		file2.setDebtorBank("Debtor Bank");
 		file2.setServiceId("Service Id");
@@ -199,12 +199,12 @@ public class DailyBatchBillableTxnCreditorReport
 		}
 		catch(IOException ioe)
 		{
-			log.error("Error on copying PBMD04 report to temp "+ioe.getMessage());
+			log.error("Error on copying PBCA01 report to temp "+ioe.getMessage());
 			ioe.printStackTrace();
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on copying PBMD04 report to temp "+ex.getMessage());
+			log.error("Error on copying PBCA01 report to temp "+ex.getMessage());
 			ex.printStackTrace();
 		}
 	}

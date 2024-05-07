@@ -403,11 +403,11 @@ public class ReportPanel extends Panel implements IAjaxIndicatorAware {
             //							log.error("Error on generating <MR018>
             //							billingTransactionReport:" + e.getMessage());
             //						}
-          } else if (choice.equalsIgnoreCase("PBMD04")) {
+          } else if (choice.equalsIgnoreCase("PBCA01")) {
             try {
               controller.generateBatchBillableTxnCreditor();
             } catch (Exception ex) {
-              log.error("Error on generating <PBMD04> Batch Billable Txn Report - Creditor:" +
+              log.error("Error on generating <PBCA01> Batch Billable Txn Report - Creditor:" +
                   ex.getMessage());
               ex.printStackTrace();
             }
@@ -425,32 +425,8 @@ public class ReportPanel extends Panel implements IAjaxIndicatorAware {
             //						}
             //						catch(Exception e)
             //						{
-            //							log.error("Error on generating <PBMD04>
+            //							log.error("Error on generating <PBCA01>
             //							MandateDailyTransCreditorReport:" + e.getMessage());
-            //						}
-
-          } else if (choice.equalsIgnoreCase("PBMD05")) {
-            try {
-              controller.generateBatchBillableTxnDebtor();
-            } catch (Exception ex) {
-              log.error("Error on generating <PBMD05> Batch Billable Txn Report - Debtor:" +
-                  ex.getMessage());
-              ex.printStackTrace();
-            }
-            //						2017-12-04 SalehaR		Remove Web method call for reports
-            //						try{
-            //							MandateDailyTransDebtorReport mandateDailyTransReport =
-            //							new MandateDailyTransDebtorReport(reportNames
-            //							.getChoices().get(Integer.parseInt(reportNames
-            //							.getValue())).getReportNr(),reportNames.getChoices()
-            //							.get(Integer.parseInt(reportNames.getValue()))
-            //							.getReportName());
-            //							mandateDailyTransReport.generateMandateDailyTransReport();
-            //						}
-            //						catch(Exception e)
-            //						{
-            //							log.error("Error on generating <PBMD05>
-            //							MandateDailyTransDebtorReport:" + e.getMessage());
             //						}
 
           } else if (choice.equalsIgnoreCase("MR020")) {
@@ -462,22 +438,22 @@ public class ReportPanel extends Panel implements IAjaxIndicatorAware {
               log.error("Error on generating <MR020> Batch Prod Stats:" + ex.getMessage());
               ex.printStackTrace();
             }
-          } else if (choice.equalsIgnoreCase("BSACA02")) {
+          } else if (choice.equalsIgnoreCase("BSACA01")) {
             Date mr022Date = new SimpleDateFormat("MMMM dd, yyyy").parse(fromDate.getValue());
             try {
               controller.generateDailyBatchProdVolumesReport(mr022Date);
             } catch (Exception ex) {
-              log.error("Error on generating <BSACA02> Daily Batch Prod Stats:" + ex.getMessage());
+              log.error("Error on generating <BSACA01> Daily Batch Prod Stats:" + ex.getMessage());
 
               ex.printStackTrace();
             }
-          } else if (choice.equalsIgnoreCase("PBMD08")) {
-            Date pbmd08Date = new SimpleDateFormat("MMMM dd, yyyy").parse(fromDate.getValue());
+          } else if (choice.equalsIgnoreCase("CAMPB01")) {
+            Date campb01Date = new SimpleDateFormat("MMMM dd, yyyy").parse(fromDate.getValue());
             try {
-              controller.generatePerBank5DayOutstanding(pbmd08Date);
+              controller.generateExpiredTxnReport(campb01Date);
             } catch (Exception ex) {
               log.error(
-                  "Error on generating <PBMD08> Real Time Outstanding Resp:" + ex.getMessage());
+                  "Error on generating <CAMPB01> Expired Txn Report:" + ex.getMessage());
               ex.printStackTrace();
             }
           } else if (choice.equalsIgnoreCase("PBBIL05")) {
@@ -498,16 +474,6 @@ public class ReportPanel extends Panel implements IAjaxIndicatorAware {
             } catch (Exception ex) {
               log.error(
                   "Error on generating <PSMD08> BSA Daily File Stats Report:" + ex.getMessage());
-            }
-          } else if (choice.equalsIgnoreCase("PBMD12")) {
-            Date pbmd12Date = new SimpleDateFormat("MMMM dd, yyyy").parse(fromDate.getValue());
-            try {
-              controller.generateExceptionReport(pbmd12Date);
-            } catch (Exception ex) {
-              log.error(
-                  "Error on generating <PBMD12> African Bank exception Report:" + ex.getMessage());
-
-              ex.printStackTrace();
             }
           } else {
             log.info("report is not generated");

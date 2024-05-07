@@ -90,7 +90,7 @@ public class DailyBatchVolumeReport
 
 	SimpleDateFormat monthFormat = new SimpleDateFormat("MMM-yyyy");
 	String reportName,recipientNr, reportNr, reportDir = null, tempDir = null;
-	String xlsFileName = null, BSACA02 = null;
+	String xlsFileName = null, BSACA01 = null;
 	String invBank = null;
 	int fileSeqNo =000;
 	int rowCount = 0;
@@ -161,13 +161,13 @@ public class DailyBatchVolumeReport
 			reportDir= propertyUtilRemote.getPropValue("Reports.Output");
 			log.debug("reportDir ==> "+reportDir);
 			//Retrieve Report Name here
-			BSACA02 = propertyUtilRemote.getPropValue("RPT.DAILY.BATCH.VOLUMES");
+			BSACA01 = propertyUtilRemote.getPropValue("RPT.DAILY.BATCH.VOLUMES");
 			invBank = propertyUtilRemote.getPropValue("ERROR_CODES_REPORT_INV_BANK");
 			recipientNr = propertyUtilRemote.getPropValue("AC.ACH.RPT.RECIPIENT.NUMBER");
 		}
 		catch(Exception ex)
 		{
-			log.error("BSACA02- Could not find CessionAssignment.properties in classpath");
+			log.error("BSACA01- Could not find CessionAssignment.properties in classpath");
 			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
 			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 			invBank = "INVBNK";
@@ -175,7 +175,7 @@ public class DailyBatchVolumeReport
 
 		//Retrieve Report Name
 		CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
-		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(BSACA02);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(BSACA01);
 
 		if(reportNameEntity != null)
 		{
@@ -188,7 +188,7 @@ public class DailyBatchVolumeReport
 				
 				long endTime = System.nanoTime();
 				long duration = (endTime - startTime) / 1000000;
-				log.info("[BSACA02 Report Duration: "+DurationFormatUtils.formatDuration(duration, "HH:mm:ss.S")+" milliseconds |");
+				log.info("[BSACA01 Report Duration: "+DurationFormatUtils.formatDuration(duration, "HH:mm:ss.S")+" milliseconds |");
 			}
 		}
 	}
@@ -535,12 +535,12 @@ public class DailyBatchVolumeReport
 		}
 		catch(IOException ioe)
 		{
-			log.error("Error on copying BSACA02 report to temp "+ioe.getMessage());
+			log.error("Error on copying BSACA01 report to temp "+ioe.getMessage());
 			ioe.printStackTrace();
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on copying BSACA02 report to temp "+ex.getMessage());
+			log.error("Error on copying BSACA01 report to temp "+ex.getMessage());
 			ex.printStackTrace();
 		}
 	}

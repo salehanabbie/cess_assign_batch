@@ -1067,7 +1067,7 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
   }
 
   @Override
-  public List<?> retrievePBMD08Data(String procDate) {
+  public List<?> retrieveExpiredTxnData(String procDate) {
     List<MandateResponseOutstandingPerBankEntityModel> mndtRespOutstandingEntityList =
         new ArrayList<MandateResponseOutstandingPerBankEntityModel>();
 
@@ -1078,11 +1078,10 @@ public class ReportBean implements ReportBeanRemote, ReportBeanLocal {
             "dbtrMemberName ,a.debtor_bank as dbtrMemberNo ");
     sb.append(",SUBSTR(a.IN_FILE_NAME,1,33) AS fileName ,'TT2' AS transType ");
     sb.append(",a.MANDATE_REQ_TRAN_ID as mandateReqTransId ,a.SERVICE_ID as serviceId ");
-    sb.append("FROM CAMOWNER.MDT_AC_ARC_MANDATE_TXNS a ");
+    sb.append("FROM CAMOWNER.CAS_ARC_CESS_ASSIGN_TXNS a ");
     sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK b ON a.CREDITOR_BANK = b.MEMBER_NO ");
     sb.append("INNER JOIN CAMOWNER.SYS_CIS_BANK c on A.DEBTOR_BANK = c.member_no ");
-    sb.append("WHERE a.PROCESS_STATUS = '8' AND TRUNC(a.ARCHIVE_DATE) = TO_DATE('" + procDate +
-        "','YYYY-MM-DD') ");
+    sb.append("WHERE a.PROCESS_STATUS = '8' AND TRUNC(a.ARCHIVE_DATE) = TO_DATE('" + procDate + "','YYYY-MM-DD') ");
     sb.append("ORDER BY c.member_name ");
 
     String sqlQuery = sb.toString();

@@ -33,7 +33,7 @@ import com.google.common.io.Files;
  * @author SalehaR-2019/11/13
  *
  */
-public class PBMD08_DailyFiveDayOutstRespCSV {
+public class CAMPB01_ExpiredTransCSV {
 	String reportName, reportNr;
 	private String downloaddirectory ="/home/opsjava/Delivery/Cession_Assign/Reports/";
 	public static Logger log=Logger.getLogger("PBMD08_5DayOutstRespCSV");
@@ -43,21 +43,21 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 	private static PropertyUtilRemote propertyUtilRemote;
 	private static ReportBeanRemote reportBeanRemote;
 
-	TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>> pbmd08Map;
+	TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>> campb01Map;
 
 	List<CreditorBankModel> creditorBankModelList;
 	SystemParameterModel systemParameterModel = new SystemParameterModel();
 
 	int lastSeqNoUsed;
 	private String fileName, reportDir = null, tempDir = null;
-	private final static String XML = "PBMD08CSV.xml";
-	String pbmd08, mdtLoadType = null;
+	private final static String XML = "CAMPB01CSV.xml";
+	String campb01, mdtLoadType = null;
 	long startTime, endTime, duration;
 	
 	CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
 	String activeIndicator = "Y";
 
-	public PBMD08_DailyFiveDayOutstRespCSV(TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>> outRespDataMap)
+	public CAMPB01_ExpiredTransCSV(TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>> outRespDataMap)
 	{
 		contextAdminBeanCheck();
 		contextCheck();
@@ -66,21 +66,21 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 
 		try
 		{
-			this.pbmd08Map = outRespDataMap;
+			this.campb01Map = outRespDataMap;
 			tempDir = propertyUtilRemote.getPropValue("ExtractTemp.Out");
 			reportDir= propertyUtilRemote.getPropValue("Reports.Output");
-			pbmd08 = propertyUtilRemote.getPropValue("RPT.BANK.BATCH.5DAYOUTRESP");
+			campb01 = propertyUtilRemote.getPropValue("RPT.BANK.BATCH.EXPIRED");
 			mdtLoadType = propertyUtilRemote.getPropValue("MDT.LOAD.TYPE");
 		}
 		catch(Exception ex)
 		{
-			log.error("PBMD08CSV - Could not find CessionAssignment.properties in classpath");
+			log.error("CAMPB01CSV - Could not find CessionAssignment.properties in classpath");
 			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
 			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 		}
 
 		//Retrieve Report Name
-		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbmd08);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(campb01);
 		if(reportNameEntity != null)
 		{
 			reportNr = reportNameEntity.getReportNr();
@@ -97,14 +97,14 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 				
 				creditorBankModelList = new ArrayList<CreditorBankModel>();
 				creditorBankModelList = (List<CreditorBankModel>) adminBeanRemote.retrieveActiveCreditorBank();
-				if(creditorBankModelList.size() > 0 && pbmd08Map != null && pbmd08Map.size() > 0)
+				if(creditorBankModelList.size() > 0 && campb01Map != null && campb01Map.size() > 0)
 				{
 					for (CreditorBankModel creditorBankModel : creditorBankModelList) 
 					{	
 						startTime = System.nanoTime();
-						List<MandateResponseOutstandingPerBankEntityModel> batchOutsRespList = pbmd08Map.get(creditorBankModel.getMemberNo());
+						List<MandateResponseOutstandingPerBankEntityModel> batchOutsRespList = campb01Map.get(creditorBankModel.getMemberNo());
 
-						log.info("GENERATING REPORT PBMD08 FOR "+creditorBankModel.getMemberNo());
+						log.info("GENERATING REPORT CAMPB01 FOR "+creditorBankModel.getMemberNo());
 
 						if(batchOutsRespList!= null && batchOutsRespList.size() > 0)
 						{
@@ -161,7 +161,7 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 		StreamFactory factory = StreamFactory.newInstance();
 		factory.loadResource(XML); 
 
-		BeanWriter writer = factory.createWriter("PBMD08CSV", new File(tempDir + getFileName()));
+		BeanWriter writer = factory.createWriter("CAMPBO1CSV", new File(tempDir + getFileName()));
 		
 		MndtRespOutstandingPerBankCsvModel file2 = new MndtRespOutstandingPerBankCsvModel();
 		file2.setDbtrMemberName("Debtor Bank");
@@ -195,12 +195,12 @@ public class PBMD08_DailyFiveDayOutstRespCSV {
 		}
 		catch(IOException ioe)
 		{
-			log.error("Error on copying PBMD08 report to temp "+ioe.getMessage());
+			log.error("Error on copying CAMPB01 report to temp "+ioe.getMessage());
 			ioe.printStackTrace();
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on copying PBMD08 report to temp "+ex.getMessage());
+			log.error("Error on copying CAMPB01 report to temp "+ex.getMessage());
 			ex.printStackTrace();
 		}
 	}

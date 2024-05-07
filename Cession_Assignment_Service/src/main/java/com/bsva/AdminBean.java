@@ -174,18 +174,16 @@ import com.bsva.interfaces.AdminBeanLocal;
 import com.bsva.interfaces.AdminBeanRemote;
 import com.bsva.mandatesArchive.AC_ArchiveMessages_ST;
 import com.bsva.reports.DailyBatchBillableTxnCreditorReport;
-import com.bsva.reports.DailyBatchBillableTxnDebtorReport;
 import com.bsva.reports.DailyBatchBillableTxnReport;
 import com.bsva.reports.DailyBatchVolumeReport;
 import com.bsva.reports.DailyReportsLogic;
-import com.bsva.reports.Exception_Report_CSV;
 import com.bsva.reports.MR020_BSAMonthlyBatchVolumesReport;
 import com.bsva.reports.MonthlyReportsLogic;
 import com.bsva.reports.PBBIL05_CSV_BatchMandatesTxnsBillReport;
 import com.bsva.reports.PBMD01_DailyOutstandingResponsesReportCSV;
 import com.bsva.reports.PBMD01_DailyOutstandingResponsesReportPDF;
-import com.bsva.reports.PBMD08_DailyFiveDayOutstRespCSV;
-import com.bsva.reports.PBMD08_DailyFiveDayOutstRespPDF;
+import com.bsva.reports.CAMPB01_ExpiredTransCSV;
+import com.bsva.reports.CAMPB01_ExpiredTransPDF;
 import com.bsva.reports.PSMD08_FileStatsBatchExcelReport;
 import com.bsva.reports.PasaBatchAmendmentReport;
 import com.bsva.reports.PasaBatchOutstandingResponsesReport;
@@ -232,14 +230,8 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
   public static String feedbackMsg = null;
   public static String eodfeedbackMsg = null;
   public static String cisFeedbackMsg = null;
-  String manin = "MANIN";
-  String manam = "MANAM";
-  String mancn = "MANCN";
-  String manrt = "MANRT";
-  String srinp = "SRINP";
+  String carin = "CARIN";
   String tt2TxnType = "TT2";
-  String tt1TxnType = "TT1";
-  String tt3TxnType = "TT3";
 
   Date startDate, endDate;
 
@@ -284,14 +276,13 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     allCasSysctrlSchedulerEntities =
         genericDAO.findAllOrdered(CasSysctrlSchedulerEntity.class, "schedulerKey ASC ");
 
-    log.info("SysCntrlSchedulerList is: " + allCasSysctrlSchedulerEntities);
+//    log.info("SysCntrlSchedulerList is: " + allCasSysctrlSchedulerEntities);
     if (allCasSysctrlSchedulerEntities.size() > 0) {
       SchedulerScreenLogic schedulerScreenLogic = new SchedulerScreenLogic();
       allSchedulerList =
           schedulerScreenLogic.retrieveAllSchedulers(allCasSysctrlSchedulerEntities);
 
-      log.info(
-          "The commons model list has this information %%%%%%%%%%%%%%%%%%%%%%" + allSchedulerList);
+//      log.info("The commons model list has this information %%%%%%%%%%%%%%%%%%%%%%" + allSchedulerList);
     }
 
 
@@ -5459,8 +5450,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
           String subService = localEntity.getSubService();
           log.debug("subService ==> " + subService);
 
-          if (subService.equalsIgnoreCase(manin) || subService.equalsIgnoreCase(manam) ||
-              subService.equalsIgnoreCase(mancn) || subService.equalsIgnoreCase(manrt)) {
+          if (subService.equalsIgnoreCase(carin)) {
             MandateDailyTransModel localModel = new MandateDailyTransModel();
             localModel = new AdminTranslator().translateDailyBillingEntityToModel(localEntity);
             log.debug("localModel ==> " + localModel);
@@ -6032,82 +6022,6 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     }
 
     return sysCtrlSlaTimeModel;
-  }
-
-  @Override
-  public List<?> retrieveMndtDailyTransPerDebtor(String instId, String txnType) {
-    List<MandateDailyTransModel> mndtDailyTransList = new ArrayList<MandateDailyTransModel>();
-    List<MandateDailyTransEntityModel> mndtDailyTransEntityList =
-        new ArrayList<MandateDailyTransEntityModel>();
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-    Date currentDate = new Date();
-    log.debug("currentDate---->" + currentDate);
-
-    String stringDate = sdf.format(currentDate);
-    log.debug("stringDate---->" + stringDate);
-
-    try {
-
-      //Retrieve Billable Transactions
-      List<CasOpsDailyBillingEntity> dailyBillingList =
-          new ArrayList<CasOpsDailyBillingEntity>();
-
-      HashMap<String, Object> dailyBillParams = new HashMap<String, Object>();
-      dailyBillParams.put("txnType", txnType);
-      dailyBillParams.put("debtorBank", instId);
-
-      dailyBillingList = (List<CasOpsDailyBillingEntity>) genericDAO.findAllByCriteria(
-          CasOpsDailyBillingEntity.class, dailyBillParams);
-
-      if (dailyBillingList != null && dailyBillingList.size() > 0) {
-        for (CasOpsDailyBillingEntity localEntity : dailyBillingList) {
-          String subService = localEntity.getSubService();
-          log.debug("subService ==> " + subService);
-
-          if (subService.equalsIgnoreCase(srinp)) {
-            //Translate to billingModel
-            MandateDailyTransModel localModel = new MandateDailyTransModel();
-            localModel = new AdminTranslator().translateDailyBillingEntityToModel(localEntity);
-            log.debug("localModel ==> " + localModel);
-            mndtDailyTransList.add(localModel);
-
-            //							2017-09-05 SalehaR - This has been removed as all data is
-            //							stored on the MDT_AC_OPS_DAILY_BILLING table
-
-            //							//Retrieve SRINP Information
-            //							MdtAcOpsConfDetailsEntity confDtlsEntity = null;
-            //
-            //							HashMap<String, Object> srinpParams = new HashMap<String,
-            //							Object>();
-            //							srinpParams.put("txnId", localEntity.getTxnId());
-            //							srinpParams.put("extractService","SROUT");
-            //
-            //							confDtlsEntity = (MdtAcOpsConfDetailsEntity) genericDAO
-            //							.findByCriteria(MdtAcOpsConfDetailsEntity.class,
-            //							srinpParams);
-            //
-            //							if(confDtlsEntity == null)
-            //								confDtlsEntity = new MdtAcOpsConfDetailsEntity();
-            //
-            //							//Translate to billingModel
-            //							MandateDailyTransModel localModel = new
-            //							MandateDailyTransModel();
-            //							localModel = new AdminTranslator()
-            //							.translateDailyBillingEntityToModel(localEntity,
-            //							confDtlsEntity.getExtractMsgId());
-            //							log.debug("localModel ==> "+localModel);
-            //							mndtDailyTransList .add(localModel);
-          }
-        }
-      }
-    } catch (ObjectNotFoundException onfe) {
-      log.error("No Object Exists on DB");
-    } catch (Exception e) {
-      log.error("Error on retrieveMndtDailyTransPerDebtor :" + e.getMessage());
-      e.printStackTrace();
-    }
-
-    return mndtDailyTransList;
   }
 
   @Override
@@ -7643,28 +7557,14 @@ null
 
 
   public void generateBatchBillableTxnCreditor() {
-    //PBMD04 - Daily Batch Billable Transaction Report Per Creditor
+    //PBCA01 - Daily Batch Billable Transaction Report Per Creditor
     try {
-      log.info("***********Generating PBMD04 Report*****************");
-      DailyBatchBillableTxnCreditorReport dailyBatchBillableTxnCreditorReport =
-          new DailyBatchBillableTxnCreditorReport();
+      log.info("***********Generating PBCA01 Report*****************");
+      DailyBatchBillableTxnCreditorReport dailyBatchBillableTxnCreditorReport = new DailyBatchBillableTxnCreditorReport();
       dailyBatchBillableTxnCreditorReport.generateMandateDailyTransCreditorReport();
-      log.info("***********PBMD04 Report Completed*****************");
+      log.info("***********PBCA01 Report Completed*****************");
     } catch (Exception e) {
-      log.error("<EX> Error on populating PBMD04 Report :" + e.getMessage());
-      e.printStackTrace();
-    }
-  }
-
-  public void generateBatchBillableTxnDebtor() {
-    try {
-      log.info("***********Generating PBMD05 Report*****************");
-      DailyBatchBillableTxnDebtorReport dailyBatchBillableTxnDebtorReport =
-          new DailyBatchBillableTxnDebtorReport();
-      dailyBatchBillableTxnDebtorReport.generateMandateDailyTransDebtorReport();
-      log.info("***********PBMD05 Report Completed*****************");
-    } catch (Exception e) {
-      log.error("<EX> Error on populating PBMD05 Report :" + e.getMessage());
+      log.error("<EX> Error on populating PBCA01 Report :" + e.getMessage());
       e.printStackTrace();
     }
   }
@@ -8026,28 +7926,27 @@ null
   }
 
   @Override
-  public void generate5DayOutstResp(Date frontEndDate) {
-    TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>> pbmd08Map = null;
-    //PBMD08 - Daily Outstanding Mandate 5Day Responses Per Bank - PDF
+  public void generateExpiredTxnReport(Date frontEndDate) {
+    TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>> campb01Map = null;
     try {
-      log.info("***********Generating PBMD08 Report*****************");
-      PBMD08_DailyFiveDayOutstRespPDF PBMD08ReportPDF = new PBMD08_DailyFiveDayOutstRespPDF();
-      PBMD08ReportPDF.generate5DayOutstRespPerBank(true, frontEndDate);
-      log.info("***********PBMD08 Report Completed*****************");
-      pbmd08Map = PBMD08ReportPDF.pbmd08Map;
+      log.info("***********Generating CAMPB01 Report*****************");
+      CAMPB01_ExpiredTransPDF CAMPB01ReportPDF = new CAMPB01_ExpiredTransPDF();
+      CAMPB01ReportPDF.generateExpiredTxnRepPerBank(true, frontEndDate);
+      log.info("***********CAMPB01 Report Completed*****************");
+      campb01Map = CAMPB01ReportPDF.campb01Map;
     } catch (Exception e) {
-      log.error("<EX> Error on populating PBMD08 Report :" + e.getMessage());
+      log.error("<EX> Error on populating CAMPB01 Report :" + e.getMessage());
       e.printStackTrace();
     }
-    //PBMD08 - Daily Outstanding Mandate 5Day Responses Per Bank - CSV
+    //CAMPB01 - Daily Outstanding Mandate 5Day Responses Per Bank - CSV
     try {
-      log.info("***********Generating PBMD08 CSV Report*****************");
-      PBMD08_DailyFiveDayOutstRespCSV PBMD08ReportCSV =
-          new PBMD08_DailyFiveDayOutstRespCSV(pbmd08Map);
-      PBMD08ReportCSV.generateMandateResponseOutstandingPerBankCsv(true, frontEndDate);
-      log.info("***********PBMD08 CSV Report Completed*****************");
+      log.info("***********Generating CAMPB01 CSV Report*****************");
+      CAMPB01_ExpiredTransCSV CAMPB01ReportCSV =
+          new CAMPB01_ExpiredTransCSV(campb01Map);
+      CAMPB01ReportCSV.generateMandateResponseOutstandingPerBankCsv(true, frontEndDate);
+      log.info("***********CAMPB01 CSV Report Completed*****************");
     } catch (Exception e) {
-      log.error("<EX> Error on populating PBMD08 CSV Report :" + e.getMessage());
+      log.error("<EX> Error on populating CAMPB01 CSV Report :" + e.getMessage());
       e.printStackTrace();
     }
   }
@@ -9282,20 +9181,6 @@ null
     return mndtDailyTransList;
   }
 
-
-  @Override
-  public void generateExceptionReport(Date frontDate) {
-    try {
-      log.info("***********Generating PBMD12 Report*****************");
-
-      Exception_Report_CSV exceptionReport = new Exception_Report_CSV();
-      exceptionReport.generateReport(frontDate, true);
-      log.info("***********PBMD12 Report Completed*****************");
-    } catch (Exception e) {
-      log.error("<EX> Error on populating PBMD12 Report :" + e.getMessage());
-      e.printStackTrace();
-    }
-  }
 
 }
 

@@ -2501,18 +2501,6 @@ public class Controller implements Serializable {
     return list;
   }
 
-  public List<?> retrieveMndtDailyTransPerDebtor(String instId, String txnType) {
-    contextAdminBeanCheck();
-    List<?> list = null;
-    try {
-      list = adminBeanRemote.retrieveMndtDailyTransPerDebtor(instId, txnType);
-    } catch (Exception e) {
-      log.error("Error on retrieveMndtDailyTransPerDebtor" + e.getMessage());
-      e.printStackTrace();
-    }
-    return list;
-  }
-
   public List<?> retrieveMndtDailyTransPerCreditor(String instId, String txnType) {
     contextAdminBeanCheck();
     List<?> list = null;
@@ -3197,17 +3185,6 @@ public class Controller implements Serializable {
     }
   }
 
-  //PBMD05
-  public void generateBatchBillableTxnDebtor() {
-    contextAdminBeanCheck();
-    try {
-      adminBeanRemote.generateBatchBillableTxnDebtor();
-    } catch (Exception e) {
-      log.error("Error generateBatchBillableTxnDebtor: " + e.getMessage());
-      e.printStackTrace();
-    }
-  }
-
   //MR018
   public void generateBatchBillableTxnReport() {
     contextAdminBeanCheck();
@@ -3283,10 +3260,10 @@ public class Controller implements Serializable {
     }
   }
 
-  public void generatePerBank5DayOutstanding(Date frontEndDate) {
+  public void generateExpiredTxnReport(Date frontEndDate) {
     contextAdminBeanCheck();
     try {
-      adminBeanRemote.generate5DayOutstResp(frontEndDate);
+      adminBeanRemote.generateExpiredTxnReport(frontEndDate);
     } catch (Exception e) {
       log.error("Error generatePerBank5DayOutstanding: " + e.getMessage());
       e.printStackTrace();
@@ -3560,18 +3537,6 @@ public class Controller implements Serializable {
       log.error("Error generateDailyFileStatsReport: " + e.getMessage());
       e.printStackTrace();
     }
-  }
-
-  //PBMD12
-  public void generateExceptionReport(Date frontDate) {
-    contextAdminBeanCheck();
-    try {
-      adminBeanRemote.generateExceptionReport(frontDate);
-    } catch (Exception e) {
-      log.error("Error generateExceptionReport: " + e.getMessage());
-      e.printStackTrace();
-    }
-
   }
 
 //  public Object retrieveReportSeqNr(String reportNr,String memberId)

@@ -28,7 +28,7 @@ public interface ReportBeanRemote {
 	//=====OPTIMISED QUERIES=======//
 	public List<?> retrievePBMD01Data(String procDate);
 	public List<?> retrievePBMD09Data(String procDate,String fromProcDate,String time);
-	public List<?> retrievePBMD08Data(String procDate);
+	public List<?> retrieveExpiredTxnData(String procDate);
 	public List<?> retrieverRespOutstand(String processingDate);
 	public List<?> retrieveAllBatchRejectedTnxs(String date);
     public List<?> retrieveBatchAmendmentTrans(String firstDate, String lastDate);
