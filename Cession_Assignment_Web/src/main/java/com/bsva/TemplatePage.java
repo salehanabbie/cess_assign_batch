@@ -1534,7 +1534,7 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 		systemMaintPM.getSubMenuItemList().add(viewPHIReportsPanel);
 		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);	
 		systemMaintPM.getSubMenuItemList().add(viewFileSizeLimitPanel);
-		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);																																									
+//		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);
 //		systemMaintPM.getSubMenuItemList().add(viewManaulBillingPanel);
 
 

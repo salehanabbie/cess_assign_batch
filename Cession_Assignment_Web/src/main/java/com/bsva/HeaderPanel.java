@@ -15,8 +15,8 @@ public class HeaderPanel extends Panel implements Serializable {
 
 	public HeaderPanel(String id) {
 		super(id);
-		this.add((new Image("logo", new ContextRelativeResource("images/Logo_H_t_b_A_100.png"))));
-//		this.add((new Image("logo", new ContextRelativeResource("images/EFTLogoHeader.png"))));
+//		this.add((new Image("logo", new ContextRelativeResource("images/Logo_H_t_b_A_100.png"))));
+		this.add((new Image("logo", new ContextRelativeResource("images/CASA_Header.jpg"))));
 	}
 
 }

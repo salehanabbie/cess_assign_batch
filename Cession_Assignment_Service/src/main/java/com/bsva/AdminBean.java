@@ -5857,7 +5857,7 @@ public class AdminBean implements AdminBeanRemote, AdminBeanLocal {
     try {
       List<CasOpsSlaTimesEntity> casOpsSlaTimesEntity =
           genericDAO.findAllByNamedQuery("CasOpsSlaTimesEntity.findByService", "service", service);
-      log.info("mdtOpsSlaTimesEntity: " + casOpsSlaTimesEntity);
+      log.info("casOpsSlaTimesEntity: " + casOpsSlaTimesEntity);
 
       if (casOpsSlaTimesEntity.size() > 0) {
         OpsSlaTimesLogic opsSlaTimesLogic = new OpsSlaTimesLogic();
@@ -6774,7 +6774,7 @@ null
       //			slaTimesEntityList = genericDAO.findAllByNQCriteria(MdtOpsSlaTimesEntity
       //			.class, parameters);
       slaTimesEntityList =
-          genericDAO.findAllByNQCriteria("MdtOpsSlaTimesEntity.findByManyServicesNotIn",
+          genericDAO.findAllByNQCriteria("CasOpsSlaTimesEntity.findByManyServicesNotIn",
               parameters);
       //			log.info("---------------slaTimesEntityList after findAllByNQCriteria:
       //			------------------" + slaTimesEntityList);

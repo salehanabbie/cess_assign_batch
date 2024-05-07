@@ -161,12 +161,12 @@ public class EotFilesCreator_ST {
 
 					try {
 						CasOpsSlaTimesEntity casOpsSlaTimesEntity = (CasOpsSlaTimesEntity) adminBeanRemote.retrieveEndTime(outService);
-						log.debug("mdtOpsSlaTimesEntity------>" + casOpsSlaTimesEntity);
+						log.debug("casOpsSlaTimesEntity------>" + casOpsSlaTimesEntity);
 						endOfService = parser.parse(casOpsSlaTimesEntity.getEndTime());
 					} catch (ObjectNotFoundException onfe) {
 						log.error("No Object Exists on DB");
 					} catch (Exception e) {
-						log.error("Error on mdtOpsSlaTimesEntity: " + e.getMessage());
+						log.error("Error on casOpsSlaTimesEntity: " + e.getMessage());
 						e.printStackTrace();
 					}
 

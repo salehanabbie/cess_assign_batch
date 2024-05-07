@@ -16,7 +16,8 @@ public class WelcomePanel extends Panel implements Serializable {
 		super(id);
 		
 //    	this.add((new Image("Welcome", new ContextRelativeResource("images/Welcome2.png"))));
-		this.add((new Image("Welcome", new ContextRelativeResource("images/DC_Mndt_Bck.png"))));
+//		this.add((new Image("Welcome", new ContextRelativeResource("images/DC_Mndt_Bck.png"))));
+		 this.add((new Image("Welcome", new ContextRelativeResource("images/CASA_Back.jpg"))));
     	
     	
 	

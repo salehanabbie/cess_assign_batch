@@ -325,7 +325,7 @@ public class ViewCopyFilesPanel  extends Panel implements Serializable
 		/* Generate SeveritryCodes for drop down box */
 		List<ServicesModel> serviceIdOutListFromDb = new ArrayList<ServicesModel>();
 		serviceIdList = new ArrayList<WebServicesModel>();
-		serviceIdOutListFromDb = (List<ServicesModel>) controller.findServicesByNamedQuery("MdtOpsServicesEntity.findByServiceIdOutAscend", "serviceIdOut", "IGNORE");				
+		serviceIdOutListFromDb = (List<ServicesModel>) controller.findServicesByNamedQuery("CasOpsServicesEntity.findByServiceIdOutAscend", "serviceIdOut", "IGNORE");
 		log.info("serviceIdOutListFromDb ==> "+serviceIdOutListFromDb);
 
 		Collections.sort(serviceIdOutListFromDb, new serviceIdOrderSorter());
