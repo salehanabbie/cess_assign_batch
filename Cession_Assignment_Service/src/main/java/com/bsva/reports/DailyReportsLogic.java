@@ -122,7 +122,7 @@ public class DailyReportsLogic
 		log.info("pbmd04Report = "+pbmd04Report);
 //		log.info("psmd08Report = "+psmd08Report);
 
-//		Enable before go live
+//		Enable before go live on C/A
 //		//Calc Day Of Week
 //		Calendar calend = Calendar.getInstance();
 //		calend.setTime(casSysctrlSysParamEntity.getProcessDate());

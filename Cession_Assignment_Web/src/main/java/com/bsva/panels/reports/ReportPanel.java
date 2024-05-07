@@ -204,7 +204,7 @@ public class ReportPanel extends Panel implements IAjaxIndicatorAware {
               e.printStackTrace();
             }
 
-          } else if (choice.equalsIgnoreCase("BSCA03")) {
+          } else if (choice.equalsIgnoreCase("BSACA03")) {
             OutOfBalanceReport outOfBalanceReport = new OutOfBalanceReport();
             try {
               outOfBalanceReport.generateReport(

@@ -159,7 +159,7 @@ public class EndOfDayLogic {
         if (userDate.after(eodTime) && userDate.before(endTime)) {
           //Check if no txns are sitting on '3' or 'L'
           txnsToExtract = beanRemote.eodCheckIfAllFilesAreExtracted(casSysctrlSysParamEntity.getProcessDate(), mdtLoadType);
-          log.debug("txnsToExtract frin Service Bean ==> " + txnsToExtract);
+          log.info("txnsToExtract frin Service Bean ==> " + txnsToExtract);
           if (txnsToExtract) {
             //Scheduler Check
             List<CasOpsSchedulerEntity> opsSchedulersList = new ArrayList<CasOpsSchedulerEntity>();
@@ -263,45 +263,46 @@ public class EndOfDayLogic {
                     log.info("<<---------ARCHIVING MANDATES COMPLETED---------->");
 
                     log.info("<<---------RUNNING PBMD08 EXPIRED TXNS REPORT---------->");
-                    boolean expReport = dailyReportsLogic.generateExpiredTxnsReport();
+                    log.info("!!!!!!This report needs to be aligned for C/A!!!!!!");
+//                    boolean expReport = dailyReportsLogic.generateExpiredTxnsReport();
 
-                    //MONTHLY REPORT RUN CHECK
-                    DateFormat endDateFormat = new SimpleDateFormat("ddMMyyyy");
+//                    Monthly reports cannot be run as part of EOD.
+//                    //MONTHLY REPORT RUN CHECK
+//                    DateFormat endDateFormat = new SimpleDateFormat("ddMMyyyy");
+//
+//                    //Calculate the last date of the month
+//                    Calendar nextNotifTime = Calendar.getInstance();
+//                    nextNotifTime.add(Calendar.MONTH, 1);
+//                    nextNotifTime.set(Calendar.DATE, 1);
+//                    nextNotifTime.add(Calendar.DATE, -1);
+//                    Date lastDate = nextNotifTime.getTime();
+//
+//                    String strLastDate = endDateFormat.format(lastDate);
+//                    log.info("strLastDate ==> " + strLastDate);
+//
+//                    String currentProcDate =
+//                        endDateFormat.format(casSysctrlSysParamEntity.getProcessDate());
+//                    log.info("currentProcDate ==> " + currentProcDate);
 
-                    //Calculate the last date of the month
-                    Calendar nextNotifTime = Calendar.getInstance();
-                    nextNotifTime.add(Calendar.MONTH, 1);
-                    nextNotifTime.set(Calendar.DATE, 1);
-                    nextNotifTime.add(Calendar.DATE, -1);
-                    Date lastDate = nextNotifTime.getTime();
-
-                    String strLastDate = endDateFormat.format(lastDate);
-                    log.info("strLastDate ==> " + strLastDate);
-
-                    String currentProcDate =
-                        endDateFormat.format(casSysctrlSysParamEntity.getProcessDate());
-                    log.info("currentProcDate ==> " + currentProcDate);
-
-                    boolean allMonthlyReportsRun = false;
-                    if (currentProcDate.equalsIgnoreCase(strLastDate)) {
-                      log.info("Dates Match!");
-                      log.info("<<---------RUN MONTHLY REPORTS---------->");
-                      MonthlyReportsLogic monthlyReportsLogic = new MonthlyReportsLogic();
-                      allMonthlyReportsRun = monthlyReportsLogic.generateMonthlyReports();
-                    } else {
-                      // It is not month end.
-                      log.info("<<---------NO MONTHLY REPORTS TO RUN---------->");
-                      allMonthlyReportsRun = true;
-                    }
-                    if (allMonthlyReportsRun) {
+//                    boolean allMonthlyReportsRun = false;
+//                    if (currentProcDate.equalsIgnoreCase(strLastDate)) {
+//                      log.info("Dates Match!");
+//                      log.info("<<---------RUN MONTHLY REPORTS---------->");
+//                      MonthlyReportsLogic monthlyReportsLogic = new MonthlyReportsLogic();
+//                      allMonthlyReportsRun = monthlyReportsLogic.generateMonthlyReports();
+//                    } else {
+//                      // It is not month end.
+//                      log.info("<<---------NO MONTHLY REPORTS TO RUN---------->");
+//                      allMonthlyReportsRun = true;
+//                    }
+//                    if (allMonthlyReportsRun) {
                       log.info("<<---------TRUNCATING TABLES---------->");
                       adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_SERVICES");
                       adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_CUST_PARAM");
                       adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_REF_SEQ_NR");
-                      adminBeanRemote.truncateTable("CAMOWNER.CAS_AC_OPS_PROCESS_CONTROLS");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_PROCESS_CONTROLS");
                       adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_SOT_EOT_CTRL");
-                      adminBeanRemote.truncateTable("CAMOWNER.MDT_OPS_CRON");
-                      adminBeanRemote.truncateTable("CAMOWNER.MDT_OPS_SLA_TIMES");
+                      adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_SLA_TIMES");
                       adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_SCHEDULER");
                       adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_TRANS_CTRL_MSG");
                       adminBeanRemote.truncateTable("CAMOWNER.CAS_OPS_REP_SEQ_NR");
@@ -344,13 +345,13 @@ public class EndOfDayLogic {
                       adminBeanRemote.updateBillingCtrl(obsSystemBillingCtrlsEntity);
 
                       eodCheck = true;
-                    } else {
-                      eodCheck = false;
-                      log.error(
-                          "Cannot proceed with EOD. All MONTHLY Reports have not completed yet!");
-                      feedbackMsg =
-                          "Cannot proceed with EOD. All Monthly Reports have not completed yet!";
-                    }
+//                    } else {
+//                      eodCheck = false;
+//                      log.error(
+//                          "Cannot proceed with EOD. All MONTHLY Reports have not completed yet!");
+//                      feedbackMsg =
+//                          "Cannot proceed with EOD. All Monthly Reports have not completed yet!";
+//                    }
                   } else {
                     eodCheck = false;
                     log.error("Cannot proceed with EOD. All Daily Reports have not completed yet!");

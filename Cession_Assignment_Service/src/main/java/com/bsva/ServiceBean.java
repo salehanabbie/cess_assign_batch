@@ -3053,11 +3053,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 				HashMap<String, Object> parameters = new HashMap<String, Object>();
 				parameters.put("processStatus", readyForExtractStatus);
 
-				List<CasOpsCessionAssignEntity> opsMandateTxnsList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByCriteria(
-						CasOpsCessionAssignEntity.class, parameters);
-				if(opsMandateTxnsList != null && opsMandateTxnsList.size() > 0)
+				List<CasOpsCessionAssignEntity> opsCASATxnsList = (List<CasOpsCessionAssignEntity>) genericDAO.findAllByCriteria(CasOpsCessionAssignEntity.class, parameters);
+				if(opsCASATxnsList != null && opsCASATxnsList.size() > 0)
 				{
-					log.debug("opsMandateTxnsList.size(); =====> "+opsMandateTxnsList.size());
+					log.debug("opsCASATxnsList.size(); =====> "+opsCASATxnsList.size());
 					painMsgsCheck = false;
 				}
 				else
@@ -3069,7 +3068,7 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 			}
 			catch (Exception e)
 			{
-				log.error("Error on eodCheckIfAllFilesAreExtracted.opsMandateTxnsList: "+ e.getMessage());
+				log.error("Error on eodCheckIfAllFilesAreExtracted.opsCASATxnsList: "+ e.getMessage());
 				e.printStackTrace();
 			}
 
@@ -3125,14 +3124,10 @@ public class ServiceBean implements ServiceBeanRemote, ServiceBeanLocal {
 
 		log.debug("painMsgsCheck ==> "+painMsgsCheck+ "\n"+
 				"confDtlsCheck ==> "+confDtlsCheck + "\n"+
-				"mdte001Check ==> "+mdte001Check + "\n"+ 
-				"mdte002Check ==> "+mdte002Check + "\n"+ 
-				"camt055Check ==> "+camt055Check + "\n"+ 
-				"statusRptsCheck ==> "+statusRptsCheck + "\n"+
-				"mrkoffCheck ==> "+mrkoffCheck);
+				"statusRptsCheck ==> "+statusRptsCheck + "\n");
 
 
-		if(painMsgsCheck && confDtlsCheck && mdte001Check && mdte002Check && camt055Check && statusRptsCheck && mrkoffCheck)
+		if(painMsgsCheck && confDtlsCheck && statusRptsCheck)
 			eodFilesCheck = true;
 		else
 			eodFilesCheck = false;
