@@ -1592,8 +1592,8 @@ public class DailyBatchVolumeReport
 
 		int rowCount_4 = 6;
 		int stsCount = 6;
-		log.info("rowCount4: "+rowCount_4);
-		log.info("stsCount: "+stsCount);
+		log.debug("rowCount4: "+rowCount_4);
+		log.debug("stsCount: "+stsCount);
 		//Retrieve Status Reports to Creditor Details
 		//ST200 Counts
 		if(statusReportToCreditorsCountList != null && statusReportToCreditorsCountList.size() > 0)
@@ -1632,8 +1632,8 @@ public class DailyBatchVolumeReport
 
 					rowCount_4++;
 				}
-				log.info("rowCount4 create: "+rowCount_4);
-				log.info("stsCount: "+stsCount);
+				log.debug("rowCount4 create: "+rowCount_4);
+				log.debug("stsCount: "+stsCount);
 				//SubTotal the Rows
 				Row statusTotalRow = statusReportsSheet.createRow(rowCount_4);
 
@@ -1727,16 +1727,16 @@ public class DailyBatchVolumeReport
 			summaryTotalsMap.put("ST202", st102TotalEntity);
 		}
 
-				log.info("rowCount_4 ==> "+rowCount_4);
-				log.info("stsCount ==> "+stsCount);
+				log.debug("rowCount_4 ==> "+rowCount_4);
+				log.debug("stsCount ==> "+stsCount);
 
 		//SubTotal the Rows
 		Row statusNullRow = statusReportsSheet.createRow(rowCount_4);
 		rowCount_4++;
 
 		stsCount = rowCount_4;
-		log.info("rowCount_4 ==> "+rowCount_4);
-		log.info("stsCount ==> "+stsCount);
+		log.debug("rowCount_4 ==> "+rowCount_4);
+		log.debug("stsCount ==> "+stsCount);
 		//ST204 Counts
 		if(statusReportToDebtorsCountList != null && statusReportToDebtorsCountList.size() > 0)
 		{
@@ -1804,8 +1804,8 @@ public class DailyBatchVolumeReport
 		Row statusNullRow1 = statusReportsSheet.createRow(rowCount_4);
 		rowCount_4++;
 
-		log.info("rowCount_4 ==> "+rowCount_4);
-		log.info("stsCount ==> "+stsCount);
+		log.debug("rowCount_4 ==> "+rowCount_4);
+		log.debug("stsCount ==> "+stsCount);
 
 		//Grand Total
 		Row statusGtRow = statusReportsSheet.createRow(rowCount_4);
