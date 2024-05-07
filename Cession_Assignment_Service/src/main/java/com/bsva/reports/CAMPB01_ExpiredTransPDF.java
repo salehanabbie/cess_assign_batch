@@ -46,11 +46,11 @@ import com.itextpdf.text.pdf.PdfWriter;
  * @author SalehaR-2019/11/21-Align to v2.0 of spec
  *
  */
-public class PBMD08_DailyFiveDayOutstRespPDF {
+public class CAMPB01_ExpiredTransPDF {
 	String reportName, reportNr;
 	public static Logger log=Logger.getLogger("PBMD08_5DayOutsRespPDF");
 
-	public TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>> pbmd08Map;
+	public TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>> campb01Map;
 
 	List<CreditorBankModel> creditorBankModelList;
 	CreditorBankModel creditorBankModel ;
@@ -58,7 +58,7 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 
 	int lastSeqNoUsed;
 
-	String pbmd08, reportDir = null, tempDir = null, mdtLoadType = null;
+	String campb01, reportDir = null, tempDir = null, mdtLoadType = null;
 	String pdfFileName = null;
 
 	public static ServiceBeanRemote beanRemote;
@@ -73,7 +73,7 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 	CasCnfgReportNamesEntity reportNameEntity = new CasCnfgReportNamesEntity();
 	String activeIndicator = "Y";
 
-	public PBMD08_DailyFiveDayOutstRespPDF() {
+	public CAMPB01_ExpiredTransPDF() {
 		contextAdminBeanCheck();
 		contextCheck();
 		contextValidationBeanCheck();
@@ -84,18 +84,18 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 		{
 			tempDir = propertyUtilRemote.getPropValue("ExtractTemp.Out");
 			reportDir= propertyUtilRemote.getPropValue("Reports.Output");
-			pbmd08 = propertyUtilRemote.getPropValue("RPT.BANK.BATCH.5DAYOUTRESP");
+			campb01 = propertyUtilRemote.getPropValue("RPT.BANK.BATCH.EXPIRED");
 			mdtLoadType = propertyUtilRemote.getPropValue("MDT.LOAD.TYPE");
 		}
 		catch(Exception ex)
 		{
-			log.error("PBMD08- Could not find CessionAssignment.properties in classpath");
+			log.error("CAMPB01- Could not find CessionAssignment.properties in classpath");
 			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
 			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 		}
 
 		//Retrieve Report Name
-		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(pbmd08);
+		reportNameEntity = (CasCnfgReportNamesEntity) adminBeanRemote.retrieveReportName(campb01);
 		if(reportNameEntity != null)
 		{
 			reportNr = reportNameEntity.getReportNr();
@@ -105,7 +105,7 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 		systemParameterModel = (SystemParameterModel) adminBeanRemote.retrieveWebActiveSysParameter();
 	}
 
-	public void generate5DayOutstRespPerBank(boolean frontEnd,Date frontEndDate)
+	public void generateExpiredTxnRepPerBank(boolean frontEnd,Date frontEndDate)
 	{
 		if(reportNameEntity != null) {
 			if(reportNameEntity.getActiveInd().equalsIgnoreCase(activeIndicator)) {
@@ -121,9 +121,9 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 					for (CreditorBankModel creditorBankModel : creditorBankModelList) 
 					{
 						startTime = System.nanoTime();
-						List<MandateResponseOutstandingPerBankEntityModel> batchOutsRespList = pbmd08Map.get(creditorBankModel.getMemberNo());
+						List<MandateResponseOutstandingPerBankEntityModel> batchOutsRespList = campb01Map.get(creditorBankModel.getMemberNo());
 
-						log.info("GENERATING REPORT PBMD08 FOR "+creditorBankModel.getMemberNo());
+						log.info("GENERATING REPORT CAMPB01 FOR "+creditorBankModel.getMemberNo());
 
 						if(batchOutsRespList!= null && batchOutsRespList.size() > 0)
 						{
@@ -134,7 +134,7 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 							}
 							catch(DocumentException | FileNotFoundException ex)
 							{
-								log.error("Error PBMD08:  generate5DayOutstRespPerBank"+ ex.getMessage());
+								log.error("Error CAMPB01:  generateExpiredTxnsReport"+ ex.getMessage());
 								ex.printStackTrace();
 							}
 						}
@@ -298,12 +298,12 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 		}
 		catch(IOException ioe)
 		{
-			log.error("Error on copying PBMD08 report to temp "+ioe.getMessage());
+			log.error("Error on copying CAMPB01 report to temp "+ioe.getMessage());
 			ioe.printStackTrace();
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on copying PBMD08 report to temp "+ex.getMessage());
+			log.error("Error on copying CAMPB01 report to temp "+ex.getMessage());
 
 			ex.printStackTrace();
 		}
@@ -320,13 +320,13 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 	}
 
 	public void loadData(boolean frontEnd,Date frontEndDate) {
-		pbmd08Map = new TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>>();
+		campb01Map = new TreeMap<String, List<MandateResponseOutstandingPerBankEntityModel>>();
 		List<MandateResponseOutstandingPerBankEntityModel> allDataList;
 		
 		if(frontEnd) {
-			allDataList = (List<MandateResponseOutstandingPerBankEntityModel>) reportBeanRemote.retrievePBMD08Data(dateFormatFront.format(frontEndDate));
+			allDataList = (List<MandateResponseOutstandingPerBankEntityModel>) reportBeanRemote.retrieveExpiredTxnData(dateFormatFront.format(frontEndDate));
 		}else {
-			allDataList = (List<MandateResponseOutstandingPerBankEntityModel>) reportBeanRemote.retrievePBMD08Data(dateFormatFront.format(systemParameterModel.getProcessDate()));
+			allDataList = (List<MandateResponseOutstandingPerBankEntityModel>) reportBeanRemote.retrieveExpiredTxnData(dateFormatFront.format(systemParameterModel.getProcessDate()));
 		}
 		
 		List<MandateResponseOutstandingPerBankEntityModel> dataPerCreditorBank;
@@ -340,10 +340,10 @@ public class PBMD08_DailyFiveDayOutstRespPDF {
 						dataPerCreditorBank.add(mndtRespEntity);
 					}
 				}
-				pbmd08Map.put(creditorBankModel.getMemberNo(), dataPerCreditorBank);
+				campb01Map.put(creditorBankModel.getMemberNo(), dataPerCreditorBank);
 			}   
 		}		
-		log.info("pbmd08Map size===> "+pbmd08Map.size());
+		log.info("campb01Map size===> "+campb01Map.size());
 	}
 
 	//CONTEXT LOOKUPS//

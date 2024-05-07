@@ -83,7 +83,7 @@ public class OutOfBalanceReport
 		}
 		catch(Exception ex)
 		{
-			log.error("BSCA03- Could not find CessionAssignment.properties in classpath");
+			log.error("BSACA03- Could not find CessionAssignment.properties in classpath");
 			reportDir = "/home/opsjava/Delivery/Cession_Assign/Output/Reports/";
 			tempDir="/home/opsjava/Delivery/Cession_Assign/Output/temp/";
 
@@ -376,12 +376,12 @@ public class OutOfBalanceReport
 		}
 		catch(IOException ioe)
 		{
-			log.error("Error on copying BSCA03 report to temp "+ioe.getMessage());
+			log.error("Error on copying BSACA03 report to temp "+ioe.getMessage());
 			ioe.printStackTrace();
 		}
 		catch(Exception ex)
 		{
-			log.error("Error on copying BSCA03 report to temp "+ex.getMessage());
+			log.error("Error on copying BSACA03 report to temp "+ex.getMessage());
 			ex.printStackTrace();
 		}
 	}

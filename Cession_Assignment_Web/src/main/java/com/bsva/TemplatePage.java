@@ -1525,20 +1525,17 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 //		SalehaR-2020/07/28 - Remove CDV as per TDA
 //		systemMaintPM.getSubMenuItemList().add(cdvMenuItem);
 //		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);
-		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);
-		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);
 		systemMaintPM.getSubMenuItemList().add(viewReportConfgScreen);
 		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);									
 		systemMaintPM.getSubMenuItemList().add(viewSysCtrlSlaTimePanel);
 		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);
 		systemMaintPM.getSubMenuItemList().add(viewSystemControlServicesPanel);
 		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);
-		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);																																									
 		systemMaintPM.getSubMenuItemList().add(viewPHIReportsPanel);
 		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);	
 		systemMaintPM.getSubMenuItemList().add(viewFileSizeLimitPanel);
-		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);																																									
-		systemMaintPM.getSubMenuItemList().add(viewManaulBillingPanel);
+//		systemMaintPM.getSubMenuItemList().add(seperatorMenuItem);
+//		systemMaintPM.getSubMenuItemList().add(viewManaulBillingPanel);
 
 
 
@@ -1552,7 +1549,6 @@ public class TemplatePage extends BasePage /* implements IAjaxIndicatorAware */ 
 		systemCodesPM.getSubMenuItemList().add(viewAdjustmentCategoryPanel);
 		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
 		systemCodesPM.getSubMenuItemList().add(viewAmendmentCodesPanel);
-		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
 		systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);
 		/*systemCodesPM.getSubMenuItemList().add(currencyCodesPanel);
 																						systemCodesPM.getSubMenuItemList().add(seperatorMenuItem);*/

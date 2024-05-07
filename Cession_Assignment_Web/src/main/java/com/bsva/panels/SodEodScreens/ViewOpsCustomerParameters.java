@@ -84,32 +84,19 @@ public class ViewOpsCustomerParameters extends Panel implements Serializable{
 
 		//columns.add(column);
 		columns.add(new PropertyColumn(new Model<String>("Inst ID"), "instId","instId"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Initiation XSD NS"),"manInitXsdNs","manInitXsdNs"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Initiation Last Seq "),"manInitLstSeq", "manInitLstSeq"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Initiation Last File Nr"),"manInitLastFileNr", "manInitLastFileNr"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Amendment XSD NS"),"manAmdXsdNs", "manAmdXsdNs"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Amendment Last Seq"),"manAmdLstSeq", "manAmdLstSeq"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Amendment Last File Nr"),"manAmdLastFileNr", "manAmdLastFileNr"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Cancellation XSD NS"),"manCanXsdNs", "manCanXsdNs"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Cancellation Last Seq"),"manCanLstSeq", "manCanLstSeq"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Cancellation Last File Nr"),"manCanLastFileNr", "manCanLastFileNr"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Acceptance XSD NS"),"manAccpXsdNs", "manAccpXsdNs"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Acceptance Last Seq"),"manAccpLstSeq", "manAccpLstSeq"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Acceptance Last File Nr"),"manAccpLastFileNr", "manAccpLastFileNr"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Amendment XSD NS"),"casaAmdXsdNs", "casaAmdXsdNs"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Amendment Last Seq"),"casaAmdLstSeq", "casaAmdLstSeq"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Amendment Last File Nr"),"casaAmdLastFileNr", "casaAmdLastFileNr"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Acceptance XSD NS"),"casaAccpXsdNs", "casaAccpXsdNs"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Acceptance Last Seq"),"casaAccpLstSeq", "casaAccpLstSeq"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Acceptance Last File Nr"),"casaAccpLastFileNr", "casaAccpLastFileNr"));
 		columns.add(new PropertyColumn(new Model<String>("Active Ind"),"activeInd", "activeInd"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Req Id Re-use Ind"),"mdtReqIdReuseInd", "mdtReqIdReuseInd"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Status Report XSD NS"),"manStatusRepXsdNs", "manStatusRepXsdNs"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Status Report Last Seq"),"manStatusRepLstSeq", "manStatusRepLstSeq"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Status Report Last File Nr"),"manStatusRepLastFileNr", "manStatusRepLastFileNr"));
-		columns.add( new PropertyColumn(new Model<String>("Mandate Request XSD NS"),"manReqXsdNs","manReqXsdNs"));
-		columns.add( new PropertyColumn(new Model<String>("Mandate Request Last Seq"),"manReqLstSeq","manReqLstSeq"));
-		columns.add( new PropertyColumn(new Model<String>("Mandate Request Last File Nr"),"manReqLastFileNr","manReqLastFileNr"));
-		columns.add( new PropertyColumn(new Model<String>("Mandate Response XSD NS"),"manRespXsdNs","manRespXsdNs"));
-		columns.add( new PropertyColumn(new Model<String>("Mandate Response Last Seq"),"manRespLstSeq","manRespLstSeq"));
-		columns.add( new PropertyColumn(new Model<String>("Mandate Response Last File Nr"),"manRespLastFileNr","manRespLastFileNr"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Confirm XSD NS"),"manConfirmXsdNs", "manConfirmXsdNs"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Confirm Last Seq"),"manConfirmLstSeq", "manConfirmLstSeq"));
-		columns.add(new PropertyColumn(new Model<String>("Mandate Confirm Last File Nr"),"manConfirmLstFileNr", "manConfirmLstFileNr"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Status Report XSD NS"),"casaStatusRepXsdNs", "casaStatusRepXsdNs"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Status Report Last Seq"),"casaStatusRepLstSeq", "casaStatusRepLstSeq"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Status Report Last File Nr"),"casaStatusRepLastFileNr", "casaStatusRepLastFileNr"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Confirm XSD NS"),"casaConfirmXsdNs", "casaConfirmXsdNs"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Confirm Last Seq"),"casaConfirmLstSeq", "casaConfirmLstSeq"));
+		columns.add(new PropertyColumn(new Model<String>("CASA Confirm Last File Nr"),"casaConfirmLstFileNr", "casaConfirmLstFileNr"));
 		
 		dataTable = new DefaultDataTable("dataTable", columns,opsCustomerParametersProvider, 10);
 

@@ -450,7 +450,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
     if (scheduler != null) {
       try {
         //				scheduler.triggerJob(jobKey11);
-        log.info("Trying to start ST100 scheduler--->");
+        log.info("Trying to start ST200 scheduler--->");
         scheduler.scheduleJob(st100Job, st100Trigger);
         boolean saved = updateOpsSchedulerDetails("ST200", null, "Y");
         if (saved) {
@@ -470,7 +470,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
     if (scheduler != null) {
       try {
         //				scheduler.triggerJob(jobKey12);
-        log.info("Trying to start ST102 scheduler--->");
+        log.info("Trying to start ST202 scheduler--->");
         scheduler.scheduleJob(st102Job, st102Trigger);
         boolean saved = updateOpsSchedulerDetails("ST202", null, "Y");
         if (saved) {
@@ -490,7 +490,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
     if (scheduler != null) {
       try {
         //				scheduler.triggerJob(jobKey13);
-        log.info("Trying to start ST104 scheduler--->");
+        log.info("Trying to start ST204 scheduler--->");
         scheduler.scheduleJob(st104Job, st104Trigger);
         boolean saved = updateOpsSchedulerDetails("ST204", null, "Y");
         if (saved) {
@@ -801,7 +801,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
           oldTrigger.withSchedule(CronScheduleBuilder.cronSchedule(rescheduleCron)).build();
       scheduler.rescheduleJob(st100TK, st100Trigger);
 
-      boolean saved = updateOpsSchedulerDetails("ST100", cronTime, "Y");
+      boolean saved = updateOpsSchedulerDetails("ST200", cronTime, "Y");
       if (saved) {
         reschST100 = true;
       }
@@ -822,7 +822,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
           oldTrigger.withSchedule(CronScheduleBuilder.cronSchedule(rescheduleCron)).build();
       scheduler.rescheduleJob(st102TK, st102Trigger);
 
-      boolean saved = updateOpsSchedulerDetails("ST102", cronTime, "Y");
+      boolean saved = updateOpsSchedulerDetails("ST202", cronTime, "Y");
       if (saved) {
         reschST102 = true;
       }
@@ -843,7 +843,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
           oldTrigger.withSchedule(CronScheduleBuilder.cronSchedule(rescheduleCron)).build();
       scheduler.rescheduleJob(st104TK, st104Trigger);
 
-      boolean saved = updateOpsSchedulerDetails("ST104", cronTime, "Y");
+      boolean saved = updateOpsSchedulerDetails("ST204", cronTime, "Y");
       if (saved) {
         reschST104 = true;
       }
@@ -980,7 +980,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
     if (scheduler != null) {
       try {
         st100Stop = scheduler.unscheduleJob(st100TK);
-        boolean saved = updateOpsSchedulerDetails("ST100", null, "N");
+        boolean saved = updateOpsSchedulerDetails("ST200", null, "N");
         if (saved) {
           st100Stop = true;
         }
@@ -998,7 +998,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
     if (scheduler != null) {
       try {
         st102Stop = scheduler.unscheduleJob(st102TK);
-        boolean saved = updateOpsSchedulerDetails("ST102", null, "N");
+        boolean saved = updateOpsSchedulerDetails("ST202", null, "N");
         if (saved) {
           st102Stop = true;
         }
@@ -1016,7 +1016,7 @@ public class QuartzSchedulerBean implements QuartzSchedulerBeanRemote, QuartzSch
     if (scheduler != null) {
       try {
         st104Stop = scheduler.unscheduleJob(st104TK);
-        boolean saved = updateOpsSchedulerDetails("ST104", null, "N");
+        boolean saved = updateOpsSchedulerDetails("ST204", null, "N");
         if (saved) {
           st104Stop = true;
         }

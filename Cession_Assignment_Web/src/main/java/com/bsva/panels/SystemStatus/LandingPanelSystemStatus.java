@@ -73,7 +73,7 @@ public class LandingPanelSystemStatus extends Panel implements Serializable
 	private Button runSystemClosure, generateReport;
 	int totalReceivedMsgs, totalRejectedMsgs ,totalExtractedMsgs = 0;
 	int totalDifferenceCalculate;
-	private String reportNr = "BSCA03", reportname = "CASA System Balance Report";
+	private String reportNr = "BSACA03", reportname = "CASA System Balance Report";
 	private TextArea<String> forceClosure ;
 	private int counter = 0;  
 	private String inBalanceind="Y";

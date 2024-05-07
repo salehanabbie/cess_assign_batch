@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beanio xmlns="http://www.beanio.org/2012/03">
-		<stream name="pbmd04ReportFile" format="csv">
+		<stream name="pbca01ReportFile" format="csv">
 		   <record name="header" class="com.bsva.commons.model.MandateDailyTransModel" order="1" occurs="1">  
 	     	<field name="creditorBank" default="Creditor Bank" length="13" padding=" " justify="left"/>
 	      	<field name="debtorBank" default="Debtor Bank" length="11" padding=" " justify="left"/>

@@ -364,8 +364,6 @@ public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel>{
 
   public List<?> retrieveMndtBillingTransactions(String txnType);
 
-  public List<?> retrieveMndtDailyTransPerDebtor(String instId, String txnType);
-
   public List<?> retrieveMndtDailyTransPerCreditor(String instId, String txnType);
 
   public boolean createBillingCtrls(Object obj);
@@ -505,8 +503,6 @@ public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel>{
 
   public void generateBatchBillableTxnCreditor();
 
-  public void generateBatchBillableTxnDebtor();
-
   public void generateBatchBillableTxnReport();
 
   public List<?> retrieveBranchesByDebtorCreditor(boolean creditorBranch, boolean debtorBranch);
@@ -536,7 +532,7 @@ public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel>{
 
   public List<?> retrieveAllCisBank();
 
-  public void generate5DayOutstResp(Date frontEndDate);
+  public void generateExpiredTxnReport(Date frontEndDate);
 
   public List<?> retrieveSysctrlFileSizeLimit();
 
@@ -589,7 +585,6 @@ public interface AdminBeanRemote<EntryClassesModel, AdjustmentCategoryModel>{
 
   public void generateBatchFileStatsReport(Date fromFrontDate);
 
-  public void generateExceptionReport(Date frontDate);
 
   public List<?> retrievePBMD06RealTimeCreditorTransBilling(String creditorBank, Date reportDate);
 

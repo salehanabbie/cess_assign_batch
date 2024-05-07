@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beanio xmlns="http://www.beanio.org/2012/03">
-		<stream name="PBMD08CSV" format="csv">
+		<stream name="CAMPBO1CSV" format="csv">
 		  <record name="header" class="com.bsva.commons.model.MndtRespOutstandingPerBankCsvModel" order="1" occurs="1">  
 	     	<field name="dbtrMemberName" default="Debtor Bank" length="13" padding=" " justify="left"/>
 	      	<field name="dbtrMemberNo" default="Member Number" length="13" padding=" " justify="left"/>
